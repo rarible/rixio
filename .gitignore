@@ -1,0 +1,24 @@
+# Build
+build/
+test-reports/
+cypress/screenshots/
+source/locales/_build/
+storybook-static
+
+# Development stuff
+platforms/
+plugins/
+node_modules/
+coverage/
+npm-debug.log
+*.sublime-workspace
+*.pyc
+.vagrant
+.idea
+.vscode
+npm-debug.*
+/target/
+.classpath
+.project
+.settings
+
