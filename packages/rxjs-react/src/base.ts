@@ -1,9 +1,11 @@
-import React, { ComponentType } from "react"
+import React from "react"
 import { Observable, Subscription } from "rxjs"
 import { Lens } from "@grecha/lens"
 
+export type ObservableLike<T> = T | Observable<T>
+
 export type Lifted<T> = {
-	[K in keyof T]: T[K] | Observable<T[K]>
+	[K in keyof T]: ObservableLike<T[K]>
 }
 
 function walk<T extends object>(
@@ -13,16 +15,18 @@ function walk<T extends object>(
 	for (const key in props) {
 		if (props.hasOwnProperty(key)) {
 			const prop = props[key] as any
-			handler(prop, Lens.key(key) as any)
+			if (key === "children" && Array.isArray(prop)) {
+				prop.forEach((v, idx) => {
+					handler(v, Lens.compose(Lens.key("children"), Lens.index(idx)) as any)
+				})
+			} else {
+				handler(prop, Lens.key(key) as any)
+			}
 		}
 	}
 }
 
-export type ReactiveProps<P extends object> = {
-	component: ComponentType<P>
-}
-
-export abstract class RxWrapperBase<P extends object, RProps extends ReactiveProps<P>>
+export abstract class RxWrapperBase<P extends object, RProps extends object>
 	extends React.Component<RProps, Lifted<P>> {
 
 	private _state: Lifted<P>
@@ -38,6 +42,7 @@ export abstract class RxWrapperBase<P extends object, RProps extends ReactivePro
 	}
 
 	abstract extractProps(props: RProps): Lifted<P>
+	abstract extractComponent(props: RProps): any
 
 	componentDidMount() {
 		this._mounted = true
@@ -63,14 +68,20 @@ export abstract class RxWrapperBase<P extends object, RProps extends ReactivePro
 	}
 
 	render() {
-		return React.createElement(this.props.component, this.state as any)
+		return React.createElement(this.extractComponent(this.props), this.state as any)
 	}
 
 	private doSubscribe(oldProps: Lifted<P>, props: Lifted<P>) {
 		const self = this
 		walk(props, (value, lens) => {
 			if (value instanceof Observable) {
-				if (lens.get(oldProps) !== value) {
+				let oldValue: any
+				try {
+					oldValue = lens.get(oldProps)
+				} catch (e) {
+					oldValue = undefined
+				}
+				if (oldValue !== value) {
 					const s = value.subscribe(plain => {
 						self.handle(lens, plain)
 					})

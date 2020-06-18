@@ -2,7 +2,7 @@
 // tslint:disable no-unnecessary-local-variable
 import { merge, Observable, from, Subject, never, throwError, empty } from "rxjs"
 import { take, toArray, tap, materialize, map } from "rxjs/operators"
-import { Atom, ReadOnlyAtom } from "../src"
+import { Atom, ReadOnlyAtom } from "./index"
 import { structEq, Option } from "@grecha/lens"
 import { Lens } from "@grecha/lens"
 
