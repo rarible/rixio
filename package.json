@@ -3,5 +3,8 @@
   "name": "grecha",
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "resolutions": {
+    "@types/react": "16.9.37"
+  }
 }

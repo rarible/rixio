@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary,no-plusplus */
-import { Lens, Prism, PropExpr, structEq, Option } from "@grecha/lens"
+import { Lens, Prism, structEq, Option } from "@grecha/lens"
 
 import { Observable, Subscriber, Subscription, BehaviorSubject, combineLatest } from "rxjs"
 
@@ -161,31 +161,6 @@ export interface Atom<T> extends ReadOnlyAtom<T> {
 	set(newValue: T): void
 
 	/**
-   * DEPRECATED: please use other overloads instead!
-   *
-   * Create a lensed atom using a property expression, which specifies
-   * a path inside the atom value's data structure.
-   *
-   * The property expression is a limited form of a getter,
-   * with following restrictions:
-   * - should be a pure function
-   * - should be a single-expression function (i.e. return immediately)
-   * - should only access object properties (nested access is OK)
-   * - should not access array items
-   *
-   * @example
-   * const atom = Atom.create({ a: { b: 5 } })
-   *
-   * atom.lens(x => x.a.b).modify(x => x + 1)
-   * atom.get()
-   * // => { a: { b: 6 } }
-   * @template U destination value type
-   * @param propExpr property expression
-   * @returns a lensed atom
-   */
-	lens<U>(propExpr: PropExpr<T, U>): Atom<U>
-
-	/**
    * Create a lensed atom by supplying a lens.
    *
    * @template U destination value type
@@ -276,22 +251,18 @@ export abstract class AbstractAtom<T>
 		this.modify(() => x)
 	}
 
-	lens<U>(propExpr: PropExpr<T, U>): Atom<U>
 	lens<U>(lens: Lens<T, U>): Atom<U>
 	lens<K extends keyof T>(k: K): Atom<T[K]>
 
-	lens<U>(arg1: Lens<T, U> | PropExpr<T, U> | string, ...args: string[]): Atom<any> {
+	lens<U>(arg1: Lens<T, U> | string, ...args: string[]): Atom<any> {
 		// tslint:disable no-use-before-declare
 
 		// lens(prop expr) case
-		return typeof arg1 === "function"
-			? new LensedAtom<T, U>(this, Lens.prop(arg1 as (x: T) => U), structEq)
-		// lens('key') case
-			: typeof arg1 === "string"
-				? new LensedAtom(
-					this, Lens.compose(Lens.key(arg1), ...args.map(k => Lens.key(k))), structEq)
+		return typeof arg1 === "string"
+			? new LensedAtom(
+				this, Lens.compose(Lens.key(arg1), ...args.map(k => Lens.key(k))), structEq)
 			// lens(lens) case
-				: new LensedAtom<T, U>(this, arg1 as Lens<T, U>, structEq)
+			: new LensedAtom<T, U>(this, arg1 as Lens<T, U>, structEq)
 		// tslint:enable no-use-before-declare
 	}
 }

@@ -1,6 +1,5 @@
 import { Lens } from "./index"
 import { structEq } from "./utils"
-import { extractPropertyPath, parsePropertyPath } from "./json"
 
 function roundtrip<T, U>(
 	name: string,
@@ -92,9 +91,9 @@ describe("json", () => {
 			],
 		}
 
-		const raccoons = Lens.prop((x: Forest) => x.raccoons)
-		const legs = Lens.prop((x: Raccoon) => x.legs)
-		const length = Lens.prop((x: Leg) => x.length)
+		const raccoons = Lens.key<Forest>()("raccoons")
+		const legs = Lens.key<Raccoon>()("legs")
+		const length = Lens.key<Leg>()("length")
 
 		testLens("case 1",
 			raccoons
@@ -164,41 +163,5 @@ describe("json", () => {
 			"type safe key 2",
 		Lens.key<typeof s>()("b"), s, "6", "7", "hello",
 		)
-	})
-})
-
-describe("property expressions", () => {
-	describe("basic", () => {
-		expect(extractPropertyPath((a: any) => a.b)).toEqual(["b"])
-		expect(extractPropertyPath((a: any) => a.b.c)).toEqual(["b", "c"])
-		expect(extractPropertyPath((a: any) => a.b.c.d)).toEqual(["b", "c", "d"])
-
-		expect(() => extractPropertyPath((a: any) => a[5])).toThrow()
-		expect(() => extractPropertyPath((_: any) => 0)).toThrow()
-		expect(() => extractPropertyPath(({ hi }: any) => hi)).toThrow()
-
-		expect(() => parsePropertyPath("function (x) { x(); return x.a; }")).toThrow()
-		expect(() => parsePropertyPath("function (x) { y(); return x.a; }")).toThrow()
-	})
-
-	describe("cross-browser", () => {
-		it("chrome", () => expect(parsePropertyPath(
-			"function (x) { return x.a; }")).toEqual(["a"]))
-
-		it("firefox", () => expect(parsePropertyPath(
-			'function (x) { "use strict"; return x.a; }')).toEqual(["a"]))
-	})
-
-	describe("wallaby.js", () => {
-		const originalNodeEnv = process.env.NODE_ENV
-		process.env.NODE_ENV = "wallaby"
-
-		expect(parsePropertyPath(
-			"function (x) { $_$wf(21); return $_$w(124, 53), x.a; }")).toEqual(["a"])
-
-		expect(() => parsePropertyPath(
-			"function (x) { $_$wf(21); return x.a, $_$w(124, 53); }")).toThrow()
-
-		process.env.NODE_ENV = originalNodeEnv
 	})
 })

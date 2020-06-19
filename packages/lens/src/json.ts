@@ -11,68 +11,9 @@ import {
 	conservatively,
 	findIndex,
 	Option,
-	DEV_ENV,
-	warning,
 } from "./utils"
 
 import { Lens, Prism } from "./base"
-
-export type PropExpr<O, P> = (x: O) => P
-
-// @TODO can we optimize this regexp?
-const PROP_EXPR_RE = new RegExp([
-	"^", "function", "\\(", "[^), ]+", "\\)", "\\{",
-	'("use strict";)?',
-	"return\\s",
-	"[^\\.]+\\.(\\S+?);?",
-	"\\}", "$",
-].join("\\s*"))
-
-const WALLABY_PROP_EXPR_RE = new RegExp([
-	"^", "function", "\\(", "[^), ]+", "\\)", "\\{",
-	'("use strict";)?',
-	"(\\$_\\$wf\\(\\d+\\);)?",  // wallaby.js code coverage compatability (#36)
-	"return\\s",
-	"(\\$_\\$w\\(\\d+, \\d+\\),\\s)?",  // wallaby.js code coverage compatability (#36)
-	"[^\\.]+\\.(\\S+?);?",
-	"\\}", "$",
-].join("\\s*"))
-
-export function parsePropertyPath(getterSource: string): string[] {
-	const exprRegexp = process.env.NODE_ENV === "wallaby" ? WALLABY_PROP_EXPR_RE : PROP_EXPR_RE
-	const exprRegexpGroup = process.env.NODE_ENV === "wallaby" ? 4 : 2
-
-	const parse = getterSource.match(exprRegexp)
-	if (parse && parse[exprRegexpGroup]) {
-		return parse[exprRegexpGroup].split(".")
-	} else {
-		throw new TypeError(`Expected a property expression, got "${getterSource}".
-
-      A property expression should be a referentially transparent (no side-effects),
-      single-expression "getter" function.
-
-      Correct example: "function (x) { return x.some }" or "x => x.some".
-      Incorrect example: "function (x) { var y = x.some; return y }" or "({some}) => some"`)
-	}
-}
-
-/**
- * Extract a list of property names from a {@link PropExpr}
- *
- * @param target The target property expressions
- * @example
- * type Second = { two: string }
- * type First = { one: Second }
- * // returns ['one', 'two']
- * extractPropertyNames((x: First) => x.one.two)
- * @returns A list of nested property names
- * @throws Will throw if the target lens expression is of a not valid form
- */
-export function extractPropertyPath<TObject, TProperty>(
-	target: PropExpr<TObject, TProperty>,
-): string[] {
-	return parsePropertyPath(target.toString())
-}
 
 // @NOTE only need this interface to add JSDocs for this call.
 export interface KeyImplFor<TObject> {
@@ -154,37 +95,6 @@ export function keyImpl<TObject>(k?: string) {
 		)
 }
 
-let propExprDeprecatedWarnings = 0
-
-function warnPropExprDeprecated(path: string[]) {
-	// don't warn more than a few times
-	if (propExprDeprecatedWarnings < 10) {
-		propExprDeprecatedWarnings++
-
-		const propExpr = `x.${path.join(".")}`
-		const keys = `'${path.join("', '")}'`
-
-		warning(
-			"The property expression overload of Atom.lens and Lens.prop are deprecated and " +
-      "will be removed in next versions of Focal. Please use the key name overload for " +
-      "Atom.lens and Lens.key instead. " +
-      `You can convert your code by changing the calls:
-  a.lens(x => ${propExpr}) to a.lens(${keys}),
-  Lens.prop((x: T) => ${propExpr}) to Lens.key<T>()(${keys}).`,
-		)
-	}
-}
-
-export function propImpl<TObject, TProperty>(
-	getter: PropExpr<TObject, TProperty>,
-): Lens<TObject, TProperty> {
-	const path = extractPropertyPath(getter as PropExpr<TObject, TProperty>)
-	if (DEV_ENV) warnPropExprDeprecated(path)
-
-	// @TODO can we optimize this?
-	return Lens.compose<TObject, TProperty>(...path.map(keyImpl()))
-}
-
 export function indexImpl<TItem>(i: number): Prism<TItem[], TItem> {
 	if (i < 0)
 		throw new TypeError(`${i} is not a valid array index, expected >= 0`)
@@ -241,29 +151,6 @@ declare module "./base" {
 		export let key: typeof keyImpl
 
 		/**
-     * DEPRECATED: please use Lens.key instead!
-     *
-     * Create a lens to an object's property. The argument is a property expression, which
-     * is a limited form of a getter, with following restrictions:
-     * - should be a pure function
-     * - should be a single-expression function (i.e. return immediately)
-     * - should only access object properties (nested access is OK)
-     *
-     * @example
-     * const obj = { a: { b: 5 } }
-     *
-     * const l = Lens.prop((x: typeof obj) => x.a.b)
-     *
-     * l.modify(x => x + 1, obj)
-     * // => { a: { b: 6 } }
-     * @template TObject type of the object
-     * @template TProperty type of the property
-     * @param propExpr property get expression
-     * @returns a lens to an object's property
-     */
-		export let prop: typeof propImpl
-
-		/**
      * Create a lens that looks at an element at particular index position
      * in an array.
      *
@@ -295,7 +182,6 @@ declare module "./base" {
 }
 
 Lens.key = keyImpl
-Lens.prop = propImpl
 Lens.index = indexImpl
 Lens.withDefault = withDefaultImpl
 Lens.replace = replaceImpl

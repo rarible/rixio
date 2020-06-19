@@ -46,6 +46,7 @@ function liftAll(html: Array<keyof ReactHTML>): LiftedIntrinsicsHTML {
 		-readonly [K in keyof ReactHTML]?: React.FunctionComponent<RxHtmlElementProps<K>>
 	} = {}
 
+	// @ts-ignore
 	html.forEach(e => r[e] = liftHtml(e))
 
 	return r as LiftedIntrinsicsHTML

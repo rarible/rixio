@@ -1,39 +1,39 @@
 {
   "name": "@grecha/lens",
   "version": "0.0.1",
-  "keywords": [
-	"frp",
-	"lens",
-	"reactive"
-  ],
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "keywords": [
+    "frp",
+    "lens",
+    "reactive"
+  ],
   "scripts": {
-	"build": "npm run lint && npm run build-lib",
-	"build-lib": "rimraf ./build && tsc && npm run copy-assets",
-	"copy-json-to-lib": "cpx \"./src/**/*.json\" ./build",
-	"copy-assets": "npm run copy-json-to-lib",
-	"test": "jest",
-	"lint:js": "eslint --ext .js,.jsx,.ts,.tsx ./",
-	"lint:types": "tsc --noEmit",
-	"lint": "npm run lint:js && npm run lint:types",
-	"lint:fix": "eslint --ext .js,.ts,.ts,.tsx ./ --fix --quiet",
-	"ci": "sh ./scripts/ci.sh",
-	"release": "sh ./scripts/release.sh"
+    "build": "npm run lint && npm run build-lib",
+    "build-lib": "rimraf ./build && tsc && npm run copy-assets",
+    "copy-json-to-lib": "cpx \"./src/**/*.json\" ./build",
+    "copy-assets": "npm run copy-json-to-lib",
+    "test": "jest",
+    "lint:js": "eslint --ext .js,.jsx,.ts,.tsx ./",
+    "lint:types": "tsc --noEmit",
+    "lint": "npm run lint:js && npm run lint:types",
+    "lint:fix": "eslint --ext .js,.ts,.ts,.tsx ./ --fix --quiet",
+    "ci": "sh ./scripts/ci.sh",
+    "release": "sh ./scripts/release.sh"
   },
   "license": "Apache-2.0",
   "repository": {
-	"type": "git",
-	"url": "https://github.com/roborox/grecha.git"
+    "type": "git",
+    "url": "https://github.com/roborox/grecha.git"
   },
   "dependencies": {},
   "devDependencies": {
-	"@roborox/eslint-config-default": "2.1.4",
-	"@types/jest": "26.0.0",
-	"cpx": "1.5.0",
-	"eslint": "7.2.0",
-	"jest": "26.0.1",
-	"ts-jest": "26.1.0",
-	"typescript": "3.9.5"
+    "@roborox/eslint-config-default": "2.1.4",
+    "@types/jest": "26.0.0",
+    "cpx": "1.5.0",
+    "eslint": "7.2.0",
+    "jest": "26.0.1",
+    "ts-jest": "26.1.0",
+    "typescript": "3.9.5"
   }
 }

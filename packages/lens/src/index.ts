@@ -29,9 +29,5 @@ import "./json"
 import { structEq, Option } from "./utils"
 
 export {
-	PropExpr,
-} from "./json"
-
-export {
 	Lens, Prism, Optic, structEq, Option,
 }

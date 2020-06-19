@@ -208,27 +208,6 @@ describe("atom", () => {
 	})
 
 	describe("lens", () => {
-		describe("lensed, property expression", () => {
-			testAtom(x => {
-				const source = Atom.create({ a: x })
-				return source.lens(x => x.a)
-			})
-		})
-
-		describe("lensed, nested property expression", () => {
-			testAtom(x => {
-				const source = Atom.create({ a: { b: { c: x } } })
-				return source.lens(x => x.a.b.c)
-			})
-		})
-
-		describe("lensed, chained lenses", () => {
-			testAtom(x => {
-				const source = Atom.create({ a: { b: { c: x } } })
-				return source.lens(x => x.a).lens(x => x.b).lens(x => x.c)
-			})
-		})
-
 		describe("lensed, nested safe key", () => {
 			testAtom(x => {
 				const source = Atom.create({ a: { b: { c: x } } })
@@ -247,9 +226,9 @@ describe("atom", () => {
 			const source = Atom.create({ a: { b: { c: 5 } } })
 			const lensed =
         source
-        	.lens(x => x.a)
-        	.lens(x => x.b)
-        	.lens(x => x.c)
+        	.lens("a")
+        	.lens("b")
+        	.lens("c")
         	.lens(
         		Lens.create(
         			(x: number) => x + 1,
@@ -281,8 +260,8 @@ describe("atom", () => {
 
 		describe("lens then view", () => {
 			const x1 = Atom.create({ a: { b: 5 } })
-			const x2 = x1.lens(x => x.a).view(x => x.b).view(x => x + 1)
-			const x3 = x1.lens(x => x.a).lens(x => x.b)
+			const x2 = x1.lens("a").view(x => x.b).view(x => x + 1)
+			const x3 = x1.lens("a").lens("b")
 
 			expect(x3.get()).toEqual(5)
 			expect(x2.get()).toEqual(6)
@@ -431,7 +410,7 @@ describe("atom", () => {
 
 		describe("complex expression", () => {
 			const source = Atom.create({ a: { b: { c: 5 } } })
-			const lensed = source.lens(x => x.a.b.c)
+			const lensed = source.lens("a", "b", "c")
 			const view = lensed.view(x => x + 5 > 0)
 
 			expect(view.get()).toEqual(true)
