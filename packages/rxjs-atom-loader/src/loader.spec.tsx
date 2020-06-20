@@ -57,7 +57,6 @@ describe("Loader", () => {
 		})
 	})
 
-	/*
 	test("should display error if simple observable is used", async () => {
 		const subj = new ReplaySubject<number>(1)
 		const r = render(
@@ -74,7 +73,6 @@ describe("Loader", () => {
 			expect(r.getByTestId("test")).toHaveTextContent(text)
 		})
 	})
-*/
 
 	test("should display content if children empty", async () => {
 		testLoadingState(state$ =>

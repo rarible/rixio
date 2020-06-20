@@ -1,6 +1,6 @@
-import { useState } from "react"
-import { Observable } from "rxjs"
-import { first } from "rxjs/operators"
+import { useMemo, useState } from "react"
+import { concat, Observable, of } from "rxjs"
+import { catchError, first, map } from "rxjs/operators"
 import { useSubscription } from "./use-subscription"
 import {
 	createLoadingStateError,
@@ -33,19 +33,17 @@ export function useRx<T>(observable: Observable<T>): T {
 	return state
 }
 
-export function useRxWithStatus<T>(observable: Observable<T>): LoadingState<T> {
-	const [state, setState] = useState<LoadingState<T>>(() => {
-		const [value, valueSet] = getImmediate(observable)
-		if (valueSet) return createLoadingStateSuccess(value as T)
-		return createLoadingStateLoading()
-	})
-	useSubscription(observable, {
-		next(value: T): void {
-			setState(createLoadingStateSuccess(value))
-		},
-		error(err: any): void {
-			setState(createLoadingStateError(err))
-		},
-	})
-	return state
+export function useRxWithStatus<T>(initial: Observable<T>): LoadingState<T> {
+	const observable = useMemo(() => withLoading(initial), [initial])
+	return useRx(observable)
+}
+
+function withLoading<T>(observable: Observable<T>): Observable<LoadingState<T>> {
+	return concat(
+		of(createLoadingStateLoading<T>()),
+		observable.pipe(
+			map(createLoadingStateSuccess),
+			catchError(err => of(createLoadingStateError<T>(err))),
+		),
+	)
 }

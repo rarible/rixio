@@ -1,7 +1,7 @@
 import React from "react"
 import { act, render } from "@testing-library/react"
 import { Observable, ReplaySubject } from "rxjs"
-import { Rx } from "./rx"
+import { RxLift } from "./rx-lift"
 
 type TestProps = { value1: string, value2: string }
 const Test = ({ value1, value2 }: TestProps) => {
@@ -13,7 +13,7 @@ describe("Rx", () => {
 		const text = Math.random().toString()
 		const obs = new ReplaySubject<string>(1)
 		obs.next(text)
-		const r = render(<Rx component={Test} value1={obs} value2="static" />)
+		const r = render(<RxLift component={Test} value1={obs} value2="static" />)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 		const nextText = Math.random().toString()
 		act(() => obs.next(nextText))
@@ -22,10 +22,10 @@ describe("Rx", () => {
 
 	test("should react to props changes", () => {
 		const text = Math.random().toString()
-		const r = render(<Rx component={Test} value1="static" value2={text}/>)
+		const r = render(<RxLift component={Test} value1="static" value2={text}/>)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 		const nextText = Math.random().toString()
-		r.rerender(<Rx component={Test} value1="static" value2={nextText}/>)
+		r.rerender(<RxLift component={Test} value1="static" value2={nextText}/>)
 		expect(r.getByTestId("value")).toHaveTextContent(nextText)
 	})
 
@@ -39,7 +39,7 @@ describe("Rx", () => {
 				count = count - 1
 			}
 		})
-		const r = render(<Rx component={Test} value1={obs} value2="some"/>)
+		const r = render(<RxLift component={Test} value1={obs} value2="some"/>)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 
 		const nextText = Math.random().toString()
@@ -47,7 +47,7 @@ describe("Rx", () => {
 		obs2.next(nextText)
 		expect(count).toBe(1)
 
-		r.rerender(<Rx component={Test} value1={obs2} value2="some"/>)
+		r.rerender(<RxLift component={Test} value1={obs2} value2="some"/>)
 		expect(r.getByTestId("value")).toHaveTextContent(nextText)
 		expect(count).toBe(0)
 	})
