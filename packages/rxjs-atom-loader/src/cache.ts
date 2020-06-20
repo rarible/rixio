@@ -5,7 +5,7 @@ import { save } from "./save"
 export interface Cache<T> {
 	load(): Promise<T>
 	get(force?: boolean): Promise<T>
-	getAtom(): Atom<LoadingState<T>>
+	atom: Atom<LoadingState<T>>
 }
 
 export class SingleCache<T> implements Cache<T> {
@@ -15,7 +15,7 @@ export class SingleCache<T> implements Cache<T> {
 	) {
 	}
 
-	getAtom(): Atom<LoadingState<T>> {
+	get atom(): Atom<LoadingState<T>> {
 		return this._atom
 	}
 
@@ -29,7 +29,7 @@ export class SingleCache<T> implements Cache<T> {
 	}
 
 	private getAtomAndLoad(force: boolean = false) {
-		const state$ = this.getAtom()
+		const state$ = this.atom
 		if (force || state$.get().status === "idle") {
 			save(this.load(), state$).then()
 		}

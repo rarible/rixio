@@ -79,5 +79,4 @@ describe("useRx", () => {
 		act(() => subject.next(1))
 		expect(count).toBe(1)
 	})
-
 })

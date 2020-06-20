@@ -6,6 +6,7 @@ import React, { ReactElement } from "react"
 import { ReplaySubject, Subject } from "rxjs"
 import { first } from "rxjs/operators"
 import { Cacheable } from "./cacheable"
+import { R } from "@grecha/rxjs-react"
 
 describe("Cacheable", () => {
 	test("should work with single item", async () => {
@@ -16,10 +17,18 @@ describe("Cacheable", () => {
 		))
 	})
 
-	test("should work with single item without children", async () => {
+	test("should work without children", async () => {
 		await testSingle(cache => (
 			<span data-testid="test">
 				<Cacheable cache={cache}/>
+			</span>
+		))
+	})
+
+	test("should work without render props", async () => {
+		await testSingle(cache => (
+			<span data-testid="test">
+				<Cacheable cache={cache}><R.span>{cache.atom.lens("value")}</R.span></Cacheable>
 			</span>
 		))
 	})

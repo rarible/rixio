@@ -40,7 +40,7 @@ export function Cacheable({ cache, children, error, ...rest }: CacheableProps): 
 	const array = getCaches(cache)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const caches: Cache<any>[] = useMemo(() => array, array)
-	const single = useMemo(() => mergeLoadingStates(caches.map(x => x.getAtom())), [caches])
+	const single = useMemo(() => mergeLoadingStates(caches.map(x => x.atom)), [caches])
 	useRxChange(single.pipe(map(x => x.status)), s => {
 		if (s !== "success") {
 			load(caches, "idle")
@@ -75,9 +75,9 @@ export function Cacheable({ cache, children, error, ...rest }: CacheableProps): 
 
 function load(caches: Cache<any>[], ...statuses: LoadingStatusStatus[]) {
 	caches.forEach(c => {
-		let status = c.getAtom().get().status
+		let status = c.atom.get().status
 		if (statuses.indexOf(status) !== -1) {
-			save(c.load(), c.getAtom()).then()
+			save(c.load(), c.atom).then()
 		}
 	})
 }
