@@ -1,4 +1,4 @@
-import { Cache, SingleCache } from "./cache"
+import { Cache, CacheImpl } from "./cache"
 import { Atom } from "@grecha/rxjs-atom"
 import { createLoadingStateIdle } from "./loading-state"
 import { act, render, waitFor, fireEvent } from "@testing-library/react"
@@ -112,6 +112,6 @@ async function testPair(comp: (cache1: Cache<String>, cache2: Cache<number>) => 
 function genCache<T>(bufferSize: number = 1): [Cache<T>, Subject<T>] {
 	const subject = new ReplaySubject<T>(bufferSize)
 	const atom = Atom.create(createLoadingStateIdle<T>())
-	const cache = new SingleCache(atom, () => subject.pipe(first()).toPromise())
+	const cache = new CacheImpl(atom, () => subject.pipe(first()).toPromise())
 	return [cache, subject]
 }

@@ -8,7 +8,7 @@ export interface Cache<T> {
 	atom: Atom<LoadingState<T>>
 }
 
-export class SingleCache<T> implements Cache<T> {
+export class CacheImpl<T> implements Cache<T> {
 	constructor(
 		private readonly _atom: Atom<LoadingState<T>>,
 		private readonly _loader: () => Promise<T>,
