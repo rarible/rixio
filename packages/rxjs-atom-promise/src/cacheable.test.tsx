@@ -1,6 +1,6 @@
 import { Cache, CacheImpl } from "./cache"
 import { Atom } from "@grecha/rxjs-atom"
-import { createLoadingStateIdle } from "./loading-state"
+import { createPromiseStateIdle } from "./promise-state"
 import { act, render, waitFor, fireEvent } from "@testing-library/react"
 import React, { ReactElement } from "react"
 import { ReplaySubject, Subject } from "rxjs"
@@ -55,10 +55,10 @@ describe("Cacheable", () => {
 
 		const r = render(
 			<span data-testid="test">
-				<Cacheable cache={[cache1, cache2]} loading="loading" error={((error, load) => <button onClick={load}>reload</button>)}/>
+				<Cacheable cache={[cache1, cache2]} pending="pending" rejected={((error, load) => <button onClick={load}>reload</button>)}/>
 			</span>,
 		)
-		expect(r.getByTestId("test")).toHaveTextContent("loading")
+		expect(r.getByTestId("test")).toHaveTextContent("pending")
 		const num = Math.random()
 		act(() => {
 			value1.error("error occured")
@@ -111,7 +111,7 @@ async function testPair(comp: (cache1: Cache<String>, cache2: Cache<number>) => 
 
 function genCache<T>(bufferSize: number = 1): [Cache<T>, Subject<T>] {
 	const subject = new ReplaySubject<T>(bufferSize)
-	const atom = Atom.create(createLoadingStateIdle<T>())
+	const atom = Atom.create(createPromiseStateIdle<T>())
 	const cache = new CacheImpl(atom, () => subject.pipe(first()).toPromise())
 	return [cache, subject]
 }

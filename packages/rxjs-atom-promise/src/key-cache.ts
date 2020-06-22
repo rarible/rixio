@@ -1,12 +1,12 @@
 import { Map as IM } from "immutable"
 import { Atom } from "@grecha/rxjs-atom"
 import {
-	createLoadingStateIdle,
-	createLoadingStateLoading,
-	createLoadingStateSuccess,
 	getFinalValue,
-	LoadingState,
-} from "./loading-state"
+	PromiseState,
+	createPromiseStateFulfilled,
+	createPromiseStateIdle,
+	createPromiseStatePending,
+} from "./promise-state"
 import { Cache, CacheImpl } from "./cache"
 import { Lens, Prism } from "@grecha/lens"
 import { save } from "./save"
@@ -33,7 +33,7 @@ export interface KeyCache<K, V> {
 	get(key: K, force?: boolean): Promise<V>
 	set(key: K, value: V): void
 	getMap(ids: K[]): Promise<IM<K, V>>
-	getAtom(key: K): Atom<LoadingState<V>>
+	getAtom(key: K): Atom<PromiseState<V>>
 	single(key: K): Cache<V>
 }
 
@@ -43,7 +43,7 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	private readonly singles: Map<K, Cache<V>> = new Map()
 
 	constructor(
-		private readonly map: Atom<IM<K, LoadingState<V>>>,
+		private readonly map: Atom<IM<K, PromiseState<V>>>,
 		private readonly loader: DataLoader<K, V>,
 		listLoader?: ListDataLoader<K, V>,
 	) {
@@ -65,11 +65,11 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	}
 
 	set(key: K, value: V): void {
-		this.map.modify(map => map.set(key, createLoadingStateSuccess(value)))
+		this.map.modify(map => map.set(key, createPromiseStateFulfilled(value)))
 	}
 
-	getAtom(key: K): Atom<LoadingState<V>> {
-		return this.map.lens(byKeyWithDefault(key, createLoadingStateIdle<V>()))
+	getAtom(key: K): Atom<PromiseState<V>> {
+		return this.map.lens(byKeyWithDefault(key, createPromiseStateIdle<V>()))
 	}
 
 	async getMap(ids: K[]) {
@@ -81,9 +81,9 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 		})
 		//todo do not use reduce. change Map at once
 		//todo error handling. should we mark items as errors?
-		this.map.modify(map => notLoaded.reduce((map, id) => map.set(id, createLoadingStateLoading()), map))
+		this.map.modify(map => notLoaded.reduce((map, id) => map.set(id, createPromiseStatePending()), map))
 		const values = await this.mapLoader.loadList(notLoaded)
-		this.map.modify(map => values.reduce((map, [id, v]) => map.set(id, createLoadingStateSuccess(v)), map))
+		this.map.modify(map => values.reduce((map, [id, v]) => map.set(id, createPromiseStateFulfilled(v)), map))
 		const allValues = await Promise.all(ids.map(id => this.get(id).then(v => [id, v] as [K, V])))
 		return IM(allValues)
 	}

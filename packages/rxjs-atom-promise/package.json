@@ -1,5 +1,5 @@
 {
-  "name": "@grecha/rxjs-atom-loader",
+  "name": "@grecha/rxjs-atom-promise",
   "version": "0.0.1",
   "keywords": [
     "frp",

@@ -1,41 +1,41 @@
 import React, { ReactElement } from "react"
 import { act, render, waitFor } from "@testing-library/react"
 import { Atom } from "@grecha/rxjs-atom"
-import { createLoadingStateLoading, createLoadingStateSuccess, LoadingState } from "./loading-state"
-import { Loader } from "./loader"
+import { PromiseState, createPromiseStatePending, createPromiseStateFulfilled } from "./promise-state"
+import { Rx } from "./rx"
 import { R } from "@grecha/rxjs-react"
 import { ReplaySubject } from "rxjs"
 
-function testLoadingState(comp: (state: Atom<LoadingState<number>>) => ReactElement) {
-	const state$ = Atom.create(createLoadingStateLoading<number>())
+function testPromiseState(comp: (state: Atom<PromiseState<number>>) => ReactElement) {
+	const state$ = Atom.create(createPromiseStatePending<number>())
 	const r = render(comp(state$))
-	expect(r.getByTestId("test")).toHaveTextContent("loading")
+	expect(r.getByTestId("test")).toHaveTextContent("pending")
 	const number = Math.random()
 	act(() => {
-		state$.set(createLoadingStateSuccess(number))
+		state$.set(createPromiseStateFulfilled(number))
 	})
 	expect(r.getByTestId("test")).toHaveTextContent(number.toString())
 }
 
 describe("Loader", () => {
-	test("should display loading if is loading", async () => {
+	test("should display pending if is pending", async () => {
 		expect.assertions(2)
-		const state$ = Atom.create(createLoadingStateLoading<string>())
+		const state$ = Atom.create(createPromiseStatePending<string>())
 		const r = render(
 			<span data-testid="test">
-				<Loader state$={state$} loading={<span>loading</span>}>{v => <span>{v}</span>}</Loader>
+				<Rx state$={state$} pending="pending">{v => <span>{v}</span>}</Rx>
 			</span>,
 		)
-		await expect(r.getByTestId("test")).toHaveTextContent("loading")
+		await expect(r.getByTestId("test")).toHaveTextContent("pending")
 		await expect(r.getByTestId("test")).not.toHaveTextContent("content")
 	})
 
 	test("should display content if loaded", async () => {
-		testLoadingState(state$ =>
+		testPromiseState(state$ =>
 			<span data-testid="test">
-				<Loader state$={state$} loading={<span>loading</span>}>
+				<Rx state$={state$} pending="pending">
 					{value => <span>{value}</span>}
-				</Loader>
+				</Rx>
 			</span>,
 		)
 	})
@@ -44,10 +44,10 @@ describe("Loader", () => {
 		const subj = new ReplaySubject<number>(1)
 		const r = render(
 			<span data-testid="test">
-				<Loader state$={subj} loading="loading"/>
+				<Rx state$={subj} pending="pending"/>
 			</span>,
 		)
-		expect(r.getByTestId("test")).toHaveTextContent("loading")
+		expect(r.getByTestId("test")).toHaveTextContent("pending")
 		const number = Math.random()
 		act(() => {
 			subj.next(number)
@@ -61,10 +61,10 @@ describe("Loader", () => {
 		const subj = new ReplaySubject<number>(1)
 		const r = render(
 			<span data-testid="test">
-				<Loader state$={subj} loading="loading" error={x => x}/>
+				<Rx state$={subj} pending="pending" rejected={x => x}/>
 			</span>,
 		)
-		expect(r.getByTestId("test")).toHaveTextContent("loading")
+		expect(r.getByTestId("test")).toHaveTextContent("pending")
 		const text = Math.random().toString()
 		act(() => {
 			subj.error(text)
@@ -75,21 +75,21 @@ describe("Loader", () => {
 	})
 
 	test("should display content if children empty", async () => {
-		testLoadingState(state$ =>
+		testPromiseState(state$ =>
 			<span data-testid="test">
-				<Loader state$={state$} loading={<span>loading</span>}/>
+				<Rx state$={state$} pending="pending"/>
 			</span>,
 		)
 	})
 
 	test("should work if render prop is not used", () => {
-		testLoadingState(state$ =>
+		testPromiseState(state$ =>
 			<span data-testid="test">
-				<Loader state$={state$} loading={<span>loading</span>}>
+				<Rx state$={state$} pending="pending">
 					simple text
 					<div>multiple elements</div>
 					<R.span>{state$.lens("value")}</R.span>
-				</Loader>
+				</Rx>
 			</span>,
 		)
 	})

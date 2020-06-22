@@ -1,21 +1,21 @@
 import { Atom } from "@grecha/rxjs-atom/build"
-import { getFinalValue, LoadingState } from "./loading-state"
+import { getFinalValue, PromiseState } from "./promise-state"
 import { save } from "./save"
 
 export interface Cache<T> {
 	load(): Promise<T>
 	get(force?: boolean): Promise<T>
-	atom: Atom<LoadingState<T>>
+	atom: Atom<PromiseState<T>>
 }
 
 export class CacheImpl<T> implements Cache<T> {
 	constructor(
-		private readonly _atom: Atom<LoadingState<T>>,
+		private readonly _atom: Atom<PromiseState<T>>,
 		private readonly _loader: () => Promise<T>,
 	) {
 	}
 
-	get atom(): Atom<LoadingState<T>> {
+	get atom(): Atom<PromiseState<T>> {
 		return this._atom
 	}
 

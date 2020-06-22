@@ -1,13 +1,7 @@
-import { useMemo, useState } from "react"
-import { concat, Observable, of } from "rxjs"
-import { catchError, first, map } from "rxjs/operators"
+import { useState } from "react"
+import { Observable } from "rxjs"
+import { first } from "rxjs/operators"
 import { useSubscription } from "./use-subscription"
-import {
-	createLoadingStateError,
-	createLoadingStateLoading,
-	createLoadingStateSuccess,
-	LoadingState,
-} from "@grecha/rxjs-atom-loader/src/loading-state"
 
 export function getImmediate<T>(observable: Observable<T>): [T | null, boolean] {
 	let value: T | null = null
@@ -31,19 +25,4 @@ export function useRx<T>(observable: Observable<T>): T {
 	const [state, setState] = useState<T>(() => getImmediateOrThrow(observable))
 	useSubscription(observable, setState)
 	return state
-}
-
-export function useRxWithStatus<T>(initial: Observable<T>): LoadingState<T> {
-	const observable = useMemo(() => withLoading(initial), [initial])
-	return useRx(observable)
-}
-
-function withLoading<T>(observable: Observable<T>): Observable<LoadingState<T>> {
-	return concat(
-		of(createLoadingStateLoading<T>()),
-		observable.pipe(
-			map(createLoadingStateSuccess),
-			catchError(err => of(createLoadingStateError<T>(err))),
-		),
-	)
 }

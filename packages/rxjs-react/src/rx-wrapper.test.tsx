@@ -8,7 +8,7 @@ const Test = ({ value1, value2 }: TestProps) => {
 	return <span data-testid="value">{value1} {value2}</span>
 }
 
-describe("Rx", () => {
+describe("RxWrapper", () => {
 	test("should observe reactive value", () => {
 		const text = Math.random().toString()
 		const obs = new ReplaySubject<string>(1)
