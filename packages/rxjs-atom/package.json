@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "build": "npm run lint && npm run build-lib",
-    "build-lib": "rimraf ./build && tsc && npm run copy-assets",
+    "build-lib": "rimraf ./build && tsc --project tsconfig-build.json && npm run copy-assets",
     "copy-json-to-lib": "cpx \"./src/**/*.json\" ./build",
     "copy-assets": "npm run copy-json-to-lib",
     "test": "jest",
@@ -35,7 +35,7 @@
     "@types/jest": "26.0.0",
     "rxjs": "6.5.5",
     "jest": "26.0.1",
-    "ts-jest": "26.1.0",
+    "ts-jest": "26.1.1",
     "@roborox/eslint-config-default": "2.1.4",
     "eslint": "7.2.0",
     "typescript": "3.9.5"
