@@ -3,6 +3,9 @@
   "version": "0.2.0",
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "files": [
+    "/build"
+  ],
   "keywords": [
     "frp",
     "lens",
