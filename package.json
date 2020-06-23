@@ -1,6 +1,13 @@
 {
   "private": true,
   "name": "root",
+  "scripts": {
+    "build-lens": "yarn workspace @rixio/lens run build",
+    "build-rxjs-atom": "yarn workspace @rixio/rxjs-atom run build",
+    "build-rxjs-react": "yarn workspace @rixio/rxjs-react run build",
+    "build-rxjs-atom-promise": "yarn workspace @rixio/rxjs-atom-promise run build",
+    "build-rxjs-react-native": "yarn workspace @rixio/rxjs-react-native run build"
+  },
   "workspaces": [
     "packages/*"
   ],

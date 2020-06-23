@@ -1,6 +1,8 @@
 {
   "name": "@rixio/rxjs-atom-promise",
   "version": "0.1.1",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "keywords": [
     "frp",
     "lens",

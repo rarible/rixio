@@ -12,6 +12,6 @@
     "skipLibCheck": true,
     "experimentalDecorators": true
   },
-  "include": ["src/**/*", "test/**/*", "typings.d.ts"],
+  "include": ["src/**/*", "typings.d.ts"],
   "exclude": ["build", "node_modules", "stories"]
 }
