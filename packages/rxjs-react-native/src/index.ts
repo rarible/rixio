@@ -1,5 +1,5 @@
 import { Text, TextProps, View } from "react-native"
-import { lift } from "@grecha/rxjs-react"
+import { lift } from "@rixio/rxjs-react"
 import { ComponentType } from "react"
 
 type FixedTextProps = Omit<TextProps, "children"> & {

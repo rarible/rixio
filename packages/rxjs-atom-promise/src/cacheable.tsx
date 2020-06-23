@@ -3,7 +3,7 @@ import { Cache } from "./cache"
 import { Rx, LoaderProps, OrReactChild } from "./rx"
 import { mergePromiseStates } from "./merge"
 import { save } from "./save"
-import { useRxChange } from "@grecha/rxjs-react"
+import { useRxChange } from "@rixio/rxjs-react"
 import { map } from "rxjs/operators"
 import { PromiseStatus } from "./promise-state"
 

@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary,no-plusplus */
-import { Lens, Prism, structEq, Option } from "@grecha/lens"
+import { Lens, Prism, structEq, Option } from "@rixio/lens"
 
 import { Observable, Subscriber, Subscription, BehaviorSubject, combineLatest } from "rxjs"
 
@@ -13,7 +13,7 @@ export interface ReadOnlyAtom<T> extends Observable<T> {
    * Get the current atom value.
    *
    * @example
-   * import { Atom } from '@grecha/rxjs-atom'
+   * import { Atom } from '@rixio/rxjs-atom'
    *
    * const a = Atom.create(5)
    * a.get()
@@ -33,7 +33,7 @@ export interface ReadOnlyAtom<T> extends Observable<T> {
    * read-only atom.
    *
    * @example
-   * import { Atom } from '@grecha/rxjs-atom'
+   * import { Atom } from '@rixio/rxjs-atom'
    *
    * const source = Atom.create(5)
    * const view = source.view()
@@ -54,7 +54,7 @@ export interface ReadOnlyAtom<T> extends Observable<T> {
    * View this atom through a given mapping.
    *
    * @example
-   * import { Atom } from '@grecha/rxjs-atom'
+   * import { Atom } from '@rixio/rxjs-atom'
    *
    * const a = Atom.create(5)
    * const b = a.view(x => x * 2)

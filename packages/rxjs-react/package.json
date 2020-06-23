@@ -1,5 +1,5 @@
 {
-  "name": "@grecha/rxjs-react",
+  "name": "@rixio/rxjs-react",
   "version": "0.1.0",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -28,10 +28,10 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/roborox/grecha.git"
+    "url": "https://github.com/roborox/rixio.git"
   },
   "devDependencies": {
-    "@grecha/lens": "^0.1.0",
+    "@rixio/lens": "^0.1.0",
     "@roborox/eslint-config-default": "2.1.4",
     "@testing-library/jest-dom": "5.10.1",
     "@testing-library/react": "10.2.1",
@@ -47,7 +47,7 @@
     "typescript": "3.9.5"
   },
   "peerDependencies": {
-    "@grecha/lens": ">= 0.0.1",
+    "@rixio/lens": ">= 0.0.1",
     "react": ">= 16.9.0",
     "rxjs": ">= 6.5.0 < 7.0.0-0"
   }

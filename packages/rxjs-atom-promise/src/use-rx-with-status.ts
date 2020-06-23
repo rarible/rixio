@@ -1,6 +1,6 @@
 import { Observable, concat, of } from "rxjs"
 import { map, catchError } from "rxjs/operators"
-import { useRx } from "@grecha/rxjs-react"
+import { useRx } from "@rixio/rxjs-react"
 import {
 	PromiseState,
 	createPromiseStatePending,

@@ -1,4 +1,4 @@
-import { Atom } from "@grecha/rxjs-atom/build"
+import { Atom } from "@rixio/rxjs-atom/build"
 import { getFinalValue, PromiseState } from "./promise-state"
 import { save } from "./save"
 

@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react"
 import { act, render, waitFor } from "@testing-library/react"
-import { Atom } from "@grecha/rxjs-atom"
+import { Atom } from "@rixio/rxjs-atom"
 import { PromiseState, createPromiseStatePending, createPromiseStateFulfilled } from "./promise-state"
 import { Rx } from "./rx"
-import { R } from "@grecha/rxjs-react"
+import { R } from "@rixio/rxjs-react"
 import { ReplaySubject } from "rxjs"
 
 function testPromiseState(comp: (state: Atom<PromiseState<number>>) => ReactElement) {

@@ -1,5 +1,5 @@
 {
-  "name": "@grecha/lens",
+  "name": "@rixio/lens",
   "version": "0.1.0",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -24,7 +24,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/roborox/grecha.git"
+    "url": "https://github.com/roborox/rixio.git"
   },
   "devDependencies": {
     "@roborox/eslint-config-default": "2.1.4",

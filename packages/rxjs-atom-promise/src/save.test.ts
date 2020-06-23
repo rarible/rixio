@@ -1,4 +1,4 @@
-import { Atom } from "@grecha/rxjs-atom"
+import { Atom } from "@rixio/rxjs-atom"
 import { api, ApiData } from "../test/fixtures/api"
 import { PromiseState, createPromiseStateIdle } from "./promise-state"
 import { save } from "./save"

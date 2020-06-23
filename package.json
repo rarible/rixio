@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "grecha",
+  "name": "root",
   "workspaces": [
     "packages/*"
   ],

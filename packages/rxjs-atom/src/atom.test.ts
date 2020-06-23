@@ -3,8 +3,8 @@
 import { merge, Observable, from, Subject, never, throwError, empty } from "rxjs"
 import { take, toArray, tap, materialize, map } from "rxjs/operators"
 import { Atom, ReadOnlyAtom } from "./index"
-import { structEq, Option } from "@grecha/lens"
-import { Lens } from "@grecha/lens"
+import { structEq, Option } from "@rixio/lens"
+import { Lens } from "@rixio/lens"
 
 function testAtom(newAtom: (x: number) => Atom<number>) {
 	it("atom/basic", async () => {

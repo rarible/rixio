@@ -1,5 +1,5 @@
 import { Map as IM } from "immutable"
-import { Atom } from "@grecha/rxjs-atom"
+import { Atom } from "@rixio/rxjs-atom"
 import {
 	getFinalValue,
 	PromiseState,
@@ -8,7 +8,7 @@ import {
 	createPromiseStatePending,
 } from "./promise-state"
 import { Cache, CacheImpl } from "./cache"
-import { Lens, Prism } from "@grecha/lens"
+import { Lens, Prism } from "@rixio/lens"
 import { save } from "./save"
 
 export interface DataLoader<K, V> {

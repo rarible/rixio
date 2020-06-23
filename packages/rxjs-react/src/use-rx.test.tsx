@@ -1,7 +1,7 @@
 import { Observable, of, ReplaySubject } from "rxjs"
 import React from "react"
 import { render } from "@testing-library/react"
-import { Atom } from "@grecha/rxjs-atom"
+import { Atom } from "@rixio/rxjs-atom"
 import { act } from "react-dom/test-utils"
 import { useRx } from "./use-rx"
 import { delay, flatMap, map } from "rxjs/operators"

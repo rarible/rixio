@@ -1,12 +1,12 @@
 import { Cache, CacheImpl } from "./cache"
-import { Atom } from "@grecha/rxjs-atom"
+import { Atom } from "@rixio/rxjs-atom"
 import { createPromiseStateIdle } from "./promise-state"
 import { act, render, waitFor, fireEvent } from "@testing-library/react"
 import React, { ReactElement } from "react"
 import { ReplaySubject, Subject } from "rxjs"
 import { first } from "rxjs/operators"
 import { Cacheable } from "./cacheable"
-import { R } from "@grecha/rxjs-react"
+import { R } from "@rixio/rxjs-react"
 
 describe("Cacheable", () => {
 	test("should work with single item", async () => {

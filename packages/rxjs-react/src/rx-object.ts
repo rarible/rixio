@@ -1,6 +1,6 @@
 import { Lifted } from "./base"
 import { combineLatest, Observable, of } from "rxjs"
-import { Lens } from "@grecha/lens"
+import { Lens } from "@rixio/lens"
 import { map } from "rxjs/operators"
 
 

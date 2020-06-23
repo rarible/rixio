@@ -1,6 +1,6 @@
 import React from "react"
 import { act, render } from "react-native-testing-library"
-import { Atom } from "@grecha/rxjs-atom"
+import { Atom } from "@rixio/rxjs-atom"
 import { RxText } from "./index"
 
 describe("RxText", () => {
