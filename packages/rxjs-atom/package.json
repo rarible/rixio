@@ -24,6 +24,9 @@
     "ci": "sh ./scripts/ci.sh",
     "release": "sh ./scripts/release.sh"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

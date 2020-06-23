@@ -27,6 +27,9 @@
     "type": "git",
     "url": "https://github.com/roborox/rixio.git"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@rixio/rxjs-atom": "^0.1.0",
     "@rixio/rxjs-react": "^0.1.0",
