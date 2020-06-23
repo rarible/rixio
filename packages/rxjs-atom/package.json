@@ -1,6 +1,6 @@
 {
   "name": "@grecha/rxjs-atom",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "keywords": [
@@ -29,19 +29,18 @@
     "type": "git",
     "url": "https://github.com/roborox/grecha.git"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@grecha/lens": "0.0.1",
-    "@types/jest": "26.0.0",
-    "rxjs": "6.5.5",
-    "jest": "26.0.1",
-    "ts-jest": "26.1.1",
+    "@grecha/lens": "^0.1.0",
     "@roborox/eslint-config-default": "2.1.4",
+    "@types/jest": "26.0.0",
     "eslint": "7.2.0",
+    "jest": "26.0.1",
+    "rxjs": "6.5.5",
+    "ts-jest": "26.1.1",
     "typescript": "3.9.5"
   },
   "peerDependencies": {
-    "rxjs": ">= 6.5.0 < 7.0.0-0",
-    "@grecha/lens": ">= 0.0.1"
+    "@grecha/lens": ">= 0.0.1",
+    "rxjs": ">= 6.5.0 < 7.0.0-0"
   }
 }

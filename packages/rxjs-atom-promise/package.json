@@ -1,6 +1,6 @@
 {
   "name": "@grecha/rxjs-atom-promise",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "keywords": [
     "frp",
     "lens",
@@ -27,28 +27,27 @@
     "type": "git",
     "url": "https://github.com/roborox/grecha.git"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@grecha/rxjs-atom": "0.0.1",
-    "@grecha/rxjs-react": "0.0.1",
+    "@grecha/rxjs-atom": "^0.1.0",
+    "@grecha/rxjs-react": "^0.1.0",
     "@roborox/eslint-config-default": "2.1.4",
     "@testing-library/jest-dom": "5.10.1",
     "@testing-library/react": "10.2.1",
     "@types/jest": "26.0.0",
     "eslint": "7.2.0",
+    "immutable": "4.0.0-rc.12",
     "jest": "26.0.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "rxjs": "6.5.5",
     "ts-jest": "26.1.1",
-    "typescript": "3.9.5",
-    "immutable": "4.0.0-rc.12"
+    "typescript": "3.9.5"
   },
   "peerDependencies": {
-    "rxjs": ">= 6.5.0 < 7.0.0-0",
-    "immutable": ">= 4.0.0-rc.12",
     "@grecha/lens": ">= 0.0.1",
     "@grecha/rxjs-atom": ">= 0.0.1",
-    "@grecha/rxjs-react": ">= 0.0.1"
+    "@grecha/rxjs-react": ">= 0.0.1",
+    "immutable": ">= 4.0.0-rc.12",
+    "rxjs": ">= 6.5.0 < 7.0.0-0"
   }
 }
