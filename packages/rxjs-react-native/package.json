@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "npm run lint && npm run build-lib",
-    "build-lib": "rimraf ./build && tsc && npm run copy-assets",
+    "build-lib": "rimraf ./build && tsc --project tsconfig-build.json && npm run copy-assets",
     "copy-json-to-lib": "cpx \"./src/**/*.json\" ./build",
     "copy-assets": "npm run copy-json-to-lib",
     "test": "jest",
