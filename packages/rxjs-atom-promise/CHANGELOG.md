@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.4](https://github.com/roborox/rixio/compare/@rixio/rxjs-atom-promise@0.2.3...@rixio/rxjs-atom-promise@0.2.4) (2020-06-24)
+
+
+### Bug Fixes
+
+* export LoadAtoms in index ([d503697](https://github.com/roborox/rixio/commit/d503697f17a4df2fa968deaf745a07f3503eabb7))
+
+
+
+
+
 ## [0.2.3](https://github.com/roborox/rixio/compare/@rixio/rxjs-atom-promise@0.2.2...@rixio/rxjs-atom-promise@0.2.3) (2020-06-24)
 
 
