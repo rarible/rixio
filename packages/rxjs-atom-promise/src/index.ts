@@ -3,7 +3,7 @@ import { CacheImpl, Cache } from "./cache"
 import { KeyCache, KeyCacheImpl } from "./key-cache"
 import { Cacheable } from "./cacheable"
 import { Rx, RxProps } from "./rx"
-import { save } from "./save"
+import { save, LoadAtoms } from "./save"
 import { useRxWithStatus } from "./use-rx-with-status"
 
 export {
@@ -15,6 +15,7 @@ export {
 	Rx,
 	RxProps,
 	save,
+	LoadAtoms,
 	useRxWithStatus,
 	PromiseState,
 	createPromiseStateIdle,
