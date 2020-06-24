@@ -6,17 +6,17 @@ import { useRxWithStatus } from "./use-rx-with-status"
 
 export type OrReactChild<T> = React.ReactChild | React.ReactChild[] | T
 
-export interface LoaderProps<T> {
-	state$: Observable<T | PromiseState<T>>
+export interface RxProps<T> {
+	value$: Observable<T | PromiseState<T>>
 	idle?: React.ReactNode
 	pending?: React.ReactNode
 	rejected?: OrReactChild<(error: any) => React.ReactNode>
 	children?: OrReactChild<(value: T) => React.ReactNode>
 }
 
-export function Rx<T>({state$, idle, pending, rejected, children}: LoaderProps<T>): ReactElement {
+export function Rx<T>({value$, idle, pending, rejected, children}: RxProps<T>): ReactElement {
 	const rx: Observable<ReactNode> = useMemo(() => {
-		return state$.pipe(map(x => {
+		return value$.pipe(map(x => {
 			if (typeof x === "object" && "status" in x) {
 				switch (x.status) {
 					case "pending":
@@ -32,7 +32,7 @@ export function Rx<T>({state$, idle, pending, rejected, children}: LoaderProps<T
 				return returnSuccess(x, children)
 			}
 		}))
-	}, [children, rejected, idle, pending, state$])
+	}, [children, rejected, idle, pending, value$])
 	const result = useRxWithStatus(rx)
 	switch (result.status) {
 		case "pending":

@@ -23,7 +23,7 @@ describe("Loader", () => {
 		const state$ = Atom.create(createPromiseStatePending<string>())
 		const r = render(
 			<span data-testid="test">
-				<Rx state$={state$} pending="pending">{v => <span>{v}</span>}</Rx>
+				<Rx value$={state$} pending="pending">{v => <span>{v}</span>}</Rx>
 			</span>,
 		)
 		await expect(r.getByTestId("test")).toHaveTextContent("pending")
@@ -33,7 +33,7 @@ describe("Loader", () => {
 	test("should display content if loaded", async () => {
 		testPromiseState(state$ =>
 			<span data-testid="test">
-				<Rx state$={state$} pending="pending">
+				<Rx value$={state$} pending="pending">
 					{value => <span>{value}</span>}
 				</Rx>
 			</span>,
@@ -44,7 +44,7 @@ describe("Loader", () => {
 		const subj = new ReplaySubject<number>(1)
 		const r = render(
 			<span data-testid="test">
-				<Rx state$={subj} pending="pending"/>
+				<Rx value$={subj} pending="pending"/>
 			</span>,
 		)
 		expect(r.getByTestId("test")).toHaveTextContent("pending")
@@ -61,7 +61,7 @@ describe("Loader", () => {
 		const subj = new ReplaySubject<number>(1)
 		const r = render(
 			<span data-testid="test">
-				<Rx state$={subj} pending="pending" rejected={x => x}/>
+				<Rx value$={subj} pending="pending" rejected={x => x}/>
 			</span>,
 		)
 		expect(r.getByTestId("test")).toHaveTextContent("pending")
@@ -77,7 +77,7 @@ describe("Loader", () => {
 	test("should display content if children empty", async () => {
 		testPromiseState(state$ =>
 			<span data-testid="test">
-				<Rx state$={state$} pending="pending"/>
+				<Rx value$={state$} pending="pending"/>
 			</span>,
 		)
 	})
@@ -85,7 +85,7 @@ describe("Loader", () => {
 	test("should work if render prop is not used", () => {
 		testPromiseState(state$ =>
 			<span data-testid="test">
-				<Rx state$={state$} pending="pending">
+				<Rx value$={state$} pending="pending">
 					simple text
 					<div>multiple elements</div>
 					<R.span>{state$.lens("value")}</R.span>

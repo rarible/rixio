@@ -2,7 +2,7 @@ import { Cache, CacheImpl } from "./cache"
 import { Atom } from "@rixio/rxjs-atom"
 import { createPromiseStateIdle } from "./promise-state"
 import { act, render, waitFor, fireEvent } from "@testing-library/react"
-import React, { ReactElement } from "react"
+import React, { ReactElement, useRef } from "react"
 import { ReplaySubject, Subject } from "rxjs"
 import { first } from "rxjs/operators"
 import { Cacheable } from "./cacheable"
@@ -49,13 +49,48 @@ describe("Cacheable", () => {
 		)
 	})
 
+	test("should support reload with render prop", async () => {
+		await testReload(cache =>
+			<Cacheable cache={cache}>
+				{(value, reload) =>
+					<>
+						<button onClick={reload}>reload</button>
+						<span data-testid="test">{value}</span>
+					</>
+				}
+			</Cacheable>,
+		)
+	})
+
+	test("should support reload with reloadRef", async () => {
+		const TestComp = ({ cache }: { cache: Cache<number> }) => {
+			const reload = useRef<() => void>(() => {
+			})
+			return (
+				<Cacheable cache={cache} reloadRef={reload}>
+					{value =>
+						<>
+							<button onClick={() => reload.current()}>reload</button>
+							<span data-testid="test">{value}</span>
+						</>
+					}
+				</Cacheable>
+			)
+		}
+
+		await testReload(cache => <TestComp cache={cache}/>)
+	})
+
 	test("should show error with working reload", async () => {
 		const [cache1, value1] = genCache<string>(0)
 		const [cache2, value2] = genCache<number>(0)
 
 		const r = render(
 			<span data-testid="test">
-				<Cacheable cache={[cache1, cache2]} pending="pending" rejected={((error, load) => <button onClick={load}>reload</button>)}/>
+				<Cacheable
+					cache={[cache1, cache2]}
+					pending="pending"
+					rejected={((_, load) => <button onClick={load}>reload</button>)}/>
 			</span>,
 		)
 		expect(r.getByTestId("test")).toHaveTextContent("pending")
@@ -114,4 +149,26 @@ function genCache<T>(bufferSize: number = 1): [Cache<T>, Subject<T>] {
 	const atom = Atom.create(createPromiseStateIdle<T>())
 	const cache = new CacheImpl(atom, () => subject.pipe(first()).toPromise())
 	return [cache, subject]
+}
+
+async function testReload(comp: (cache: Cache<number>) => ReactElement) {
+	let value = 0
+
+	function getNext() {
+		// eslint-disable-next-line no-plusplus
+		return Promise.resolve(value++)
+	}
+
+	const atom = Atom.create(createPromiseStateIdle<number>())
+	const cache = new CacheImpl(atom, getNext)
+	const r = render(comp(cache))
+	await waitFor(() => {
+		expect(r.getByTestId("test")).toHaveTextContent("0")
+	})
+	act(() => {
+		fireEvent.click(r.getByText("reload"))
+	})
+	await waitFor(() => {
+		expect(r.getByTestId("test")).toHaveTextContent("1")
+	})
 }

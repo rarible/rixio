@@ -1,24 +1,30 @@
-import React, { ReactNode, useCallback, useMemo } from "react"
+import React, { MutableRefObject, ReactNode, useCallback, useEffect, useMemo } from "react"
 import { Cache } from "./cache"
-import { Rx, LoaderProps, OrReactChild } from "./rx"
+import { Rx, RxProps, OrReactChild } from "./rx"
 import { mergePromiseStates } from "./merge"
 import { save } from "./save"
 import { useRxChange } from "@rixio/rxjs-react"
 import { map } from "rxjs/operators"
 import { PromiseStatus } from "./promise-state"
 
-type CacheablePropsBase = Omit<LoaderProps<any>, "state$" | "rejected" | "children"> & {
+type CacheablePropsBase = Omit<RxProps<any>, "value$" | "rejected" | "children"> & {
 	rejected?: OrReactChild<(error: any, load: () => void) => ReactNode>
+	reloadRef?: MutableRefObject<() => void>
 }
 
 type Cacheable1Props<T> = {
 	cache: Cache<T>
-	children?: OrReactChild<(value: T) => ReactNode>
+	children?: OrReactChild<(value: T, reload: () => {}) => ReactNode>
 } & CacheablePropsBase
 
 type Cacheable2Props<T1, T2> = {
 	cache: [Cache<T1>, Cache<T2>]
-	children?: OrReactChild<(value: [T1, T2]) => ReactNode>
+	children?: OrReactChild<(value: [T1, T2], reload: () => {}) => ReactNode>
+} & CacheablePropsBase
+
+type Cacheable3Props<T1, T2, T3> = {
+	cache: [Cache<T1>, Cache<T2>, Cache<T3>]
+	children?: OrReactChild<(value: [T1, T2, T3], reload: () => {}) => ReactNode>
 } & CacheablePropsBase
 
 type CacheableProps = {
@@ -36,7 +42,10 @@ function getCaches(cache: any): Cache<any>[] {
 
 export function Cacheable<T>(props: Cacheable1Props<T>): React.ReactElement | null
 export function Cacheable<T1, T2>(props: Cacheable2Props<T1, T2>): React.ReactElement | null
-export function Cacheable({ cache, children, rejected, ...rest }: CacheableProps): React.ReactElement | null {
+export function Cacheable<T1, T2, T3>(props: Cacheable3Props<T1, T2, T3>): React.ReactElement | null
+export function Cacheable(
+	{ cache, children, rejected, reloadRef, ...rest }: CacheableProps,
+): React.ReactElement | null {
 	const array = getCaches(cache)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const caches: Cache<any>[] = useMemo(() => array, array)
@@ -46,7 +55,7 @@ export function Cacheable({ cache, children, rejected, ...rest }: CacheableProps
 			load(caches, "idle")
 		}
 	}, [caches])
-	const reload = useCallback(() => load(caches, "idle", "rejected"), [caches])
+	const reload = useCallback(() => load(caches, "idle", "rejected", "fulfilled"), [caches])
 	const newRejected = useCallback((err: any) => {
 		if (typeof rejected === "function") {
 			return rejected(err, reload)
@@ -54,6 +63,11 @@ export function Cacheable({ cache, children, rejected, ...rest }: CacheableProps
 			return rejected
 		}
 	}, [rejected, reload])
+	useEffect(() => {
+		if (reloadRef) {
+			reloadRef.current = reload
+		}
+	}, [reload, reloadRef])
 	const newChildren = useCallback(value => {
 		let realValue: any
 		if (Array.isArray(cache)) {
@@ -62,15 +76,15 @@ export function Cacheable({ cache, children, rejected, ...rest }: CacheableProps
 			realValue = value[0]
 		}
 		if (typeof children === "function") {
-			return children(realValue)
+			return children(realValue, reload)
 		} else if (children) {
 			return children
 		} else {
 			return realValue
 		}
-	}, [cache, children])
+	}, [cache, children, reload])
 
-	return <Rx state$={single} {...rest} rejected={newRejected} children={newChildren}/>
+	return <Rx value$={single} {...rest} rejected={newRejected} children={newChildren}/>
 }
 
 function load(caches: Cache<any>[], ...statuses: PromiseStatus["status"][]) {
