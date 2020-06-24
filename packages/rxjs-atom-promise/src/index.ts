@@ -2,7 +2,7 @@ import { PromiseState, createPromiseStateIdle, createPromiseStatePending, create
 import { CacheImpl, Cache } from "./cache"
 import { KeyCache, KeyCacheImpl } from "./key-cache"
 import { Cacheable } from "./cacheable"
-import { Rx } from "./rx"
+import { Rx, RxProps } from "./rx"
 import { save } from "./save"
 import { useRxWithStatus } from "./use-rx-with-status"
 
@@ -13,6 +13,7 @@ export {
 	KeyCacheImpl,
 	Cacheable,
 	Rx,
+	RxProps,
 	save,
 	useRxWithStatus,
 	PromiseState,
