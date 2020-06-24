@@ -32,6 +32,3 @@ function walk<T extends object>(
 		}
 	}
 }
-
-
-const obs = rxObject({some: of(1), key: "value"})
