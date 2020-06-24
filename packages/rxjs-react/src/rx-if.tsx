@@ -1,7 +1,8 @@
 import React from "react"
 import { Observable } from "rxjs"
 import { useRx } from "./use-rx"
-import { OrReactChild } from "@rixio/rxjs-atom-promise/build/rx"
+
+type OrReactChild<T> = React.ReactChild | React.ReactChild[] | T
 
 export interface RxIfProps {
 	test$: Observable<any>,
