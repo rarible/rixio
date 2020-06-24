@@ -6,18 +6,7 @@ import { Rx } from "./rx"
 import { R } from "@rixio/rxjs-react"
 import { ReplaySubject } from "rxjs"
 
-function testPromiseState(comp: (state: Atom<PromiseState<number>>) => ReactElement) {
-	const state$ = Atom.create(createPromiseStatePending<number>())
-	const r = render(comp(state$))
-	expect(r.getByTestId("test")).toHaveTextContent("pending")
-	const number = Math.random()
-	act(() => {
-		state$.set(createPromiseStateFulfilled(number))
-	})
-	expect(r.getByTestId("test")).toHaveTextContent(number.toString())
-}
-
-describe("Loader", () => {
+describe("Rx", () => {
 	test("should display pending if is pending", async () => {
 		expect.assertions(2)
 		const state$ = Atom.create(createPromiseStatePending<string>())
@@ -28,6 +17,34 @@ describe("Loader", () => {
 		)
 		await expect(r.getByTestId("test")).toHaveTextContent("pending")
 		await expect(r.getByTestId("test")).not.toHaveTextContent("content")
+	})
+
+	test("should not display pending if handlePending=none", async () => {
+		expect.assertions(2)
+		const state$ = Atom.create(createPromiseStatePending<string>())
+		const r = render(
+			<span data-testid="test">
+				<Rx value$={state$} pending="pending" handlePending="none">{v => <span>{v}</span>}</Rx>
+			</span>,
+		)
+		await expect(r.getByTestId("test")).not.toHaveTextContent("pending")
+		act(() => state$.set(createPromiseStateFulfilled("content")))
+		await expect(r.getByTestId("test")).toHaveTextContent("content")
+	})
+
+	test("should display pending only first time when handlePending=initial", async () => {
+		expect.assertions(3)
+		const state$ = Atom.create(createPromiseStatePending<string>())
+		const r = render(
+			<span data-testid="test">
+				<Rx value$={state$} pending="pending" handlePending="initial">{v => <span>{v}</span>}</Rx>
+			</span>,
+		)
+		await expect(r.getByTestId("test")).toHaveTextContent("pending")
+		act(() => state$.set(createPromiseStateFulfilled("content")))
+		await expect(r.getByTestId("test")).toHaveTextContent("content")
+		act(() => state$.lens("status").set("pending"))
+		await expect(r.getByTestId("test")).not.toHaveTextContent("pending")
 	})
 
 	test("should display content if loaded", async () => {
@@ -94,3 +111,14 @@ describe("Loader", () => {
 		)
 	})
 })
+
+function testPromiseState(comp: (state: Atom<PromiseState<number>>) => ReactElement) {
+	const state$ = Atom.create(createPromiseStatePending<number>())
+	const r = render(comp(state$))
+	expect(r.getByTestId("test")).toHaveTextContent("pending")
+	const number = Math.random()
+	act(() => {
+		state$.set(createPromiseStateFulfilled(number))
+	})
+	expect(r.getByTestId("test")).toHaveTextContent(number.toString())
+}
