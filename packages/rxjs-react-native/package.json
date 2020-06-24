@@ -1,6 +1,6 @@
 {
   "name": "@rixio/rxjs-react-native",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@rixio/lens": "^0.2.1",
-    "@rixio/rxjs-react": "^0.3.0",
+    "@rixio/rxjs-react": "^0.3.1",
     "@roborox/eslint-config-default": "2.1.4",
     "@testing-library/jest-native": "3.1.0",
     "@types/jest": "26.0.0",

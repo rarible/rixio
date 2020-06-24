@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.3.0...@rixio/rxjs-react@0.3.1) (2020-06-24)
+
+
+### Bug Fixes
+
+* export RxIf in index ([22236c2](https://github.com/roborox/rixio/commit/22236c20dafa57b37e0d16093b892a0cadfdc204))
+
+
+
+
+
 # [0.3.0](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.2.1...@rixio/rxjs-react@0.3.0) (2020-06-24)
 
 
