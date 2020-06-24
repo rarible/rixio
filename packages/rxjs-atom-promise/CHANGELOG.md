@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/roborox/rixio/compare/@rixio/rxjs-atom-promise@0.1.2...@rixio/rxjs-atom-promise@0.2.0) (2020-06-24)
+
+
+### Features
+
+* Cacheable reload support ([4c5ebd6](https://github.com/roborox/rixio/commit/4c5ebd67355fd5f26bc2afe54586131e53bb4a65))
+
+
+
+
+
 ## [0.1.2](https://github.com/roborox/rixio/compare/@rixio/rxjs-atom-promise@0.1.1...@rixio/rxjs-atom-promise@0.1.2) (2020-06-23)
 
 

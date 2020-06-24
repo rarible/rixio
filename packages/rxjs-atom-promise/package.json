@@ -1,6 +1,6 @@
 {
   "name": "@rixio/rxjs-atom-promise",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@rixio/rxjs-atom": "^0.2.1",
-    "@rixio/rxjs-react": "^0.2.1",
+    "@rixio/rxjs-react": "^0.3.0",
     "@roborox/eslint-config-default": "2.1.4",
     "@testing-library/jest-dom": "5.10.1",
     "@testing-library/react": "10.2.1",
