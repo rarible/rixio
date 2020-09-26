@@ -4,7 +4,12 @@ import { Lens } from "@rixio/lens"
 import { map } from "rxjs/operators"
 
 
-export function rxObject<T>(lifted: Lifted<T>): Observable<T> {
+type InferObservableValue<O extends ObservableLike<any>> = O extends Observable<infer T> ? T : O
+type InferObservableInTuple<A extends [...ObservableLike<any>[]]> = { [I in keyof A]: InferObservableValue<A[I]> }
+type InferLiftedValue<L extends Lifted<any>> = L extends Lifted<infer T> ? T : L
+export function rxObject<A extends [...ObservableLike<any>[]]>(lifted: [...A]): Observable<InferObservableInTuple<A>>
+export function rxObject<L extends Lifted<any>>(lifted: L): Observable<InferLiftedValue<L>>
+export function rxObject(lifted: any): Observable<any> {
 	const observables: Observable<any>[] = []
 	const lenses: Lens<Lifted<T>, any>[] = []
 	walk(lifted, (value, lens) => {
