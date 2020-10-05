@@ -1,10 +1,10 @@
 import React, { MutableRefObject, ReactNode, useCallback, useEffect, useMemo } from "react"
+import { useRxChange } from "@rixio/rxjs-react"
+import { map } from "rxjs/operators"
 import { Cache } from "./cache"
 import { Rx, RxProps, OrReactChild } from "./rx"
 import { mergePromiseStates } from "./merge"
 import { save } from "./save"
-import { useRxChange } from "@rixio/rxjs-react"
-import { map } from "rxjs/operators"
 import { PromiseStatus } from "./promise-state"
 
 type CacheablePropsBase = Omit<RxProps<any>, "value$" | "rejected" | "children"> & {

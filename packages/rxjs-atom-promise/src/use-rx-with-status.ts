@@ -1,13 +1,13 @@
 import { Observable, concat, of } from "rxjs"
 import { map, catchError } from "rxjs/operators"
 import { useRx } from "@rixio/rxjs-react"
+import { useMemo } from "react"
 import {
 	PromiseState,
 	createPromiseStatePending,
 	createPromiseStateFulfilled,
 	createPromiseStateRejected,
 } from "./promise-state"
-import { useMemo } from "react"
 
 export function useRxWithStatus<T>(initial: Observable<T>): PromiseState<T> {
 	const observable = useMemo(() => asPromiseState(initial), [initial])

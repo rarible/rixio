@@ -1,7 +1,7 @@
 import { act, render } from "@testing-library/react"
 import { ReplaySubject } from "rxjs"
-import { R } from "./rx-html"
 import React from "react"
+import { R } from "./rx-html"
 
 describe("RxHtml", () => {
 

@@ -1,7 +1,7 @@
-import { Lifted } from "./base"
 import { combineLatest, Observable, of } from "rxjs"
 import { Lens } from "@rixio/lens"
 import { map } from "rxjs/operators"
+import { Lifted } from "./base"
 
 
 export function rxObject<T>(lifted: Lifted<T>): Observable<T> {

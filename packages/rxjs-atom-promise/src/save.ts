@@ -1,5 +1,5 @@
-import { createPromiseStatusRejected, PromiseState, PromiseStatus } from "./promise-state"
 import { Atom } from "@rixio/rxjs-atom"
+import { createPromiseStatusRejected, PromiseState, PromiseStatus } from "./promise-state"
 
 export interface LoadAtoms<T> {
 	value?: Atom<T | undefined>

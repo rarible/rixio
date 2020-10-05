@@ -3,8 +3,8 @@ import React from "react"
 import { render } from "@testing-library/react"
 import { Atom } from "@rixio/rxjs-atom"
 import { act } from "react-dom/test-utils"
-import { useRx } from "./use-rx"
 import { delay, flatMap, map } from "rxjs/operators"
+import { useRx } from "./use-rx"
 
 const RxText = ({ value, renders }: { value: Observable<string>, renders: Atom<number> }) => {
 	const simple = useRx(value)

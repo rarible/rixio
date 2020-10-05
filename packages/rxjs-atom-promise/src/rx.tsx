@@ -1,6 +1,6 @@
 import { Observable } from "rxjs"
-import { PromiseState } from "./promise-state"
 import React, { ReactElement } from "react"
+import { PromiseState } from "./promise-state"
 import { useRxWithStatus } from "./use-rx-with-status"
 
 export type OrReactChild<T> = React.ReactChild | React.ReactChild[] | T

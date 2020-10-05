@@ -2,9 +2,9 @@
 // tslint:disable no-unnecessary-local-variable
 import { merge, Observable, from, Subject, never, throwError, empty } from "rxjs"
 import { take, toArray, tap, materialize, map } from "rxjs/operators"
-import { Atom, ReadOnlyAtom } from "./index"
 import { structEq, Option } from "@rixio/lens"
 import { Lens } from "@rixio/lens"
+import { Atom, ReadOnlyAtom } from "./index"
 
 function testAtom(newAtom: (x: number) => Atom<number>) {
 	it("atom/basic", async () => {

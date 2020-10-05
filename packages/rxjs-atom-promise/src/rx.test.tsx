@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react"
 import { act, render, waitFor } from "@testing-library/react"
 import { Atom } from "@rixio/rxjs-atom"
-import { PromiseState, createPromiseStatePending, createPromiseStateFulfilled } from "./promise-state"
-import { Rx } from "./rx"
 import { R } from "@rixio/rxjs-react"
 import { ReplaySubject } from "rxjs"
+import { PromiseState, createPromiseStatePending, createPromiseStateFulfilled } from "./promise-state"
+import { Rx } from "./rx"
 
 describe("Rx", () => {
 	test("should display pending if is pending", async () => {

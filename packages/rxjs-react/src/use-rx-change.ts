@@ -1,6 +1,6 @@
 import { Observable } from "rxjs"
-import { useSubscription } from "./use-subscription"
 import { useRef } from "react"
+import { useSubscription } from "./use-subscription"
 
 export function useRxChange<T>(
 	observable: Observable<T>, observer: ((value: T) => void), deps: any[] = [],

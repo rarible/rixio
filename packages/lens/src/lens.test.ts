@@ -1,5 +1,5 @@
-import { Lens } from "./index"
 import { structEq } from "./utils"
+import { Lens } from "./index"
 
 function roundtrip<T, U>(
 	name: string,
@@ -148,6 +148,7 @@ describe("json", () => {
 
 		// the lines below should compile
 		let _: number = l1.get(s)
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		_ = l2.get(s)
 	})
 

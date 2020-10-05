@@ -1,5 +1,5 @@
-import { Lifted, RxWrapperBase } from "./base"
 import React, { ComponentType } from "react"
+import { Lifted, RxWrapperBase } from "./base"
 
 export type RxLiftProps<P extends object> = {
 	component: ComponentType<P>

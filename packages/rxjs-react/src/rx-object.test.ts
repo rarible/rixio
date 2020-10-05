@@ -1,6 +1,6 @@
-import { rxObject } from "./rx-object"
 import { first } from "rxjs/operators"
 import { of } from "rxjs"
+import { rxObject } from "./rx-object"
 
 describe("rxObject", () => {
 	test("should work with plain objects", async () => {

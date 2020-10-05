@@ -69,6 +69,7 @@ function identical(a: any, b: any) {
 		return a !== 0 || 1 / a === 1 / b
 	} else {
 		// Step 6.a: NaN == NaN
+		// eslint-disable-next-line no-self-compare
 		return a !== a && b !== b
 	}
 }

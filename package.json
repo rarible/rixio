@@ -1,17 +1,26 @@
 {
-  "private": true,
   "name": "root",
-  "scripts": {
-    "build-lens": "yarn workspace @rixio/lens run build",
-    "build-rxjs-atom": "yarn workspace @rixio/rxjs-atom run build",
-    "build-rxjs-react": "yarn workspace @rixio/rxjs-react run build",
-    "build-rxjs-atom-promise": "yarn workspace @rixio/rxjs-atom-promise run build",
-    "build-rxjs-react-native": "yarn workspace @rixio/rxjs-react-native run build",
-    "build-all": "yarn run build-lens && yarn run build-rxjs-atom && yarn run build-rxjs-react && yarn run build-rxjs-atom-promise && yarn run build-rxjs-react-native"
-  },
+  "private": true,
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "bootstrap": "lerna bootstrap && lerna link",
+    "build-all": "yarn run build-lens && yarn run build-rxjs-atom && yarn run build-rxjs-react && yarn run build-rxjs-atom-promise && yarn run build-rxjs-react-native",
+    "build-lens": "yarn workspace @rixio/lens run build",
+    "build-rxjs-atom": "yarn workspace @rixio/rxjs-atom run build",
+    "build-rxjs-atom-promise": "yarn workspace @rixio/rxjs-atom-promise run build",
+    "build-rxjs-react": "yarn workspace @rixio/rxjs-react run build",
+    "build-rxjs-react-native": "yarn workspace @rixio/rxjs-react-native run build",
+    "lint": "yarn workspaces run lint",
+    "test": "yarn workspaces run test"
+  },
+  "dependencies": {
+    "immutable": "4.0.0-rc.12",
+    "react": "16.13.1",
+    "react-native": "0.62.2",
+    "rxjs": "6.5.5"
+  },
   "devDependencies": {
     "lerna": "^3.20.2"
   }

@@ -1,4 +1,5 @@
 import { combineLatest, Observable } from "rxjs"
+import { map } from "rxjs/operators"
 import {
 	PromiseState,
 	PromiseStatus,
@@ -6,7 +7,6 @@ import {
 	promiseStatusPending,
 	promiseStatusFulfilled,
 } from "./promise-state"
-import { map } from "rxjs/operators"
 
 export function mergePromiseStates(array: Observable<PromiseState<any>>[]): Observable<PromiseState<any>> {
 	return combineLatest(array).pipe(

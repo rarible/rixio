@@ -1,8 +1,8 @@
 import { ReplaySubject, Observable, Subject } from "rxjs"
 import { render, waitFor } from "@testing-library/react"
 import { act } from "react-dom/test-utils"
-import { useRxWithStatus } from "./use-rx-with-status"
 import React from "react"
+import { useRxWithStatus } from "./use-rx-with-status"
 
 describe("useRxWithStatus", () => {
 	test("should work with emitted values", async () => {
