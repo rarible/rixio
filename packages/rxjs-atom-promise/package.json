@@ -15,13 +15,9 @@
     "atom"
   ],
   "scripts": {
-    "build": "rimraf ./build && tsc && npm run copy-assets",
-    "copy-json-to-lib": "cpx \"./src/**/*.json\" ./build",
-    "copy-assets": "npm run copy-json-to-lib",
+    "build": "rimraf ./build && tsc",
     "test": "jest --silent",
-    "verify": "tsc --noEmit",
-    "ci": "sh ./scripts/ci.sh",
-    "release": "sh ./scripts/release.sh"
+    "verify": "tsc --noEmit"
   },
   "license": "Apache-2.0",
   "repository": {
