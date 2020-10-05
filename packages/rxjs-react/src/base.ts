@@ -8,10 +8,7 @@ export type Lifted<T> = {
 	[K in keyof T]: ObservableLike<T[K]>
 }
 
-function walk<T extends object>(
-	props: T,
-	handler: (value: any, lens: Lens<T, any>) => void,
-) {
+function walk<T extends object>(props: T, handler: (value: any, lens: Lens<T, any>) => void) {
 	for (const key in props) {
 		if (props.hasOwnProperty(key)) {
 			const prop = props[key] as any
@@ -26,9 +23,10 @@ function walk<T extends object>(
 	}
 }
 
-export abstract class RxWrapperBase<P extends object, RProps extends object>
-	extends React.Component<RProps, Lifted<P>> {
-
+export abstract class RxWrapperBase<P extends object, RProps extends object> extends React.Component<
+	RProps,
+	Lifted<P>
+> {
 	private _state: Lifted<P>
 	private _mounted: boolean = false
 	private subscriptions: Map<Observable<any>, Subscription> = new Map<Observable<any>, Subscription>()
@@ -52,11 +50,7 @@ export abstract class RxWrapperBase<P extends object, RProps extends object>
 		this._mounted = false
 	}
 
-	shouldComponentUpdate(
-		nextProps: Readonly<RProps>,
-		nextState: Readonly<Lifted<P>>,
-		nextContext: any,
-	): boolean {
+	shouldComponentUpdate(nextProps: Readonly<RProps>, nextState: Readonly<Lifted<P>>, nextContext: any): boolean {
 		if (this.props !== nextProps) {
 			const oldProps: Lifted<P> = this.extractProps(this.props as any)
 			const newProps: Lifted<P> = this.extractProps(nextProps as any)

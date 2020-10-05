@@ -1,4 +1,10 @@
-import { PromiseState, createPromiseStateIdle, createPromiseStatePending, createPromiseStateRejected, createPromiseStateFulfilled } from "./promise-state"
+import {
+	PromiseState,
+	createPromiseStateIdle,
+	createPromiseStatePending,
+	createPromiseStateRejected,
+	createPromiseStateFulfilled,
+} from "./promise-state"
 import { CacheImpl, Cache } from "./cache"
 import { KeyCache, KeyCacheImpl } from "./key-cache"
 import { Cacheable } from "./cacheable"

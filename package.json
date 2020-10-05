@@ -12,8 +12,15 @@
     "build-rxjs-atom-promise": "yarn workspace @rixio/rxjs-atom-promise run build",
     "build-rxjs-react": "yarn workspace @rixio/rxjs-react run build",
     "build-rxjs-react-native": "yarn workspace @rixio/rxjs-react-native run build",
-    "lint": "yarn workspaces run lint",
-    "test": "yarn workspaces run test"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
+    "prettify": "prettier --write **/src/**/*",
+    "test": "yarn workspaces run test",
+    "verify": "yarn workspaces run verify"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "yarn run prettify"
+    ]
   },
   "dependencies": {
     "immutable": "4.0.0-rc.12",
@@ -22,6 +29,12 @@
     "rxjs": "6.5.5"
   },
   "devDependencies": {
-    "lerna": "^3.20.2"
+    "@roborox/eslint-config-default": "2.2.0",
+    "eslint": "7.10.0",
+    "eslint-config-prettier": "6.11.0",
+    "husky": "4.3.0",
+    "lerna": "^3.20.2",
+    "lint-staged": "10.4.0",
+    "prettier": "2.1.2"
   }
 }

@@ -6,7 +6,7 @@ import { act } from "react-dom/test-utils"
 import { delay, flatMap, map } from "rxjs/operators"
 import { useRx } from "./use-rx"
 
-const RxText = ({ value, renders }: { value: Observable<string>, renders: Atom<number> }) => {
+const RxText = ({ value, renders }: { value: Observable<string>; renders: Atom<number> }) => {
 	const simple = useRx(value)
 	renders.modify(x => x + 1)
 	return <span data-testid="value">{simple}</span>
@@ -19,14 +19,14 @@ const Count = () => {
 }
 const TestCount = (props: { value: Observable<number> }) => {
 	useRx(props.value)
-	return <Count/>
+	return <Count />
 }
 
 describe("useRx", () => {
 	test("should render atom exactly one time", () => {
 		const text = Math.random().toString()
 		const renders = Atom.create(0)
-		const r = render(<RxText value={Atom.create(text)} renders={renders}/>)
+		const r = render(<RxText value={Atom.create(text)} renders={renders} />)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 		expect(renders.get()).toStrictEqual(1)
 	})
@@ -36,7 +36,7 @@ describe("useRx", () => {
 		const subject = new ReplaySubject<string>(1)
 		const text = Math.random().toString()
 		subject.next(text)
-		const r = render(<RxText value={subject} renders={renders}/>)
+		const r = render(<RxText value={subject} renders={renders} />)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 		expect(renders.get()).toStrictEqual(1)
 	})
@@ -63,7 +63,7 @@ describe("useRx", () => {
 		const renders = Atom.create(0)
 		const text = Math.random().toString()
 		const atom = Atom.create(text)
-		const r = render(<RxText value={preprocessor(atom)} renders={renders}/>)
+		const r = render(<RxText value={preprocessor(atom)} renders={renders} />)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 		const nextText = Math.random().toString()
 		act(() => atom.set(nextText))
@@ -74,7 +74,7 @@ describe("useRx", () => {
 	test("should not trigger rerender if not changed", () => {
 		const subject = new ReplaySubject<number>(1)
 		subject.next(1)
-		render(<TestCount value={subject}/>)
+		render(<TestCount value={subject} />)
 		expect(count).toBe(1)
 		act(() => subject.next(1))
 		expect(count).toBe(1)

@@ -3,7 +3,6 @@ import { Lens } from "@rixio/lens"
 import { map } from "rxjs/operators"
 import { Lifted } from "./base"
 
-
 export function rxObject<T>(lifted: Lifted<T>): Observable<T> {
 	const observables: Observable<any>[] = []
 	const lenses: Lens<Lifted<T>, any>[] = []
@@ -17,14 +16,11 @@ export function rxObject<T>(lifted: Lifted<T>): Observable<T> {
 		return of(lifted as T)
 	}
 	return combineLatest(observables).pipe(
-		map(values => lenses.reduce((acc, l, idx) => l.set(values[idx], acc), lifted) as T),
+		map(values => lenses.reduce((acc, l, idx) => l.set(values[idx], acc), lifted) as T)
 	)
 }
 
-function walk<T extends object>(
-	props: T,
-	handler: (value: any, lens: Lens<T, any>) => void,
-) {
+function walk<T extends object>(props: T, handler: (value: any, lens: Lens<T, any>) => void) {
 	for (const key in props) {
 		if (props.hasOwnProperty(key)) {
 			const prop = props[key] as any

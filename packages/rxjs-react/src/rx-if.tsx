@@ -5,8 +5,8 @@ import { useRx } from "./use-rx"
 type OrReactChild<T> = React.ReactChild | React.ReactChild[] | T
 
 export interface RxIfProps {
-	test$: Observable<any>,
-	else?: OrReactChild<() => React.ReactNode>,
+	test$: Observable<any>
+	else?: OrReactChild<() => React.ReactNode>
 	negate?: boolean
 	children: React.ReactNode
 }
@@ -17,16 +17,12 @@ export function RxIf({ test$, children, negate, else: not }: RxIfProps): React.R
 	if (negate && !raw) {
 		return <>{children}</>
 	} else if (negate) {
-		if (typeof not === "function")
-			return <>{not()}</>
-		else
-			return <>{not}</>
+		if (typeof not === "function") return <>{not()}</>
+		else return <>{not}</>
 	} else if (raw) {
 		return <>{children}</>
 	} else {
-		if (typeof not === "function")
-			return <>{not()}</>
-		else
-			return <>{not}</>
+		if (typeof not === "function") return <>{not()}</>
+		else return <>{not}</>
 	}
 }

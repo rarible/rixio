@@ -26,7 +26,7 @@ function conserve<T>(x: T, y: T): T {
  * Make a fold function's behaviour conservative in its input value's
  * identity.
  */
-export function conservatively<T, U>(fn: ((y: T, c0: U) => U)) {
+export function conservatively<T, U>(fn: (y: T, c0: U) => U) {
 	return (y: T, c0: U) => conserve(fn(y, c0), c0)
 }
 

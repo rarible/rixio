@@ -20,7 +20,7 @@ describe("Cacheable", () => {
 	test("should work without children", async () => {
 		await testSingle(cache => (
 			<span data-testid="test">
-				<Cacheable cache={cache}/>
+				<Cacheable cache={cache} />
 			</span>
 		))
 	})
@@ -28,57 +28,58 @@ describe("Cacheable", () => {
 	test("should work without render props", async () => {
 		await testSingle(cache => (
 			<span data-testid="test">
-				<Cacheable cache={cache}><R.span>{cache.atom.lens("value")}</R.span></Cacheable>
+				<Cacheable cache={cache}>
+					<R.span>{cache.atom.lens("value")}</R.span>
+				</Cacheable>
 			</span>
 		))
 	})
 
 	test("should work with some items", async () => {
-		await testPair((cache1, cache2) =>
+		await testPair((cache1, cache2) => (
 			<span data-testid="test">
 				<Cacheable cache={[cache1, cache2]}>{([v1, v2]) => `${v1} ${v2}`}</Cacheable>
-			</span>,
-		)
+			</span>
+		))
 	})
 
 	test("should work with some items without children", async () => {
-		await testPair((cache1, cache2) =>
+		await testPair((cache1, cache2) => (
 			<span data-testid="test">
-				<Cacheable cache={[cache1, cache2]}/>
-			</span>,
-		)
+				<Cacheable cache={[cache1, cache2]} />
+			</span>
+		))
 	})
 
 	test("should support reload with render prop", async () => {
-		await testReload(cache =>
+		await testReload(cache => (
 			<Cacheable cache={cache}>
-				{(value, reload) =>
+				{(value, reload) => (
 					<>
 						<button onClick={reload}>reload</button>
 						<span data-testid="test">{value}</span>
 					</>
-				}
-			</Cacheable>,
-		)
+				)}
+			</Cacheable>
+		))
 	})
 
 	test("should support reload with reloadRef", async () => {
 		const TestComp = ({ cache }: { cache: Cache<number> }) => {
-			const reload = useRef<() => void>(() => {
-			})
+			const reload = useRef<() => void>(() => {})
 			return (
 				<Cacheable cache={cache} reloadRef={reload}>
-					{value =>
+					{value => (
 						<>
 							<button onClick={() => reload.current()}>reload</button>
 							<span data-testid="test">{value}</span>
 						</>
-					}
+					)}
 				</Cacheable>
 			)
 		}
 
-		await testReload(cache => <TestComp cache={cache}/>)
+		await testReload(cache => <TestComp cache={cache} />)
 	})
 
 	test("should show error with working reload", async () => {
@@ -90,8 +91,9 @@ describe("Cacheable", () => {
 				<Cacheable
 					cache={[cache1, cache2]}
 					pending="pending"
-					rejected={((_, load) => <button onClick={load}>reload</button>)}/>
-			</span>,
+					rejected={(_, load) => <button onClick={load}>reload</button>}
+				/>
+			</span>
 		)
 		expect(r.getByTestId("test")).toHaveTextContent("pending")
 		const num = Math.random()

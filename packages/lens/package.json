@@ -12,15 +12,11 @@
     "reactive"
   ],
   "scripts": {
-    "build": "npm run lint && npm run build-lib",
-    "build-lib": "rimraf ./build && tsc --project tsconfig-build.json && npm run copy-assets",
+    "build": "rimraf ./build && tsc --project tsconfig-build.json && npm run copy-assets",
     "copy-json-to-lib": "cpx \"./src/**/*.json\" ./build",
     "copy-assets": "npm run copy-json-to-lib",
     "test": "jest --silent",
-    "lint:js": "eslint --ext .js,.jsx,.ts,.tsx ./",
-    "lint:types": "tsc --noEmit",
-    "lint": "npm run lint:js && npm run lint:types",
-    "lint:fix": "eslint --ext .js,.ts,.ts,.tsx ./ --fix --quiet",
+    "verify": "tsc --noEmit",
     "ci": "sh ./scripts/ci.sh",
     "release": "sh ./scripts/release.sh"
   },
@@ -33,10 +29,8 @@
     "url": "https://github.com/roborox/rixio.git"
   },
   "devDependencies": {
-    "@roborox/eslint-config-default": "2.2.0",
     "@types/jest": "26.0.14",
     "cpx": "1.5.0",
-    "eslint": "7.10.0",
     "jest": "26.4.2",
     "ts-jest": "26.4.1",
     "typescript": "4.0.3"

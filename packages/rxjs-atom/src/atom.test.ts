@@ -37,8 +37,8 @@ function testAtom(newAtom: (x: number) => Atom<number>) {
 		const a = newAtom(1)
 		const observations: number[] = []
 		const cb = (x: number) => observations.push(x)
-		const subscription = a.subscribe(cb);
-		[2, 3, 3, 3, 1].forEach(x => a.set(x))
+		const subscription = a.subscribe(cb)
+		;[2, 3, 3, 3, 1].forEach(x => a.set(x))
 
 		expect(structEq(observations, [1, 2, 3, 1])).toBeTruthy()
 
@@ -47,12 +47,8 @@ function testAtom(newAtom: (x: number) => Atom<number>) {
 }
 
 function testDerivedAtom(
-	createDerived: (
-		a: Atom<number>,
-		f: (x: number) => number,
-		onCalled: (a: number) => void
-	) => ReadOnlyAtom<number>,
-	create: (x: number) => Atom<number> = Atom.create,
+	createDerived: (a: Atom<number>, f: (x: number) => number, onCalled: (a: number) => void) => ReadOnlyAtom<number>,
+	create: (x: number) => Atom<number> = Atom.create
 ) {
 	describe("unsub in modify", () => {
 		const a = create(5)
@@ -60,7 +56,11 @@ function testDerivedAtom(
 		const viewFnCalls: number[] = []
 		const os: number[] = []
 
-		const v = createDerived(a, x => x + 1, x => viewFnCalls.push(x))
+		const v = createDerived(
+			a,
+			x => x + 1,
+			x => viewFnCalls.push(x)
+		)
 
 		expect(viewFnCalls).toEqual([])
 		expect(os).toEqual([])
@@ -91,7 +91,11 @@ function testDerivedAtom(
 		const viewFnCalls2: number[] = []
 		const os2: number[] = []
 
-		const v1 = createDerived(a, x => x + 1, x => viewFnCalls1.push(x))
+		const v1 = createDerived(
+			a,
+			x => x + 1,
+			x => viewFnCalls1.push(x)
+		)
 		const v2 = v1.view(x => {
 			viewFnCalls2.push(x)
 			return x + 5
@@ -126,7 +130,13 @@ function testDerivedAtom(
 
 	describe("resubscribe", () => {
 		const a = create(5)
-		const v = createDerived(a, x => x + 1, () => { /* no-op */ })
+		const v = createDerived(
+			a,
+			x => x + 1,
+			() => {
+				/* no-op */
+			}
+		)
 
 		const os: number[] = []
 		const sub1 = v.subscribe(x => os.push(x))
@@ -166,7 +176,13 @@ function testDerivedAtom(
 
 	describe("multiple subscriptions", () => {
 		const a = create(5)
-		const v = createDerived(a, x => x + 1, () => { /* no-op */ })
+		const v = createDerived(
+			a,
+			x => x + 1,
+			() => {
+				/* no-op */
+			}
+		)
 
 		const os1: number[] = []
 		const sub1 = v.subscribe(x => os1.push(x))
@@ -224,15 +240,16 @@ describe("atom", () => {
 
 		describe("lensed, chained + complex", () => {
 			const source = Atom.create({ a: { b: { c: 5 } } })
-			const lensed =
-        source
-        	.lens("a")
-        	.lens("b")
-        	.lens("c")
-        	.lens(
-        		Lens.create(
-        			(x: number) => x + 1,
-        			(v: number, _: number) => v - 1))
+			const lensed = source
+				.lens("a")
+				.lens("b")
+				.lens("c")
+				.lens(
+					Lens.create(
+						(x: number) => x + 1,
+						(v: number, _: number) => v - 1
+					)
+				)
 
 			expect(lensed.get()).toEqual(6)
 
@@ -243,13 +260,16 @@ describe("atom", () => {
 
 		describe("lensed, safe key, chained + complex", () => {
 			const source = Atom.create({ a: { b: { c: 5 } } })
-			const lensed =
-        source
-        	.lens("a").lens("b").lens("c")
-        	.lens(
-        		Lens.create(
-        			(x: number) => x + 1,
-        			(v: number, _: number) => v - 1))
+			const lensed = source
+				.lens("a")
+				.lens("b")
+				.lens("c")
+				.lens(
+					Lens.create(
+						(x: number) => x + 1,
+						(v: number, _: number) => v - 1
+					)
+				)
 
 			expect(lensed.get()).toEqual(6)
 
@@ -260,7 +280,10 @@ describe("atom", () => {
 
 		describe("lens then view", () => {
 			const x1 = Atom.create({ a: { b: 5 } })
-			const x2 = x1.lens("a").view(x => x.b).view(x => x + 1)
+			const x2 = x1
+				.lens("a")
+				.view(x => x.b)
+				.view(x => x + 1)
 			const x3 = x1.lens("a").lens("b")
 
 			expect(x3.get()).toEqual(5)
@@ -280,10 +303,12 @@ describe("atom", () => {
 					return source.lens(
 						Lens.index<number>(0)
 							// assert element is non-undefined
-							.compose(Lens.create(
-								(x: number | undefined) => x!,
-								(v, _) => v,
-							)),
+							.compose(
+								Lens.create(
+									(x: number | undefined) => x!,
+									(v, _) => v
+								)
+							)
 					)
 				})
 			})
@@ -336,16 +361,16 @@ describe("atom", () => {
 			})
 		})
 
-		testDerivedAtom(
-			(a, f, onCalled) => a.lens(
+		testDerivedAtom((a, f, onCalled) =>
+			a.lens(
 				Lens.create(
 					(x: number) => {
 						onCalled(x)
 						return f(x)
 					},
-					(v, _) => v,
-				),
-			),
+					(v, _) => v
+				)
+			)
 		)
 	})
 
@@ -393,8 +418,8 @@ describe("atom", () => {
 			const sourceSub = source.subscribe(x => sourceOs.push(x))
 
 			const viewOs: number[] = []
-			const viewSub = view.subscribe(x => viewOs.push(x));
-			[2, 2, 2, 3, 3, 3, 1, 1, 1].forEach(x => source.set(x))
+			const viewSub = view.subscribe(x => viewOs.push(x))
+			;[2, 2, 2, 3, 3, 3, 1, 1, 1].forEach(x => source.set(x))
 
 			expect(viewOs).toEqual([2, 3, 4, 2])
 			expect(sourceOs).toEqual([1, 2, 3, 1])
@@ -403,10 +428,12 @@ describe("atom", () => {
 			viewSub.unsubscribe()
 		})
 
-		testDerivedAtom((a, f, onCalled) => a.view(x => {
-			onCalled(x)
-			return f(x)
-		}))
+		testDerivedAtom((a, f, onCalled) =>
+			a.view(x => {
+				onCalled(x)
+				return f(x)
+			})
+		)
 
 		describe("complex expression", () => {
 			const source = Atom.create({ a: { b: { c: 5 } } })
@@ -513,13 +540,8 @@ describe("atom", () => {
 				return `HU ${x}`
 			})
 
-			function testCalls(
-				a: number, b: number, c: number, d: number, e: number, f: number,
-				msg: string,
-			) {
-				expect(
-					[called1, called2, called3, called4, called5, called5]).toEqual(
-					[a, b, c, d, e, f])
+			function testCalls(a: number, b: number, c: number, d: number, e: number, f: number, msg: string) {
+				expect([called1, called2, called3, called4, called5, called5]).toEqual([a, b, c, d, e, f])
 				//   ,
 				//   msg
 				// )
@@ -538,15 +560,7 @@ describe("atom", () => {
 			source.set(2)
 			testCalls(3, 3, 3, 3, 3, 3, "3 calls each after subscribe + 2 sets")
 
-			expect(
-				observations,
-			).toEqual(
-				[
-					"Hi -2", "Ho -2", "HU -2",
-					"Hi -4", "Ho -4", "HU -4",
-					"Hi -6", "Ho -6", "HU -6",
-				],
-			)
+			expect(observations).toEqual(["Hi -2", "Ho -2", "HU -2", "Hi -4", "Ho -4", "HU -4", "Hi -6", "Ho -6", "HU -6"])
 
 			sub.unsubscribe()
 		})
@@ -597,15 +611,16 @@ describe("atom", () => {
 			})
 
 			function testCalls(
-				a: number, b: number, c: number, d: number, e: number, f: number,
+				a: number,
+				b: number,
+				c: number,
+				d: number,
+				e: number,
+				f: number,
 				// @TODO jest doesn't have messages for expects
-				_msg: string,
+				_msg: string
 			) {
-				expect(
-					[called1, called2, called3, called4, called5, called5],
-				).toEqual(
-					[a, b, c, d, e, f],
-				)
+				expect([called1, called2, called3, called4, called5, called5]).toEqual([a, b, c, d, e, f])
 			}
 
 			testCalls(0, 0, 0, 0, 0, 0, "no calls initially")
@@ -629,9 +644,8 @@ describe("atom", () => {
 
 	describe("combine", () => {
 		describe("constant", () => {
-			const combined = Atom.combine(
-				Atom.create(1), Atom.create(false), Atom.create("test"),
-				(x, y, z) => y && x < 0 ? z.toUpperCase() : "NO",
+			const combined = Atom.combine(Atom.create(1), Atom.create(false), Atom.create("test"), (x, y, z) =>
+				y && x < 0 ? z.toUpperCase() : "NO"
 			)
 
 			expect(combined.get()).toEqual("NO")
@@ -642,10 +656,7 @@ describe("atom", () => {
 			const s2 = Atom.create(false)
 			const s3 = Atom.create("test")
 
-			const combined = Atom.combine(
-				s1, s2, s3,
-				(x, y, z) => y && x < 0 ? z.toUpperCase() : "NO",
-			)
+			const combined = Atom.combine(s1, s2, s3, (x, y, z) => (y && x < 0 ? z.toUpperCase() : "NO"))
 
 			expect(combined.get()).toEqual("NO")
 
@@ -668,10 +679,7 @@ describe("atom", () => {
 			const s3 = Atom.create("test")
 			const observations: string[] = []
 
-			const combined = Atom.combine(
-				s1, s2, s3,
-				(x, y, z) => y && x < 0 ? z.toUpperCase() : "NO",
-			)
+			const combined = Atom.combine(s1, s2, s3, (x, y, z) => (y && x < 0 ? z.toUpperCase() : "NO"))
 
 			const sub = combined.subscribe(x => observations.push(x))
 
@@ -694,10 +702,12 @@ describe("atom", () => {
 			sub.unsubscribe()
 		})
 
-		testDerivedAtom((a, f, onCalled) => Atom.combine(a, Atom.create(0), (a, b) => {
-			onCalled(a)
-			return f(a)
-		}))
+		testDerivedAtom((a, f, onCalled) =>
+			Atom.combine(a, Atom.create(0), (a, b) => {
+				onCalled(a)
+				return f(a)
+			})
+		)
 	})
 
 	describe("logger", () => {
@@ -712,22 +722,27 @@ describe("atom", () => {
 		logAtom.set("foo")
 
 		expect(consoleLogFireTime).toEqual(2)
-		expect(consoleLogArguments).toEqual([["bar", "bar"], ["bar", "foo"]])
+		expect(consoleLogArguments).toEqual([
+			["bar", "bar"],
+			["bar", "foo"],
+		])
 	})
 
 	describe("fromObservable", () => {
 		test("emits atom", async () => {
-			const a = await Atom.fromObservable(from([1])).pipe(take(1)).toPromise()
+			const a = await Atom.fromObservable(from([1]))
+				.pipe(take(1))
+				.toPromise()
 			expect(a.get()).toEqual(1)
 		})
 
 		test("emits atom once", async () => {
 			const a = await merge(
-				Atom.fromObservable(
-					from(Array.from(new Array(15)).map(_ => Math.random())),
-				),
-				from(["hello"]),
-			).pipe(take(2), toArray()).toPromise()
+				Atom.fromObservable(from(Array.from(new Array(15)).map(_ => Math.random()))),
+				from(["hello"])
+			)
+				.pipe(take(2), toArray())
+				.toPromise()
 
 			expect(a[1]).toEqual("hello")
 		})
@@ -739,7 +754,9 @@ describe("atom", () => {
 				subscribed = true
 				o.complete()
 
-				return () => { subscribed = false }
+				return () => {
+					subscribed = false
+				}
 			})
 
 			const _ = Atom.fromObservable(src)
@@ -754,7 +771,9 @@ describe("atom", () => {
 				subCount++
 				o.next(1)
 
-				return () => { subCount-- }
+				return () => {
+					subCount--
+				}
 			})
 
 			const a = Atom.fromObservable(src)
@@ -762,9 +781,11 @@ describe("atom", () => {
 			// no subs until we have subscribed to use the atom
 			expect(subCount).toEqual(0)
 
-			const subs = Array.from(new Array(5)).map(_ => a.subscribe(a => {
-				expect(a.get()).toEqual(1)
-			}))
+			const subs = Array.from(new Array(5)).map(_ =>
+				a.subscribe(a => {
+					expect(a.get()).toEqual(1)
+				})
+			)
 
 			// exactly one sub, no matter how many times the atom observable was subbed to
 			expect(subCount).toEqual(1)
@@ -776,10 +797,9 @@ describe("atom", () => {
 		})
 
 		test("does not return atom if source has no value", async () => {
-			const r = await merge(
-				Atom.fromObservable(never()),
-				from(["hello"]),
-			).pipe(take(1), toArray()).toPromise()
+			const r = await merge(Atom.fromObservable(never()), from(["hello"]))
+				.pipe(take(1), toArray())
+				.toPromise()
 
 			expect(r).toEqual(["hello"])
 		})
@@ -787,20 +807,22 @@ describe("atom", () => {
 		test("atom values correspond to source", async () => {
 			const src = new Subject<number>()
 
-			const r = Atom.fromObservable(src).pipe(
-				tap(async a => {
-					const srcValues = Array.from(new Array(10), _ => Math.random())
-					const atomValues = a.pipe(toArray()).toPromise()
+			const r = Atom.fromObservable(src)
+				.pipe(
+					tap(async a => {
+						const srcValues = Array.from(new Array(10), _ => Math.random())
+						const atomValues = a.pipe(toArray()).toPromise()
 
-					srcValues.forEach(x => {
-						src.next(x)
-						expect(a.get()).toEqual(x)
-					})
+						srcValues.forEach(x => {
+							src.next(x)
+							expect(a.get()).toEqual(x)
+						})
 
-					expect(await atomValues).toEqual(srcValues)
-				}),
-				take(1),
-			).toPromise()
+						expect(await atomValues).toEqual(srcValues)
+					}),
+					take(1)
+				)
+				.toPromise()
 
 			src.next(0)
 			await r
@@ -810,11 +832,13 @@ describe("atom", () => {
 			const src = new Subject<number>()
 			let atom!: ReadOnlyAtom<number>
 
-			const sub = Atom.fromObservable(src).pipe(
-				tap(a => {
-					atom = a
-				}),
-			).subscribe()
+			const sub = Atom.fromObservable(src)
+				.pipe(
+					tap(a => {
+						atom = a
+					})
+				)
+				.subscribe()
 
 			src.next(1)
 			expect(atom.get()).toEqual(1)
@@ -829,7 +853,7 @@ describe("atom", () => {
 
 		test("source error is propagated", async () => {
 			try {
-				await (Atom.fromObservable(throwError("hello")).toPromise())
+				await Atom.fromObservable(throwError("hello")).toPromise()
 				fail()
 			} catch (e) {
 				expect(e).toEqual("hello")
@@ -838,17 +862,25 @@ describe("atom", () => {
 
 		test("source completion is propagated 1", async () => {
 			expect(
-				await Atom.fromObservable(empty()).pipe(
-					materialize(), map(x => x.kind), toArray(),
-				).toPromise(),
+				await Atom.fromObservable(empty())
+					.pipe(
+						materialize(),
+						map(x => x.kind),
+						toArray()
+					)
+					.toPromise()
 			).toEqual(["C"])
 		})
 
 		test("source completion is propagated 2", async () => {
 			expect(
-				await Atom.fromObservable(from([1, 2, 3])).pipe(
-					materialize(), map(x => x.kind), toArray(),
-				).toPromise(),
+				await Atom.fromObservable(from([1, 2, 3]))
+					.pipe(
+						materialize(),
+						map(x => x.kind),
+						toArray()
+					)
+					.toPromise()
 			).toEqual(["N", "C"])
 		})
 	})

@@ -19,7 +19,7 @@ function asPromiseState<T>(observable: Observable<T>): Observable<PromiseState<T
 		of(createPromiseStatePending<T>()),
 		observable.pipe(
 			map(createPromiseStateFulfilled),
-			catchError(err => of(createPromiseStateRejected<T>(err))),
-		),
+			catchError(err => of(createPromiseStateRejected<T>(err)))
+		)
 	)
 }

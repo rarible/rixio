@@ -3,19 +3,16 @@ import { createPromiseStatusRejected, PromiseState, PromiseStatus } from "./prom
 
 export interface LoadAtoms<T> {
 	value?: Atom<T | undefined>
-	status?: Atom<PromiseStatus>,
+	status?: Atom<PromiseStatus>
 }
 
-export async function save<T>(
-	promise: Promise<T>,
-	value: LoadAtoms<T> | Atom<PromiseState<T>>,
-): Promise<void> {
+export async function save<T>(promise: Promise<T>, value: LoadAtoms<T> | Atom<PromiseState<T>>): Promise<void> {
 	if ("get" in value) {
 		value.lens("status").set("pending")
 
 		try {
 			const result = await promise
-			value.modify(v => ({...v, value: result, status: "fulfilled" }))
+			value.modify(v => ({ ...v, value: result, status: "fulfilled" }))
 		} catch (e) {
 			value.modify(v => ({ ...v, ...createPromiseStatusRejected(e) }))
 		}
@@ -27,7 +24,7 @@ export async function save<T>(
 			value.value?.set(result)
 			value.status?.lens("status")?.set("fulfilled")
 		} catch (e) {
-			value.status?.modify(x => ({...x, ...createPromiseStatusRejected(e)}))
+			value.status?.modify(x => ({ ...x, ...createPromiseStatusRejected(e) }))
 		}
 	}
 }

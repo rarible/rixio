@@ -12,7 +12,11 @@ describe("lift", () => {
 		const text = Math.random().toString()
 		const obs = new ReplaySubject<string>(1)
 		obs.next(text)
-		const r = render(<span data-testid="value"><LiftedDiv value={obs}/></span>)
+		const r = render(
+			<span data-testid="value">
+				<LiftedDiv value={obs} />
+			</span>
+		)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 		const nextText = Math.random().toString()
 		act(() => obs.next(nextText))

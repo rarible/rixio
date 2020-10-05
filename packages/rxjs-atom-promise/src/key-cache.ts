@@ -20,12 +20,10 @@ export interface ListDataLoader<K, V> {
 }
 
 class DefaultListDataLoader<K, V> implements ListDataLoader<K, V> {
-	constructor(private readonly loader: DataLoader<K, V>) { }
+	constructor(private readonly loader: DataLoader<K, V>) {}
 
 	loadList(ids: K[]) {
-		return Promise.all(
-			ids.map(id => this.loader.load(id).then(v => [id, v] as [K, V])),
-		)
+		return Promise.all(ids.map(id => this.loader.load(id).then(v => [id, v] as [K, V])))
 	}
 }
 
@@ -45,7 +43,7 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	constructor(
 		private readonly map: Atom<IM<K, PromiseState<V>>>,
 		private readonly loader: DataLoader<K, V>,
-		listLoader?: ListDataLoader<K, V>,
+		listLoader?: ListDataLoader<K, V>
 	) {
 		this.mapLoader = listLoader || new DefaultListDataLoader(loader)
 	}
@@ -104,13 +102,13 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 export function byKey<K, V>(key: K): Prism<IM<K, V>, V> {
 	return Prism.create(
 		map => map.get(key),
-		(v, map) => map.set(key, v),
+		(v, map) => map.set(key, v)
 	)
 }
 
 export function byKeyWithDefault<K, V>(key: K, defaultValue: V): Lens<IM<K, V>, V> {
 	return Lens.create(
 		map => map.get(key) || defaultValue,
-		(v, map) => map.set(key, v),
+		(v, map) => map.set(key, v)
 	)
 }

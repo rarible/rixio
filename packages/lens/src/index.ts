@@ -9,9 +9,7 @@
  *
  * @module
  */
-import {
-	Lens, Prism, Optic,
-} from "./base"
+import { Lens, Prism, Optic } from "./base"
 
 // This import adds JSON-specific lens functions to the Lens
 // namespace, in style of RxJS.
@@ -28,6 +26,4 @@ import "./json"
 
 import { structEq, Option } from "./utils"
 
-export {
-	Lens, Prism, Optic, structEq, Option,
-}
+export { Lens, Prism, Optic, structEq, Option }

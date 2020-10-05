@@ -18,7 +18,7 @@ export class RxLift<P extends object> extends RxWrapperBase<P, RxLiftProps<P>> {
 
 export function lift<P extends object>(component: ComponentType<P>): React.FC<Lifted<P>> {
 	function LiftedComponent(props: Lifted<P>) {
-		return <RxLift component={component} props={props}/>
+		return <RxLift component={component} props={props} />
 	}
 
 	LiftedComponent.displayName = `lifted(${component.displayName})`

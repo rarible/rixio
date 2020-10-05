@@ -19,7 +19,11 @@ describe("useRxWithStatus", () => {
 			}
 		}
 
-		const r = render(<span data-testid="test"><Test value={subj}/></span>)
+		const r = render(
+			<span data-testid="test">
+				<Test value={subj} />
+			</span>
+		)
 		expect(r.getByTestId("test")).toHaveTextContent("pending")
 		const num = Math.random()
 		act(() => subj.next(num))
@@ -34,7 +38,11 @@ describe("useRxWithStatus", () => {
 			const raw = useRxWithStatus(value)
 			return <>{raw.status}</>
 		}
-		const r = render(<span data-testid="test"><Test value={s}/></span>)
+		const r = render(
+			<span data-testid="test">
+				<Test value={s} />
+			</span>
+		)
 		act(() => s.error(new Error("thrown")))
 		await waitFor(() => {
 			expect(r.getByTestId("test")).toHaveTextContent("rejected")
