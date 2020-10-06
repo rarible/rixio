@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/roborox/rixio/compare/@rixio/lens@0.3.0...@rixio/lens@0.3.1) (2020-10-06)
+
+
+### Bug Fixes
+
+* bump ([9c90a3c](https://github.com/roborox/rixio/commit/9c90a3cc276a8668b5ee54783edb7cba94ead5d3))
+
+
+
+
+
 # [0.3.0](https://github.com/roborox/rixio/compare/@rixio/lens@0.2.1...@rixio/lens@0.3.0) (2020-10-06)
 
 
