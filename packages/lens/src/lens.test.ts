@@ -30,6 +30,7 @@ describe("identity", () => {
 })
 
 describe("json", () => {
+
 	describe("simple", () => {
 		const a = Lens.key("a")
 		const b = Lens.key("b")
@@ -159,4 +160,5 @@ describe("json", () => {
 
 		testLens<typeof s, typeof s["b"]>("type safe key 2", Lens.key<typeof s>()("b"), s, "6", "7", "hello")
 	})
+
 })
