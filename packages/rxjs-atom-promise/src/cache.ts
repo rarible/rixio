@@ -9,11 +9,7 @@ export interface Cache<T> {
 }
 
 export class CacheImpl<T> implements Cache<T> {
-	constructor(
-		private readonly _atom: Atom<PromiseState<T>>,
-		private readonly _loader: () => Promise<T>,
-	) {
-	}
+	constructor(private readonly _atom: Atom<PromiseState<T>>, private readonly _loader: () => Promise<T>) {}
 
 	get atom(): Atom<PromiseState<T>> {
 		return this._atom

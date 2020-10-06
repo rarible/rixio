@@ -24,14 +24,17 @@ describe("save", () => {
 })
 
 export type ApiData = {
-	id: string,
+	id: string
 	value: number
 }
 
-export const apiItems = new Array(100).fill(1).map((_, index) => ({
-	id: index.toString(),
-	value: index,
-}) as ApiData)
+export const apiItems = new Array(100).fill(1).map(
+	(_, index) =>
+		({
+			id: index.toString(),
+			value: index,
+		} as ApiData)
+)
 
 export type LoadPageContinuation = number
 

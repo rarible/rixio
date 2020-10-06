@@ -15,17 +15,9 @@
     "atom"
   ],
   "scripts": {
-    "build": "npm run lint && npm run build-lib",
-    "build-lib": "rimraf ./build && tsc && npm run copy-assets",
-    "copy-json-to-lib": "cpx \"./src/**/*.json\" ./build",
-    "copy-assets": "npm run copy-json-to-lib",
-    "test": "jest",
-    "lint:js": "eslint --ext .js,.jsx,.ts,.tsx ./",
-    "lint:types": "tsc --noEmit",
-    "lint": "npm run lint:js && npm run lint:types",
-    "lint:fix": "eslint --ext .js,.ts,.ts,.tsx ./ --fix --quiet",
-    "ci": "sh ./scripts/ci.sh",
-    "release": "sh ./scripts/release.sh"
+    "build": "rimraf ./build && tsc",
+    "test": "jest --silent",
+    "verify": "tsc --noEmit"
   },
   "license": "Apache-2.0",
   "repository": {
@@ -38,18 +30,16 @@
   "devDependencies": {
     "@rixio/rxjs-atom": "^0.2.1",
     "@rixio/rxjs-react": "^0.3.2",
-    "@roborox/eslint-config-default": "2.1.4",
-    "@testing-library/jest-dom": "5.10.1",
-    "@testing-library/react": "10.2.1",
-    "@types/jest": "26.0.0",
-    "eslint": "7.2.0",
+    "@testing-library/jest-dom": "5.11.4",
+    "@testing-library/react": "11.0.4",
+    "@types/jest": "26.0.14",
     "immutable": "4.0.0-rc.12",
-    "jest": "26.0.1",
+    "jest": "26.4.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "rxjs": "6.5.5",
-    "ts-jest": "26.1.1",
-    "typescript": "3.9.5"
+    "ts-jest": "26.4.1",
+    "typescript": "4.0.3"
   },
   "peerDependencies": {
     "@rixio/lens": ">= 0.0.1",

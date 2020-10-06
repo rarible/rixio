@@ -2,7 +2,9 @@ import { Observable, PartialObserver } from "rxjs"
 import { useEffect } from "react"
 
 export function useSubscription<T>(
-	observable: Observable<T>, observer?: PartialObserver<T> | ((value: T) => void), deps: any[] = [],
+	observable: Observable<T>,
+	observer?: PartialObserver<T> | ((value: T) => void),
+	deps: any[] = []
 ) {
 	useEffect(() => {
 		if (typeof observer === "function") {

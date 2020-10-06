@@ -11,7 +11,7 @@ export type PromiseStatusPending = {
 	status: "pending"
 }
 export type PromiseStatusRejected = {
-	status: "rejected",
+	status: "rejected"
 	error: any
 }
 export type PromiseStatus = PromiseStatusIdle | PromiseStatusPending | PromiseStatusFulfilled | PromiseStatusRejected
@@ -50,7 +50,7 @@ export const createPromiseStatePending = <T>(emptyValue?: T): PromiseState<T> =>
 })
 
 export function mapPromiseState<F, T>(mapper: (value: F) => T): (state: PromiseState<F>) => PromiseState<T> {
-	return (state) => {
+	return state => {
 		let value: T | undefined
 		if (state.value) {
 			value = mapper(state.value)
@@ -60,10 +60,12 @@ export function mapPromiseState<F, T>(mapper: (value: F) => T): (state: PromiseS
 }
 
 export async function getFinalValue<T>(state$: Observable<PromiseState<T>>) {
-	const result = await state$.pipe(
-		filter(x => x.status === "rejected" || x.status === "fulfilled"),
-		first(),
-	).toPromise()
+	const result = await state$
+		.pipe(
+			filter(x => x.status === "rejected" || x.status === "fulfilled"),
+			first()
+		)
+		.toPromise()
 	switch (result.status) {
 		case "rejected":
 			return Promise.reject(result.error)

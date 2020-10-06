@@ -5,35 +5,29 @@
  * @module
  */
 
-import {
-	structEq,
-	setKey,
-	conservatively,
-	findIndex,
-	Option,
-} from "./utils"
+import { structEq, setKey, conservatively, findIndex, Option } from "./utils"
 
 import { Lens, Prism } from "./base"
 
 // @NOTE only need this interface to add JSDocs for this call.
 export interface KeyImplFor<TObject> {
 	/**
-   * Create a lens focusing on a key of an object.
-   *
-   * Requires two subsequent calls, first with only a type argument and no function
-   * arguments and second with the key argument.
-   *
-   * This enables better auto-completion, and is required because TypeScript does not
-   * allow to specify only some of the type arguments.
-   *
-   * This is the second call, where you supply the key argument.
-   * @example
-   * interface SomeObject {
-   *   someProp: number
-   * }
-   *
-   * const lens = Lens.key<SomeObject>()('someProp')
-   */
+	 * Create a lens focusing on a key of an object.
+	 *
+	 * Requires two subsequent calls, first with only a type argument and no function
+	 * arguments and second with the key argument.
+	 *
+	 * This enables better auto-completion, and is required because TypeScript does not
+	 * allow to specify only some of the type arguments.
+	 *
+	 * This is the second call, where you supply the key argument.
+	 * @example
+	 * interface SomeObject {
+	 *   someProp: number
+	 * }
+	 *
+	 * const lens = Lens.key<SomeObject>()('someProp')
+	 */
 	<K extends keyof TObject>(k: K): Lens<TObject, TObject[K]>
 }
 
@@ -82,22 +76,21 @@ export function keyImpl<TObject = any>(): KeyImplFor<TObject>
 
 export function keyImpl<TObject>(k?: string) {
 	return k === undefined
-	// type-safe key
-		? <K extends keyof TObject>(k: K): Lens<TObject, TObject[K]> =>
-			Lens.create<TObject, TObject[K]>(
-				(s: TObject) => s[k],
-				(v: TObject[K], s: TObject) => setKey(k, v, s),
-			)
-	// untyped key
-		: Lens.create(
-			(s: { [k: string]: any }) => s[k] as Option<any>,
-			(v: any, s: { [k: string]: any }) => setKey(k, v, s),
-		)
+		? // type-safe key
+		  <K extends keyof TObject>(k: K): Lens<TObject, TObject[K]> =>
+				Lens.create<TObject, TObject[K]>(
+					(s: TObject) => s[k],
+					(v: TObject[K], s: TObject) => setKey(k, v, s)
+				)
+		: // untyped key
+		  Lens.create(
+				(s: { [k: string]: any }) => s[k] as Option<any>,
+				(v: any, s: { [k: string]: any }) => setKey(k, v, s)
+		  )
 }
 
 export function indexImpl<TItem>(i: number): Prism<TItem[], TItem> {
-	if (i < 0)
-		throw new TypeError(`${i} is not a valid array index, expected >= 0`)
+	if (i < 0) throw new TypeError(`${i} is not a valid array index, expected >= 0`)
 
 	return Prism.create(
 		(xs: TItem[]) => xs[i] as Option<TItem>,
@@ -109,7 +102,7 @@ export function indexImpl<TItem>(i: number): Prism<TItem[], TItem> {
 			} else {
 				return xs.slice(0, i).concat([v], xs.slice(i + 1))
 			}
-		},
+		}
 	)
 }
 
@@ -121,14 +114,14 @@ export function withDefaultImpl<T>(defaultValue: T): Lens<Option<T>, T> {
 function choose<T, U>(getLens: (state: T) => Lens<T, U>): Lens<T, U> {
 	return Lens.create(
 		(s: T) => getLens(s).get(s),
-		(v: U, s: T) => getLens(s).set(v, s),
+		(v: U, s: T) => getLens(s).set(v, s)
 	)
 }
 
 export function replaceImpl<T>(originalValue: T, newValue: T): Lens<T, T> {
 	return Lens.create<T, T>(
-		x => structEq(x, originalValue) ? newValue : x,
-		conservatively((y: T) => structEq(y, newValue) ? originalValue : y),
+		x => (structEq(x, originalValue) ? newValue : x),
+		conservatively((y: T) => (structEq(y, newValue) ? originalValue : y))
 	)
 }
 
@@ -136,9 +129,7 @@ export function findImpl<T>(predicate: (x: T) => boolean): Prism<T[], T> {
 	return choose((xs: T[]) => {
 		const i = findIndex(xs, predicate)
 
-		return i < 0
-			? Lens.nothing<T[], T>()
-			: Lens.index<T>(i)
+		return i < 0 ? Lens.nothing<T[], T>() : Lens.index<T>(i)
 	})
 }
 
@@ -151,32 +142,32 @@ declare module "./base" {
 		export let key: typeof keyImpl
 
 		/**
-     * Create a lens that looks at an element at particular index position
-     * in an array.
-     *
-     * @template TItem type of array elements
-     * @param i the index
-     * @returns a lens to an element at particular position in an array
-     */
+		 * Create a lens that looks at an element at particular index position
+		 * in an array.
+		 *
+		 * @template TItem type of array elements
+		 * @param i the index
+		 * @returns a lens to an element at particular position in an array
+		 */
 		export let index: typeof indexImpl
 
 		/**
-     * Create a lens that will show a given default value if the actual
-     * value is absent (is undefined).
-     *
-     * @param defaultValue default value to return
-     */
+		 * Create a lens that will show a given default value if the actual
+		 * value is absent (is undefined).
+		 *
+		 * @param defaultValue default value to return
+		 */
 		export let withDefault: typeof withDefaultImpl
 
 		/**
-     * Create a lens that replaces a given value with a new one.
-     */
+		 * Create a lens that replaces a given value with a new one.
+		 */
 		export let replace: typeof replaceImpl
 
 		/**
-     * Create a prism that focuses on an array's element that
-     * satisfies a given predicate.
-     */
+		 * Create a prism that focuses on an array's element that
+		 * satisfies a given predicate.
+		 */
 		export let find: typeof findImpl
 	}
 }

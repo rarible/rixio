@@ -1,6 +1,6 @@
 import { Observable } from "rxjs"
-import { PromiseState } from "./promise-state"
 import React, { ReactElement } from "react"
+import { PromiseState } from "./promise-state"
 import { useRxWithStatus } from "./use-rx-with-status"
 
 export type OrReactChild<T> = React.ReactChild | React.ReactChild[] | T
@@ -16,7 +16,14 @@ export interface RxProps<T> {
 	children?: OrReactChild<(value: T) => React.ReactNode>
 }
 
-export function Rx<T>({value$, idle, pending, rejected, children, handlePending = "every"}: RxProps<T>): ReactElement {
+export function Rx<T>({
+	value$,
+	idle,
+	pending,
+	rejected,
+	children,
+	handlePending = "every",
+}: RxProps<T>): ReactElement {
 	const plain: PromiseState<T | PromiseState<T>> = useRxWithStatus(value$)
 	let state: PromiseState<T>
 	if (plain.status === "fulfilled" && typeof plain.value === "object" && "status" in plain.value) {
@@ -39,10 +46,8 @@ export function Rx<T>({value$, idle, pending, rejected, children, handlePending 
 				case "every":
 					return <>{pending}</>
 				case "initial":
-					if (state.value === undefined)
-						return <>{pending}</>
-					else
-						return <>{returnSuccess(state.value, children)}</>
+					if (state.value === undefined) return <>{pending}</>
+					else return <>{returnSuccess(state.value, children)}</>
 				case "none":
 					return <></>
 			}

@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react"
 import { act, render, waitFor } from "@testing-library/react"
 import { Atom } from "@rixio/rxjs-atom"
-import { PromiseState, createPromiseStatePending, createPromiseStateFulfilled } from "./promise-state"
-import { Rx } from "./rx"
 import { R } from "@rixio/rxjs-react"
 import { ReplaySubject } from "rxjs"
+import { PromiseState, createPromiseStatePending, createPromiseStateFulfilled } from "./promise-state"
+import { Rx } from "./rx"
 
 describe("Rx", () => {
 	test("should display pending if is pending", async () => {
@@ -12,8 +12,10 @@ describe("Rx", () => {
 		const state$ = Atom.create(createPromiseStatePending<string>())
 		const r = render(
 			<span data-testid="test">
-				<Rx value$={state$} pending="pending">{v => <span>{v}</span>}</Rx>
-			</span>,
+				<Rx value$={state$} pending="pending">
+					{v => <span>{v}</span>}
+				</Rx>
+			</span>
 		)
 		await expect(r.getByTestId("test")).toHaveTextContent("pending")
 		await expect(r.getByTestId("test")).not.toHaveTextContent("content")
@@ -24,8 +26,10 @@ describe("Rx", () => {
 		const state$ = Atom.create(createPromiseStatePending<string>())
 		const r = render(
 			<span data-testid="test">
-				<Rx value$={state$} pending="pending" handlePending="none">{v => <span>{v}</span>}</Rx>
-			</span>,
+				<Rx value$={state$} pending="pending" handlePending="none">
+					{v => <span>{v}</span>}
+				</Rx>
+			</span>
 		)
 		await expect(r.getByTestId("test")).not.toHaveTextContent("pending")
 		act(() => state$.set(createPromiseStateFulfilled("content")))
@@ -37,8 +41,10 @@ describe("Rx", () => {
 		const state$ = Atom.create(createPromiseStatePending<string>())
 		const r = render(
 			<span data-testid="test">
-				<Rx value$={state$} pending="pending" handlePending="initial">{v => <span>{v}</span>}</Rx>
-			</span>,
+				<Rx value$={state$} pending="pending" handlePending="initial">
+					{v => <span>{v}</span>}
+				</Rx>
+			</span>
 		)
 		await expect(r.getByTestId("test")).toHaveTextContent("pending")
 		act(() => state$.set(createPromiseStateFulfilled("content")))
@@ -48,21 +54,21 @@ describe("Rx", () => {
 	})
 
 	test("should display content if loaded", async () => {
-		testPromiseState(state$ =>
+		testPromiseState(state$ => (
 			<span data-testid="test">
 				<Rx value$={state$} pending="pending">
 					{value => <span>{value}</span>}
 				</Rx>
-			</span>,
-		)
+			</span>
+		))
 	})
 
 	test("should display content if simple observable is used", async () => {
 		const subj = new ReplaySubject<number>(1)
 		const r = render(
 			<span data-testid="test">
-				<Rx value$={subj} pending="pending"/>
-			</span>,
+				<Rx value$={subj} pending="pending" />
+			</span>
 		)
 		expect(r.getByTestId("test")).toHaveTextContent("pending")
 		const number = Math.random()
@@ -78,8 +84,8 @@ describe("Rx", () => {
 		const subj = new ReplaySubject<number>(1)
 		const r = render(
 			<span data-testid="test">
-				<Rx value$={subj} pending="pending" rejected={x => x}/>
-			</span>,
+				<Rx value$={subj} pending="pending" rejected={x => x} />
+			</span>
 		)
 		expect(r.getByTestId("test")).toHaveTextContent("pending")
 		const text = Math.random().toString()
@@ -92,23 +98,23 @@ describe("Rx", () => {
 	})
 
 	test("should display content if children empty", async () => {
-		testPromiseState(state$ =>
+		testPromiseState(state$ => (
 			<span data-testid="test">
-				<Rx value$={state$} pending="pending"/>
-			</span>,
-		)
+				<Rx value$={state$} pending="pending" />
+			</span>
+		))
 	})
 
 	test("should work if render prop is not used", () => {
-		testPromiseState(state$ =>
+		testPromiseState(state$ => (
 			<span data-testid="test">
 				<Rx value$={state$} pending="pending">
 					simple text
 					<div>multiple elements</div>
 					<R.span>{state$.lens("value")}</R.span>
 				</Rx>
-			</span>,
-		)
+			</span>
+		))
 	})
 })
 

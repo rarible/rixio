@@ -1,8 +1,8 @@
 import { ReplaySubject, Observable, Subject } from "rxjs"
 import { render, waitFor } from "@testing-library/react"
 import { act } from "react-dom/test-utils"
-import { useRxWithStatus } from "./use-rx-with-status"
 import React from "react"
+import { useRxWithStatus } from "./use-rx-with-status"
 
 describe("useRxWithStatus", () => {
 	test("should work with emitted values", async () => {
@@ -19,7 +19,11 @@ describe("useRxWithStatus", () => {
 			}
 		}
 
-		const r = render(<span data-testid="test"><Test value={subj}/></span>)
+		const r = render(
+			<span data-testid="test">
+				<Test value={subj} />
+			</span>
+		)
 		expect(r.getByTestId("test")).toHaveTextContent("pending")
 		const num = Math.random()
 		act(() => subj.next(num))
@@ -34,7 +38,11 @@ describe("useRxWithStatus", () => {
 			const raw = useRxWithStatus(value)
 			return <>{raw.status}</>
 		}
-		const r = render(<span data-testid="test"><Test value={s}/></span>)
+		const r = render(
+			<span data-testid="test">
+				<Test value={s} />
+			</span>
+		)
 		act(() => s.error(new Error("thrown")))
 		await waitFor(() => {
 			expect(r.getByTestId("test")).toHaveTextContent("rejected")

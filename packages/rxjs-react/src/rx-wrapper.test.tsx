@@ -3,9 +3,13 @@ import { act, render } from "@testing-library/react"
 import { Observable, ReplaySubject } from "rxjs"
 import { RxWrapper } from "./rx-wrapper"
 
-type TestProps = { value1: string, value2: string }
+type TestProps = { value1: string; value2: string }
 const Test = ({ value1, value2 }: TestProps) => {
-	return <span data-testid="value">{value1} {value2}</span>
+	return (
+		<span data-testid="value">
+			{value1} {value2}
+		</span>
+	)
 }
 
 describe("RxWrapper", () => {
@@ -22,10 +26,10 @@ describe("RxWrapper", () => {
 
 	test("should react to props changes", () => {
 		const text = Math.random().toString()
-		const r = render(<RxWrapper component={Test} value1="static" value2={text}/>)
+		const r = render(<RxWrapper component={Test} value1="static" value2={text} />)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 		const nextText = Math.random().toString()
-		r.rerender(<RxWrapper component={Test} value1="static" value2={nextText}/>)
+		r.rerender(<RxWrapper component={Test} value1="static" value2={nextText} />)
 		expect(r.getByTestId("value")).toHaveTextContent(nextText)
 	})
 
@@ -39,7 +43,7 @@ describe("RxWrapper", () => {
 				count = count - 1
 			}
 		})
-		const r = render(<RxWrapper component={Test} value1={obs} value2="some"/>)
+		const r = render(<RxWrapper component={Test} value1={obs} value2="some" />)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 
 		const nextText = Math.random().toString()
@@ -47,9 +51,8 @@ describe("RxWrapper", () => {
 		obs2.next(nextText)
 		expect(count).toBe(1)
 
-		r.rerender(<RxWrapper component={Test} value1={obs2} value2="some"/>)
+		r.rerender(<RxWrapper component={Test} value1={obs2} value2="some" />)
 		expect(r.getByTestId("value")).toHaveTextContent(nextText)
 		expect(count).toBe(0)
 	})
-
 })

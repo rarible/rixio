@@ -1,6 +1,6 @@
-import { rxObject } from "./rx-object"
 import { first } from "rxjs/operators"
 import { of } from "rxjs"
+import { rxObject } from "./rx-object"
 
 describe("rxObject", () => {
 	test("should work with plain objects", async () => {
@@ -10,7 +10,9 @@ describe("rxObject", () => {
 
 	test("should work with one observable", async () => {
 		const num = Math.random()
-		const value = await rxObject({ key: "value", obs: of(num) }).pipe(first()).toPromise()
+		const value = await rxObject({ key: "value", obs: of(num) })
+			.pipe(first())
+			.toPromise()
 		expect(value.key).toBe("value")
 		expect(value.obs).toBe(num)
 	})
@@ -18,10 +20,11 @@ describe("rxObject", () => {
 	test("should work with some observables", async () => {
 		const num = Math.random()
 		const num2 = Math.random()
-		const value = await rxObject({ key: "value", obs: of(num), obs2: of(num2) }).pipe(first()).toPromise()
+		const value = await rxObject({ key: "value", obs: of(num), obs2: of(num2) })
+			.pipe(first())
+			.toPromise()
 		expect(value.key).toBe("value")
 		expect(value.obs).toBe(num)
 		expect(value.obs2).toBe(num2)
 	})
-
 })
