@@ -3,7 +3,13 @@ import { Lens } from "@rixio/lens"
 import { map } from "rxjs/operators"
 import { Lifted } from "./base"
 
-export function rxObject<T>(lifted: Lifted<T>): Observable<T> {
+
+type InferObservableInTuple<T extends any[]> = {
+	[I in keyof T]: T[I] extends Observable<infer T> ? T : T[I]
+}
+export declare function rxObject<T extends any[]>(lifted: [...T]): Observable<InferObservableInTuple<T>>
+export declare function rxObject<T>(lifted: Lifted<T>): Observable<T>
+export function rxObject(lifted: any): Observable<any> {
 	const observables: Observable<any>[] = []
 	const lenses: Lens<Lifted<T>, any>[] = []
 	walk(lifted, (value, lens) => {
