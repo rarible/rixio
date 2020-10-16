@@ -116,6 +116,18 @@ describe("Rx", () => {
 			</span>
 		))
 	})
+
+	test("should work with null atom's value", async () => {
+		const state$ = Atom.create(null)
+		const r = render(
+			<span data-testid="test">
+				<Rx value$={state$}>
+					{v => <span>{`${v}`}</span>}
+				</Rx>
+			</span>
+		)
+		await expect(r.getByTestId("test")).toHaveTextContent("null")
+	})
 })
 
 function testPromiseState(comp: (state: Atom<PromiseState<number>>) => ReactElement) {

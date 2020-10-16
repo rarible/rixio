@@ -26,7 +26,12 @@ export function Rx<T>({
 }: RxProps<T>): ReactElement {
 	const plain: PromiseState<T | PromiseState<T>> = useRxWithStatus(value$)
 	let state: PromiseState<T>
-	if (plain.status === "fulfilled" && typeof plain.value === "object" && "status" in plain.value) {
+	if (
+		plain.status === "fulfilled"
+		&& typeof plain.value === "object"
+		&& plain.value !== null
+		&& "status" in plain.value
+	) {
 		state = plain.value
 	} else {
 		state = plain as PromiseState<T>
