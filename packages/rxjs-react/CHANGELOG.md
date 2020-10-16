@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.4.1...@rixio/rxjs-react@0.5.0) (2020-10-16)
+
+
+### Bug Fixes
+
+* rxObject ([203efc1](https://github.com/roborox/rixio/commit/203efc1c7ef3c14563c33935c65bf93acc594f3c))
+
+
+### Features
+
+* better rxObject typings ([27419a7](https://github.com/roborox/rixio/commit/27419a7d54d99f5c6699914e5e3d7f1c66b264fc))
+* simplify typings ([c59423b](https://github.com/roborox/rixio/commit/c59423bd996bd8b28f38bab59258f1722e0ad2ca))
+
+
+
+
+
 ## [0.4.1](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.4.0...@rixio/rxjs-react@0.4.1) (2020-10-06)
 
 **Note:** Version bump only for package @rixio/rxjs-react

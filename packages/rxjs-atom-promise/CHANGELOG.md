@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/roborox/rixio/compare/@rixio/rxjs-atom-promise@0.3.1...@rixio/rxjs-atom-promise@0.4.0) (2020-10-16)
+
+
+### Bug Fixes
+
+* **rxjs-atom-promise:** atom with null value ([28db5a7](https://github.com/roborox/rixio/commit/28db5a7b780563eeb553aead0fe52d406939c831))
+
+
+### Features
+
+* reexport in index.ts ([d229908](https://github.com/roborox/rixio/commit/d229908885141fa5088fe0651054b439274483d7))
+* update mergePromiseStates typings ([44e20da](https://github.com/roborox/rixio/commit/44e20dad3a7856d11ce304c1478c48ab1975e982))
+* **rxjs-atom-promise:** add value null test to rx ([bdba69a](https://github.com/roborox/rixio/commit/bdba69ac5ddbae5df7623c57c4ee10dff1a7a835))
+* **rxjs-atom-promise:** export mergePromiseStates ([84f99ad](https://github.com/roborox/rixio/commit/84f99adfdd4a077fd84afeaf48fd9584f0d1a345))
+
+
+
+
+
 ## [0.3.1](https://github.com/roborox/rixio/compare/@rixio/rxjs-atom-promise@0.3.0...@rixio/rxjs-atom-promise@0.3.1) (2020-10-06)
 
 **Note:** Version bump only for package @rixio/rxjs-atom-promise
