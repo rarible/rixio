@@ -121,9 +121,7 @@ describe("Rx", () => {
 		const state$ = Atom.create(null)
 		const r = render(
 			<span data-testid="test">
-				<Rx value$={state$}>
-					{v => <span>{`${v}`}</span>}
-				</Rx>
+				<Rx value$={state$}>{v => <span>{`${v}`}</span>}</Rx>
 			</span>
 		)
 		await expect(r.getByTestId("test")).toHaveTextContent("null")

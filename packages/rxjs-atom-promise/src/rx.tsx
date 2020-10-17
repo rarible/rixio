@@ -27,10 +27,10 @@ export function Rx<T>({
 	const plain: PromiseState<T | PromiseState<T>> = useRxWithStatus(value$)
 	let state: PromiseState<T>
 	if (
-		plain.status === "fulfilled"
-		&& typeof plain.value === "object"
-		&& plain.value !== null
-		&& "status" in plain.value
+		plain.status === "fulfilled" &&
+		typeof plain.value === "object" &&
+		plain.value !== null &&
+		"status" in plain.value
 	) {
 		state = plain.value
 	} else {

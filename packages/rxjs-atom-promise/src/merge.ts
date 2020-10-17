@@ -12,8 +12,8 @@ type InferObservablePromiseStateInTuple<T extends any[]> = {
 	[I in keyof T]: T[I] extends Observable<PromiseState<infer T>> ? T : unknown
 }
 export function mergePromiseStates<Ts extends [...Observable<PromiseState<any>>[]]>(
-	array: [...Ts],
-): Observable<PromiseState<InferObservablePromiseStateInTuple<Ts>>>;
+	array: [...Ts]
+): Observable<PromiseState<InferObservablePromiseStateInTuple<Ts>>>
 export function mergePromiseStates(array: Observable<PromiseState<any>>[]): Observable<PromiseState<any>> {
 	return combineLatest(array).pipe(map(xs => ({ value: xs.map(x => x.value), ...mergePromiseStatuses(xs) })))
 }
