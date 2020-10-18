@@ -1,5 +1,6 @@
 export {
 	PromiseState,
+	PromiseStatus,
 	createPromiseStateIdle,
 	createPromiseStatePending,
 	createPromiseStateRejected,

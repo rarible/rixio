@@ -1,0 +1,44 @@
+{
+  "name": "@rixio/list",
+  "version": "0.1.0",
+  "keywords": [
+    "frp",
+    "lens",
+    "reactive",
+    "rx",
+    "rxjs",
+    "atom",
+    "list"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roborox/rixio.git"
+  },
+  "license": "Apache-2.0",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "/build"
+  ],
+  "scripts": {
+    "build": "rimraf ./build && tsc --project tsconfig-build.json",
+    "test": "jest",
+    "verify": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@rixio/rxjs-atom": "^0.3.1",
+    "@rixio/rxjs-atom-promise": "^0.4.0",
+    "@types/jest": "26.0.0",
+    "jest": "26.4.2",
+    "rxjs": "6.5.5",
+    "ts-jest": "26.4.1",
+    "typescript": "4.0.3"
+  },
+  "peerDependencies": {
+    "@rixio/lens": ">= 0.0.1",
+    "rxjs": ">= 6.5.0 < 7.0.0-0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
