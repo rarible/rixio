@@ -1,0 +1,59 @@
+{
+  "name": "@rixio/list-react-native",
+  "version": "0.1.0",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "/build"
+  ],
+  "keywords": [
+    "frp",
+    "lens",
+    "react",
+    "reactive",
+    "rx",
+    "rxjs",
+    "atom",
+    "list"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "rimraf ./build && tsc --project tsconfig-build.json",
+    "test": "jest --silent",
+    "verify": "tsc --noEmit"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roborox/rixio.git"
+  },
+  "devDependencies": {
+    "@babel/core": "7.11.6",
+    "@rixio/lens": "^0.3.1",
+    "@rixio/rxjs-react": "^0.5.0",
+    "@rixio/rxjs-atom-promise": "^0.4.0",
+    "@rixio/list": "^0.1.0",
+    "@testing-library/jest-native": "3.4.3",
+    "@types/jest": "26.0.14",
+    "@types/react": "16.9.37",
+    "@types/react-native": "0.62.13",
+    "@types/react-test-renderer": "16.9.2",
+    "jest": "26.4.2",
+    "react": "16.13.1",
+    "react-native": "0.62.2",
+    "react-native-testing-library": "2.1.0",
+    "react-test-renderer": "16.13.1",
+    "rxjs": "6.5.5",
+    "ts-jest": "26.4.1",
+    "typescript": "4.0.3"
+  },
+  "peerDependencies": {
+    "@rixio/lens": ">= 0.0.1",
+    "@rixio/rxjs-react": ">= 0.0.1",
+    "react": ">= 16.13.1",
+    "react-native": ">= 0.62.0",
+    "rxjs": ">= 6.5.0 < 7.0.0-0"
+  }
+}

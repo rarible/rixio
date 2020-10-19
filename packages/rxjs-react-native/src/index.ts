@@ -8,3 +8,4 @@ type FixedTextProps = Omit<TextProps, "children"> & {
 
 export const RxView = lift(View)
 export const RxText = lift(Text as ComponentType<FixedTextProps>)
+export { RxFlatList, RxFlatListProps, RxListRenderItem, RxListRenderItemInfo } from "./flat-list"
