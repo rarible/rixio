@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/roborox/rixio/compare/@rixio/rxjs-atom-promise@0.4.0...@rixio/rxjs-atom-promise@0.5.0) (2020-10-27)
+
+
+### Features
+
+* InfiniteList component ([e71abbc](https://github.com/roborox/rixio/commit/e71abbc4fdbcc962a37f00b152d7d6137e35e831))
+* InfiniteListState moved to separate package + loadNext added ([845d5a8](https://github.com/roborox/rixio/commit/845d5a8bc995078303000d58010ab7eae6204ce5))
+* RxFlatList added ([bd138c9](https://github.com/roborox/rixio/commit/bd138c924a75198e9d049feca5de4d98a2266bf2))
+
+
+
+
+
 # [0.4.0](https://github.com/roborox/rixio/compare/@rixio/rxjs-atom-promise@0.3.1...@rixio/rxjs-atom-promise@0.4.0) (2020-10-16)
 
 

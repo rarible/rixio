@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/roborox/rixio/compare/@rixio/lens@0.3.1...@rixio/lens@0.4.0) (2020-10-27)
+
+
+### Features
+
+* RxFlatList added ([bd138c9](https://github.com/roborox/rixio/commit/bd138c924a75198e9d049feca5de4d98a2266bf2))
+
+
+
+
+
 ## [0.3.1](https://github.com/roborox/rixio/compare/@rixio/lens@0.3.0...@rixio/lens@0.3.1) (2020-10-06)
 
 

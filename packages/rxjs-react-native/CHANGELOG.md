@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/roborox/rixio/compare/@rixio/rxjs-react-native@0.3.2...@rixio/rxjs-react-native@0.4.0) (2020-10-27)
+
+
+### Features
+
+* InfiniteFlatList ([0f71748](https://github.com/roborox/rixio/commit/0f71748f8e44ab110fdae952d9d37acced7e42eb))
+* InfiniteListState moved to separate package + loadNext added ([845d5a8](https://github.com/roborox/rixio/commit/845d5a8bc995078303000d58010ab7eae6204ce5))
+* RxFlatList added ([bd138c9](https://github.com/roborox/rixio/commit/bd138c924a75198e9d049feca5de4d98a2266bf2))
+
+
+
+
+
 ## [0.3.2](https://github.com/roborox/rixio/compare/@rixio/rxjs-react-native@0.3.1...@rixio/rxjs-react-native@0.3.2) (2020-10-16)
 
 **Note:** Version bump only for package @rixio/rxjs-react-native
