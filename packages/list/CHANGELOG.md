@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/roborox/rixio/compare/@rixio/list@0.2.0...@rixio/list@0.2.1) (2020-10-27)
+
+
+### Bug Fixes
+
+* export listStateIdle function ([8e7a399](https://github.com/roborox/rixio/commit/8e7a3995fe72774c43b2f6e2d6130a62bfb46799))
+
+
+
+
+
 # 0.2.0 (2020-10-27)
 
 
