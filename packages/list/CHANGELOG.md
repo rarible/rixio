@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/roborox/rixio/compare/@rixio/list@0.2.1...@rixio/list@0.2.2) (2020-10-27)
+
+
+### Bug Fixes
+
+* fix Rx problem with InfiniteList ([f53900e](https://github.com/roborox/rixio/commit/f53900e24e3ef392402b59cd2260f8d26febd383))
+
+
+
+
+
 ## [0.2.1](https://github.com/roborox/rixio/compare/@rixio/list@0.2.0...@rixio/list@0.2.1) (2020-10-27)
 
 
