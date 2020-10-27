@@ -24,9 +24,11 @@
     "test": "jest",
     "verify": "tsc --noEmit"
   },
+  "dependencies": {
+    "@rixio/rxjs-atom": "^0.3.2"
+  },
   "devDependencies": {
     "@hapi/joi": "17.1.1",
-    "@rixio/rxjs-atom": "^0.3.2",
     "@types/hapi__joi": "17.1.6",
     "@types/jest": "26.0.0",
     "jest": "26.4.2",
@@ -35,7 +37,6 @@
     "typescript": "4.0.3"
   },
   "peerDependencies": {
-    "@rixio/lens": ">= 0.0.1",
     "rxjs": ">= 6.5.0 < 7.0.0-0"
   },
   "publishConfig": {

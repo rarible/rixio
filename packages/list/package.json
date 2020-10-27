@@ -25,9 +25,10 @@
     "test": "jest",
     "verify": "tsc --noEmit"
   },
+  "dependencies": {
+    "@rixio/rxjs-atom-promise": "^0.5.2"
+  },
   "devDependencies": {
-    "@rixio/rxjs-atom": "^0.3.2",
-    "@rixio/rxjs-atom-promise": "^0.5.2",
     "@types/jest": "26.0.0",
     "jest": "26.4.2",
     "queueing-subject": "0.3.4",
@@ -36,7 +37,6 @@
     "typescript": "4.0.3"
   },
   "peerDependencies": {
-    "@rixio/lens": ">= 0.0.1",
     "rxjs": ">= 6.5.0 < 7.0.0-0"
   },
   "publishConfig": {

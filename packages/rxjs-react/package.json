@@ -28,8 +28,11 @@
   "publishConfig": {
     "access": "public"
   },
+  "dependencies": {
+    "@rixio/lens": "^0.4.0"
+  },
   "devDependencies": {
-    "@rixio/lens": "^0.4.0",
+    "@rixio/rxjs-atom": "^0.3.2",
     "@testing-library/jest-dom": "5.11.4",
     "@testing-library/react": "11.0.4",
     "@types/jest": "26.0.14",
@@ -43,7 +46,6 @@
     "typescript": "4.0.3"
   },
   "peerDependencies": {
-    "@rixio/lens": ">= 0.0.1",
     "react": ">= 16.13.1",
     "rxjs": ">= 6.5.0 < 7.0.0-0"
   }
