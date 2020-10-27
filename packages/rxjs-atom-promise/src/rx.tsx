@@ -30,7 +30,8 @@ export function Rx<T>({
 		plain.status === "fulfilled" &&
 		typeof plain.value === "object" &&
 		plain.value !== null &&
-		"status" in plain.value
+		"status" in plain.value &&
+		!("items" in plain.value)
 	) {
 		state = plain.value
 	} else {

@@ -29,6 +29,7 @@ const Renderable = ({ loader, state }: RenderableProps) => (
 	>
 		{load => (
 			<section>
+				<Rx value$={state}>{s => s.items.map(x => <span>{x}</span>)}</Rx>
 				<Rx
 					value$={reactiveList(state.view("items"), x => (
 						<span key={x} data-testid={`item_${x}`}>
@@ -50,6 +51,7 @@ const Renderable = ({ loader, state }: RenderableProps) => (
 type RequestData = [number | null, Subject<[number[], number]>]
 
 const perPage = 5
+
 async function sendNextPage(requests: Observable<RequestData>) {
 	const [page, subject] = await requests.pipe(first()).toPromise()
 	const startPage = page || 0
