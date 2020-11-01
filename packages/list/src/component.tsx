@@ -51,7 +51,10 @@ export function InfiniteList<T, C>({ state$, loader, pending, children, rejected
 	}, [load, initialStatus])
 
 	if (initialStatus.status === "pending") {
-		return <>{pending}</>
+		if (pending) {
+			return <>{pending}</>
+		}
+		return <>{children(load)}</>
 	} else if (initialStatus.status === "rejected") {
 		if (typeof rejected === "function") {
 			return (
