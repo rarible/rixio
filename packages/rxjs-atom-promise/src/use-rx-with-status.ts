@@ -1,25 +1,26 @@
-import { Observable, concat, of } from "rxjs"
-import { map, catchError } from "rxjs/operators"
-import { useRx } from "@rixio/rxjs-react"
-import { useMemo } from "react"
+import { Observable } from "rxjs"
+import { useSubscription, getImmediate } from "@rixio/rxjs-react"
+import { useState } from "react"
 import {
-	PromiseState,
-	createPromiseStatePending,
 	createPromiseStateFulfilled,
+	createPromiseStatePending,
 	createPromiseStateRejected,
+	PromiseState,
 } from "./promise-state"
 
-export function useRxWithStatus<T>(initial: Observable<T>): PromiseState<T> {
-	const observable = useMemo(() => asPromiseState(initial), [initial])
-	return useRx(observable)
-}
-
-function asPromiseState<T>(observable: Observable<T>): Observable<PromiseState<T>> {
-	return concat(
-		of(createPromiseStatePending<T>()),
-		observable.pipe(
-			map(createPromiseStateFulfilled),
-			catchError(err => of(createPromiseStateRejected<T>(err)))
-		)
-	)
+export function useRxWithStatus<T>(observable: Observable<T>): PromiseState<T> {
+	const [state, setState] = useState<PromiseState<T>>(() => {
+		const [value, valueSet] = getImmediate(observable)
+		if (valueSet) return createPromiseStateFulfilled(value as T)
+		return createPromiseStatePending()
+	})
+	useSubscription(observable, {
+		next(value: T): void {
+			setState(createPromiseStateFulfilled(value))
+		},
+		error(err: any): void {
+			setState(createPromiseStateRejected(err))
+		},
+	})
+	return state
 }

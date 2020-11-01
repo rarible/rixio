@@ -24,19 +24,7 @@ export function Rx<T>({
 	children,
 	handlePending = "every",
 }: RxProps<T>): ReactElement {
-	const plain: PromiseState<T | PromiseState<T>> = useRxWithStatus(value$)
-	let state: PromiseState<T>
-	if (
-		plain.status === "fulfilled" &&
-		typeof plain.value === "object" &&
-		plain.value !== null &&
-		"status" in plain.value &&
-		!("items" in plain.value)
-	) {
-		state = plain.value
-	} else {
-		state = plain as PromiseState<T>
-	}
+	const state = extractSimple(useRxWithStatus(value$))
 	switch (state.status) {
 		case "idle":
 			return <>{idle}</>
@@ -57,6 +45,18 @@ export function Rx<T>({
 				case "none":
 					return <></>
 			}
+	}
+}
+
+function extractSimple<T>(full: PromiseState<T | PromiseState<T>>): PromiseState<T> {
+	if (full.status === "fulfilled") {
+		if (full.value !== null && typeof full.value === "object" && "status" in full.value && "value" in full.value) {
+			return full.value
+		} else {
+			return full as PromiseState<T>
+		}
+	} else {
+		return full as PromiseState<T>
 	}
 }
 
