@@ -269,10 +269,6 @@ export abstract class AbstractAtom<T> extends AbstractReadOnlyAtom<T> implements
 }
 
 export class JsonAtom<T> extends AbstractAtom<T> {
-	constructor(initialValue: T) {
-		super(initialValue)
-	}
-
 	get() {
 		return this.getValue()
 	}

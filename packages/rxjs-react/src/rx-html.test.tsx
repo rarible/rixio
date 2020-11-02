@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import { act, render } from "@testing-library/react"
 import { ReplaySubject } from "rxjs"
 import React from "react"

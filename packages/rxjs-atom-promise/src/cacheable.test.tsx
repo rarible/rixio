@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import { Atom } from "@rixio/rxjs-atom"
 import { act, render, waitFor, fireEvent } from "@testing-library/react"
 import React, { ReactElement, useRef } from "react"

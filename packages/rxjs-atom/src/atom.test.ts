@@ -759,6 +759,7 @@ describe("atom", () => {
 				}
 			})
 
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const _ = Atom.fromObservable(src)
 
 			expect(subscribed).toEqual(false)
