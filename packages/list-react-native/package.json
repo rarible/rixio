@@ -20,7 +20,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rimraf ./build && tsc --project tsconfig-build.json",
+    "build": "tsc --project tsconfig-build.json",
+    "clean": "rimraf ./build",
     "test": "jest --silent --passWithNoTests",
     "verify": "tsc --noEmit"
   },
@@ -45,7 +46,7 @@
     "react-test-renderer": "16.13.1",
     "rxjs": "6.5.5",
     "ts-jest": "26.4.1",
-    "typescript": "4.0.3"
+    "typescript": "4.0.5"
   },
   "peerDependencies": {
     "@rixio/rxjs-react": ">= 0.0.1",

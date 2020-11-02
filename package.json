@@ -6,6 +6,7 @@
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap && lerna link",
+    "clean": "yarn workspaces run clean",
     "build-all": "yarn run build-lens && yarn run build-rxjs-atom && yarn run build-rxjs-react && yarn run build-rxjs-atom-promise && yarn run build-list && yarn run build-rxjs-react-native && yarn run build-form-store && yarn run build-list-react-native",
     "build-lens": "yarn workspace @rixio/lens run build",
     "build-rxjs-atom": "yarn workspace @rixio/rxjs-atom run build",
