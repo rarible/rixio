@@ -8,8 +8,7 @@ import { PromiseState, createPromiseStatePending, createPromiseStateFulfilled } 
 import { Rx } from "./rx"
 
 describe("Rx", () => {
-	test("should display pending if is pending", async () => {
-		expect.assertions(2)
+	test("should display pending if is pending", () => {
 		const state$ = Atom.create(createPromiseStatePending<string>())
 		const r = render(
 			<span data-testid="test">
@@ -18,12 +17,11 @@ describe("Rx", () => {
 				</Rx>
 			</span>
 		)
-		await expect(r.getByTestId("test")).toHaveTextContent("pending")
-		await expect(r.getByTestId("test")).not.toHaveTextContent("content")
+		expect(r.getByTestId("test")).toHaveTextContent("pending")
+		expect(r.getByTestId("test")).not.toHaveTextContent("content")
 	})
 
-	test("should not display pending if handlePending=none", async () => {
-		expect.assertions(2)
+	test("should not display pending if handlePending=none", () => {
 		const state$ = Atom.create(createPromiseStatePending<string>())
 		const r = render(
 			<span data-testid="test">
@@ -32,13 +30,12 @@ describe("Rx", () => {
 				</Rx>
 			</span>
 		)
-		await expect(r.getByTestId("test")).not.toHaveTextContent("pending")
+		expect(r.getByTestId("test")).not.toHaveTextContent("pending")
 		act(() => state$.set(createPromiseStateFulfilled("content")))
-		await expect(r.getByTestId("test")).toHaveTextContent("content")
+		expect(r.getByTestId("test")).toHaveTextContent("content")
 	})
 
-	test("should display pending only first time when handlePending=initial", async () => {
-		expect.assertions(3)
+	test("should display pending only first time when handlePending=initial", () => {
 		const state$ = Atom.create(createPromiseStatePending<string>())
 		const r = render(
 			<span data-testid="test">
@@ -47,15 +44,15 @@ describe("Rx", () => {
 				</Rx>
 			</span>
 		)
-		await expect(r.getByTestId("test")).toHaveTextContent("pending")
+		expect(r.getByTestId("test")).toHaveTextContent("pending")
 		act(() => state$.set(createPromiseStateFulfilled("content")))
-		await expect(r.getByTestId("test")).toHaveTextContent("content")
+		expect(r.getByTestId("test")).toHaveTextContent("content")
 		act(() => state$.lens("status").set("pending"))
-		await expect(r.getByTestId("test")).not.toHaveTextContent("pending")
+		expect(r.getByTestId("test")).not.toHaveTextContent("pending")
 	})
 
-	test("should display content if loaded", async () => {
-		testPromiseState(state$ => (
+	test("should display content if loaded", () => {
+		return testPromiseState(state$ => (
 			<span data-testid="test">
 				<Rx value$={state$} pending="pending">
 					{value => <span>{value}</span>}
@@ -64,7 +61,7 @@ describe("Rx", () => {
 		))
 	})
 
-	test("should display content if simple observable is used", async () => {
+	test("should display content if simple observable is used", () => {
 		const subj = new ReplaySubject<number>(1)
 		const r = render(
 			<span data-testid="test">
@@ -76,12 +73,12 @@ describe("Rx", () => {
 		act(() => {
 			subj.next(number)
 		})
-		await waitFor(() => {
+		return waitFor(() => {
 			expect(r.getByTestId("test")).toHaveTextContent(number.toString())
 		})
 	})
 
-	test("should display error if simple observable is used", async () => {
+	test("should display error if simple observable is used", () => {
 		const subj = new ReplaySubject<number>(1)
 		const r = render(
 			<span data-testid="test">
@@ -91,15 +88,17 @@ describe("Rx", () => {
 		expect(r.getByTestId("test")).toHaveTextContent("pending")
 		const text = Math.random().toString()
 		act(() => {
-			subj.error(text)
+			try {
+				subj.error(text)
+			} catch (_) {}
 		})
-		await waitFor(() => {
+		return waitFor(() => {
 			expect(r.getByTestId("test")).toHaveTextContent(text)
 		})
 	})
 
-	test("should display content if children empty", async () => {
-		testPromiseState(state$ => (
+	test("should display content if children empty", () => {
+		return testPromiseState(state$ => (
 			<span data-testid="test">
 				<Rx value$={state$} pending="pending" />
 			</span>
@@ -107,7 +106,7 @@ describe("Rx", () => {
 	})
 
 	test("should work if render prop is not used", () => {
-		testPromiseState(state$ => (
+		return testPromiseState(state$ => (
 			<span data-testid="test">
 				<Rx value$={state$} pending="pending">
 					simple text
@@ -118,14 +117,14 @@ describe("Rx", () => {
 		))
 	})
 
-	test("should work with null atom's value", async () => {
+	test("should work with null atom's value", () => {
 		const state$ = Atom.create(null)
 		const r = render(
 			<span data-testid="test">
 				<Rx value$={state$}>{v => <span>{`${v}`}</span>}</Rx>
 			</span>
 		)
-		await expect(r.getByTestId("test")).toHaveTextContent("null")
+		return expect(r.getByTestId("test")).toHaveTextContent("null")
 	})
 })
 
@@ -137,5 +136,7 @@ function testPromiseState(comp: (state: Atom<PromiseState<number>>) => ReactElem
 	act(() => {
 		state$.set(createPromiseStateFulfilled(number))
 	})
-	expect(r.getByTestId("test")).toHaveTextContent(number.toString())
+	return waitFor(() => {
+		expect(r.getByTestId("test")).toHaveTextContent(number.toString())
+	})
 }

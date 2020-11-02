@@ -32,8 +32,8 @@
     "@rixio/rxjs-react": "^0.6.2"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "5.11.4",
-    "@testing-library/react": "11.0.4",
+    "@testing-library/jest-dom": "5.11.5",
+    "@testing-library/react": "11.1.0",
     "@types/jest": "26.0.14",
     "immutable": "4.0.0-rc.12",
     "jest": "26.4.2",
