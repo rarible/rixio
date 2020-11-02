@@ -29,7 +29,7 @@ const Renderable = ({ loader, state }: RenderableProps) => (
 	>
 		{load => (
 			<section>
-				<Rx value$={state}>{s => s.items.map(x => <span>{x}</span>)}</Rx>
+				<Rx value$={state}>{s => s.items.map((x, i) => <span key={i}>{x}</span>)}</Rx>
 				<Rx
 					value$={reactiveList(state.view("items"), x => (
 						<span key={x} data-testid={`item_${x}`}>

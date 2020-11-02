@@ -51,11 +51,33 @@ export const createPromiseStatePending = <T>(emptyValue?: T): PromiseState<T> =>
 
 export function mapPromiseState<F, T>(mapper: (value: F) => T): (state: PromiseState<F>) => PromiseState<T> {
 	return state => {
-		let value: T | undefined
-		if (state.value) {
-			value = mapper(state.value)
+		if (state.status === "fulfilled") {
+			return {
+				status: state.status,
+				value: mapper(state.value),
+			} as PromiseState<T>
 		}
-		return { ...state, value: value as T }
+		return {
+			status: state.status,
+			value: state.value as any,
+		} as PromiseState<T>
+	}
+}
+
+export function mapPromiseStateAsync<F, T>(
+	mapper: (value: F) => Promise<T>
+): (state: PromiseState<F>) => Promise<PromiseState<T>> {
+	return async state => {
+		if (state.status === "fulfilled") {
+			return {
+				status: state.status,
+				value: await mapper(state.value),
+			} as PromiseState<T>
+		}
+		return {
+			status: state.status,
+			value: state.value as any,
+		} as PromiseState<T>
 	}
 }
 
