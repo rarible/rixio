@@ -1,6 +1,6 @@
 {
   "name": "@rixio/rxjs-atom",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -29,7 +29,7 @@
     "url": "https://github.com/roborox/rixio.git"
   },
   "dependencies": {
-    "@rixio/lens": "^0.4.0"
+    "@rixio/lens": "^0.4.1"
   },
   "devDependencies": {
     "@types/jest": "26.0.0",

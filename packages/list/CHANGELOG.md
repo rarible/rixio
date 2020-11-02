@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.7](https://github.com/roborox/rixio/compare/@rixio/list@0.2.6...@rixio/list@0.2.7) (2020-11-02)
+
+
+### Bug Fixes
+
+* rework getImmediate, useRxWithStatus ([e409f67](https://github.com/roborox/rixio/commit/e409f6706e13fde0d73407adfba276db71c8e402))
+
+
+
+
+
 ## [0.2.6](https://github.com/roborox/rixio/compare/@rixio/list@0.2.5...@rixio/list@0.2.6) (2020-11-01)
 
 **Note:** Version bump only for package @rixio/list

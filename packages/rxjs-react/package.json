@@ -1,6 +1,6 @@
 {
   "name": "@rixio/rxjs-react",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -30,10 +30,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@rixio/lens": "^0.4.0"
+    "@rixio/lens": "^0.4.1"
   },
   "devDependencies": {
-    "@rixio/rxjs-atom": "^0.3.3",
+    "@rixio/rxjs-atom": "^0.3.4",
     "@testing-library/jest-dom": "5.11.4",
     "@testing-library/react": "11.0.4",
     "@types/jest": "26.0.14",

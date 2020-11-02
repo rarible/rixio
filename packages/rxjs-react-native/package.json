@@ -1,6 +1,6 @@
 {
   "name": "@rixio/rxjs-react-native",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -30,8 +30,8 @@
     "url": "https://github.com/roborox/rixio.git"
   },
   "dependencies": {
-    "@rixio/rxjs-atom": "^0.3.3",
-    "@rixio/rxjs-react": "^0.6.2"
+    "@rixio/rxjs-atom": "^0.3.4",
+    "@rixio/rxjs-react": "^0.6.3"
   },
   "devDependencies": {
     "@babel/core": "7.11.6",
