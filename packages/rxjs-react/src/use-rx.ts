@@ -3,22 +3,35 @@ import { Observable } from "rxjs"
 import { first } from "rxjs/operators"
 import { useSubscription } from "./use-subscription"
 
-export function getImmediate<T>(observable: Observable<T>): [T | null, boolean] {
-	let value: T | null = null
-	let valueSet: boolean = false
-	observable.pipe(first()).subscribe(next => {
-		value = next
-		valueSet = true
-	})
-	return [value, valueSet]
+export type ImmediateFulfilled<T> = {
+	status: "fulfilled"
+	value: T
+}
+
+export type Immediate<T> = ImmediateFulfilled<T> | { status: "pending" } | { status: "rejected"; error: any }
+
+export function getImmediate<T>(observable: Observable<T>): Immediate<T> {
+	let immediate: Immediate<T> = { status: "pending" }
+	observable.pipe(first()).subscribe(
+		value => {
+			immediate = { status: "fulfilled", value }
+		},
+		error => {
+			immediate = { status: "rejected", error }
+		}
+	)
+	return immediate
 }
 
 export function getImmediateOrThrow<T>(observable: Observable<T>): T {
-	const [value, valueSet] = getImmediate(observable)
-	if (!valueSet) {
+	const immediate = getImmediate(observable)
+	if (immediate.status === "rejected") {
+		throw immediate.error
+	}
+	if (immediate.status !== "fulfilled") {
 		throw new Error("Observable doesn't immediately emits value")
 	}
-	return value as T
+	return immediate.value
 }
 
 export function useRx<T>(observable: Observable<T>): T {

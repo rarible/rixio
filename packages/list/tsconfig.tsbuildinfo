@@ -1192,8 +1192,8 @@
         "affectsGlobalScope": false
       },
       "../rxjs-atom-promise/build/use-rx-with-status.d.ts": {
-        "version": "99d240cc6f73d8724bda288e766a142bf42bad94d9a0f970749784128aaa7125",
-        "signature": "99d240cc6f73d8724bda288e766a142bf42bad94d9a0f970749784128aaa7125",
+        "version": "b5bf87abe63fbfabed3f338ba658d871f32ca1f614679bb6fdc4c047d128dd6d",
+        "signature": "b5bf87abe63fbfabed3f338ba658d871f32ca1f614679bb6fdc4c047d128dd6d",
         "affectsGlobalScope": false
       },
       "../rxjs-atom-promise/build/merge.d.ts": {
@@ -1242,8 +1242,8 @@
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/use-rx.d.ts": {
-        "version": "f38f77612f84fa50302767f476716b7a36f5095962b0ae92f27a381f3ba3a8a8",
-        "signature": "f38f77612f84fa50302767f476716b7a36f5095962b0ae92f27a381f3ba3a8a8",
+        "version": "91800c33f07253300c98a67627316297a00d18bcaaef517ea2332fbf3ad40f9e",
+        "signature": "91800c33f07253300c98a67627316297a00d18bcaaef517ea2332fbf3ad40f9e",
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/rx-if.d.ts": {

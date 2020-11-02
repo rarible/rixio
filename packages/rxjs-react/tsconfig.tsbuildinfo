@@ -1047,8 +1047,8 @@
         "affectsGlobalScope": false
       },
       "./src/use-rx.ts": {
-        "version": "f73b205d0f753367eb9e5d70ffeff496aada655ae6bb2be83fbd6d2af8d19c99",
-        "signature": "f38f77612f84fa50302767f476716b7a36f5095962b0ae92f27a381f3ba3a8a8",
+        "version": "ead710d4358b98f42b4c194addc8921a31484cee1d225c36c1352d6add21a51f",
+        "signature": "91800c33f07253300c98a67627316297a00d18bcaaef517ea2332fbf3ad40f9e",
         "affectsGlobalScope": false
       },
       "./src/rx-if.tsx": {

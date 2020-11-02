@@ -607,8 +607,8 @@
         "affectsGlobalScope": false
       },
       "../rxjs-atom-promise/build/use-rx-with-status.d.ts": {
-        "version": "99d240cc6f73d8724bda288e766a142bf42bad94d9a0f970749784128aaa7125",
-        "signature": "99d240cc6f73d8724bda288e766a142bf42bad94d9a0f970749784128aaa7125",
+        "version": "b5bf87abe63fbfabed3f338ba658d871f32ca1f614679bb6fdc4c047d128dd6d",
+        "signature": "b5bf87abe63fbfabed3f338ba658d871f32ca1f614679bb6fdc4c047d128dd6d",
         "affectsGlobalScope": false
       },
       "../rxjs-atom-promise/build/merge.d.ts": {
