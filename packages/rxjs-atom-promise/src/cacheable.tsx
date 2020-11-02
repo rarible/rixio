@@ -27,6 +27,16 @@ type Cacheable3Props<T1, T2, T3> = {
 	children?: OrReactChild<(value: [T1, T2, T3], reload: () => {}) => ReactNode>
 } & CacheablePropsBase
 
+type Cacheable4Props<T1, T2, T3, T4> = {
+	cache: [Cache<T1>, Cache<T2>, Cache<T3>, Cache<T4>]
+	children?: OrReactChild<(value: [T1, T2, T3, T4], reload: () => {}) => ReactNode>
+} & CacheablePropsBase
+
+type Cacheable5Props<T1, T2, T3, T4, T5> = {
+	cache: [Cache<T1>, Cache<T2>, Cache<T3>, Cache<T4>, Cache<T5>]
+	children?: OrReactChild<(value: [T1, T2, T3, T4, T5], reload: () => {}) => ReactNode>
+} & CacheablePropsBase
+
 type CacheableProps = {
 	cache: any
 	children?: any
@@ -43,6 +53,8 @@ function getCaches(cache: any): Cache<any>[] {
 export function Cacheable<T>(props: Cacheable1Props<T>): React.ReactElement | null
 export function Cacheable<T1, T2>(props: Cacheable2Props<T1, T2>): React.ReactElement | null
 export function Cacheable<T1, T2, T3>(props: Cacheable3Props<T1, T2, T3>): React.ReactElement | null
+export function Cacheable<T1, T2, T3, T4>(props: Cacheable4Props<T1, T2, T3, T4>): React.ReactElement | null
+export function Cacheable<T1, T2, T3, T4, T5>(props: Cacheable5Props<T1, T2, T3, T4, T5>): React.ReactElement | null
 export function Cacheable({
 	cache,
 	children,
