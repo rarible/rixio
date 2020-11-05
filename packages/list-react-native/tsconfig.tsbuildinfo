@@ -597,8 +597,8 @@
         "affectsGlobalScope": false
       },
       "../rxjs-atom-promise/build/cacheable.d.ts": {
-        "version": "97c0c963cfe6035b835dab996cad420af1df6389f73f60ad06ed541918fbb826",
-        "signature": "97c0c963cfe6035b835dab996cad420af1df6389f73f60ad06ed541918fbb826",
+        "version": "6dd5879411d706bdf68b3337d83948f4d3037c630e5e96ce501345a3a4b20707",
+        "signature": "6dd5879411d706bdf68b3337d83948f4d3037c630e5e96ce501345a3a4b20707",
         "affectsGlobalScope": false
       },
       "../rxjs-atom-promise/build/save.d.ts": {

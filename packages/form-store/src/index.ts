@@ -4,6 +4,7 @@ import { map } from "rxjs/operators"
 import type { Validate, ValidationResult, ValidationResultSuccess, ValidationResultValidating } from "./domain"
 import { createValidationResult } from "./utils/create-validation-result"
 
+export { isSubmitDisabled } from "./is-submit-disabled"
 export const noErrors: ValidationResultSuccess = { status: "success" }
 export const validating: ValidationResultValidating = { status: "validating" }
 

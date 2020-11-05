@@ -1201,9 +1201,14 @@
         "signature": "3f4dcf71d04811c5ac96e60b4f7017e3398c36817dadbbc7bdca65d4113328fc",
         "affectsGlobalScope": false
       },
+      "./src/is-submit-disabled.ts": {
+        "version": "9dd381a71aeeadb9330efe5a8a63322d90d8e43cf5c1902c3b68f0a67d5d22bd",
+        "signature": "322dad0fb17cddf60a23499e29fb88fb5257410d0377f1c7a183b96047a45d67",
+        "affectsGlobalScope": false
+      },
       "./src/index.ts": {
-        "version": "e77927d114aa01c461dd194c9edb888ee3222e6bb00428bf35732ba1ba372ad5",
-        "signature": "6abb77d060027e241bc00d8d687263f1bdb98658f5728cc62d64da2c201c3563",
+        "version": "587d382bd7084b2df244e10ae264ccb87c899333dd58cf5f6f94065975bc18b5",
+        "signature": "c167986bcf11c62e96b9583e6feb0eff396fcd14a580a946efeae770458441a1",
         "affectsGlobalScope": false
       },
       "./src/index.spec.ts": {
@@ -2912,7 +2917,13 @@
         "../../node_modules/rxjs/operators/index.d.ts",
         "../rxjs-atom/build/index.d.ts",
         "./src/domain.ts",
+        "./src/is-submit-disabled.ts",
         "./src/utils/create-validation-result.ts"
+      ],
+      "./src/is-submit-disabled.ts": [
+        "../../node_modules/rxjs/index.d.ts",
+        "../../node_modules/rxjs/operators/index.d.ts",
+        "./src/index.ts"
       ],
       "./src/utils/create-validation-result.ts": [
         "../../node_modules/rxjs/index.d.ts",
@@ -4132,7 +4143,12 @@
       "./src/index.ts": [
         "../../node_modules/rxjs/index.d.ts",
         "../rxjs-atom/build/index.d.ts",
-        "./src/domain.ts"
+        "./src/domain.ts",
+        "./src/is-submit-disabled.ts"
+      ],
+      "./src/is-submit-disabled.ts": [
+        "../../node_modules/rxjs/index.d.ts",
+        "./src/index.ts"
       ],
       "./src/utils/create-validation-result.ts": [
         "../../node_modules/rxjs/index.d.ts",
@@ -4497,6 +4513,7 @@
       "./src/domain.ts",
       "./src/index.spec.ts",
       "./src/index.ts",
+      "./src/is-submit-disabled.ts",
       "./src/utils/create-validation-result.ts",
       "./src/utils/validate-joi.ts",
       "../lens/build/base.d.ts",
@@ -5734,6 +5751,10 @@
       ],
       [
         "./src/index.ts",
+        1
+      ],
+      [
+        "./src/is-submit-disabled.ts",
         1
       ],
       [
