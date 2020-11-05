@@ -9,16 +9,23 @@ export const validating: ValidationResultValidating = { status: "validating" }
 
 export class FormStore<T> {
 	canSubmit$: Observable<boolean>
+	private readonly bindCache: Map<keyof T, FormStore<any>> = new Map()
 
 	constructor(public readonly value: Atom<T>, public readonly validationResult: Observable<ValidationResult<T>>) {
 		this.canSubmit$ = this.validationResult.pipe(map(it => it.status === "success"))
 	}
 
 	bind<K extends keyof T>(field: K): FormStore<T[K]> {
-		return new FormStore(this.value.lens(field), this.getChild(field))
+		const cached = this.bindCache.get(field)
+		if (cached) {
+			return cached
+		}
+		const created = new FormStore(this.value.lens(field), this.getChild(field))
+		this.bindCache.set(field, created)
+		return created
 	}
 
-	getChild<K extends keyof T>(field: K) {
+	private getChild<K extends keyof T>(field: K) {
 		return this.validationResult.pipe(
 			map(x => {
 				if (x.status === "validating") {
