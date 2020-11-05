@@ -1,6 +1,6 @@
 {
   "name": "@rixio/list",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "keywords": [
     "frp",
     "lens",
@@ -27,7 +27,7 @@
     "verify": "tsc --noEmit"
   },
   "dependencies": {
-    "@rixio/rxjs-atom-promise": "^0.5.5"
+    "@rixio/rxjs-atom-promise": "^0.5.6"
   },
   "devDependencies": {
     "@types/jest": "26.0.0",

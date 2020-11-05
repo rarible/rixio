@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.8](https://github.com/roborox/rixio/compare/@rixio/list@0.2.7...@rixio/list@0.2.8) (2020-11-05)
+
+
+### Bug Fixes
+
+* isSubmitDisabled ([fecb06e](https://github.com/roborox/rixio/commit/fecb06ee734fb92e1bad5f738051342f54829ffd))
+
+
+
+
+
 ## [0.2.7](https://github.com/roborox/rixio/compare/@rixio/list@0.2.6...@rixio/list@0.2.7) (2020-11-02)
 
 

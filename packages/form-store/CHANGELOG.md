@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/roborox/rixio/compare/@rixio/form-store@0.1.4...@rixio/form-store@0.1.5) (2020-11-05)
+
+
+### Bug Fixes
+
+* FormStore.bind cache ([2cda254](https://github.com/roborox/rixio/commit/2cda2548c8b8a791a11cdd153683ae995d1fe712))
+* isSubmitDisabled ([fecb06e](https://github.com/roborox/rixio/commit/fecb06ee734fb92e1bad5f738051342f54829ffd))
+
+
+
+
+
 ## [0.1.4](https://github.com/roborox/rixio/compare/@rixio/form-store@0.1.3...@rixio/form-store@0.1.4) (2020-11-02)
 
 **Note:** Version bump only for package @rixio/form-store
