@@ -1207,8 +1207,8 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "a95a7d9fa36ace891eecdee98f6fee67dad9917ae43b2e039d8914fbcf4f8de1",
-        "signature": "c167986bcf11c62e96b9583e6feb0eff396fcd14a580a946efeae770458441a1",
+        "version": "86d6f356647bfd3452b6f282d054aafa61ab58d906690c3a40d152cf78293f98",
+        "signature": "410ba7b0b80bd25488e579ffbcb0debd6c23c03daeda3432ed22bef75959f71e",
         "affectsGlobalScope": false
       },
       "./src/index.spec.ts": {
@@ -2918,7 +2918,8 @@
         "../rxjs-atom/build/index.d.ts",
         "./src/domain.ts",
         "./src/is-submit-disabled.ts",
-        "./src/utils/create-validation-result.ts"
+        "./src/utils/create-validation-result.ts",
+        "./src/utils/validate-joi.ts"
       ],
       "./src/is-submit-disabled.ts": [
         "../../node_modules/rxjs/index.d.ts",
@@ -4144,7 +4145,8 @@
         "../../node_modules/rxjs/index.d.ts",
         "../rxjs-atom/build/index.d.ts",
         "./src/domain.ts",
-        "./src/is-submit-disabled.ts"
+        "./src/is-submit-disabled.ts",
+        "./src/utils/validate-joi.ts"
       ],
       "./src/is-submit-disabled.ts": [
         "../../node_modules/rxjs/index.d.ts",
