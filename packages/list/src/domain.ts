@@ -9,9 +9,11 @@ export type InfiniteListState<T, C> = {
 	finished: boolean
 } & PromiseStatus
 
-export const listStateIdle = <D, C>(): InfiniteListState<D, C> => ({
-	...promiseStatusIdle,
-	items: [],
-	continuation: null,
-	finished: false,
-})
+export function listStateIdle<D, C>(): InfiniteListState<D, C> {
+	return {
+		...promiseStatusIdle,
+		items: [],
+		continuation: null,
+		finished: false,
+	}
+}
