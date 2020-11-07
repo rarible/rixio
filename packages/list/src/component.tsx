@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react"
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Atom } from "@rixio/rxjs-atom"
 import { OrReactChild } from "@rixio/rxjs-atom-promise"
 import { useRx } from "@rixio/rxjs-react"
@@ -21,7 +21,7 @@ export interface InfiniteListProps<T, C> {
 }
 
 export function InfiniteList<T, C>({ state$, loader, pending, children, rejected }: InfiniteListProps<T, C>) {
-	const load = useMemo(() => () => loadNext(state$, loader), [state$, loader])
+	const load = useCallback(() => loadNext(state$, loader), [state$, loader])
 	const initialStatus$ = useMemo(
 		() =>
 			state$.pipe(

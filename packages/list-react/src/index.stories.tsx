@@ -24,20 +24,17 @@ async function load(c: number | null): Promise<[SampleData[], number]> {
 
 const state$ = Atom.create(listStateIdle<SampleData, number>())
 
-storiesOf("__v2__/molecules/scrollable-infinite-list", module)
+storiesOf("scrollable-infinite-list", module)
   .add("basic", () => (
-    <ScrollableInfiniteList
+    <ScrollableInfiniteList<SampleData, number>
       state$={state$}
       loader={load}
-      renderEmpty={() => <div>No data</div>}
-      partLoading={<div>Loading</div>}
-      renderRejected={() => <div>Error</div>}
-    >
-      {item => (
+      pending={<div>Part is loading</div>}
+      itemRenderer={item => (
         <article key={item.id}>
           <h3>{item.title}</h3>
           <p>{item.body}</p>
         </article>
       )}
-    </ScrollableInfiniteList>
+    />
   ))
