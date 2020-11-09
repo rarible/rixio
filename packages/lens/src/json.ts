@@ -9,6 +9,31 @@ import { structEq, setKey, conservatively, findIndex, Option } from "./utils"
 
 import { Lens, Prism } from "./base"
 
+const gettersCache = new Map()
+const setterCache = new Map()
+
+function createGetter<T, K extends keyof T>(k: K): (value: T) => T[K] {
+	const cached = gettersCache.get(k)
+	if (cached !== undefined) {
+		return cached
+	} else {
+		const created = (value: T): T[K] => value[k]
+		gettersCache.set(k, created)
+		return created
+	}
+}
+
+function createSetter<T, K extends keyof T>(k: K): (v: T[K], s: T) => T {
+	const cached = setterCache.get(k)
+	if (cached !== undefined) {
+		return cached
+	} else {
+		const created = (v: T[K], s: T): T => setKey(k, v, s)
+		setterCache.set(k, created)
+		return created
+	}
+}
+
 // @NOTE only need this interface to add JSDocs for this call.
 export interface KeyImplFor<TObject> {
 	/**
@@ -78,10 +103,7 @@ export function keyImpl<TObject>(k?: string) {
 	return k === undefined
 		? // type-safe key
 		  <K extends keyof TObject>(k: K): Lens<TObject, TObject[K]> =>
-				Lens.create<TObject, TObject[K]>(
-					(s: TObject) => s[k],
-					(v: TObject[K], s: TObject) => setKey(k, v, s)
-				)
+				Lens.create<TObject, TObject[K]>(createGetter(k), createSetter(k))
 		: // untyped key
 		  Lens.create(
 				(s: { [k: string]: any }) => s[k] as Option<any>,

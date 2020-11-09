@@ -79,6 +79,8 @@ export namespace Prism {
 }
 
 export namespace Lens {
+	const cache = new Map()
+
 	/**
 	 * Create a lens.
 	 *
@@ -93,7 +95,14 @@ export namespace Lens {
 		getter: (s: TSource) => T,
 		setter: (v: T, s: TSource) => TSource
 	): Lens<TSource, T> {
-		return {
+		let first = cache.get(getter) as Map<any, any> | undefined
+		if (first !== undefined) {
+			const second = first.get(setter)
+			if (second !== undefined) {
+				return second
+			}
+		}
+		const result: Lens<TSource, T> = {
 			get: getter,
 			set: setter,
 			modify: createModify(getter, setter),
@@ -105,6 +114,12 @@ export namespace Lens {
 				)
 			},
 		}
+		if (first === undefined) {
+			first = new Map()
+			cache.set(getter, first)
+		}
+		first.set(setter, result)
+		return result
 	}
 
 	/**

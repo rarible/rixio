@@ -159,4 +159,25 @@ describe("json", () => {
 
 		testLens<typeof s, typeof s["b"]>("type safe key 2", Lens.key<typeof s>()("b"), s, "6", "7", "hello")
 	})
+
+	describe("lenses are reused", () => {
+		const getter = (value: SomeValue) => value.prop
+		const setter = (newProp: string, value: SomeValue) => ({ ...value, prop: newProp })
+
+		it("Lens.create", () => {
+			const lens1 = Lens.create(getter, setter)
+			const lens2 = Lens.create(getter, setter)
+			expect(lens1).toStrictEqual(lens2)
+		})
+
+		it("key lenses are reused", () => {
+			const lens1 = Lens.key<SomeValue>()("prop")
+			const lens2 = Lens.key<SomeValue>()("prop")
+			expect(lens1).toStrictEqual(lens2)
+		})
+	})
 })
+
+interface SomeValue {
+	prop: string
+}
