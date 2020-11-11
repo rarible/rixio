@@ -24,7 +24,7 @@ export class CacheImpl<T> implements Cache<T> {
 		return getFinalValue(state$)
 	}
 
-	private getAtomAndLoad(force: boolean = false) {
+	getAtomAndLoad(force: boolean = false): Atom<PromiseState<T>> {
 		const state$ = this.atom
 		if (force || state$.get().status === "idle") {
 			save(this.load(), state$).then()
