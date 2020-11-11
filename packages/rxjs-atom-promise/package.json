@@ -1,6 +1,6 @@
 {
   "name": "@rixio/rxjs-atom-promise",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
