@@ -6,6 +6,7 @@ export interface Cache<T> {
 	load(): Promise<T>
 	get(force?: boolean): Promise<T>
 	atom: Atom<PromiseState<T>>
+	getAtomAndLoad(force?: boolean): Atom<PromiseState<T>>
 }
 
 export class CacheImpl<T> implements Cache<T> {
