@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.11](https://github.com/roborox/rixio/compare/@rixio/list-react-native@0.2.10...@rixio/list-react-native@0.2.11) (2020-11-13)
+
+
+### Bug Fixes
+
+* export Lifted, made Cache.getAtomAndLoad private ([0de05e5](https://github.com/roborox/rixio/commit/0de05e5022b908d64acf9a1ff6fdcf60dc723748))
+
+
+
+
+
 ## [0.2.10](https://github.com/roborox/rixio/compare/@rixio/list-react-native@0.2.9...@rixio/list-react-native@0.2.10) (2020-11-11)
 
 **Note:** Version bump only for package @rixio/list-react-native

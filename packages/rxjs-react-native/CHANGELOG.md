@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.6](https://github.com/roborox/rixio/compare/@rixio/rxjs-react-native@0.4.5...@rixio/rxjs-react-native@0.4.6) (2020-11-13)
+
+
+### Bug Fixes
+
+* export Lifted, made Cache.getAtomAndLoad private ([0de05e5](https://github.com/roborox/rixio/commit/0de05e5022b908d64acf9a1ff6fdcf60dc723748))
+
+
+
+
+
 ## [0.4.5](https://github.com/roborox/rixio/compare/@rixio/rxjs-react-native@0.4.4...@rixio/rxjs-react-native@0.4.5) (2020-11-02)
 
 
