@@ -1062,8 +1062,8 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "e6eae555624baf6dc893321d4adb1e4b0dca1651d87bd6b82387bc0c983aaee8",
-        "signature": "bcb21c1f755f66cca7b3dc924fa1cda69477785720f4c8914ab8f49fb680bc24",
+        "version": "0a4efcfd5031803ddd330976152257ac3f38f6e1139c4a16f0c01d4a1a5a51cb",
+        "signature": "5931022bc46c0b7528d75a683b6dbd87bb6cc6dd55d4e38dab4773fb29b2628f",
         "affectsGlobalScope": false
       },
       "../../node_modules/pretty-format/build/types.d.ts": {
@@ -2840,6 +2840,7 @@
         "../lens/build/index.d.ts"
       ],
       "./src/index.ts": [
+        "./src/base.ts",
         "./src/lift.tsx",
         "./src/rx-html.tsx",
         "./src/rx-if.tsx",
@@ -4064,6 +4065,7 @@
         "../../node_modules/rxjs/index.d.ts"
       ],
       "./src/index.ts": [
+        "./src/base.ts",
         "./src/lift.tsx",
         "./src/rx-html.tsx",
         "./src/rx-if.tsx",

@@ -531,9 +531,49 @@
         "signature": "66a536268504d178a640afc672e1399f57519c014c35416123d83857f1566d28",
         "affectsGlobalScope": false
       },
+      "../rxjs-react/build/rx-wrapper.d.ts": {
+        "version": "931ef4d5569af325e224019b0b93f673afb5043134f6ff5da7ab3a1750d448e5",
+        "signature": "931ef4d5569af325e224019b0b93f673afb5043134f6ff5da7ab3a1750d448e5",
+        "affectsGlobalScope": false
+      },
+      "../rxjs-react/build/use-rx-change.d.ts": {
+        "version": "202620408d8a8b9ee81d18c9d56dcf78a6e5792c91e2452477ee69cfc52bb199",
+        "signature": "202620408d8a8b9ee81d18c9d56dcf78a6e5792c91e2452477ee69cfc52bb199",
+        "affectsGlobalScope": false
+      },
+      "../rxjs-react/build/use-subscription.d.ts": {
+        "version": "4b6a23abae3230e3b4c7cc8e5d9fe926a3e95771463857b7a56e074937a54835",
+        "signature": "4b6a23abae3230e3b4c7cc8e5d9fe926a3e95771463857b7a56e074937a54835",
+        "affectsGlobalScope": false
+      },
+      "../rxjs-react/build/lift.d.ts": {
+        "version": "8ca3db481193cdaad41132bb6080a6717abf82eff3109c5524717341ec99b7e5",
+        "signature": "8ca3db481193cdaad41132bb6080a6717abf82eff3109c5524717341ec99b7e5",
+        "affectsGlobalScope": false
+      },
+      "../rxjs-react/build/use-rx.d.ts": {
+        "version": "91800c33f07253300c98a67627316297a00d18bcaaef517ea2332fbf3ad40f9e",
+        "signature": "91800c33f07253300c98a67627316297a00d18bcaaef517ea2332fbf3ad40f9e",
+        "affectsGlobalScope": false
+      },
+      "../rxjs-react/build/rx-if.d.ts": {
+        "version": "768a200cc1d34dc413850f70acb0a2065ccdfcd13fe9ac2806e6958464200555",
+        "signature": "768a200cc1d34dc413850f70acb0a2065ccdfcd13fe9ac2806e6958464200555",
+        "affectsGlobalScope": false
+      },
+      "../rxjs-react/build/rx-html.d.ts": {
+        "version": "0c7701c885cb2f9f2a2f5ec2b4b76145ffd234fe066e749e269e260b7fdbe686",
+        "signature": "0c7701c885cb2f9f2a2f5ec2b4b76145ffd234fe066e749e269e260b7fdbe686",
+        "affectsGlobalScope": false
+      },
+      "../rxjs-react/build/index.d.ts": {
+        "version": "5931022bc46c0b7528d75a683b6dbd87bb6cc6dd55d4e38dab4773fb29b2628f",
+        "signature": "5931022bc46c0b7528d75a683b6dbd87bb6cc6dd55d4e38dab4773fb29b2628f",
+        "affectsGlobalScope": false
+      },
       "../rxjs-react-native/build/index.d.ts": {
-        "version": "9753dd35d7c40de9c8e738a1892ff5783baf3c36e4137e14df7719580b987a79",
-        "signature": "9753dd35d7c40de9c8e738a1892ff5783baf3c36e4137e14df7719580b987a79",
+        "version": "919f6da8db30c8076cab4275e01a77480be5b02b2dc676202bb1e8fd697779e4",
+        "signature": "919f6da8db30c8076cab4275e01a77480be5b02b2dc676202bb1e8fd697779e4",
         "affectsGlobalScope": false
       },
       "../rxjs-atom-promise/build/promise-state.d.ts": {
@@ -577,8 +617,8 @@
         "affectsGlobalScope": false
       },
       "../rxjs-atom-promise/build/cache.d.ts": {
-        "version": "b277620a7977a8cf7ba8b6b731b26046df23c7565bf610e325713f443a4fd89f",
-        "signature": "b277620a7977a8cf7ba8b6b731b26046df23c7565bf610e325713f443a4fd89f",
+        "version": "ed9cd48b58d8a5a1faba9253dcfbec62b6bd2845c8624b784ada4cde6895f4bb",
+        "signature": "ed9cd48b58d8a5a1faba9253dcfbec62b6bd2845c8624b784ada4cde6895f4bb",
         "affectsGlobalScope": false
       },
       "../../node_modules/immutable/dist/immutable-nonambient.d.ts": {
@@ -1788,10 +1828,45 @@
         "../../node_modules/@types/react-native/index.d.ts",
         "../../node_modules/@types/react/index.d.ts",
         "../rxjs-react-native/build/flat-list.d.ts",
-        "../rxjs-react/build/base.d.ts"
+        "../rxjs-react/build/index.d.ts"
       ],
       "../rxjs-react/build/base.d.ts": [
         "../../node_modules/@types/react/index.d.ts",
+        "../../node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-react/build/index.d.ts": [
+        "../rxjs-react/build/base.d.ts",
+        "../rxjs-react/build/lift.d.ts",
+        "../rxjs-react/build/rx-html.d.ts",
+        "../rxjs-react/build/rx-if.d.ts",
+        "../rxjs-react/build/rx-wrapper.d.ts",
+        "../rxjs-react/build/use-rx-change.d.ts",
+        "../rxjs-react/build/use-rx.d.ts",
+        "../rxjs-react/build/use-subscription.d.ts"
+      ],
+      "../rxjs-react/build/lift.d.ts": [
+        "../../node_modules/@types/react/index.d.ts",
+        "../rxjs-react/build/base.d.ts"
+      ],
+      "../rxjs-react/build/rx-html.d.ts": [
+        "../../node_modules/@types/react/index.d.ts",
+        "../rxjs-react/build/base.d.ts"
+      ],
+      "../rxjs-react/build/rx-if.d.ts": [
+        "../../node_modules/@types/react/index.d.ts",
+        "../../node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-react/build/rx-wrapper.d.ts": [
+        "../../node_modules/@types/react/index.d.ts",
+        "../rxjs-react/build/base.d.ts"
+      ],
+      "../rxjs-react/build/use-rx-change.d.ts": [
+        "../../node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-react/build/use-rx.d.ts": [
+        "../../node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-react/build/use-subscription.d.ts": [
         "../../node_modules/rxjs/index.d.ts"
       ]
     },
@@ -2479,10 +2554,45 @@
         "../../node_modules/@types/react-native/index.d.ts",
         "../../node_modules/@types/react/index.d.ts",
         "../rxjs-react-native/build/flat-list.d.ts",
-        "../rxjs-react/build/base.d.ts"
+        "../rxjs-react/build/index.d.ts"
       ],
       "../rxjs-react/build/base.d.ts": [
         "../../node_modules/@types/react/index.d.ts",
+        "../../node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-react/build/index.d.ts": [
+        "../rxjs-react/build/base.d.ts",
+        "../rxjs-react/build/lift.d.ts",
+        "../rxjs-react/build/rx-html.d.ts",
+        "../rxjs-react/build/rx-if.d.ts",
+        "../rxjs-react/build/rx-wrapper.d.ts",
+        "../rxjs-react/build/use-rx-change.d.ts",
+        "../rxjs-react/build/use-rx.d.ts",
+        "../rxjs-react/build/use-subscription.d.ts"
+      ],
+      "../rxjs-react/build/lift.d.ts": [
+        "../../node_modules/@types/react/index.d.ts",
+        "../rxjs-react/build/base.d.ts"
+      ],
+      "../rxjs-react/build/rx-html.d.ts": [
+        "../../node_modules/@types/react/index.d.ts",
+        "../rxjs-react/build/base.d.ts"
+      ],
+      "../rxjs-react/build/rx-if.d.ts": [
+        "../../node_modules/@types/react/index.d.ts",
+        "../../node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-react/build/rx-wrapper.d.ts": [
+        "../../node_modules/@types/react/index.d.ts",
+        "../rxjs-react/build/base.d.ts"
+      ],
+      "../rxjs-react/build/use-rx-change.d.ts": [
+        "../../node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-react/build/use-rx.d.ts": [
+        "../../node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-react/build/use-subscription.d.ts": [
         "../../node_modules/rxjs/index.d.ts"
       ]
     },
@@ -2702,7 +2812,15 @@
       "../rxjs-atom/build/index.d.ts",
       "../rxjs-react-native/build/flat-list.d.ts",
       "../rxjs-react-native/build/index.d.ts",
-      "../rxjs-react/build/base.d.ts"
+      "../rxjs-react/build/base.d.ts",
+      "../rxjs-react/build/index.d.ts",
+      "../rxjs-react/build/lift.d.ts",
+      "../rxjs-react/build/rx-html.d.ts",
+      "../rxjs-react/build/rx-if.d.ts",
+      "../rxjs-react/build/rx-wrapper.d.ts",
+      "../rxjs-react/build/use-rx-change.d.ts",
+      "../rxjs-react/build/use-rx.d.ts",
+      "../rxjs-react/build/use-subscription.d.ts"
     ],
     "affectedFilesPendingEmit": [
       [
@@ -3475,6 +3593,38 @@
       ],
       [
         "../rxjs-react/build/base.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react/build/index.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react/build/lift.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react/build/rx-html.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react/build/rx-if.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react/build/rx-wrapper.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react/build/use-rx-change.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react/build/use-rx.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react/build/use-subscription.d.ts",
         1
       ]
     ]

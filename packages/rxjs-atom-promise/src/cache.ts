@@ -6,7 +6,6 @@ export interface Cache<T> {
 	load(): Promise<T>
 	get(force?: boolean): Promise<T>
 	atom: Atom<PromiseState<T>>
-	getAtomAndLoad(force?: boolean): Atom<PromiseState<T>>
 }
 
 export class CacheImpl<T> implements Cache<T> {
@@ -25,7 +24,7 @@ export class CacheImpl<T> implements Cache<T> {
 		return getFinalValue(state$)
 	}
 
-	getAtomAndLoad(force: boolean = false): Atom<PromiseState<T>> {
+	private getAtomAndLoad(force: boolean = false): Atom<PromiseState<T>> {
 		const state$ = this.atom
 		if (force || state$.get().status === "idle") {
 			save(this.load(), state$).then()
