@@ -12,6 +12,10 @@ const Test = ({ value1, value2 }: TestProps) => {
 	)
 }
 
+const Testing = ({ text }: { text?: any }) => {
+	return <span data-testid="testing">{text || "BLABLABLA"}</span>
+}
+
 describe("RxWrapper", () => {
 	test("should observe reactive value", () => {
 		const text = Math.random().toString()
@@ -22,6 +26,43 @@ describe("RxWrapper", () => {
 		const nextText = Math.random().toString()
 		act(() => obs.next(nextText))
 		expect(r.getByTestId("value")).toHaveTextContent(nextText)
+	})
+
+	test("should not render anything if observable doesn't emit value", () => {
+		const text = Math.random().toString()
+		const obs = new ReplaySubject<string>(1)
+		const r = render(<RxWrapper component={Test} value1={obs} value2="static" />)
+		expect(() => r.getByTestId("value")).toThrow()
+		act(() => obs.next(text))
+		expect(r.getByTestId("value")).toHaveTextContent(text)
+		const nextText = Math.random().toString()
+		act(() => obs.next(nextText))
+		expect(r.getByTestId("value")).toHaveTextContent(nextText)
+	})
+
+	test("should render pending prop if observable doesn't emit value", () => {
+		const text = Math.random().toString()
+		const obs = new ReplaySubject<string>(1)
+		const r = render(<RxWrapper component={Test} value1={obs} value2="static" pending={<Testing />} />)
+		expect(r.getByTestId("testing")).toHaveTextContent("BLABLABLA")
+		expect(() => r.getByTestId("value")).toThrow()
+		act(() => obs.next(text))
+		expect(r.getByTestId("value")).toHaveTextContent(text)
+		const nextText = Math.random().toString()
+		act(() => obs.next(nextText))
+		expect(r.getByTestId("value")).toHaveTextContent(nextText)
+	})
+
+	test("should render rejected prop if observable emits error", () => {
+		const text = Math.random().toString()
+		const obs = new ReplaySubject<string>(1)
+		const r = render(<RxWrapper component={Test} value1={obs} value2="static" rejected={e => <Testing text={e} />} />)
+		act(() => obs.error(text))
+		expect(r.getByTestId("testing")).toHaveTextContent(text)
+		expect(() => r.getByTestId("value")).toThrow()
+		act(() => obs.next(text))
+		expect(r.getByTestId("testing")).toHaveTextContent(text)
+		expect(() => r.getByTestId("value")).toThrow()
 	})
 
 	test("should react to props changes", () => {

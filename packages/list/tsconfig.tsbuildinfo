@@ -1257,8 +1257,8 @@
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/index.d.ts": {
-        "version": "5931022bc46c0b7528d75a683b6dbd87bb6cc6dd55d4e38dab4773fb29b2628f",
-        "signature": "5931022bc46c0b7528d75a683b6dbd87bb6cc6dd55d4e38dab4773fb29b2628f",
+        "version": "bcb21c1f755f66cca7b3dc924fa1cda69477785720f4c8914ab8f49fb680bc24",
+        "signature": "bcb21c1f755f66cca7b3dc924fa1cda69477785720f4c8914ab8f49fb680bc24",
         "affectsGlobalScope": false
       },
       "./src/load-next.ts": {
@@ -3005,7 +3005,6 @@
         "../../node_modules/rxjs/index.d.ts"
       ],
       "../rxjs-react/build/index.d.ts": [
-        "../rxjs-react/build/base.d.ts",
         "../rxjs-react/build/lift.d.ts",
         "../rxjs-react/build/rx-html.d.ts",
         "../rxjs-react/build/rx-if.d.ts",
@@ -4252,7 +4251,6 @@
         "../../node_modules/rxjs/index.d.ts"
       ],
       "../rxjs-react/build/index.d.ts": [
-        "../rxjs-react/build/base.d.ts",
         "../rxjs-react/build/lift.d.ts",
         "../rxjs-react/build/rx-html.d.ts",
         "../rxjs-react/build/rx-if.d.ts",

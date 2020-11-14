@@ -2,25 +2,32 @@ import React from "react"
 import { Observable, Subscription } from "rxjs"
 import { Lens } from "@rixio/lens"
 
+const flagName = "___error___"
+const errorFlag = Symbol.for(flagName)
+
+function checkIsError(value: any) {
+	return value !== null && value[flagName] === errorFlag
+}
+
+type CheckResult = { status: "fulfilled" } | { status: "rejected"; error: any } | { status: "pending" }
+const fulfilled: { status: "fulfilled" } = { status: "fulfilled" }
+const pending: { status: "pending" } = { status: "pending" }
+
+function createRejected(error: any): { status: "rejected"; error: any } {
+	return { status: "rejected", error }
+}
+
+export type OrReactChild<T> = React.ReactChild | React.ReactChild[] | T
+
 export type ObservableLike<T> = T | Observable<T>
 
 export type Lifted<T> = {
 	[K in keyof T]: ObservableLike<T[K]>
 }
 
-function walk<T extends object>(props: T, handler: (value: any, lens: Lens<T, any>) => void) {
-	for (const key in props) {
-		if (props.hasOwnProperty(key)) {
-			const prop = props[key] as any
-			if (key === "children" && Array.isArray(prop)) {
-				prop.forEach((v, idx) => {
-					handler(v, Lens.compose(Lens.key("children"), Lens.index(idx)) as any)
-				})
-			} else {
-				handler(prop, Lens.key(key) as any)
-			}
-		}
-	}
+export type RxBaseProps = {
+	pending?: React.ReactNode
+	rejected?: OrReactChild<(error: any) => React.ReactNode>
 }
 
 export abstract class RxWrapperBase<P extends object, RProps extends object> extends React.Component<
@@ -35,11 +42,13 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 		super(props)
 		this._state = this.extractProps(props)
 		this.doSubscribe({} as any, this.extractProps(props))
-		this.checkNoObservables()
 		this.state = this._state
 	}
 
+	abstract extractRxBaseProps(props: RProps): RxBaseProps | undefined
+
 	abstract extractProps(props: RProps): Lifted<P>
+
 	abstract extractComponent(props: RProps): any
 
 	componentDidMount() {
@@ -62,7 +71,26 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 	}
 
 	render() {
-		return React.createElement(this.extractComponent(this.props), this.state as any)
+		const result = this.checkObservables()
+		switch (result.status) {
+			case "fulfilled":
+				return React.createElement(this.extractComponent(this.props), this.state as any)
+			case "rejected":
+				const rejected = this.extractRxBaseProps(this.props)?.rejected
+				if (rejected && typeof rejected === "function") {
+					return rejected(result.error)
+				} else if (rejected) {
+					return rejected
+				} else {
+					return null
+				}
+			case "pending":
+				const pending = this.extractRxBaseProps(this.props)?.pending
+				if (pending) {
+					return pending
+				}
+				return null
+		}
 	}
 
 	private doSubscribe(oldProps: Lifted<P>, props: Lifted<P>) {
@@ -76,9 +104,10 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 					oldValue = undefined
 				}
 				if (oldValue !== value) {
-					const s = value.subscribe(plain => {
-						self.handle(lens, plain)
-					})
+					const s = value.subscribe(
+						plain => self.handle(lens, plain),
+						error => self.handle(lens, { error, [flagName]: errorFlag })
+					)
 					self.subscriptions.set(value, s)
 				}
 			} else {
@@ -107,11 +136,39 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 		}
 	}
 
-	private checkNoObservables() {
-		walk(this._state, value => {
+	private checkObservables(): CheckResult {
+		const result = walk(this._state, value => {
 			if (value instanceof Observable) {
-				throw new Error("Observable doesn't emit value immediately")
+				return pending
+			}
+			if (checkIsError(value)) {
+				return createRejected(value.error)
 			}
 		})
+		if (result !== undefined) {
+			return result
+		}
+		return fulfilled
+	}
+}
+
+function walk<T extends object, R>(props: T, handler: (value: any, lens: Lens<T, any>) => R | undefined) {
+	for (const key in props) {
+		if (props.hasOwnProperty(key)) {
+			const prop = props[key] as any
+			if (key === "children" && Array.isArray(prop)) {
+				for (let i = 0; i < prop.length; i++) {
+					const result = handler(prop[i], Lens.compose(Lens.key("children"), Lens.index(i)) as any)
+					if (result !== undefined) {
+						return result
+					}
+				}
+			} else {
+				const result = handler(prop, Lens.key(key) as any)
+				if (result !== undefined) {
+					return result
+				}
+			}
+		}
 	}
 }

@@ -1,5 +1,5 @@
 import React, { LegacyRef, ReactHTML, DetailedHTMLFactory } from "react"
-import { Lifted, RxWrapperBase } from "./base"
+import { Lifted, RxBaseProps, RxWrapperBase } from "./base"
 
 type InferHtmlProps<K extends keyof React.ReactHTML> = React.ReactHTML[K] extends DetailedHTMLFactory<infer P, any>
 	? P
@@ -22,6 +22,10 @@ export type RxHtmlProps<K extends keyof React.ReactHTML> = {
 }
 
 export class RxHtml<K extends keyof React.ReactHTML> extends RxWrapperBase<InferHtmlProps<K>, RxHtmlProps<K>> {
+	extractRxBaseProps(props: RxHtmlProps<K>): RxBaseProps | undefined {
+		return undefined
+	}
+
 	extractProps({ props }: RxHtmlProps<K>): Lifted<InferHtmlProps<K>> {
 		return props || ({} as any)
 	}

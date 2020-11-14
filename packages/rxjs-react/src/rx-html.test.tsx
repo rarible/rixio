@@ -35,4 +35,20 @@ describe("RxHtml", () => {
 		act(() => obs.next(nextText))
 		expect(r.getByTestId("value")).toHaveTextContent(`${nextText}-test-${nextText}`)
 	})
+
+	test("should not display anything if observable doesn't emit value", () => {
+		const text = Math.random().toString()
+		const obs = new ReplaySubject<string>(1)
+		const r = render(
+			<span data-testid="value">
+				<R.div>{obs}</R.div>
+			</span>
+		)
+		expect(r.getByTestId("value")).toBeEmpty()
+		obs.next(text)
+		expect(r.getByTestId("value")).toHaveTextContent(text)
+		const nextText = Math.random().toString()
+		act(() => obs.next(nextText))
+		expect(r.getByTestId("value")).toHaveTextContent(nextText)
+	})
 })
