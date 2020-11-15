@@ -6,7 +6,7 @@ import {
 	promiseStatusIdle,
 	promiseStatusPending,
 	promiseStatusFulfilled,
-} from "./promise-state"
+} from "./cache-state"
 
 type InferObservablePromiseStateInTuple<T extends any[]> = {
 	[I in keyof T]: T[I] extends Observable<PromiseState<infer T>> ? T : unknown

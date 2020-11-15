@@ -1,12 +1,12 @@
 import { Atom } from "@rixio/rxjs-atom"
-import { createPromiseStatusRejected, PromiseState, PromiseStatus } from "./promise-state"
+import { createCacheStatusRejected, CacheState, CacheStatus } from "./cache-state"
 
 export interface LoadAtoms<T> {
 	value?: Atom<T | undefined>
-	status?: Atom<PromiseStatus>
+	status?: Atom<CacheStatus>
 }
 
-export async function save<T>(promise: Promise<T>, value: LoadAtoms<T> | Atom<PromiseState<T>>): Promise<void> {
+export async function save<T>(promise: Promise<T>, value: LoadAtoms<T> | Atom<CacheState<T>>): Promise<void> {
 	if ("get" in value) {
 		value.lens("status").set("pending")
 
@@ -14,7 +14,7 @@ export async function save<T>(promise: Promise<T>, value: LoadAtoms<T> | Atom<Pr
 			const result = await promise
 			value.modify(v => ({ ...v, value: result, status: "fulfilled" }))
 		} catch (e) {
-			value.modify(v => ({ ...v, ...createPromiseStatusRejected(e) }))
+			value.modify(v => ({ ...v, ...createCacheStatusRejected(e) }))
 		}
 	} else {
 		value.status?.lens("status")?.set("pending")
@@ -24,7 +24,7 @@ export async function save<T>(promise: Promise<T>, value: LoadAtoms<T> | Atom<Pr
 			value.value?.set(result)
 			value.status?.lens("status")?.set("fulfilled")
 		} catch (e) {
-			value.status?.modify(x => ({ ...x, ...createPromiseStatusRejected(e) }))
+			value.status?.modify(x => ({ ...x, ...createCacheStatusRejected(e) }))
 		}
 	}
 }

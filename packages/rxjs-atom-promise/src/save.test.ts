@@ -1,11 +1,11 @@
 import { Atom } from "@rixio/rxjs-atom"
-import { PromiseState, createPromiseStateIdle } from "./promise-state"
+import { createCacheStateIdle } from "./cache-state"
 import { save } from "./save"
 
 describe("save", () => {
 	test("should save data to atom", async () => {
 		expect.assertions(1)
-		const state = Atom.create<PromiseState<ApiData[]>>(createPromiseStateIdle())
+		const state = Atom.create(createCacheStateIdle<ApiData[]>())
 
 		await save(api.loadPage(0, 5), state)
 		expect(state.get().value).toBeTruthy()
@@ -13,7 +13,7 @@ describe("save", () => {
 
 	test("should save to separate atoms", async () => {
 		expect.assertions(1)
-		const state = Atom.create<PromiseState<ApiData[]>>(createPromiseStateIdle())
+		const state = Atom.create(createCacheStateIdle<ApiData[]>())
 
 		await save(api.loadPage(0, 5), {
 			value: state.lens("value"),

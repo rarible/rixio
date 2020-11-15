@@ -1,13 +1,7 @@
 import { Map as IM } from "immutable"
 import { Atom } from "@rixio/rxjs-atom"
 import { Lens, Prism } from "@rixio/lens"
-import {
-	getFinalValue,
-	PromiseState,
-	createPromiseStateFulfilled,
-	createPromiseStateIdle,
-	createPromiseStatePending,
-} from "./promise-state"
+import { CacheState } from "./cache-state"
 import { Cache, CacheImpl } from "./cache"
 import { save } from "./save"
 
@@ -28,10 +22,7 @@ class DefaultListDataLoader<K, V> implements ListDataLoader<K, V> {
 }
 
 export interface KeyCache<K, V> {
-	get(key: K, force?: boolean): Promise<V>
-	set(key: K, value: V): void
 	getMap(ids: K[]): Promise<IM<K, V>>
-	getAtom(key: K): Atom<PromiseState<V>>
 	single(key: K): Cache<V>
 }
 
@@ -41,7 +32,7 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	private readonly singles: Map<K, Cache<V>> = new Map()
 
 	constructor(
-		private readonly map: Atom<IM<K, PromiseState<V>>>,
+		private readonly map: Atom<IM<K, CacheState<V>>>,
 		private readonly loader: DataLoader<K, V>,
 		listLoader?: ListDataLoader<K, V>
 	) {
@@ -56,18 +47,6 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 		const created = new CacheImpl(this.getAtom(key), () => this.load(key))
 		this.singles.set(key, created)
 		return created
-	}
-
-	get(key: K, force?: boolean): Promise<V> {
-		return getFinalValue(this.getAtomAndLoad(key, force))
-	}
-
-	set(key: K, value: V): void {
-		this.map.modify(map => map.set(key, createPromiseStateFulfilled(value)))
-	}
-
-	getAtom(key: K): Atom<PromiseState<V>> {
-		return this.map.lens(byKeyWithDefault(key, createPromiseStateIdle<V>()))
 	}
 
 	async getMap(ids: K[]) {
