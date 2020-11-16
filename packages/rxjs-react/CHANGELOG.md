@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.7.0...@rixio/rxjs-react@0.7.1) (2020-11-16)
+
+
+### Bug Fixes
+
+* fix lift ([10fbcad](https://github.com/roborox/rixio/commit/10fbcadda20ae67b44b37e4e31fe729c82146354))
+
+
+
+
+
 # [0.7.0](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.6.4...@rixio/rxjs-react@0.7.0) (2020-11-16)
 
 

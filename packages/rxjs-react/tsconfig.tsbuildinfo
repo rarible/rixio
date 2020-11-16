@@ -507,7 +507,7 @@
         "affectsGlobalScope": false
       },
       "./src/base.ts": {
-        "version": "f19e7be30f040ba0f5b72f395d41d92b591a2572c970bab5320a3ae341bd94f2",
+        "version": "ccc3cccfe0d5e4ec3b079894a03bec672fcc00f30eb488d876a0008d23324d74",
         "signature": "396e8b3a97ff454ae044d175995dc1c0203c5e6d16142bf1ad4133ef8bf36db1",
         "affectsGlobalScope": false
       },

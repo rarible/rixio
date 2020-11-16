@@ -1,6 +1,6 @@
 {
   "name": "@rixio/rxjs-atom-promise",
-  "version": "0.5.10",
+  "version": "0.5.11",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@rixio/rxjs-atom": "^0.3.4",
-    "@rixio/rxjs-react": "^0.7.0"
+    "@rixio/rxjs-react": "^0.7.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.11.4",
