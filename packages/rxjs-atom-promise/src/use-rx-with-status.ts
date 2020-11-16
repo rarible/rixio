@@ -15,14 +15,25 @@ export function useRxWithStatus<T>(initial: Observable<T>): PromiseState<T> {
 }
 
 function asPromiseState<T>(observable: Observable<T>): Observable<PromiseState<T>> {
-	const immediate = getImmediate(observable)
-	const result = observable.pipe(
-		map(createPromiseStateFulfilled),
-		catchError(err => of(createPromiseStateRejected<T>(err)))
-	)
-	if (immediate.status !== "pending") {
-		return result
-	} else {
-		return concat(of(createPromiseStatePending<T>()), result)
-	}
+	return new Observable<PromiseState<T>>(s => {
+		let emitted = false
+		const subscription = observable.subscribe(
+			value => {
+				emitted = true
+				s.next(createPromiseStateFulfilled(value))
+			},
+			error => {
+				emitted = true
+				s.next(createPromiseStateRejected(error))
+			},
+			() => {
+				emitted = true
+				s.complete()
+			}
+		)
+		if (!emitted) {
+			s.next(createPromiseStatePending<T>())
+		}
+		s.add(subscription)
+	})
 }

@@ -612,8 +612,8 @@
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/index.d.ts": {
-        "version": "bcb21c1f755f66cca7b3dc924fa1cda69477785720f4c8914ab8f49fb680bc24",
-        "signature": "bcb21c1f755f66cca7b3dc924fa1cda69477785720f4c8914ab8f49fb680bc24",
+        "version": "5931022bc46c0b7528d75a683b6dbd87bb6cc6dd55d4e38dab4773fb29b2628f",
+        "signature": "5931022bc46c0b7528d75a683b6dbd87bb6cc6dd55d4e38dab4773fb29b2628f",
         "affectsGlobalScope": false
       },
       "./src/flat-list.tsx": {
@@ -628,7 +628,7 @@
       },
       "./src/index.ts": {
         "version": "c28315a33bc22c49a03852ff2dbc68ce8d015e6d02eb7a5e68174c6682346775",
-        "signature": "9753dd35d7c40de9c8e738a1892ff5783baf3c36e4137e14df7719580b987a79",
+        "signature": "919f6da8db30c8076cab4275e01a77480be5b02b2dc676202bb1e8fd697779e4",
         "affectsGlobalScope": false
       },
       "./src/index.spec.tsx": {
@@ -1694,6 +1694,7 @@
         "../../node_modules/rxjs/index.d.ts"
       ],
       "../rxjs-react/build/index.d.ts": [
+        "../rxjs-react/build/base.d.ts",
         "../rxjs-react/build/lift.d.ts",
         "../rxjs-react/build/rx-html.d.ts",
         "../rxjs-react/build/rx-if.d.ts",
@@ -2333,7 +2334,7 @@
       "./src/index.ts": [
         "../../node_modules/@types/react-native/index.d.ts",
         "../../node_modules/@types/react/index.d.ts",
-        "../rxjs-react/build/base.d.ts",
+        "../rxjs-react/build/index.d.ts",
         "./src/flat-list.tsx"
       ],
       "../rxjs-react/build/base.d.ts": [
@@ -2341,6 +2342,7 @@
         "../../node_modules/rxjs/index.d.ts"
       ],
       "../rxjs-react/build/index.d.ts": [
+        "../rxjs-react/build/base.d.ts",
         "../rxjs-react/build/lift.d.ts",
         "../rxjs-react/build/rx-html.d.ts",
         "../rxjs-react/build/rx-if.d.ts",
