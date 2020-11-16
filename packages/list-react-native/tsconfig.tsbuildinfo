@@ -527,13 +527,13 @@
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/base.d.ts": {
-        "version": "66a536268504d178a640afc672e1399f57519c014c35416123d83857f1566d28",
-        "signature": "66a536268504d178a640afc672e1399f57519c014c35416123d83857f1566d28",
+        "version": "396e8b3a97ff454ae044d175995dc1c0203c5e6d16142bf1ad4133ef8bf36db1",
+        "signature": "396e8b3a97ff454ae044d175995dc1c0203c5e6d16142bf1ad4133ef8bf36db1",
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/rx-wrapper.d.ts": {
-        "version": "931ef4d5569af325e224019b0b93f673afb5043134f6ff5da7ab3a1750d448e5",
-        "signature": "931ef4d5569af325e224019b0b93f673afb5043134f6ff5da7ab3a1750d448e5",
+        "version": "6838dab97815dc023f3d6cf2860f6029b3b9f90227d9223ddef8cea2ef81002f",
+        "signature": "6838dab97815dc023f3d6cf2860f6029b3b9f90227d9223ddef8cea2ef81002f",
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/use-rx-change.d.ts": {
@@ -547,8 +547,8 @@
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/lift.d.ts": {
-        "version": "8ca3db481193cdaad41132bb6080a6717abf82eff3109c5524717341ec99b7e5",
-        "signature": "8ca3db481193cdaad41132bb6080a6717abf82eff3109c5524717341ec99b7e5",
+        "version": "0308208da9769ba5d44f51aa45fb17f7a5cad37f1e260fc7635e4c4ed70fb5ba",
+        "signature": "0308208da9769ba5d44f51aa45fb17f7a5cad37f1e260fc7635e4c4ed70fb5ba",
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/use-rx.d.ts": {
@@ -562,8 +562,8 @@
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/rx-html.d.ts": {
-        "version": "0c7701c885cb2f9f2a2f5ec2b4b76145ffd234fe066e749e269e260b7fdbe686",
-        "signature": "0c7701c885cb2f9f2a2f5ec2b4b76145ffd234fe066e749e269e260b7fdbe686",
+        "version": "75c139d71893ffe8b70dcea13dbbc0e02d3032e8ef62333a3b3468985f2c9d20",
+        "signature": "75c139d71893ffe8b70dcea13dbbc0e02d3032e8ef62333a3b3468985f2c9d20",
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/index.d.ts": {
