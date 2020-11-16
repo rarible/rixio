@@ -6,7 +6,7 @@ const flagName = "___error___"
 const errorFlag = Symbol.for(flagName)
 
 function checkIsError(value: any) {
-	return value !== null && value[flagName] === errorFlag
+	return value !== null && typeof value === "object" && value[flagName] === errorFlag
 }
 
 type CheckResult = { status: "fulfilled" } | { status: "rejected"; error: any } | { status: "pending" }

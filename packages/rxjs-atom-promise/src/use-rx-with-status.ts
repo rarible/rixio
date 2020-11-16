@@ -1,7 +1,6 @@
-import { concat, Observable, of } from "rxjs"
-import { getImmediate, useRx } from "@rixio/rxjs-react"
+import { Observable } from "rxjs"
+import { useRx } from "@rixio/rxjs-react"
 import { useMemo } from "react"
-import { map, catchError } from "rxjs/operators"
 import {
 	createPromiseStateFulfilled,
 	createPromiseStatePending,
