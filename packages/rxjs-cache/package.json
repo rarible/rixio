@@ -1,5 +1,5 @@
 {
-	"name": "@rixio/rxjs-wrapped",
+	"name": "@rixio/rxjs-cache",
 	"version": "0.0.1",
 	"main": "build/index.js",
 	"types": "build/index.d.ts",
@@ -7,6 +7,7 @@
 		"/build"
 	],
 	"keywords": [
+		"cache",
 		"frp",
 		"lens",
 		"reactive",
@@ -27,6 +28,10 @@
 	},
 	"publishConfig": {
 		"access": "public"
+	},
+	"dependencies": {
+		"@rixio/rxjs-atom": "0.3.4",
+		"@rixio/rxjs-wrapped": "0.0.1"
 	},
 	"devDependencies": {
 		"@types/jest": "26.0.14",

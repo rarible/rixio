@@ -1,0 +1,86 @@
+import { combineLatest as rxjsCombineLatest, from, Observable, of } from "rxjs"
+import { distinctUntilChanged, map as rxjsMap, mergeMap as rxjsMergeMap } from "rxjs/operators"
+import {
+	createFulfilled,
+	createRejected,
+	pending as wrappedPending,
+	Rejected,
+	Wrapped,
+	WrappedObservable,
+} from "./domain"
+import { wrap } from "./index"
+
+type F<T, R> = (value: T) => R
+
+export function map<T, R>(mapper: (value: T) => R): F<WrappedObservable<T>, Observable<Wrapped<R>>> {
+  return (observable) => wrap(observable).pipe(
+    rxjsMap(v => {
+      switch (v.status) {
+        case "fulfilled":
+          return createFulfilled(mapper(v.value))
+        case "pending":
+          return v
+        case "rejected":
+          return v
+      }
+    })
+  )
+}
+
+export function combineLatest<T1, T2>(array: [WrappedObservable<T1>, WrappedObservable<T2>]): Observable<Wrapped<[T1, T2]>>
+export function combineLatest<T1, T2, T3>(array: [WrappedObservable<T1>, WrappedObservable<T2>, WrappedObservable<T3>]): Observable<Wrapped<[T1, T2, T3]>>
+export function combineLatest<T1, T2, T3, T4>(array: [WrappedObservable<T1>, WrappedObservable<T2>, WrappedObservable<T3>, WrappedObservable<T4>]): Observable<Wrapped<[T1, T2, T3, T4]>>
+export function combineLatest<T1, T2, T3, T4, T5>(array: [WrappedObservable<T1>, WrappedObservable<T2>, WrappedObservable<T3>, WrappedObservable<T4>, WrappedObservable<T5>]): Observable<Wrapped<[T1, T2, T3, T4, T5]>>
+export function combineLatest(array: Array<WrappedObservable<any>>): Observable<Wrapped<any>> {
+  return rxjsCombineLatest(array.map(wrap)).pipe(
+    rxjsMap(resultArray => {
+      let pending = false
+      let rejected: Rejected[] = []
+      const combined = new Array(resultArray.length)
+      resultArray.forEach((w, idx) => {
+        switch (w.status) {
+          case "pending":
+            pending = true
+            break
+          case "rejected":
+            rejected.push(w)
+            break
+          case "fulfilled":
+            combined[idx] = w.value
+        }
+      })
+      if (rejected.length > 0) {
+        const error = rejected[0].error
+        const reload = () => {
+          rejected.forEach(r => r.reload())
+        }
+        return createRejected(error, reload)
+      } else if (pending) {
+        return wrappedPending
+      } else {
+        return createFulfilled(combined)
+      }
+    }),
+		distinctUntilChanged(),
+  )
+}
+
+export function flatMap<T, R>(mapper: (value: T) => WrappedObservable<R> | PromiseLike<R>): F<WrappedObservable<T>, Observable<Wrapped<R>>> {
+	return (observable) => wrap(observable).pipe(
+		rxjsMergeMap(x => {
+			switch (x.status) {
+				case "pending":
+					return of(wrappedPending)
+				case "rejected":
+					return of(x)
+				case "fulfilled":
+					return wrap(from(mapper(x.value)))
+			}
+		}),
+    distinctUntilChanged(),
+	)
+}
+
+export function fromPromise<T>(promise: PromiseLike<T>): Observable<Wrapped<T>> {
+	return wrap(from(promise))
+}
