@@ -1,5 +1,6 @@
 import { Atom } from "@rixio/rxjs-atom"
 import waitForExpect from "wait-for-expect"
+import { Wrapped, pendingWrapped } from "@rixio/rxjs-wrapped"
 import { CacheImpl } from "./impl"
 import { CacheState, idle } from "./index";
 
@@ -11,15 +12,23 @@ describe("CacheImpl", () => {
 
     const s = cache.subscribe()
     await waitForExpect(() => {
-      expect(cache.atom.get().status).toBe("fulfilled")
-      expect(cache.atom.get().value).toBe("loaded")
+      let value = cache.atom.get()
+      if (value.status === "fulfilled") {
+        expect(value.value).toBe("loaded")
+      } else {
+        fail()
+      }
     })
 
     result = "reloaded"
     cache.clear()
     await waitForExpect(() => {
-      expect(cache.atom.get().status).toBe("fulfilled")
-      expect(cache.atom.get().value).toBe("reloaded")
+      const value = cache.atom.get()
+      if (value.status === "fulfilled") {
+        expect(value.value).toBe("reloaded")
+      } else {
+        fail()
+      }
     })
 
     s.unsubscribe()
@@ -61,13 +70,12 @@ describe("CacheImpl", () => {
     expect(value).toBe("loaded")
   })
 
-/*
-  test("cache should be provided in rejected state", async () => {
+  test("reload should work if rejected", async () => {
     let promise: Promise<string> = Promise.reject("reason")
     const cache = new CacheImpl(Atom.create(idle as CacheState<string>), () => promise)
     expect(cache.atom.get().status).toBe("idle")
 
-    let value: WrappedRx<string> = cacheStatusPending as WrappedRx<string>
+    let value: Wrapped<string> = pendingWrapped
     let error: any = null
     cache.subscribe(
       v => value = v,
@@ -77,11 +85,15 @@ describe("CacheImpl", () => {
       expect(value.status).toBe("rejected")
     })
     expect(error).toBeNull()
-    if (value && value.status === "rejected") {
-      expect(value.cache).toStrictEqual(cache)
-    } else {
+    if (value.status !== "rejected") {
       fail()
     }
+
+    promise = Promise.resolve("resolved")
+    value.reload()
+    await waitForExpect(() => {
+      expect(value.status).toBe("fulfilled")
+    })
   })
-*/
+
 })

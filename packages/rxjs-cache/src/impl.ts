@@ -1,8 +1,8 @@
 import { Atom } from "@rixio/rxjs-atom/build"
 import { Observable, Subscriber, Subscription, BehaviorSubject } from "rxjs"
 import { filter, first } from "rxjs/operators"
-import { createFulfilled, createRejected, pending, Wrapped } from "@rixio/rxjs-wrapped";
-
+import { createFulfilledWrapped, createRejectedWrapped, pendingWrapped, Wrapped } from "@rixio/rxjs-wrapped";
+import { fromPromise } from "@rixio/rxjs-wrapped/build/operators"
 import { Cache, CacheState, idle } from ".";
 
 export class CacheImpl<T> extends BehaviorSubject<Wrapped<T>> implements Cache<T> {
@@ -10,13 +10,18 @@ export class CacheImpl<T> extends BehaviorSubject<Wrapped<T>> implements Cache<T
   private _refCount = 0
 
   constructor(private readonly _atom: Atom<CacheState<T>>, private readonly _loader: () => Promise<T>) {
-    super(pending)
+    super(pendingWrapped)
     this._onSourceValue = this._onSourceValue.bind(this)
     this.clear = this.clear.bind(this)
   }
 
   get atom(): Atom<CacheState<T>> {
     return this._atom
+  }
+
+  get valueAtom(): Atom<T> {
+    // @ts-ignore
+    return this._atom.lens("value")
   }
 
   get(force: boolean = false): Promise<T> {
@@ -27,7 +32,7 @@ export class CacheImpl<T> extends BehaviorSubject<Wrapped<T>> implements Cache<T
   }
 
   set(value: T): void {
-    this.atom.set(createFulfilled(value))
+    this.atom.set(createFulfilledWrapped(value))
   }
 
   modifyIfFulfilled(updateFn: (currentValue: T) => T): void {
@@ -47,17 +52,17 @@ export class CacheImpl<T> extends BehaviorSubject<Wrapped<T>> implements Cache<T
   private _onSourceValue(x: CacheState<T>) {
     switch (x.status) {
       case "idle":
-        //todo save
-        this.next(pending)
+        Atom.set(this._atom, fromPromise(this._loader())).subscribe()
+        this.next(pendingWrapped)
         break
       case "pending":
-        this.next(pending)
+        this.next(pendingWrapped)
         break
       case "rejected":
-        this.next(createRejected(x.error, this.clear))
+        this.next(createRejectedWrapped(x.error, this.clear))
         break
       case "fulfilled":
-        this.next(createFulfilled(x.value))
+        this.next(createFulfilledWrapped(x.value))
     }
   }
 

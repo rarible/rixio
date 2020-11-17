@@ -163,4 +163,15 @@ export namespace Atom {
 			return sub
 		})
 	}
+
+	export function set<T>(atom: Atom<T>, observable: Observable<T>): Observable<void> {
+		return new Observable(s => {
+			const sub = observable.subscribe(
+				next => atom.set(next),
+				e => s.next(e),
+				() => s.complete(),
+			)
+			s.add(sub)
+		})
+	}
 }

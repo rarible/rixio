@@ -1,7 +1,7 @@
 import { Subject } from "rxjs"
 import waitForExpect from "wait-for-expect";
 import { combineLatest, flatMap, map } from "./operators"
-import { createRejected, Rejected, Wrapped } from "./domain";
+import { createRejectedWrapped, Rejected, Wrapped } from "./domain";
 
 describe("operators", () => {
 	test("map should work with plain observables", () => {
@@ -77,7 +77,7 @@ describe("operators", () => {
 		expect(emitted[0].status).toBe("pending")
 
 		let invoked = false
-		s.next(createRejected("reason1", () => invoked = true))
+		s.next(createRejectedWrapped("reason1", () => invoked = true))
 		expect(emitted.length).toBe(2)
 		expect(emitted[1].status).toBe("rejected")
 		const rej = emitted[1] as Rejected

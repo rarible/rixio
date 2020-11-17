@@ -1,9 +1,9 @@
 import { combineLatest as rxjsCombineLatest, from, Observable, of } from "rxjs"
 import { distinctUntilChanged, map as rxjsMap, mergeMap as rxjsMergeMap } from "rxjs/operators"
 import {
-	createFulfilled,
-	createRejected,
-	pending as wrappedPending,
+	createFulfilledWrapped,
+	createRejectedWrapped,
+	pendingWrapped as wrappedPending,
 	Rejected,
 	Wrapped,
 	WrappedObservable,
@@ -17,7 +17,7 @@ export function map<T, R>(mapper: (value: T) => R): F<WrappedObservable<T>, Obse
     rxjsMap(v => {
       switch (v.status) {
         case "fulfilled":
-          return createFulfilled(mapper(v.value))
+          return createFulfilledWrapped(mapper(v.value))
         case "pending":
           return v
         case "rejected":
@@ -54,11 +54,11 @@ export function combineLatest(array: Array<WrappedObservable<any>>): Observable<
         const reload = () => {
           rejected.forEach(r => r.reload())
         }
-        return createRejected(error, reload)
+        return createRejectedWrapped(error, reload)
       } else if (pending) {
         return wrappedPending
       } else {
-        return createFulfilled(combined)
+        return createFulfilledWrapped(combined)
       }
     }),
 		distinctUntilChanged(),

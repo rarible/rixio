@@ -22,9 +22,9 @@ export type WrappedObservable<T> = Observable<T | Wrapped<T>>
 
 export type Wrapped<T> = (Fulfilled<T> | Pending | Rejected) & HasFlag
 
-export const pending: Wrapped<any> = { status: "pending", [wrapped]: symbol }
+export const pendingWrapped: Wrapped<any> = { status: "pending", [wrapped]: symbol }
 
-export function createRejected(error: any, reload: () => void = noop): Wrapped<any> {
+export function createRejectedWrapped(error: any, reload: () => void = noop): Wrapped<any> {
   return {
     status: "rejected",
     error,
@@ -33,7 +33,7 @@ export function createRejected(error: any, reload: () => void = noop): Wrapped<a
   }
 }
 
-export function createFulfilled<T>(value: T): Fulfilled<T> & HasFlag {
+export function createFulfilledWrapped<T>(value: T): Fulfilled<T> & HasFlag {
   return {
     status: "fulfilled",
     value,

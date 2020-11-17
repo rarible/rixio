@@ -1,5 +1,5 @@
 import { Subject } from "rxjs"
-import { createFulfilled, createRejected, Wrapped } from "./domain";
+import { createFulfilledWrapped, createRejectedWrapped, Wrapped } from "./domain";
 import { wrap } from "./index"
 
 describe("wrap", () => {
@@ -36,19 +36,19 @@ describe("wrap", () => {
     expect(emitted.length).toBe(1)
     expect(emitted[0].status).toBe("pending")
 
-    s.next(createFulfilled(1))
+    s.next(createFulfilledWrapped(1))
     expect(emitted.length).toBe(2)
     const em2 = emitted[1]
     expect(em2.status).toBe("fulfilled")
     expect((em2 as any).value).toBe(1)
 
-    s.next(createRejected("reason"))
+    s.next(createRejectedWrapped("reason"))
     expect(emitted.length).toBe(3)
     const em3 = emitted[2]
     expect(em3.status).toBe("rejected")
     expect((em3 as any).error).toBe("reason")
 
-    s.next(createRejected("reason2"))
+    s.next(createRejectedWrapped("reason2"))
     expect(emitted.length).toBe(4)
     const em4 = emitted[3]
     expect(em4.status).toBe("rejected")

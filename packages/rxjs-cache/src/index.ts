@@ -8,8 +8,7 @@ export type Idle = {
 
 export const idle: Idle = { status: "idle" }
 
-type HasValue<T> = { value: T }
-type AtomState<S, T> = Omit<S, "value" | "reload"> & HasValue<T>
+type AtomState<S, T> = Omit<S, "reload">
 export type CacheState<T> = AtomState<Idle, T> | AtomState<Pending, T> | AtomState<Rejected, T> | AtomState<Fulfilled<T>, T>
 
 export interface Cache<T> extends Observable<Wrapped<T>> {
@@ -22,4 +21,6 @@ export interface Cache<T> extends Observable<Wrapped<T>> {
 	clear(): void
 
 	atom: Atom<CacheState<T>>
+
+	valueAtom: Atom<T>
 }
