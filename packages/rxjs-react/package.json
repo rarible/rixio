@@ -30,7 +30,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@rixio/lens": "^0.4.1"
+    "@rixio/lens": "^0.4.1",
+    "@rixio/rxjs-wrapped": "0.0.1"
   },
   "devDependencies": {
     "@rixio/rxjs-atom": "^0.3.4",

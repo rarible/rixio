@@ -33,4 +33,5 @@ function toWrapped<T>(value: T | Wrapped<T>): Wrapped<T> {
   }
 }
 
-export * from "./domain"
+export { WrappedObservable, pendingWrapped, createFulfilledWrapped, createRejectedWrapped, Fulfilled, isWrapped, Pending, Rejected, Wrapped} from "./domain"
+export { combineLatest, fromPromise, map, flatMap } from "./operators"

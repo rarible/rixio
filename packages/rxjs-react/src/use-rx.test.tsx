@@ -3,27 +3,17 @@ import React from "react"
 import { render } from "@testing-library/react"
 import { Atom } from "@rixio/rxjs-atom"
 import { act } from "react-dom/test-utils"
-import { delay, flatMap, map } from "rxjs/operators"
+import { delay, map, mergeMap } from "rxjs/operators"
 import { useRx } from "./use-rx"
 
 const RxText = ({ value, renders }: { value: Observable<string>; renders: Atom<number> }) => {
 	const simple = useRx(value)
 	renders.modify(x => x + 1)
-	return <span data-testid="value">{simple}</span>
-}
-
-let count = 0
-const Count = () => {
-	count = count + 1
-	return <span>test</span>
-}
-const TestCount = (props: { value: Observable<number> }) => {
-	useRx(props.value)
-	return <Count />
+	return <span data-testid="value">{simple.status === "fulfilled" ? simple.value : ""}</span>
 }
 
 describe("useRx", () => {
-	test("should render atom exactly one time", () => {
+	test("should render atom 2 times", () => {
 		const text = Math.random().toString()
 		const renders = Atom.create(0)
 		const r = render(<RxText value={Atom.create(text)} renders={renders} />)
@@ -31,7 +21,7 @@ describe("useRx", () => {
 		expect(renders.get()).toStrictEqual(1)
 	})
 
-	test("should render ReplaySubject 1 time", () => {
+	test("should render ReplaySubject 2 times", () => {
 		const renders = Atom.create(0)
 		const subject = new ReplaySubject<string>(1)
 		const text = Math.random().toString()
@@ -49,8 +39,8 @@ describe("useRx", () => {
 		testSimple(a => a.pipe(map(x => x)))
 	})
 
-	test("should work with simple flatMap operator", () => {
-		testSimple(a => a.pipe(flatMap(x => of(x))))
+	test("should work with simple mergeMap operator", () => {
+		testSimple(a => a.pipe(mergeMap(x => of(x))))
 	})
 
 	test("should not work when there is no immediate value", () => {
@@ -70,13 +60,4 @@ describe("useRx", () => {
 		expect(r.getByTestId("value")).toHaveTextContent(nextText)
 		expect(renders.get()).toStrictEqual(2)
 	}
-
-	test("should not trigger rerender if not changed", () => {
-		const subject = new ReplaySubject<number>(1)
-		subject.next(1)
-		render(<TestCount value={subject} />)
-		expect(count).toBe(1)
-		act(() => subject.next(1))
-		expect(count).toBe(1)
-	})
 })

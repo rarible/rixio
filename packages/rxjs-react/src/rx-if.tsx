@@ -13,13 +13,14 @@ export interface RxIfProps {
 
 export function RxIf({ test$, children, negate, else: not }: RxIfProps): React.ReactElement | null {
 	const raw = useRx(test$)
+	const truthy = raw.status === "fulfilled" && raw
 
-	if (negate && !raw) {
+	if (negate && !truthy) {
 		return <>{children}</>
 	} else if (negate) {
 		if (typeof not === "function") return <>{not()}</>
 		else return <>{not}</>
-	} else if (raw) {
+	} else if (truthy) {
 		return <>{children}</>
 	} else {
 		if (typeof not === "function") return <>{not()}</>

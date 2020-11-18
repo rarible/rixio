@@ -27,11 +27,10 @@ export function map<T, R>(mapper: (value: T) => R): F<WrappedObservable<T>, Obse
   )
 }
 
-export function combineLatest<T1, T2>(array: [WrappedObservable<T1>, WrappedObservable<T2>]): Observable<Wrapped<[T1, T2]>>
-export function combineLatest<T1, T2, T3>(array: [WrappedObservable<T1>, WrappedObservable<T2>, WrappedObservable<T3>]): Observable<Wrapped<[T1, T2, T3]>>
-export function combineLatest<T1, T2, T3, T4>(array: [WrappedObservable<T1>, WrappedObservable<T2>, WrappedObservable<T3>, WrappedObservable<T4>]): Observable<Wrapped<[T1, T2, T3, T4]>>
-export function combineLatest<T1, T2, T3, T4, T5>(array: [WrappedObservable<T1>, WrappedObservable<T2>, WrappedObservable<T3>, WrappedObservable<T4>, WrappedObservable<T5>]): Observable<Wrapped<[T1, T2, T3, T4, T5]>>
-export function combineLatest(array: Array<WrappedObservable<any>>): Observable<Wrapped<any>> {
+type InferFromTuple<T extends any[]> = {
+	[I in keyof T]: T[I] extends WrappedObservable<infer T> ? T : unknown
+}
+export function combineLatest<Ts extends [...WrappedObservable<any>[]]>(array: [...Ts]): Observable<Wrapped<InferFromTuple<Ts>>> {
   return rxjsCombineLatest(array.map(wrap)).pipe(
     rxjsMap(resultArray => {
       let pending = false
