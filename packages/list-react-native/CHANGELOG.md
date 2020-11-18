@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/roborox/rixio/compare/@rixio/list-react-native@0.3.0...@rixio/list-react-native@0.3.1) (2020-11-16)
+
+**Note:** Version bump only for package @rixio/list-react-native
+
+
+
+
+
+# [0.3.0](https://github.com/roborox/rixio/compare/@rixio/list-react-native@0.2.11...@rixio/list-react-native@0.3.0) (2020-11-16)
+
+
+### Bug Fixes
+
+* useRxWithStatus fix ([98495d3](https://github.com/roborox/rixio/commit/98495d3dbb630c968c3a6e3b50d646044bdbbfc6))
+
+
+### Features
+
+* lift and RxWrapper support for pending and rejected state ([9fa96d8](https://github.com/roborox/rixio/commit/9fa96d802f76283883112c7e88fcf821eaaaf99f))
+
+
+
+
+
 ## [0.2.11](https://github.com/roborox/rixio/compare/@rixio/list-react-native@0.2.10...@rixio/list-react-native@0.2.11) (2020-11-13)
 
 

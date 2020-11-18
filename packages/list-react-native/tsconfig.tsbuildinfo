@@ -201,324 +201,324 @@
         "signature": "22f5e7534724db83591e9b9ae7e65307aa954c943b852be7f55da132a9b723c8",
         "affectsGlobalScope": true
       },
-      "../../node_modules/rxjs/internal/Subscription.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts": {
         "version": "6cb35d83d21a7e72bd00398c93302749bcd38349d0cc5e76ff3a90c6d1498a4d",
         "signature": "6cb35d83d21a7e72bd00398c93302749bcd38349d0cc5e76ff3a90c6d1498a4d",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/types.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts": {
         "version": "051451ceae7f29c8f17b810e6a6d8d270c67b401866f487cdc50c5c1a8b3f511",
         "signature": "051451ceae7f29c8f17b810e6a6d8d270c67b401866f487cdc50c5c1a8b3f511",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/Subscriber.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts": {
         "version": "2632057d8b983ee33295566088c080384d7d69a492bc60b008d6a6dfd3508d6b",
         "signature": "2632057d8b983ee33295566088c080384d7d69a492bc60b008d6a6dfd3508d6b",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/Operator.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts": {
         "version": "4bf71cf2a94492fc71e97800bdf2bcb0a9a0fa5fce921c8fe42c67060780cbfa",
         "signature": "4bf71cf2a94492fc71e97800bdf2bcb0a9a0fa5fce921c8fe42c67060780cbfa",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/iif.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts": {
         "version": "0996ff06f64cb05b6dac158a6ada2e16f8c2ccd20f9ff6f3c3e871f1ba5fb6d9",
         "signature": "0996ff06f64cb05b6dac158a6ada2e16f8c2ccd20f9ff6f3c3e871f1ba5fb6d9",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/throwError.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts": {
         "version": "5c492d01a19fea5ebfff9d27e786bc533e5078909521ca17ae41236f16f9686a",
         "signature": "5c492d01a19fea5ebfff9d27e786bc533e5078909521ca17ae41236f16f9686a",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/Observable.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts": {
         "version": "a6ee930b81c65ec79aca49025b797817dde6f2d2e9b0e0106f0844e18e2cc819",
         "signature": "a6ee930b81c65ec79aca49025b797817dde6f2d2e9b0e0106f0844e18e2cc819",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/Subject.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts": {
         "version": "84fce15473e993e6b656db9dd3c9196b80f545647458e6621675e840fd700d29",
         "signature": "84fce15473e993e6b656db9dd3c9196b80f545647458e6621675e840fd700d29",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/ConnectableObservable.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts": {
         "version": "7d5336ee766aa72dffb1cc2a515f61d18a4fb61b7a2757cbccfb7b286b783dfb",
         "signature": "7d5336ee766aa72dffb1cc2a515f61d18a4fb61b7a2757cbccfb7b286b783dfb",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/operators/groupBy.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts": {
         "version": "63e96248ab63f6e7a86e31aa3e654ed6de1c3f99e3b668e04800df05874e8b77",
         "signature": "63e96248ab63f6e7a86e31aa3e654ed6de1c3f99e3b668e04800df05874e8b77",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/symbol/observable.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/symbol/observable.d.ts": {
         "version": "ed164267a8b206892d69768f51e6e7157ad0a6e89745fbd39f3e81c4700e9a9e",
         "signature": "ed164267a8b206892d69768f51e6e7157ad0a6e89745fbd39f3e81c4700e9a9e",
         "affectsGlobalScope": true
       },
-      "../../node_modules/rxjs/internal/BehaviorSubject.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts": {
         "version": "06a20cc7d937074863861ea1159ac783ff97b13952b4b5d1811c7d8ab5c94776",
         "signature": "06a20cc7d937074863861ea1159ac783ff97b13952b4b5d1811c7d8ab5c94776",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/ReplaySubject.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts": {
         "version": "ab6de4af0e293eae73b67dad251af097d7bcc0b8b62de84e3674e831514cb056",
         "signature": "ab6de4af0e293eae73b67dad251af097d7bcc0b8b62de84e3674e831514cb056",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/AsyncSubject.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts": {
         "version": "18cbd79079af97af66c9c07c61b481fce14a4e7282eca078c474b40c970ba1d0",
         "signature": "18cbd79079af97af66c9c07c61b481fce14a4e7282eca078c474b40c970ba1d0",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/Scheduler.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts": {
         "version": "e7b45405689d87e745a217b648d3646fb47a6aaba9c8d775204de90c7ea9ff35",
         "signature": "e7b45405689d87e745a217b648d3646fb47a6aaba9c8d775204de90c7ea9ff35",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/scheduler/Action.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/Action.d.ts": {
         "version": "669b754ec246dd7471e19b655b73bda6c2ca5bb7ccb1a4dff44a9ae45b6a716a",
         "signature": "669b754ec246dd7471e19b655b73bda6c2ca5bb7ccb1a4dff44a9ae45b6a716a",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts": {
         "version": "bcfaca4a8ff50f57fd36df91fba5d34056883f213baff7192cbfc4d3805d2084",
         "signature": "bcfaca4a8ff50f57fd36df91fba5d34056883f213baff7192cbfc4d3805d2084",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/scheduler/AsyncAction.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncAction.d.ts": {
         "version": "76a564b360b267502219a89514953058494713ee0923a63b2024e542c18b40e5",
         "signature": "76a564b360b267502219a89514953058494713ee0923a63b2024e542c18b40e5",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/scheduler/AsapScheduler.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsapScheduler.d.ts": {
         "version": "8f62cbd3afbd6a07bb8c934294b6bfbe437021b89e53a4da7de2648ecfc7af25",
         "signature": "8f62cbd3afbd6a07bb8c934294b6bfbe437021b89e53a4da7de2648ecfc7af25",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/scheduler/asap.d.ts": {
-        "version": "c586a0e66183dd76fa9324e9b95bac89d959f92094de6f935f64baf34291bead",
-        "signature": "c586a0e66183dd76fa9324e9b95bac89d959f92094de6f935f64baf34291bead",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts": {
+        "version": "a20629551ed7923f35f7556c4c15d0c8b2ebe7afaa68ceaab079a1707ba64be2",
+        "signature": "a20629551ed7923f35f7556c4c15d0c8b2ebe7afaa68ceaab079a1707ba64be2",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/scheduler/async.d.ts": {
-        "version": "e124a70dabc0309927d45dce2ae9de70f951dce0b520c4382a740d18075a9533",
-        "signature": "e124a70dabc0309927d45dce2ae9de70f951dce0b520c4382a740d18075a9533",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts": {
+        "version": "d6de66600c97cd499526ddecea6e12166ab1c0e8d9bf36fb2339fd39c8b3372a",
+        "signature": "d6de66600c97cd499526ddecea6e12166ab1c0e8d9bf36fb2339fd39c8b3372a",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/scheduler/QueueScheduler.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/QueueScheduler.d.ts": {
         "version": "8e7a5b8f867b99cc8763c0b024068fb58e09f7da2c4810c12833e1ca6eb11c4f",
         "signature": "8e7a5b8f867b99cc8763c0b024068fb58e09f7da2c4810c12833e1ca6eb11c4f",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/scheduler/queue.d.ts": {
-        "version": "91ddde7ec68545fa696fd27b9e38c0b2f1c180a26dbf229348808c4674f6398f",
-        "signature": "91ddde7ec68545fa696fd27b9e38c0b2f1c180a26dbf229348808c4674f6398f",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts": {
+        "version": "a8932876de2e3138a5a27f9426b225a4d27f0ba0a1e2764ba20930b4c3faf4b9",
+        "signature": "a8932876de2e3138a5a27f9426b225a4d27f0ba0a1e2764ba20930b4c3faf4b9",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/scheduler/AnimationFrameScheduler.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AnimationFrameScheduler.d.ts": {
         "version": "df877050b04c29b9f8409aa10278d586825f511f0841d1ec41b6554f8362092b",
         "signature": "df877050b04c29b9f8409aa10278d586825f511f0841d1ec41b6554f8362092b",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/scheduler/animationFrame.d.ts": {
-        "version": "65b8e0c3dea43e760f7887db1139774a1c9097e78b5f73f497cd12e71b7d377e",
-        "signature": "65b8e0c3dea43e760f7887db1139774a1c9097e78b5f73f497cd12e71b7d377e",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts": {
+        "version": "027d600e00c5f5e1816c207854285d736f2f5fa28276e2829db746d5d6811ba1",
+        "signature": "027d600e00c5f5e1816c207854285d736f2f5fa28276e2829db746d5d6811ba1",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts": {
         "version": "5443113a16ef378446e08d6500bb48b35de582426459abdb5c9704f5c7d327d9",
         "signature": "5443113a16ef378446e08d6500bb48b35de582426459abdb5c9704f5c7d327d9",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/Notification.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts": {
         "version": "0fb581ecb53304a3c95bb930160b4fa610537470cce850371cbaad5a458ca0d9",
         "signature": "0fb581ecb53304a3c95bb930160b4fa610537470cce850371cbaad5a458ca0d9",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/util/pipe.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts": {
         "version": "7da4e290c009d7967343a7f8c3f145a3d2c157c62483362183ba9f637a536489",
         "signature": "7da4e290c009d7967343a7f8c3f145a3d2c157c62483362183ba9f637a536489",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/util/noop.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/util/noop.d.ts": {
         "version": "eb21ddc3a8136a12e69176531197def71dc28ffaf357b74d4bf83407bd845991",
         "signature": "eb21ddc3a8136a12e69176531197def71dc28ffaf357b74d4bf83407bd845991",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/util/identity.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/util/identity.d.ts": {
         "version": "914560d0c4c6aa947cfe7489fe970c94ba25383c414bbe0168b44fd20dbf0df4",
         "signature": "914560d0c4c6aa947cfe7489fe970c94ba25383c414bbe0168b44fd20dbf0df4",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/util/isObservable.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts": {
         "version": "4fb3405055b54566dea2135845c3a776339e7e170d692401d97fd41ad9a20e5d",
         "signature": "4fb3405055b54566dea2135845c3a776339e7e170d692401d97fd41ad9a20e5d",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts": {
         "version": "8d607832a6ef0eac30657173441367dd76c96bf7800d77193428b922e060c3af",
         "signature": "8d607832a6ef0eac30657173441367dd76c96bf7800d77193428b922e060c3af",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/util/EmptyError.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/util/EmptyError.d.ts": {
         "version": "20ff7207f0bb5cdde5fee8e83315ade7e5b8100cfa2087d20d39069a3d7d06f4",
         "signature": "20ff7207f0bb5cdde5fee8e83315ade7e5b8100cfa2087d20d39069a3d7d06f4",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts": {
         "version": "7ca4c534eab7cff43d81327e369a23464bc37ef38ce5337ceff24a42c6c84eb2",
         "signature": "7ca4c534eab7cff43d81327e369a23464bc37ef38ce5337ceff24a42c6c84eb2",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/util/UnsubscriptionError.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/util/UnsubscriptionError.d.ts": {
         "version": "5252dec18a34078398be4e321dee884dc7f47930e5225262543a799b591b36d2",
         "signature": "5252dec18a34078398be4e321dee884dc7f47930e5225262543a799b591b36d2",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/util/TimeoutError.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/util/TimeoutError.d.ts": {
         "version": "23caed4dff98bd28157d2b798b43f1dfefe727f18641648c01ce4e0e929a1630",
         "signature": "23caed4dff98bd28157d2b798b43f1dfefe727f18641648c01ce4e0e929a1630",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/bindCallback.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts": {
         "version": "f67e013d5374826596d7c23dbae1cdb14375a27cd72e16c5fb46a4b445059329",
         "signature": "f67e013d5374826596d7c23dbae1cdb14375a27cd72e16c5fb46a4b445059329",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/bindNodeCallback.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts": {
         "version": "ea3401b70e2302683bbf4c18b69ef2292b60f4d8f8e6d920413b81fb7bde0f65",
         "signature": "ea3401b70e2302683bbf4c18b69ef2292b60f4d8f8e6d920413b81fb7bde0f65",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/InnerSubscriber.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/InnerSubscriber.d.ts": {
         "version": "71afe26642c0fb86b9f8b1af4af5deb5181b43b6542a3ff2314871b53d04c749",
         "signature": "71afe26642c0fb86b9f8b1af4af5deb5181b43b6542a3ff2314871b53d04c749",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/OuterSubscriber.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/OuterSubscriber.d.ts": {
         "version": "0d7f01634e6234d84cf0106508efdb8ae00e5ed126eff9606d37b031ac1de654",
         "signature": "0d7f01634e6234d84cf0106508efdb8ae00e5ed126eff9606d37b031ac1de654",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/combineLatest.d.ts": {
-        "version": "1571e40de593d48983b09fbf798c7ed7f2fb0e45c2a004ca172973880fa01ebc",
-        "signature": "1571e40de593d48983b09fbf798c7ed7f2fb0e45c2a004ca172973880fa01ebc",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts": {
+        "version": "f8d209086bad78af6bd7fef063c1ed449c815e6f8d36058115f222d9f788b848",
+        "signature": "f8d209086bad78af6bd7fef063c1ed449c815e6f8d36058115f222d9f788b848",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/concat.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts": {
         "version": "3ad003278d569d1953779e2f838f7798f02e793f6a1eceac8e0065f1a202669b",
         "signature": "3ad003278d569d1953779e2f838f7798f02e793f6a1eceac8e0065f1a202669b",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/defer.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts": {
         "version": "fb2c5eceffcd918dbb86332afa0199f5e7b6cf6ee42809e930a827b28ef25afe",
         "signature": "fb2c5eceffcd918dbb86332afa0199f5e7b6cf6ee42809e930a827b28ef25afe",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/empty.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts": {
         "version": "f664aaff6a981eeca68f1ff2d9fd21b6664f47bf45f3ae19874df5a6683a8d8a",
         "signature": "f664aaff6a981eeca68f1ff2d9fd21b6664f47bf45f3ae19874df5a6683a8d8a",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/forkJoin.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts": {
         "version": "ce066f85d73e09e9adbd0049bcf6471c7eefbfc2ec4b5692b5bcef1e36babd2a",
         "signature": "ce066f85d73e09e9adbd0049bcf6471c7eefbfc2ec4b5692b5bcef1e36babd2a",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/from.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts": {
         "version": "09d302513cacfbcc54b67088739bd8ac1c3c57917f83f510b2d1adcb99fd7d2a",
         "signature": "09d302513cacfbcc54b67088739bd8ac1c3c57917f83f510b2d1adcb99fd7d2a",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/fromEvent.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts": {
         "version": "3faa54e978b92a6f726440c13fe3ab35993dc74d697c7709681dc1764a25219f",
         "signature": "3faa54e978b92a6f726440c13fe3ab35993dc74d697c7709681dc1764a25219f",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/fromEventPattern.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts": {
         "version": "2bd0489e968925eb0c4c0fb12ef090be5165c86bd088e1e803102c38d4a717d8",
         "signature": "2bd0489e968925eb0c4c0fb12ef090be5165c86bd088e1e803102c38d4a717d8",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/generate.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts": {
         "version": "88924207132b9ba339c1adb1ed3ea07e47b3149ff8a2e21a3ea1f91cee68589d",
         "signature": "88924207132b9ba339c1adb1ed3ea07e47b3149ff8a2e21a3ea1f91cee68589d",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/interval.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts": {
         "version": "b8800b93d8ab532f8915be73f8195b9d4ef06376d8a82e8cdc17c400553172d6",
         "signature": "b8800b93d8ab532f8915be73f8195b9d4ef06376d8a82e8cdc17c400553172d6",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/merge.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts": {
         "version": "d7d469703b78beba76d511957f8c8b534c3bbb02bea7ab4705c65ef573532fb8",
         "signature": "d7d469703b78beba76d511957f8c8b534c3bbb02bea7ab4705c65ef573532fb8",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/never.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts": {
         "version": "74c8c3057669c03264263d911d0f82e876cef50b05be21c54fef23c900de0420",
         "signature": "74c8c3057669c03264263d911d0f82e876cef50b05be21c54fef23c900de0420",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/of.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts": {
         "version": "b303eda2ff2d582a9c3c5ecb708fb57355cdc25e8c8197a9f66d4d1bf09fda19",
         "signature": "b303eda2ff2d582a9c3c5ecb708fb57355cdc25e8c8197a9f66d4d1bf09fda19",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts": {
         "version": "4e5dc89fa22ff43da3dee1db97d5add0591ebaff9e4adef6c8b6f0b41f0f60f0",
         "signature": "4e5dc89fa22ff43da3dee1db97d5add0591ebaff9e4adef6c8b6f0b41f0f60f0",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/pairs.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts": {
         "version": "ec4e82cb42a902fe83dc13153c7a260bee95684541f8d7ef26cb0629a2f4ca31",
         "signature": "ec4e82cb42a902fe83dc13153c7a260bee95684541f8d7ef26cb0629a2f4ca31",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/partition.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts": {
         "version": "5f36e24cd92b0ff3e2a243685a8a780c9413941c36739f04b428cc4e15de629d",
         "signature": "5f36e24cd92b0ff3e2a243685a8a780c9413941c36739f04b428cc4e15de629d",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/race.d.ts": {
-        "version": "9200f1759b84cc96ffd483ea718fa9db83567a0393c5598a53ca5f22284795d5",
-        "signature": "9200f1759b84cc96ffd483ea718fa9db83567a0393c5598a53ca5f22284795d5",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts": {
+        "version": "40a26494e6ab10a91851791169582ab77fed4fbd799518968177e7eefe08c7a9",
+        "signature": "40a26494e6ab10a91851791169582ab77fed4fbd799518968177e7eefe08c7a9",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/range.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts": {
         "version": "208e125b45bc561765a74f6f1019d88e44e94678769824cf93726e1bac457961",
         "signature": "208e125b45bc561765a74f6f1019d88e44e94678769824cf93726e1bac457961",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/timer.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts": {
         "version": "b3985971de086ef3aa698ef19009a53527b72e65851b782dc188ac341a1e1390",
         "signature": "b3985971de086ef3aa698ef19009a53527b72e65851b782dc188ac341a1e1390",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/using.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts": {
         "version": "c81d421aabb6113cd98b9d4f11e9a03273b363b841f294b457f37c15d513151d",
         "signature": "c81d421aabb6113cd98b9d4f11e9a03273b363b841f294b457f37c15d513151d",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/observable/zip.d.ts": {
-        "version": "1f26af7308d6d7adaa4656de4da9c5bc0593cdcfcf7da8b5ee8cebd9aad981f4",
-        "signature": "1f26af7308d6d7adaa4656de4da9c5bc0593cdcfcf7da8b5ee8cebd9aad981f4",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts": {
+        "version": "30063e3a184ff31254bbafa782c78a2d6636943dfe59e1a34f451827fd7a68dc",
+        "signature": "30063e3a184ff31254bbafa782c78a2d6636943dfe59e1a34f451827fd7a68dc",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/scheduled/scheduled.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts": {
         "version": "c05d4cae0bceed02c9d013360d3e65658297acb1b7a90252fe366f2bf4f9ccc9",
         "signature": "c05d4cae0bceed02c9d013360d3e65658297acb1b7a90252fe366f2bf4f9ccc9",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/internal/config.d.ts": {
+      "../rxjs-react-native/node_modules/rxjs/internal/config.d.ts": {
         "version": "6f14b92848889abba03a474e0750f7350cc91fc190c107408ca48679a03975ae",
         "signature": "6f14b92848889abba03a474e0750f7350cc91fc190c107408ca48679a03975ae",
         "affectsGlobalScope": false
       },
-      "../../node_modules/rxjs/index.d.ts": {
-        "version": "41249bfce2b6ec504f2b83fd6704194277e264b13f1b896550f60dc6f98b36a3",
-        "signature": "41249bfce2b6ec504f2b83fd6704194277e264b13f1b896550f60dc6f98b36a3",
+      "../rxjs-react-native/node_modules/rxjs/index.d.ts": {
+        "version": "a588d0765b1d18bf00a498b75a83e095aef75a9300b6c1e91cbf39e408f2fe2f",
+        "signature": "a588d0765b1d18bf00a498b75a83e095aef75a9300b6c1e91cbf39e408f2fe2f",
         "affectsGlobalScope": false
       },
       "../rxjs-react-native/build/flat-list.d.ts": {
@@ -526,14 +526,19 @@
         "signature": "224d94964fe9a6fe5cea334a676b37423bbeed263448e9ba87740161e963a909",
         "affectsGlobalScope": false
       },
+      "../rxjs-react/node_modules/rxjs/index.d.ts": {
+        "version": "a588d0765b1d18bf00a498b75a83e095aef75a9300b6c1e91cbf39e408f2fe2f",
+        "signature": "a588d0765b1d18bf00a498b75a83e095aef75a9300b6c1e91cbf39e408f2fe2f",
+        "affectsGlobalScope": false
+      },
       "../rxjs-react/build/base.d.ts": {
-        "version": "66a536268504d178a640afc672e1399f57519c014c35416123d83857f1566d28",
-        "signature": "66a536268504d178a640afc672e1399f57519c014c35416123d83857f1566d28",
+        "version": "396e8b3a97ff454ae044d175995dc1c0203c5e6d16142bf1ad4133ef8bf36db1",
+        "signature": "396e8b3a97ff454ae044d175995dc1c0203c5e6d16142bf1ad4133ef8bf36db1",
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/rx-wrapper.d.ts": {
-        "version": "931ef4d5569af325e224019b0b93f673afb5043134f6ff5da7ab3a1750d448e5",
-        "signature": "931ef4d5569af325e224019b0b93f673afb5043134f6ff5da7ab3a1750d448e5",
+        "version": "6838dab97815dc023f3d6cf2860f6029b3b9f90227d9223ddef8cea2ef81002f",
+        "signature": "6838dab97815dc023f3d6cf2860f6029b3b9f90227d9223ddef8cea2ef81002f",
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/use-rx-change.d.ts": {
@@ -547,8 +552,8 @@
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/lift.d.ts": {
-        "version": "8ca3db481193cdaad41132bb6080a6717abf82eff3109c5524717341ec99b7e5",
-        "signature": "8ca3db481193cdaad41132bb6080a6717abf82eff3109c5524717341ec99b7e5",
+        "version": "0308208da9769ba5d44f51aa45fb17f7a5cad37f1e260fc7635e4c4ed70fb5ba",
+        "signature": "0308208da9769ba5d44f51aa45fb17f7a5cad37f1e260fc7635e4c4ed70fb5ba",
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/use-rx.d.ts": {
@@ -562,8 +567,8 @@
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/rx-html.d.ts": {
-        "version": "0c7701c885cb2f9f2a2f5ec2b4b76145ffd234fe066e749e269e260b7fdbe686",
-        "signature": "0c7701c885cb2f9f2a2f5ec2b4b76145ffd234fe066e749e269e260b7fdbe686",
+        "version": "75c139d71893ffe8b70dcea13dbbc0e02d3032e8ef62333a3b3468985f2c9d20",
+        "signature": "75c139d71893ffe8b70dcea13dbbc0e02d3032e8ef62333a3b3468985f2c9d20",
         "affectsGlobalScope": false
       },
       "../rxjs-react/build/index.d.ts": {
@@ -576,9 +581,19 @@
         "signature": "919f6da8db30c8076cab4275e01a77480be5b02b2dc676202bb1e8fd697779e4",
         "affectsGlobalScope": false
       },
+      "../rxjs-atom-promise/node_modules/rxjs/index.d.ts": {
+        "version": "a588d0765b1d18bf00a498b75a83e095aef75a9300b6c1e91cbf39e408f2fe2f",
+        "signature": "a588d0765b1d18bf00a498b75a83e095aef75a9300b6c1e91cbf39e408f2fe2f",
+        "affectsGlobalScope": false
+      },
       "../rxjs-atom-promise/build/promise-state.d.ts": {
         "version": "efced04d62936c5b421a602098cf9055005984892124545f92e307563a76eb38",
         "signature": "efced04d62936c5b421a602098cf9055005984892124545f92e307563a76eb38",
+        "affectsGlobalScope": false
+      },
+      "../rxjs-atom/node_modules/rxjs/index.d.ts": {
+        "version": "a588d0765b1d18bf00a498b75a83e095aef75a9300b6c1e91cbf39e408f2fe2f",
+        "signature": "a588d0765b1d18bf00a498b75a83e095aef75a9300b6c1e91cbf39e408f2fe2f",
         "affectsGlobalScope": false
       },
       "../lens/build/equals.d.ts": {
@@ -612,8 +627,8 @@
         "affectsGlobalScope": false
       },
       "../rxjs-atom/build/index.d.ts": {
-        "version": "0ac973ccff54ec5b54ce45fbb57413d8516025f25e4dcee1711cfef13183f623",
-        "signature": "0ac973ccff54ec5b54ce45fbb57413d8516025f25e4dcee1711cfef13183f623",
+        "version": "010660de10fad84e7278defde67b1472a06bac24cc00f0946c045f20ccceb953",
+        "signature": "010660de10fad84e7278defde67b1472a06bac24cc00f0946c045f20ccceb953",
         "affectsGlobalScope": false
       },
       "../rxjs-atom-promise/build/cache.d.ts": {
@@ -674,6 +689,11 @@
       "../list/build/load-next.d.ts": {
         "version": "12ba44a4bc399a52d34fbaad5dca0772323364e7ef396a27c7178e473268ffe9",
         "signature": "12ba44a4bc399a52d34fbaad5dca0772323364e7ef396a27c7178e473268ffe9",
+        "affectsGlobalScope": false
+      },
+      "../list/node_modules/rxjs/index.d.ts": {
+        "version": "a588d0765b1d18bf00a498b75a83e095aef75a9300b6c1e91cbf39e408f2fe2f",
+        "signature": "a588d0765b1d18bf00a498b75a83e095aef75a9300b6c1e91cbf39e408f2fe2f",
         "affectsGlobalScope": false
       },
       "../list/build/reactive-list.d.ts": {
@@ -1412,305 +1432,6 @@
       "../../node_modules/@types/yargs/index.d.ts": [
         "../../node_modules/@types/yargs-parser/index.d.ts"
       ],
-      "../../node_modules/rxjs/index.d.ts": [
-        "../../node_modules/rxjs/internal/AsyncSubject.d.ts",
-        "../../node_modules/rxjs/internal/BehaviorSubject.d.ts",
-        "../../node_modules/rxjs/internal/Notification.d.ts",
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Operator.d.ts",
-        "../../node_modules/rxjs/internal/ReplaySubject.d.ts",
-        "../../node_modules/rxjs/internal/Scheduler.d.ts",
-        "../../node_modules/rxjs/internal/Subject.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/config.d.ts",
-        "../../node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
-        "../../node_modules/rxjs/internal/observable/bindCallback.d.ts",
-        "../../node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
-        "../../node_modules/rxjs/internal/observable/combineLatest.d.ts",
-        "../../node_modules/rxjs/internal/observable/concat.d.ts",
-        "../../node_modules/rxjs/internal/observable/defer.d.ts",
-        "../../node_modules/rxjs/internal/observable/empty.d.ts",
-        "../../node_modules/rxjs/internal/observable/forkJoin.d.ts",
-        "../../node_modules/rxjs/internal/observable/from.d.ts",
-        "../../node_modules/rxjs/internal/observable/fromEvent.d.ts",
-        "../../node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
-        "../../node_modules/rxjs/internal/observable/generate.d.ts",
-        "../../node_modules/rxjs/internal/observable/iif.d.ts",
-        "../../node_modules/rxjs/internal/observable/interval.d.ts",
-        "../../node_modules/rxjs/internal/observable/merge.d.ts",
-        "../../node_modules/rxjs/internal/observable/never.d.ts",
-        "../../node_modules/rxjs/internal/observable/of.d.ts",
-        "../../node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
-        "../../node_modules/rxjs/internal/observable/pairs.d.ts",
-        "../../node_modules/rxjs/internal/observable/partition.d.ts",
-        "../../node_modules/rxjs/internal/observable/race.d.ts",
-        "../../node_modules/rxjs/internal/observable/range.d.ts",
-        "../../node_modules/rxjs/internal/observable/throwError.d.ts",
-        "../../node_modules/rxjs/internal/observable/timer.d.ts",
-        "../../node_modules/rxjs/internal/observable/using.d.ts",
-        "../../node_modules/rxjs/internal/observable/zip.d.ts",
-        "../../node_modules/rxjs/internal/operators/groupBy.d.ts",
-        "../../node_modules/rxjs/internal/scheduled/scheduled.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/asap.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/async.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/queue.d.ts",
-        "../../node_modules/rxjs/internal/symbol/observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts",
-        "../../node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
-        "../../node_modules/rxjs/internal/util/EmptyError.d.ts",
-        "../../node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
-        "../../node_modules/rxjs/internal/util/TimeoutError.d.ts",
-        "../../node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
-        "../../node_modules/rxjs/internal/util/identity.d.ts",
-        "../../node_modules/rxjs/internal/util/isObservable.d.ts",
-        "../../node_modules/rxjs/internal/util/noop.d.ts",
-        "../../node_modules/rxjs/internal/util/pipe.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/AsyncSubject.d.ts": [
-        "../../node_modules/rxjs/internal/Subject.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/BehaviorSubject.d.ts": [
-        "../../node_modules/rxjs/internal/Subject.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/InnerSubscriber.d.ts": [
-        "../../node_modules/rxjs/internal/OuterSubscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/Notification.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/Observable.d.ts": [
-        "../../node_modules/rxjs/internal/Operator.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/observable/iif.d.ts",
-        "../../node_modules/rxjs/internal/observable/throwError.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/Operator.d.ts": [
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/OuterSubscriber.d.ts": [
-        "../../node_modules/rxjs/internal/InnerSubscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/ReplaySubject.d.ts": [
-        "../../node_modules/rxjs/internal/Subject.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/Scheduler.d.ts": [
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/Action.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/Subject.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Operator.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/Subscriber.d.ts": [
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/Subscription.d.ts": [
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/ConnectableObservable.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Subject.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/bindCallback.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/bindNodeCallback.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/combineLatest.d.ts": [
-        "../../node_modules/rxjs/internal/InnerSubscriber.d.ts",
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Operator.d.ts",
-        "../../node_modules/rxjs/internal/OuterSubscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/concat.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/defer.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/empty.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/forkJoin.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/from.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/fromEvent.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/fromEventPattern.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/observable/fromEvent.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/generate.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/iif.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/interval.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/merge.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/never.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/of.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/pairs.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/partition.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/race.d.ts": [
-        "../../node_modules/rxjs/internal/InnerSubscriber.d.ts",
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Operator.d.ts",
-        "../../node_modules/rxjs/internal/OuterSubscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/range.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/throwError.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/timer.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/using.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/zip.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Operator.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/operators/groupBy.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Subject.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduled/scheduled.d.ts": [
-        "../../node_modules/rxjs/index.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/Action.d.ts": [
-        "../../node_modules/rxjs/internal/Scheduler.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/AnimationFrameScheduler.d.ts": [
-        "../../node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/AsapScheduler.d.ts": [
-        "../../node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/AsyncAction.d.ts": [
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/Action.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts": [
-        "../../node_modules/rxjs/internal/Scheduler.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/Action.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/QueueScheduler.d.ts": [
-        "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts": [
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/animationFrame.d.ts": [
-        "../../node_modules/rxjs/internal/scheduler/AnimationFrameScheduler.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/asap.d.ts": [
-        "../../node_modules/rxjs/internal/scheduler/AsapScheduler.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/async.d.ts": [
-        "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/queue.d.ts": [
-        "../../node_modules/rxjs/internal/scheduler/QueueScheduler.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/types.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/util/isObservable.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/util/pipe.d.ts": [
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
       "../lens/build/base.d.ts": [
         "../lens/build/utils.d.ts"
       ],
@@ -1763,7 +1484,64 @@
         "../rxjs-atom/build/index.d.ts"
       ],
       "../list/build/reactive-list.d.ts": [
-        "../../node_modules/rxjs/index.d.ts"
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
+      ],
+      "../list/node_modules/rxjs/index.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/config.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/symbol/observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/EmptyError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/TimeoutError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/identity.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/noop.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts"
       ],
       "../rxjs-atom-promise/build/cache.d.ts": [
         "../rxjs-atom-promise/build/promise-state.d.ts",
@@ -1792,37 +1570,151 @@
         "../rxjs-atom/build/index.d.ts"
       ],
       "../rxjs-atom-promise/build/merge.d.ts": [
-        "../../node_modules/rxjs/index.d.ts",
-        "../rxjs-atom-promise/build/promise-state.d.ts"
+        "../rxjs-atom-promise/build/promise-state.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
       ],
       "../rxjs-atom-promise/build/promise-state.d.ts": [
-        "../../node_modules/rxjs/index.d.ts"
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
       ],
       "../rxjs-atom-promise/build/rx.d.ts": [
         "../../node_modules/@types/react/index.d.ts",
-        "../../node_modules/rxjs/index.d.ts",
-        "../rxjs-atom-promise/build/promise-state.d.ts"
+        "../rxjs-atom-promise/build/promise-state.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
       ],
       "../rxjs-atom-promise/build/save.d.ts": [
         "../rxjs-atom-promise/build/promise-state.d.ts",
         "../rxjs-atom/build/index.d.ts"
       ],
       "../rxjs-atom-promise/build/use-rx-with-status.d.ts": [
-        "../../node_modules/rxjs/index.d.ts",
-        "../rxjs-atom-promise/build/promise-state.d.ts"
+        "../rxjs-atom-promise/build/promise-state.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-atom-promise/node_modules/rxjs/index.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/config.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/symbol/observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/EmptyError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/TimeoutError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/identity.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/noop.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts"
       ],
       "../rxjs-atom/build/base.d.ts": [
-        "../../node_modules/rxjs/index.d.ts",
-        "../lens/build/index.d.ts"
+        "../lens/build/index.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
       ],
       "../rxjs-atom/build/index.d.ts": [
-        "../../node_modules/rxjs/index.d.ts",
-        "../rxjs-atom/build/base.d.ts"
+        "../rxjs-atom/build/base.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-atom/node_modules/rxjs/index.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/config.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/symbol/observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/EmptyError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/TimeoutError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/identity.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/noop.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts"
       ],
       "../rxjs-react-native/build/flat-list.d.ts": [
         "../../node_modules/@types/react-native/index.d.ts",
         "../../node_modules/@types/react/index.d.ts",
-        "../../node_modules/rxjs/index.d.ts"
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
       ],
       "../rxjs-react-native/build/index.d.ts": [
         "../../node_modules/@types/react-native/index.d.ts",
@@ -1830,9 +1722,306 @@
         "../rxjs-react-native/build/flat-list.d.ts",
         "../rxjs-react/build/index.d.ts"
       ],
+      "../rxjs-react-native/node_modules/rxjs/index.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/config.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/symbol/observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/EmptyError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/TimeoutError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/identity.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/noop.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/InnerSubscriber.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/OuterSubscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/OuterSubscriber.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/InnerSubscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/Action.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/OuterSubscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/OuterSubscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/Action.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AnimationFrameScheduler.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsapScheduler.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncAction.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/Action.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/Action.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/QueueScheduler.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AnimationFrameScheduler.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsapScheduler.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/QueueScheduler.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
       "../rxjs-react/build/base.d.ts": [
         "../../node_modules/@types/react/index.d.ts",
-        "../../node_modules/rxjs/index.d.ts"
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
       ],
       "../rxjs-react/build/index.d.ts": [
         "../rxjs-react/build/base.d.ts",
@@ -1854,20 +2043,77 @@
       ],
       "../rxjs-react/build/rx-if.d.ts": [
         "../../node_modules/@types/react/index.d.ts",
-        "../../node_modules/rxjs/index.d.ts"
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
       ],
       "../rxjs-react/build/rx-wrapper.d.ts": [
         "../../node_modules/@types/react/index.d.ts",
         "../rxjs-react/build/base.d.ts"
       ],
       "../rxjs-react/build/use-rx-change.d.ts": [
-        "../../node_modules/rxjs/index.d.ts"
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
       ],
       "../rxjs-react/build/use-rx.d.ts": [
-        "../../node_modules/rxjs/index.d.ts"
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
       ],
       "../rxjs-react/build/use-subscription.d.ts": [
-        "../../node_modules/rxjs/index.d.ts"
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-react/node_modules/rxjs/index.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/config.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/symbol/observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/EmptyError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/TimeoutError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/identity.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/noop.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts"
       ]
     },
     "exportedModulesMap": {
@@ -2140,305 +2386,6 @@
       "../../node_modules/@types/yargs/index.d.ts": [
         "../../node_modules/@types/yargs-parser/index.d.ts"
       ],
-      "../../node_modules/rxjs/index.d.ts": [
-        "../../node_modules/rxjs/internal/AsyncSubject.d.ts",
-        "../../node_modules/rxjs/internal/BehaviorSubject.d.ts",
-        "../../node_modules/rxjs/internal/Notification.d.ts",
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Operator.d.ts",
-        "../../node_modules/rxjs/internal/ReplaySubject.d.ts",
-        "../../node_modules/rxjs/internal/Scheduler.d.ts",
-        "../../node_modules/rxjs/internal/Subject.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/config.d.ts",
-        "../../node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
-        "../../node_modules/rxjs/internal/observable/bindCallback.d.ts",
-        "../../node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
-        "../../node_modules/rxjs/internal/observable/combineLatest.d.ts",
-        "../../node_modules/rxjs/internal/observable/concat.d.ts",
-        "../../node_modules/rxjs/internal/observable/defer.d.ts",
-        "../../node_modules/rxjs/internal/observable/empty.d.ts",
-        "../../node_modules/rxjs/internal/observable/forkJoin.d.ts",
-        "../../node_modules/rxjs/internal/observable/from.d.ts",
-        "../../node_modules/rxjs/internal/observable/fromEvent.d.ts",
-        "../../node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
-        "../../node_modules/rxjs/internal/observable/generate.d.ts",
-        "../../node_modules/rxjs/internal/observable/iif.d.ts",
-        "../../node_modules/rxjs/internal/observable/interval.d.ts",
-        "../../node_modules/rxjs/internal/observable/merge.d.ts",
-        "../../node_modules/rxjs/internal/observable/never.d.ts",
-        "../../node_modules/rxjs/internal/observable/of.d.ts",
-        "../../node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
-        "../../node_modules/rxjs/internal/observable/pairs.d.ts",
-        "../../node_modules/rxjs/internal/observable/partition.d.ts",
-        "../../node_modules/rxjs/internal/observable/race.d.ts",
-        "../../node_modules/rxjs/internal/observable/range.d.ts",
-        "../../node_modules/rxjs/internal/observable/throwError.d.ts",
-        "../../node_modules/rxjs/internal/observable/timer.d.ts",
-        "../../node_modules/rxjs/internal/observable/using.d.ts",
-        "../../node_modules/rxjs/internal/observable/zip.d.ts",
-        "../../node_modules/rxjs/internal/operators/groupBy.d.ts",
-        "../../node_modules/rxjs/internal/scheduled/scheduled.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/asap.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/async.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/queue.d.ts",
-        "../../node_modules/rxjs/internal/symbol/observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts",
-        "../../node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
-        "../../node_modules/rxjs/internal/util/EmptyError.d.ts",
-        "../../node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
-        "../../node_modules/rxjs/internal/util/TimeoutError.d.ts",
-        "../../node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
-        "../../node_modules/rxjs/internal/util/identity.d.ts",
-        "../../node_modules/rxjs/internal/util/isObservable.d.ts",
-        "../../node_modules/rxjs/internal/util/noop.d.ts",
-        "../../node_modules/rxjs/internal/util/pipe.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/AsyncSubject.d.ts": [
-        "../../node_modules/rxjs/internal/Subject.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/BehaviorSubject.d.ts": [
-        "../../node_modules/rxjs/internal/Subject.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/InnerSubscriber.d.ts": [
-        "../../node_modules/rxjs/internal/OuterSubscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/Notification.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/Observable.d.ts": [
-        "../../node_modules/rxjs/internal/Operator.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/observable/iif.d.ts",
-        "../../node_modules/rxjs/internal/observable/throwError.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/Operator.d.ts": [
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/OuterSubscriber.d.ts": [
-        "../../node_modules/rxjs/internal/InnerSubscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/ReplaySubject.d.ts": [
-        "../../node_modules/rxjs/internal/Subject.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/Scheduler.d.ts": [
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/Action.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/Subject.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Operator.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/Subscriber.d.ts": [
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/Subscription.d.ts": [
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/ConnectableObservable.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Subject.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/bindCallback.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/bindNodeCallback.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/combineLatest.d.ts": [
-        "../../node_modules/rxjs/internal/InnerSubscriber.d.ts",
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Operator.d.ts",
-        "../../node_modules/rxjs/internal/OuterSubscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/concat.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/defer.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/empty.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/forkJoin.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/from.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/fromEvent.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/fromEventPattern.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/observable/fromEvent.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/generate.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/iif.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/interval.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/merge.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/never.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/of.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/pairs.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/partition.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/race.d.ts": [
-        "../../node_modules/rxjs/internal/InnerSubscriber.d.ts",
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Operator.d.ts",
-        "../../node_modules/rxjs/internal/OuterSubscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/range.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/throwError.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/timer.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/using.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/observable/zip.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Operator.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/operators/groupBy.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Subject.d.ts",
-        "../../node_modules/rxjs/internal/Subscriber.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduled/scheduled.d.ts": [
-        "../../node_modules/rxjs/index.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/Action.d.ts": [
-        "../../node_modules/rxjs/internal/Scheduler.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/AnimationFrameScheduler.d.ts": [
-        "../../node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/AsapScheduler.d.ts": [
-        "../../node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/AsyncAction.d.ts": [
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/Action.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts": [
-        "../../node_modules/rxjs/internal/Scheduler.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/Action.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/QueueScheduler.d.ts": [
-        "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts": [
-        "../../node_modules/rxjs/internal/Subscription.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
-        "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts",
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/animationFrame.d.ts": [
-        "../../node_modules/rxjs/internal/scheduler/AnimationFrameScheduler.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/asap.d.ts": [
-        "../../node_modules/rxjs/internal/scheduler/AsapScheduler.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/async.d.ts": [
-        "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/scheduler/queue.d.ts": [
-        "../../node_modules/rxjs/internal/scheduler/QueueScheduler.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/types.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts",
-        "../../node_modules/rxjs/internal/Subscription.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/util/isObservable.d.ts": [
-        "../../node_modules/rxjs/internal/Observable.d.ts"
-      ],
-      "../../node_modules/rxjs/internal/util/pipe.d.ts": [
-        "../../node_modules/rxjs/internal/types.d.ts"
-      ],
       "../lens/build/base.d.ts": [
         "../lens/build/utils.d.ts"
       ],
@@ -2491,6 +2438,63 @@
       "../list/build/reactive-list.d.ts": [
         "../../node_modules/rxjs/index.d.ts"
       ],
+      "../list/node_modules/rxjs/index.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/config.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/symbol/observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/EmptyError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/TimeoutError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/identity.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/noop.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts"
+      ],
       "../rxjs-atom-promise/build/cache.d.ts": [
         "../rxjs-atom-promise/build/promise-state.d.ts",
         "../rxjs-atom/build/index.d.ts"
@@ -2537,13 +2541,127 @@
         "../../node_modules/rxjs/index.d.ts",
         "../rxjs-atom-promise/build/promise-state.d.ts"
       ],
+      "../rxjs-atom-promise/node_modules/rxjs/index.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/config.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/symbol/observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/EmptyError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/TimeoutError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/identity.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/noop.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts"
+      ],
       "../rxjs-atom/build/base.d.ts": [
         "../../node_modules/rxjs/index.d.ts",
         "../lens/build/index.d.ts"
       ],
       "../rxjs-atom/build/index.d.ts": [
-        "../../node_modules/rxjs/index.d.ts",
-        "../rxjs-atom/build/base.d.ts"
+        "../rxjs-atom/build/base.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-atom/node_modules/rxjs/index.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/config.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/symbol/observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/EmptyError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/TimeoutError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/identity.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/noop.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts"
       ],
       "../rxjs-react-native/build/flat-list.d.ts": [
         "../../node_modules/@types/react-native/index.d.ts",
@@ -2555,6 +2673,303 @@
         "../../node_modules/@types/react/index.d.ts",
         "../rxjs-react-native/build/flat-list.d.ts",
         "../rxjs-react/build/index.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/index.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/config.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/symbol/observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/EmptyError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/TimeoutError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/identity.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/noop.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/InnerSubscriber.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/OuterSubscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/OuterSubscriber.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/InnerSubscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/Action.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/OuterSubscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/OuterSubscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/Action.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AnimationFrameScheduler.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsapScheduler.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncAction.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/Action.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/Action.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/QueueScheduler.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AnimationFrameScheduler.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsapScheduler.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/QueueScheduler.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts"
+      ],
+      "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts"
       ],
       "../rxjs-react/build/base.d.ts": [
         "../../node_modules/@types/react/index.d.ts",
@@ -2594,6 +3009,63 @@
       ],
       "../rxjs-react/build/use-subscription.d.ts": [
         "../../node_modules/rxjs/index.d.ts"
+      ],
+      "../rxjs-react/node_modules/rxjs/index.d.ts": [
+        "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/config.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/symbol/observable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/EmptyError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/TimeoutError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/identity.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/noop.d.ts",
+        "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -2695,70 +3167,6 @@
       "../../node_modules/@types/yargs/index.d.ts",
       "../../node_modules/csstype/index.d.ts",
       "../../node_modules/immutable/dist/immutable-nonambient.d.ts",
-      "../../node_modules/rxjs/index.d.ts",
-      "../../node_modules/rxjs/internal/AsyncSubject.d.ts",
-      "../../node_modules/rxjs/internal/BehaviorSubject.d.ts",
-      "../../node_modules/rxjs/internal/InnerSubscriber.d.ts",
-      "../../node_modules/rxjs/internal/Notification.d.ts",
-      "../../node_modules/rxjs/internal/Observable.d.ts",
-      "../../node_modules/rxjs/internal/Operator.d.ts",
-      "../../node_modules/rxjs/internal/OuterSubscriber.d.ts",
-      "../../node_modules/rxjs/internal/ReplaySubject.d.ts",
-      "../../node_modules/rxjs/internal/Scheduler.d.ts",
-      "../../node_modules/rxjs/internal/Subject.d.ts",
-      "../../node_modules/rxjs/internal/Subscriber.d.ts",
-      "../../node_modules/rxjs/internal/Subscription.d.ts",
-      "../../node_modules/rxjs/internal/config.d.ts",
-      "../../node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
-      "../../node_modules/rxjs/internal/observable/bindCallback.d.ts",
-      "../../node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
-      "../../node_modules/rxjs/internal/observable/combineLatest.d.ts",
-      "../../node_modules/rxjs/internal/observable/concat.d.ts",
-      "../../node_modules/rxjs/internal/observable/defer.d.ts",
-      "../../node_modules/rxjs/internal/observable/empty.d.ts",
-      "../../node_modules/rxjs/internal/observable/forkJoin.d.ts",
-      "../../node_modules/rxjs/internal/observable/from.d.ts",
-      "../../node_modules/rxjs/internal/observable/fromEvent.d.ts",
-      "../../node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
-      "../../node_modules/rxjs/internal/observable/generate.d.ts",
-      "../../node_modules/rxjs/internal/observable/iif.d.ts",
-      "../../node_modules/rxjs/internal/observable/interval.d.ts",
-      "../../node_modules/rxjs/internal/observable/merge.d.ts",
-      "../../node_modules/rxjs/internal/observable/never.d.ts",
-      "../../node_modules/rxjs/internal/observable/of.d.ts",
-      "../../node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
-      "../../node_modules/rxjs/internal/observable/pairs.d.ts",
-      "../../node_modules/rxjs/internal/observable/partition.d.ts",
-      "../../node_modules/rxjs/internal/observable/race.d.ts",
-      "../../node_modules/rxjs/internal/observable/range.d.ts",
-      "../../node_modules/rxjs/internal/observable/throwError.d.ts",
-      "../../node_modules/rxjs/internal/observable/timer.d.ts",
-      "../../node_modules/rxjs/internal/observable/using.d.ts",
-      "../../node_modules/rxjs/internal/observable/zip.d.ts",
-      "../../node_modules/rxjs/internal/operators/groupBy.d.ts",
-      "../../node_modules/rxjs/internal/scheduled/scheduled.d.ts",
-      "../../node_modules/rxjs/internal/scheduler/Action.d.ts",
-      "../../node_modules/rxjs/internal/scheduler/AnimationFrameScheduler.d.ts",
-      "../../node_modules/rxjs/internal/scheduler/AsapScheduler.d.ts",
-      "../../node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
-      "../../node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts",
-      "../../node_modules/rxjs/internal/scheduler/QueueScheduler.d.ts",
-      "../../node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
-      "../../node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
-      "../../node_modules/rxjs/internal/scheduler/asap.d.ts",
-      "../../node_modules/rxjs/internal/scheduler/async.d.ts",
-      "../../node_modules/rxjs/internal/scheduler/queue.d.ts",
-      "../../node_modules/rxjs/internal/symbol/observable.d.ts",
-      "../../node_modules/rxjs/internal/types.d.ts",
-      "../../node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
-      "../../node_modules/rxjs/internal/util/EmptyError.d.ts",
-      "../../node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
-      "../../node_modules/rxjs/internal/util/TimeoutError.d.ts",
-      "../../node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
-      "../../node_modules/rxjs/internal/util/identity.d.ts",
-      "../../node_modules/rxjs/internal/util/isObservable.d.ts",
-      "../../node_modules/rxjs/internal/util/noop.d.ts",
-      "../../node_modules/rxjs/internal/util/pipe.d.ts",
       "../../node_modules/typescript/lib/lib.es2015.collection.d.ts",
       "../../node_modules/typescript/lib/lib.es2015.core.d.ts",
       "../../node_modules/typescript/lib/lib.es2015.d.ts",
@@ -2799,6 +3207,7 @@
       "../list/build/index.d.ts",
       "../list/build/load-next.d.ts",
       "../list/build/reactive-list.d.ts",
+      "../list/node_modules/rxjs/index.d.ts",
       "../rxjs-atom-promise/build/cache.d.ts",
       "../rxjs-atom-promise/build/cacheable.d.ts",
       "../rxjs-atom-promise/build/index.d.ts",
@@ -2808,10 +3217,76 @@
       "../rxjs-atom-promise/build/rx.d.ts",
       "../rxjs-atom-promise/build/save.d.ts",
       "../rxjs-atom-promise/build/use-rx-with-status.d.ts",
+      "../rxjs-atom-promise/node_modules/rxjs/index.d.ts",
       "../rxjs-atom/build/base.d.ts",
       "../rxjs-atom/build/index.d.ts",
+      "../rxjs-atom/node_modules/rxjs/index.d.ts",
       "../rxjs-react-native/build/flat-list.d.ts",
       "../rxjs-react-native/build/index.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/index.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/InnerSubscriber.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/OuterSubscriber.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/config.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/Action.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AnimationFrameScheduler.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsapScheduler.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/QueueScheduler.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/symbol/observable.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/util/EmptyError.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/util/TimeoutError.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/util/identity.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/util/noop.d.ts",
+      "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts",
       "../rxjs-react/build/base.d.ts",
       "../rxjs-react/build/index.d.ts",
       "../rxjs-react/build/lift.d.ts",
@@ -2820,7 +3295,8 @@
       "../rxjs-react/build/rx-wrapper.d.ts",
       "../rxjs-react/build/use-rx-change.d.ts",
       "../rxjs-react/build/use-rx.d.ts",
-      "../rxjs-react/build/use-subscription.d.ts"
+      "../rxjs-react/build/use-subscription.d.ts",
+      "../rxjs-react/node_modules/rxjs/index.d.ts"
     ],
     "affectedFilesPendingEmit": [
       [
@@ -3540,6 +4016,10 @@
         1
       ],
       [
+        "../list/node_modules/rxjs/index.d.ts",
+        1
+      ],
+      [
         "../rxjs-atom-promise/build/cache.d.ts",
         1
       ],
@@ -3576,6 +4056,10 @@
         1
       ],
       [
+        "../rxjs-atom-promise/node_modules/rxjs/index.d.ts",
+        1
+      ],
+      [
         "../rxjs-atom/build/base.d.ts",
         1
       ],
@@ -3584,11 +4068,271 @@
         1
       ],
       [
+        "../rxjs-atom/node_modules/rxjs/index.d.ts",
+        1
+      ],
+      [
         "../rxjs-react-native/build/flat-list.d.ts",
         1
       ],
       [
         "../rxjs-react-native/build/index.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/index.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/AsyncSubject.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/BehaviorSubject.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/InnerSubscriber.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/Notification.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/Observable.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/Operator.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/OuterSubscriber.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/ReplaySubject.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/Scheduler.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subject.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscriber.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/Subscription.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/config.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/ConnectableObservable.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindCallback.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/bindNodeCallback.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/combineLatest.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/concat.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/defer.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/empty.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/forkJoin.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/from.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEvent.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/fromEventPattern.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/generate.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/iif.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/interval.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/merge.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/never.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/of.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/onErrorResumeNext.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/pairs.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/partition.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/race.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/range.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/throwError.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/timer.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/using.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/observable/zip.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/operators/groupBy.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduled/scheduled.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/Action.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AnimationFrameScheduler.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsapScheduler.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncAction.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/AsyncScheduler.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/QueueScheduler.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/VirtualTimeScheduler.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/animationFrame.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/asap.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/async.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/scheduler/queue.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/symbol/observable.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/types.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ArgumentOutOfRangeError.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/util/EmptyError.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/util/ObjectUnsubscribedError.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/util/TimeoutError.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/util/UnsubscriptionError.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/util/identity.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/util/isObservable.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/util/noop.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react-native/node_modules/rxjs/internal/util/pipe.d.ts",
         1
       ],
       [
@@ -3625,6 +4369,10 @@
       ],
       [
         "../rxjs-react/build/use-subscription.d.ts",
+        1
+      ],
+      [
+        "../rxjs-react/node_modules/rxjs/index.d.ts",
         1
       ]
     ]
