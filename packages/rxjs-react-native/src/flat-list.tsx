@@ -2,6 +2,7 @@ import React, { useCallback } from "react"
 import { FlatList, FlatListProps, ListRenderItemInfo } from "react-native"
 import { Observable, of } from "rxjs"
 import { useRx } from "@rixio/rxjs-react"
+import { toPlainOrThrow } from "@rixio/rxjs-wrapped"
 
 export interface RxListRenderItemInfo<T> extends ListRenderItemInfo<T> {
 	first: boolean
@@ -23,8 +24,8 @@ export function RxFlatList<T>({
 	refreshing = of(false),
 	...rest
 }: RxFlatListProps<T>): React.ReactElement | null {
-	const list = useRx(data)
-	const isRefreshing = useRx(refreshing)
+	const list = toPlainOrThrow(useRx(data))
+	const isRefreshing = toPlainOrThrow(useRx(refreshing))
 
 	const renderItem = useCallback(
 		(x: ListRenderItemInfo<T>) =>

@@ -1,6 +1,7 @@
 import React from "react"
-import { act, render } from "@testing-library/react"
+import { act, render, fireEvent } from "@testing-library/react"
 import { Observable, ReplaySubject } from "rxjs"
+import { Wrapped, createRejectedWrapped, createFulfilledWrapped } from "@rixio/rxjs-wrapped"
 import { RxWrapper } from "./rx-wrapper"
 
 type TestProps = { value1: string; value2: string }
@@ -12,8 +13,13 @@ const Test = ({ value1, value2 }: TestProps) => {
 	)
 }
 
-const Testing = ({ text }: { text?: any }) => {
-	return <span data-testid="testing">{text || "BLABLABLA"}</span>
+const Testing = ({ text, reload }: { text?: any, reload?: () => void }) => {
+	return (
+		<>
+			<span data-testid="testing">{text || "BLABLABLA"}</span>
+			<button data-testid="reload" onClick={reload}>reload</button>
+		</>
+	)
 }
 
 describe("RxWrapper", () => {
@@ -21,7 +27,7 @@ describe("RxWrapper", () => {
 		const text = Math.random().toString()
 		const obs = new ReplaySubject<string>(1)
 		obs.next(text)
-		const r = render(<RxWrapper component={Test} value1={obs} value2="static" />)
+		const r = render(<RxWrapper component={Test} value1={obs} value2="static"/>)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 		const nextText = Math.random().toString()
 		act(() => obs.next(nextText))
@@ -31,7 +37,7 @@ describe("RxWrapper", () => {
 	test("should not render anything if observable doesn't emit value", () => {
 		const text = Math.random().toString()
 		const obs = new ReplaySubject<string>(1)
-		const r = render(<RxWrapper component={Test} value1={obs} value2="static" />)
+		const r = render(<RxWrapper component={Test} value1={obs} value2="static"/>)
 		expect(() => r.getByTestId("value")).toThrow()
 		act(() => obs.next(text))
 		expect(r.getByTestId("value")).toHaveTextContent(text)
@@ -43,7 +49,7 @@ describe("RxWrapper", () => {
 	test("should render pending prop if observable doesn't emit value", () => {
 		const text = Math.random().toString()
 		const obs = new ReplaySubject<string>(1)
-		const r = render(<RxWrapper component={Test} value1={obs} value2="static" pending={<Testing />} />)
+		const r = render(<RxWrapper component={Test} value1={obs} value2="static" pending={<Testing/>}/>)
 		expect(r.getByTestId("testing")).toHaveTextContent("BLABLABLA")
 		expect(() => r.getByTestId("value")).toThrow()
 		act(() => obs.next(text))
@@ -55,22 +61,36 @@ describe("RxWrapper", () => {
 
 	test("should render rejected prop if observable emits error", () => {
 		const text = Math.random().toString()
-		const obs = new ReplaySubject<string>(1)
-		const r = render(<RxWrapper component={Test} value1={obs} value2="static" rejected={e => <Testing text={e} />} />)
-		act(() => obs.error(text))
+		const obs = new ReplaySubject<Wrapped<string>>(1)
+		let reloaded = false
+		const reload = () => {
+			reloaded = true
+		}
+		const r = render(
+			<RxWrapper<TestProps>
+				component={Test}
+				value1={obs}
+				value2="static"
+				rejected={(e, reload) => <Testing text={e} reload={reload}/>}/>,
+		)
+		act(() => obs.next(createRejectedWrapped(text, reload)))
 		expect(r.getByTestId("testing")).toHaveTextContent(text)
 		expect(() => r.getByTestId("value")).toThrow()
-		act(() => obs.next(text))
-		expect(r.getByTestId("testing")).toHaveTextContent(text)
-		expect(() => r.getByTestId("value")).toThrow()
+		expect(reloaded).toBeFalsy()
+		act(() => {
+			fireEvent.click(r.getByTestId("reload"))
+		})
+		expect(reloaded).toBeTruthy()
+		act(() => obs.next(createFulfilledWrapped(text)))
+		expect(r.getByTestId("value")).toHaveTextContent(text)
 	})
 
 	test("should react to props changes", () => {
 		const text = Math.random().toString()
-		const r = render(<RxWrapper component={Test} value1="static" value2={text} />)
+		const r = render(<RxWrapper component={Test} value1="static" value2={text}/>)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 		const nextText = Math.random().toString()
-		r.rerender(<RxWrapper component={Test} value1="static" value2={nextText} />)
+		r.rerender(<RxWrapper component={Test} value1="static" value2={nextText}/>)
 		expect(r.getByTestId("value")).toHaveTextContent(nextText)
 	})
 
@@ -84,7 +104,7 @@ describe("RxWrapper", () => {
 				count = count - 1
 			}
 		})
-		const r = render(<RxWrapper component={Test} value1={obs} value2="some" />)
+		const r = render(<RxWrapper component={Test} value1={obs} value2="some"/>)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 
 		const nextText = Math.random().toString()
@@ -92,7 +112,7 @@ describe("RxWrapper", () => {
 		obs2.next(nextText)
 		expect(count).toBe(1)
 
-		r.rerender(<RxWrapper component={Test} value1={obs2} value2="some" />)
+		r.rerender(<RxWrapper component={Test} value1={obs2} value2="some"/>)
 		expect(r.getByTestId("value")).toHaveTextContent(nextText)
 		expect(count).toBe(0)
 	})

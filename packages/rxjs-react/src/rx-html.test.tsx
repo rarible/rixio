@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-pascal-case */
 import { act, render } from "@testing-library/react"
-import { ReplaySubject } from "rxjs"
+import { of, ReplaySubject } from "rxjs"
 import React from "react"
+import { createFulfilledWrapped } from "@rixio/rxjs-wrapped"
 import { R } from "./rx-html"
 
 describe("RxHtml", () => {
@@ -17,6 +19,16 @@ describe("RxHtml", () => {
 		const nextText = Math.random().toString()
 		act(() => obs.next(nextText))
 		expect(r.getByTestId("value")).toHaveTextContent(nextText)
+	})
+
+	test("should observe wrapped reactive value using lifted html", () => {
+		const text = Math.random().toString()
+		const r = render(
+			<span data-testid="value">
+				<R.div>{of(createFulfilledWrapped(text))}</R.div>
+			</span>
+		)
+		expect(r.getByTestId("value")).toHaveTextContent(text)
 	})
 
 	test("should support some observables in children", () => {
