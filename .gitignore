@@ -6,6 +6,7 @@ source/locales/_build/
 storybook-static
 
 # Development stuff
+tsconfig.tsbuildinfo
 platforms/
 plugins/
 node_modules/
