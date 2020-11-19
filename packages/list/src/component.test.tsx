@@ -5,7 +5,7 @@ import { Observable, Subject } from "rxjs"
 import { QueueingSubject } from "queueing-subject"
 import { first, map } from "rxjs/operators"
 import { Atom } from "@rixio/rxjs-atom"
-import { Rx } from "@rixio/rxjs-atom-promise"
+import { Rx } from "@rixio/rxjs-react"
 import { range } from "../test/utils/range"
 import { InfiniteListState, ListPartLoader, listStateIdle } from "./domain"
 import { InfiniteList } from "./component"
@@ -74,7 +74,7 @@ const createPartLoader = (requests: Subject<RequestData>): ListPartLoader<number
 describe("InfiniteList", () => {
 	let state: Atom<InfiniteListState<number, number>>
 	beforeEach(() => {
-		state = Atom.create(listStateIdle())
+		state = Atom.create(listStateIdle)
 	})
 
 	test("should load first page at start and then other pages", async () => {

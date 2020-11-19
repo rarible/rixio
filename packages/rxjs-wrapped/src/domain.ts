@@ -12,9 +12,11 @@ export type Fulfilled<T> = {
 export type Pending = {
   status: "pending"
 }
-export type Rejected = {
+export type SimpleRejected = {
   status: "rejected"
   error: any
+}
+export type Rejected = SimpleRejected & {
   reload: () => void
 }
 

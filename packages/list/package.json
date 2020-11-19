@@ -27,7 +27,8 @@
     "verify": "tsc --noEmit"
   },
   "dependencies": {
-    "@rixio/rxjs-atom-promise": "^0.5.11"
+    "@rixio/rxjs-cache": "0.0.1",
+    "@rixio/rxjs-react": "0.7.1"
   },
   "devDependencies": {
     "@types/jest": "26.0.0",

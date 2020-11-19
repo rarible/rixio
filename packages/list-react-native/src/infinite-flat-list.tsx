@@ -2,7 +2,7 @@ import React from "react"
 import { RxFlatList, RxFlatListProps, RxListRenderItem } from "@rixio/rxjs-react-native"
 import { InfiniteList, InfiniteListState, ListPartLoader } from "@rixio/list"
 import { Atom } from "@rixio/rxjs-atom"
-import { OrReactChild } from "@rixio/rxjs-atom-promise"
+import { OrReactChild } from "@rixio/rxjs-react"
 import { useInfiniteListScrollEvent } from "./use-infinite-list-scroll-event"
 
 export type FooterComponentProps = {

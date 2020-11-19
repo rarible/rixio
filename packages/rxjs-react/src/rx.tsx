@@ -1,8 +1,7 @@
 import React, { ReactNode, useMemo } from "react"
 import { WrappedObservable, combineLatest } from "@rixio/rxjs-wrapped"
 import { useRx } from "./use-rx"
-
-export type OrReactChild<T> = React.ReactChild | React.ReactChild[] | T
+import { OrReactChild } from "./base"
 
 export interface RxPropsBase {
 	pending?: React.ReactNode
@@ -41,7 +40,6 @@ export function Rx<T1, T2, T3, T4>(props: Rx4Props<T1, T2, T3, T4>): React.React
 export function Rx({ pending, rejected, children, value$ }: RxProps): React.ReactElement | null {
 	const observables = useObservables(value$)
 	const value = useRx(observables)
-	console.log("rendering", value)
 	switch (value.status) {
 		case "pending":
 			return <>{pending}</>

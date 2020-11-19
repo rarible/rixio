@@ -1,5 +1,5 @@
 import { Observable } from "rxjs"
-import { Fulfilled, Pending, Rejected, Wrapped } from "@rixio/rxjs-wrapped";
+import { Fulfilled, Pending, Wrapped, SimpleRejected } from "@rixio/rxjs-wrapped"
 import { Atom } from "@rixio/rxjs-atom"
 
 export type Idle = {
@@ -8,8 +8,8 @@ export type Idle = {
 
 export const idle: Idle = { status: "idle" }
 
-type AtomState<S, T> = Omit<S, "reload">
-export type CacheState<T> = AtomState<Idle, T> | AtomState<Pending, T> | AtomState<Rejected, T> | AtomState<Fulfilled<T>, T>
+export type AtomStateStatus = Idle | Pending | SimpleRejected | { status: "fulfilled" }
+export type CacheState<T> = Idle | Pending | SimpleRejected | Fulfilled<T>
 
 export interface Cache<T> extends Observable<Wrapped<T>> {
 	get(force?: boolean): Promise<T>

@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react"
+import { useState, useMemo, useRef } from "react"
 import { Observable } from "rxjs"
 import { first } from "rxjs/operators"
 import { Wrapped, wrap, WrappedObservable } from "@rixio/rxjs-wrapped"
@@ -38,15 +38,22 @@ export function getImmediateOrThrow<T>(observable: Observable<T>): T {
 export function useRx<T>(observable: WrappedObservable<T>): Wrapped<T> {
 	const wrapped = useMemo(() => wrap(observable), [observable])
 	const [state, setState] = useState<Wrapped<T>>(() => getImmediateOrThrow(wrapped))
-	const setStateWithCheck = useCallback((value: Wrapped<T>) => {
-		if (state.status === "fulfilled") {
-			if (value.status === "fulfilled" && value.value !== state.value) {
+	const ref = useRef<Wrapped<T>>()
+	useSubscription(wrapped, value => {
+		const current = ref.current
+		if (current !== undefined) {
+			if (current.status === "fulfilled") {
+				if (value.status === "fulfilled" && value.value !== current.value) {
+					ref.current = value
+					setState(value)
+				}
+			} else {
+				ref.current = value
 				setState(value)
 			}
 		} else {
-			setState(value)
+			ref.current = value
 		}
-	}, [state])
-	useSubscription(wrapped, setStateWithCheck)
+	})
 	return state
 }

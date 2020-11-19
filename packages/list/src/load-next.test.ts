@@ -9,7 +9,7 @@ let appState: Atom<MyListState>
 
 describe("load-next", () => {
 	beforeEach(() => {
-		appState = Atom.create(listStateIdle())
+		appState = Atom.create(listStateIdle)
 	})
 
 	test("Should create new load next function", async () => {
@@ -19,7 +19,7 @@ describe("load-next", () => {
 			const nextItems = await api.loadPage(page, 10)
 			return [nextItems, page + 1]
 		}
-		expect(appState.get()).toEqual(listStateIdle())
+		expect(appState.get()).toEqual(listStateIdle)
 
 		await loadNext(appState, loader)
 		const firstPage = await api.loadPage(0, 10)

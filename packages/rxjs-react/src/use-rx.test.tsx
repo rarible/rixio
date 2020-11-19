@@ -13,7 +13,7 @@ const RxText = ({ value, renders }: { value: Observable<string>; renders: Atom<n
 }
 
 describe("useRx", () => {
-	test("should render atom 2 times", () => {
+	test("should render atom 1 time", () => {
 		const text = Math.random().toString()
 		const renders = Atom.create(0)
 		const r = render(<RxText value={Atom.create(text)} renders={renders} />)
@@ -21,7 +21,7 @@ describe("useRx", () => {
 		expect(renders.get()).toStrictEqual(1)
 	})
 
-	test("should render ReplaySubject 2 times", () => {
+	test("should render ReplaySubject 1 time", () => {
 		const renders = Atom.create(0)
 		const subject = new ReplaySubject<string>(1)
 		const text = Math.random().toString()

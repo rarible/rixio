@@ -1,8 +1,7 @@
 import React from "react"
 import { Observable } from "rxjs"
 import { useRx } from "./use-rx"
-
-type OrReactChild<T> = React.ReactChild | React.ReactChild[] | T
+import { OrReactChild } from "./base"
 
 export interface RxIfProps {
 	test$: Observable<any>
@@ -13,7 +12,7 @@ export interface RxIfProps {
 
 export function RxIf({ test$, children, negate, else: not }: RxIfProps): React.ReactElement | null {
 	const raw = useRx(test$)
-	const truthy = raw.status === "fulfilled" && raw
+	const truthy = raw.status === "fulfilled" && Boolean(raw.value)
 
 	if (negate && !truthy) {
 		return <>{children}</>

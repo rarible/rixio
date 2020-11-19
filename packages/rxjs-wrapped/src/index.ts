@@ -40,5 +40,5 @@ export function toPlainOrThrow<T>(value: Wrapped<T>): T {
 	throw new Error("not fulfilled")
 }
 
-export { WrappedObservable, pendingWrapped, createFulfilledWrapped, createRejectedWrapped, Fulfilled, isWrapped, Pending, Rejected, Wrapped} from "./domain"
+export { WrappedObservable, pendingWrapped, createFulfilledWrapped, createRejectedWrapped, Fulfilled, isWrapped, Pending, SimpleRejected, Rejected, Wrapped} from "./domain"
 export { combineLatest, fromPromise, map, flatMap } from "./operators"

@@ -1,14 +1,8 @@
-import React, { useEffect, useMemo } from "react"
+import React, { useEffect, useCallback } from "react"
 import { Atom } from "@rixio/rxjs-atom"
-import { OrReactChild } from "@rixio/rxjs-atom-promise"
-import { useRx } from "@rixio/rxjs-react"
-import { distinctUntilKeyChanged, map } from "rxjs/operators"
-import {
-	createPromiseStatusRejected,
-	promiseStatusFulfilled,
-	promiseStatusIdle,
-	promiseStatusPending,
-} from "@rixio/rxjs-atom-promise/build/promise-state"
+import { useRx, OrReactChild, useSubscription } from "@rixio/rxjs-react"
+import { toPlainOrThrow } from "@rixio/rxjs-wrapped"
+import { AtomStateStatus } from "@rixio/rxjs-cache"
 import { InfiniteListState, ListPartLoader, listStateIdle } from "./domain"
 import { loadNext } from "./load-next"
 
@@ -21,29 +15,9 @@ export interface InfiniteListProps<T, C> {
 }
 
 export function InfiniteList<T, C>({ state$, loader, pending, children, rejected }: InfiniteListProps<T, C>) {
-	const load = useMemo(() => () => loadNext(state$, loader), [state$, loader])
-	const initialStatus$ = useMemo(
-		() =>
-			state$.pipe(
-				map(x => {
-					if (x.items.length > 0) {
-						return promiseStatusFulfilled
-					} else if (x.status === "rejected") {
-						return createPromiseStatusRejected(x.error)
-					} else if (x.status === "idle") {
-						return promiseStatusIdle
-					} else if (x.status === "fulfilled") {
-						return promiseStatusFulfilled
-					} else if (x.status === "pending") {
-						return promiseStatusPending
-					}
-					throw new Error("never happens")
-				}),
-				distinctUntilKeyChanged("status")
-			),
-		[state$]
-	)
-	const initialStatus = useRx(initialStatus$)
+	const load = useCallback(() => loadNext(state$, loader), [state$, loader])
+	const state = toPlainOrThrow(useRx(state$))
+	const initialStatus = getInitalStatus(state)
 	useEffect(() => {
 		if (initialStatus.status === "idle") {
 			load().then()
@@ -60,14 +34,26 @@ export function InfiniteList<T, C>({ state$, loader, pending, children, rejected
 			return (
 				<>
 					{rejected(initialStatus.error, async () => {
-						state$.set(listStateIdle())
+						state$.set(listStateIdle)
 					})}
 				</>
 			)
 		}
-		return <>{rejected}</>
+		if (rejected) {
+			return <>{rejected}</>
+		}
+		return <>{children(load)}</>
 	} else if (initialStatus.status === "fulfilled") {
 		return <>{children(load)}</>
 	}
 	return null
+}
+
+function getInitalStatus(state: InfiniteListState<any, any>): AtomStateStatus {
+	if (state.items.length > 0) {
+		return { status: "fulfilled" }
+	} else {
+		const { items, continuation, finished, ...rest } = state
+		return rest
+	}
 }
