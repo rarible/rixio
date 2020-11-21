@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7](https://github.com/roborox/rixio/compare/@rixio/form-store@0.1.6...@rixio/form-store@0.1.7) (2020-11-21)
+
+
+### Bug Fixes
+
+* Cache set and modify ([4034db5](https://github.com/roborox/rixio/commit/4034db578f4e75ab71d4cf5fc919ceb77f5232c7))
+
+
+
+
+
 ## [0.1.6](https://github.com/roborox/rixio/compare/@rixio/form-store@0.1.5...@rixio/form-store@0.1.6) (2020-11-06)
 
 

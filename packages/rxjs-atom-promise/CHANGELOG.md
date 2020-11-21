@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.12](https://github.com/roborox/rixio/compare/@rixio/rxjs-atom-promise@0.5.11...@rixio/rxjs-atom-promise@0.5.12) (2020-11-21)
+
+
+### Bug Fixes
+
+* Cache set and modify ([4034db5](https://github.com/roborox/rixio/commit/4034db578f4e75ab71d4cf5fc919ceb77f5232c7))
+
+
+
+
+
 ## [0.5.11](https://github.com/roborox/rixio/compare/@rixio/rxjs-atom-promise@0.5.10...@rixio/rxjs-atom-promise@0.5.11) (2020-11-16)
 
 

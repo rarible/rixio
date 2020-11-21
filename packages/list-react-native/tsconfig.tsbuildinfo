@@ -617,8 +617,8 @@
         "affectsGlobalScope": false
       },
       "../rxjs-atom-promise/build/cache.d.ts": {
-        "version": "ed9cd48b58d8a5a1faba9253dcfbec62b6bd2845c8624b784ada4cde6895f4bb",
-        "signature": "ed9cd48b58d8a5a1faba9253dcfbec62b6bd2845c8624b784ada4cde6895f4bb",
+        "version": "4ac405c04b6d41a38855d02667e73c8f33fb8db6e5fcb22af470b8c532c02011",
+        "signature": "4ac405c04b6d41a38855d02667e73c8f33fb8db6e5fcb22af470b8c532c02011",
         "affectsGlobalScope": false
       },
       "../../node_modules/immutable/dist/immutable-nonambient.d.ts": {
