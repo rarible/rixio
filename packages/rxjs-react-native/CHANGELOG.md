@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.2](https://github.com/roborox/rixio/compare/@rixio/rxjs-react-native@0.5.1...@rixio/rxjs-react-native@0.5.2) (2020-11-23)
+
+
+### Bug Fixes
+
+* rxjs-react fixes, removed rxjs-atom-promise ([91e89e6](https://github.com/roborox/rixio/commit/91e89e6a5a9e8a12ecfb77e3a6e639be8c303140))
+
+
+
+
+
 ## [0.5.1](https://github.com/roborox/rixio/compare/@rixio/rxjs-react-native@0.5.0...@rixio/rxjs-react-native@0.5.1) (2020-11-16)
 
 **Note:** Version bump only for package @rixio/rxjs-react-native

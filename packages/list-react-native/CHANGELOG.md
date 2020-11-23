@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4](https://github.com/roborox/rixio/compare/@rixio/list-react-native@0.3.3...@rixio/list-react-native@0.3.4) (2020-11-23)
+
+
+### Bug Fixes
+
+* InfiniteList fixed, tests fixed ([ea32c97](https://github.com/roborox/rixio/commit/ea32c97139ddbac5fa1a0dd1deeb1abcdf788875))
+
+
+
+
+
 ## [0.3.3](https://github.com/roborox/rixio/compare/@rixio/list-react-native@0.3.2...@rixio/list-react-native@0.3.3) (2020-11-23)
 
 **Note:** Version bump only for package @rixio/list-react-native

@@ -1,6 +1,6 @@
 {
   "name": "@rixio/form-store",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "keywords": [
     "frp",
     "lens",
@@ -26,7 +26,7 @@
     "verify": "tsc --noEmit"
   },
   "dependencies": {
-    "@rixio/rxjs-atom": "^0.3.4"
+    "@rixio/rxjs-atom": "^0.3.5"
   },
   "devDependencies": {
     "@hapi/joi": "17.1.1",
