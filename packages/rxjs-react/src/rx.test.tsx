@@ -2,14 +2,14 @@ import React, { ReactElement } from "react"
 import { act, render, waitFor } from "@testing-library/react"
 import { Atom } from "@rixio/rxjs-atom"
 import { R } from "@rixio/rxjs-react"
-import { ReplaySubject } from "rxjs"
-import { PromiseState, createPromiseStatePending, createPromiseStateFulfilled } from "./promise-state"
+import { ReplaySubject, Observable, BehaviorSubject } from "rxjs"
+import { pendingWrapped, Wrapped, createFulfilledWrapped } from "@rixio/rxjs-wrapped"
 import { Rx } from "./rx"
 
 describe("Rx", () => {
 	test("should display pending if is pending", async () => {
 		expect.assertions(2)
-		const state$ = Atom.create(createPromiseStatePending<string>())
+		const state$ = Atom.create<Wrapped<string>>(pendingWrapped)
 		const r = render(
 			<span data-testid="test">
 				<Rx value$={state$} pending="pending">
@@ -21,42 +21,10 @@ describe("Rx", () => {
 		await expect(r.getByTestId("test")).not.toHaveTextContent("content")
 	})
 
-	test("should not display pending if handlePending=none", async () => {
-		expect.assertions(2)
-		const state$ = Atom.create(createPromiseStatePending<string>())
-		const r = render(
-			<span data-testid="test">
-				<Rx value$={state$} pending="pending" handlePending="none">
-					{v => <span>{v}</span>}
-				</Rx>
-			</span>
-		)
-		await expect(r.getByTestId("test")).not.toHaveTextContent("pending")
-		act(() => state$.set(createPromiseStateFulfilled("content")))
-		await expect(r.getByTestId("test")).toHaveTextContent("content")
-	})
-
-	test("should display pending only first time when handlePending=initial", async () => {
-		expect.assertions(3)
-		const state$ = Atom.create(createPromiseStatePending<string>())
-		const r = render(
-			<span data-testid="test">
-				<Rx value$={state$} pending="pending" handlePending="initial">
-					{v => <span>{v}</span>}
-				</Rx>
-			</span>
-		)
-		await expect(r.getByTestId("test")).toHaveTextContent("pending")
-		act(() => state$.set(createPromiseStateFulfilled("content")))
-		await expect(r.getByTestId("test")).toHaveTextContent("content")
-		act(() => state$.lens("status").set("pending"))
-		await expect(r.getByTestId("test")).not.toHaveTextContent("pending")
-	})
-
 	test("should display content if loaded", async () => {
-		testPromiseState(state$ => (
+		testCacheState(state$ => (
 			<span data-testid="test">
-				<Rx value$={state$} pending="pending">
+				<Rx<number> value$={state$} pending="pending">
 					{value => <span>{value}</span>}
 				</Rx>
 			</span>
@@ -98,7 +66,7 @@ describe("Rx", () => {
 	})
 
 	test("should display content if children empty", async () => {
-		testPromiseState(state$ => (
+		testCacheState(state$ => (
 			<span data-testid="test">
 				<Rx value$={state$} pending="pending" />
 			</span>
@@ -106,12 +74,12 @@ describe("Rx", () => {
 	})
 
 	test("should work if render prop is not used", () => {
-		testPromiseState(state$ => (
+		testCacheState(state$ => (
 			<span data-testid="test">
 				<Rx value$={state$} pending="pending">
 					simple text
 					<div>multiple elements</div>
-					<R.span>{state$.lens("value")}</R.span>
+					<R.span>{state$}</R.span>
 				</Rx>
 			</span>
 		))
@@ -128,13 +96,13 @@ describe("Rx", () => {
 	})
 })
 
-function testPromiseState(comp: (state: Atom<PromiseState<number>>) => ReactElement) {
-	const state$ = Atom.create(createPromiseStatePending<number>())
+function testCacheState(comp: (state: Observable<Wrapped<number>>) => ReactElement) {
+	const state$ = new BehaviorSubject<Wrapped<number>>(pendingWrapped)
 	const r = render(comp(state$))
 	expect(r.getByTestId("test")).toHaveTextContent("pending")
 	const number = Math.random()
 	act(() => {
-		state$.set(createPromiseStateFulfilled(number))
+		state$.next(createFulfilledWrapped(number))
 	})
 	expect(r.getByTestId("test")).toHaveTextContent(number.toString())
 }

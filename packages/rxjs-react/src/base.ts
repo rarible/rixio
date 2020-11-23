@@ -1,25 +1,11 @@
 import React from "react"
 import { Observable, Subscription } from "rxjs"
 import { Lens } from "@rixio/lens"
-
-const flagName = "___error___"
-const errorFlag = Symbol.for(flagName)
-
-function checkIsError(value: any) {
-	return value !== null && typeof value === "object" && value[flagName] === errorFlag
-}
-
-type CheckResult = { status: "fulfilled" } | { status: "rejected"; error: any } | { status: "pending" }
-const fulfilled: { status: "fulfilled" } = { status: "fulfilled" }
-const pending: { status: "pending" } = { status: "pending" }
-
-function createRejected(error: any): { status: "rejected"; error: any } {
-	return { status: "rejected", error }
-}
+import { Wrapped, createRejectedWrapped, toWrapped, pendingWrapped, Rejected } from "@rixio/rxjs-wrapped"
 
 export type OrReactChild<T> = React.ReactChild | React.ReactChild[] | T
 
-export type ObservableLike<T> = T | Observable<T>
+export type ObservableLike<T> = T | Observable<T> | Observable<Wrapped<T>>
 
 export type Lifted<T> = {
 	[K in keyof T]: ObservableLike<T[K]>
@@ -27,7 +13,7 @@ export type Lifted<T> = {
 
 export type RxBaseProps = {
 	pending?: React.ReactNode
-	rejected?: OrReactChild<(error: any) => React.ReactNode>
+	rejected?: OrReactChild<(error: any, reload: () => void) => React.ReactNode>
 }
 
 export abstract class RxWrapperBase<P extends object, RProps extends object> extends React.Component<
@@ -71,25 +57,25 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 	}
 
 	render() {
-		const result = this.checkObservables()
+		const result = toWrapped(this.checkObservables())
 		switch (result.status) {
 			case "fulfilled":
-				return React.createElement(this.extractComponent(this.props), this.state as any)
-			case "rejected":
-				const rejected = this.extractRxBaseProps(this.props)?.rejected
-				if (rejected && typeof rejected === "function") {
-					return rejected(result.error)
-				} else if (rejected) {
-					return rejected
-				} else {
-					return null
-				}
+				return React.createElement(this.extractComponent(this.props), result.value as any)
 			case "pending":
 				const pending = this.extractRxBaseProps(this.props)?.pending
 				if (pending) {
 					return pending
 				}
 				return null
+			case "rejected":
+				const rejected = this.extractRxBaseProps(this.props)?.rejected
+				if (rejected && typeof rejected === "function") {
+					return rejected(result.error, result.reload)
+				} else if (rejected) {
+					return rejected
+				} else {
+					return null
+				}
 		}
 	}
 
@@ -105,8 +91,8 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 				}
 				if (oldValue !== value) {
 					const s = value.subscribe(
-						plain => self.handle(lens, plain),
-						error => self.handle(lens, { error, [flagName]: errorFlag })
+						plain => self.handle(lens, toWrapped(plain)),
+						error => self.handle(lens, createRejectedWrapped(error))
 					)
 					self.subscriptions.set(value, s)
 				}
@@ -136,19 +122,31 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 		}
 	}
 
-	private checkObservables(): CheckResult {
-		const result = walk(this._state, value => {
+	private checkObservables(): Lifted<P> | Wrapped<any> {
+		let foundPending = false
+		const rejected: Rejected[] = []
+		let props = this._state
+		walk(this._state, (value, lens) => {
 			if (value instanceof Observable) {
-				return pending
+				foundPending = true
 			}
-			if (checkIsError(value)) {
-				return createRejected(value.error)
+			const wrapped = toWrapped(value)
+			if (wrapped.status === "rejected") {
+				rejected.push(wrapped)
+			} else if (wrapped.status === "pending") {
+				foundPending = true
+			} else {
+				props = lens.set(wrapped.value, props)
 			}
 		})
-		if (result !== undefined) {
-			return result
+		if (foundPending) return pendingWrapped
+		if (rejected.length > 0) {
+			const reload = () => {
+				rejected.forEach(r => r.reload())
+			}
+			return createRejectedWrapped(rejected[0].error, reload)
 		}
-		return fulfilled
+		return props
 	}
 }
 

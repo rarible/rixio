@@ -8,7 +8,7 @@ function Div({ value }: { value: string }) {
 }
 
 const LiftedDiv = lift(Div)
-const LiftedDivWithPending = lift(Div, {
+const ExtendedLiftedDiv = lift(Div, {
 	pending: "BLABLABLA",
 })
 
@@ -44,11 +44,11 @@ describe("lift", () => {
 		expect(r.getByTestId("value")).toHaveTextContent(nextText)
 	})
 
-	test("should render rejected props if observable doesn't emit value", () => {
+	test("should render pending props if observable doesn't emit value", () => {
 		const obs = new ReplaySubject<string>(1)
 		const r = render(
 			<span data-testid="value">
-				<LiftedDivWithPending value={obs} />
+				<ExtendedLiftedDiv value={obs} />
 			</span>
 		)
 		expect(r.getByTestId("value")).toHaveTextContent("BLABLABLA")

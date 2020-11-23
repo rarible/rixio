@@ -30,7 +30,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@rixio/lens": "^0.4.1"
+    "@rixio/lens": "^0.4.1",
+    "@rixio/rxjs-wrapped": "0.0.1"
   },
   "devDependencies": {
     "@rixio/rxjs-atom": "^0.3.4",
@@ -42,7 +43,7 @@
     "jest": "26.4.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "rxjs": "6.5.5",
+    "rxjs": "6.6.3",
     "ts-jest": "26.4.1",
     "typescript": "4.0.5"
   },
