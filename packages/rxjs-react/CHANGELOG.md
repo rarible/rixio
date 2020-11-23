@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.2](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.0...@rixio/rxjs-react@0.8.2) (2020-11-23)
+
+
+### Bug Fixes
+
+* useAtom, simplier version of useRx ([468acbe](https://github.com/roborox/rixio/commit/468acbe6a7a7d8c54fb28be4fb597ab0d40487a7))
+* useAtom, simplier version of useRx ([0fdb5c6](https://github.com/roborox/rixio/commit/0fdb5c6b38b436bc5106b46621e147934104fdc0))
+
+
+
+
+
 ## [0.8.1](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.0...@rixio/rxjs-react@0.8.1) (2020-11-23)
 
 
