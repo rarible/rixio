@@ -46,3 +46,6 @@ export interface Cache<T> extends Observable<Wrapped<T>> {
 
 	valueAtom: Atom<T>
 }
+
+export { save, CacheImpl } from "./impl"
+export { KeyCache, KeyCacheImpl, ListDataLoader, DataLoader, byKeyWithDefault, byKey } from "./key"
