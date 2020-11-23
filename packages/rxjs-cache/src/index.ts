@@ -1,5 +1,12 @@
 import { Observable } from "rxjs"
-import { Fulfilled, Pending, Wrapped, SimpleRejected } from "@rixio/rxjs-wrapped"
+import {
+	Fulfilled,
+	Pending,
+	Wrapped,
+	SimpleRejected,
+	createFulfilledWrapped,
+	pendingWrapped, createRejectedWrapped,
+} from "@rixio/rxjs-wrapped"
 import { Atom } from "@rixio/rxjs-atom"
 
 const cache = "___cache___"
@@ -27,6 +34,16 @@ export function toCache<T>(wrapped: Wrapped<T>): CacheState<T> {
 			return pendingCache
 		case "rejected":
 			return createRejectedCache(wrapped.error)
+	}
+}
+export function toWrapped<T>(cache: CacheState<T>): Wrapped<T> {
+	switch (cache.status) {
+		case "fulfilled":
+			return createFulfilledWrapped(cache.value)
+		case "pending":
+			return pendingWrapped
+		case "rejected":
+			return createRejectedWrapped(cache.error)
 	}
 }
 

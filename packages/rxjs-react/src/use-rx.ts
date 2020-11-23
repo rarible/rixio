@@ -3,6 +3,7 @@ import { Observable } from "rxjs"
 import { first } from "rxjs/operators"
 import { Wrapped, wrap, WrappedObservable } from "@rixio/rxjs-wrapped"
 import { useSubscription } from "./use-subscription"
+import { ReadOnlyAtom } from "@rixio/rxjs-atom"
 
 export type ImmediateFulfilled<T> = {
 	status: "fulfilled"
@@ -55,5 +56,11 @@ export function useRx<T>(observable: WrappedObservable<T>): Wrapped<T> {
 			ref.current = value
 		}
 	})
+	return state
+}
+
+export function useAtom<T>(atom: ReadOnlyAtom<T>): T {
+	const [state, setState] = useState<T>(() => atom.get())
+	useSubscription(atom, setState)
 	return state
 }
