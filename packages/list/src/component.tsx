@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react"
 import { Atom } from "@rixio/rxjs-atom"
 import { OrReactChild } from "@rixio/rxjs-atom-promise"
 import { useRx } from "@rixio/rxjs-react"
