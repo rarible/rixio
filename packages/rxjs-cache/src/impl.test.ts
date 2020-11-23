@@ -2,12 +2,12 @@ import { Atom } from "@rixio/rxjs-atom"
 import waitForExpect from "wait-for-expect"
 import { Wrapped, pendingWrapped } from "@rixio/rxjs-wrapped"
 import { CacheImpl } from "./impl"
-import { CacheState, idle } from "./index";
+import { CacheState, idleCache } from "./index";
 
 describe("CacheImpl", () => {
   test("should load data when subscribed and idle", async () => {
     let result: string = "loaded"
-    const cache = new CacheImpl(Atom.create(idle as CacheState<string>), () => Promise.resolve(result))
+    const cache = new CacheImpl(Atom.create(idleCache as CacheState<string>), () => Promise.resolve(result))
     expect(cache.atom.get().status).toBe("idle")
 
     const s = cache.subscribe()
@@ -42,7 +42,7 @@ describe("CacheImpl", () => {
 
   test("get should work", async () => {
     let result: string = "loaded"
-    const cache = new CacheImpl(Atom.create(idle as CacheState<string>), () => Promise.resolve(result))
+    const cache = new CacheImpl(Atom.create(idleCache as CacheState<string>), () => Promise.resolve(result))
     expect(cache.atom.get().status).toBe("idle")
 
     const value = await cache.get()
@@ -61,7 +61,7 @@ describe("CacheImpl", () => {
   })
 
   test("set should work", async () => {
-    const cache = new CacheImpl(Atom.create(idle as CacheState<string>), () => Promise.resolve("other"))
+    const cache = new CacheImpl(Atom.create(idleCache as CacheState<string>), () => Promise.resolve("other"))
     expect(cache.atom.get().status).toBe("idle")
     cache.set("loaded")
     expect(cache.atom.get().status).toBe("fulfilled")
@@ -72,7 +72,7 @@ describe("CacheImpl", () => {
 
   test("reload should work if rejected", async () => {
     let promise: Promise<string> = Promise.reject("reason")
-    const cache = new CacheImpl(Atom.create(idle as CacheState<string>), () => promise)
+    const cache = new CacheImpl(Atom.create(idleCache as CacheState<string>), () => promise)
     expect(cache.atom.get().status).toBe("idle")
 
     let value: Wrapped<string> = pendingWrapped

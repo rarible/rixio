@@ -1,9 +1,8 @@
 import { Map as IM } from "immutable"
 import { Atom } from "@rixio/rxjs-atom"
 import { Lens, Prism } from "@rixio/lens"
-import { createFulfilledWrapped, pendingWrapped } from "@rixio/rxjs-wrapped"
 import { CacheImpl } from "./impl"
-import { Cache, CacheState, idle } from "./index"
+import { Cache, CacheState, createFulfilledCache, idleCache, pendingCache } from "./index"
 
 export interface DataLoader<K, V> {
 	load(key: K): Promise<V>
@@ -57,11 +56,11 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	}
 
 	set(key: K, value: V): void {
-		this.map.modify(map => map.set(key, createFulfilledWrapped(value)))
+		this.map.modify(map => map.set(key, createFulfilledCache(value)))
 	}
 
 	getAtom(key: K): Atom<CacheState<V>> {
-		return this.map.lens(byKeyWithDefault(key, idle))
+		return this.map.lens(byKeyWithDefault(key, idleCache))
 	}
 
 	async getMap(ids: K[]) {
@@ -73,9 +72,9 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 		})
 		//todo do not use reduce. change Map at once
 		//todo error handling. should we mark items as errors?
-		this.map.modify(map => notLoaded.reduce((map, id) => map.set(id, pendingWrapped), map))
+		this.map.modify(map => notLoaded.reduce((map, id) => map.set(id, pendingCache), map))
 		const values = await this.mapLoader.loadList(notLoaded)
-		this.map.modify(map => values.reduce((map, [id, v]) => map.set(id, createFulfilledWrapped(v)), map))
+		this.map.modify(map => values.reduce((map, [id, v]) => map.set(id, createFulfilledCache(v)), map))
 		const allValues = await Promise.all(ids.map(id => this.get(id).then(v => [id, v] as [K, V])))
 		return IM(allValues)
 	}

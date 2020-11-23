@@ -3,7 +3,8 @@ import { Observable, Subscriber, Subscription, BehaviorSubject } from "rxjs"
 import { filter, first } from "rxjs/operators"
 import { createFulfilledWrapped, createRejectedWrapped, pendingWrapped, Wrapped } from "@rixio/rxjs-wrapped";
 import { fromPromise } from "@rixio/rxjs-wrapped/build/operators"
-import { Cache, CacheState, idle } from ".";
+import { Cache, CacheState, createFulfilledCache, idleCache, toCache } from ".";
+import { map as rxjsMap } from "rxjs/operators"
 
 export class CacheImpl<T> extends BehaviorSubject<Wrapped<T>> implements Cache<T> {
   private _subscription: Subscription | null = null
@@ -32,7 +33,7 @@ export class CacheImpl<T> extends BehaviorSubject<Wrapped<T>> implements Cache<T
   }
 
   set(value: T): void {
-    this.atom.set(createFulfilledWrapped(value))
+    this.atom.set(createFulfilledCache(value))
   }
 
   modifyIfFulfilled(updateFn: (currentValue: T) => T): void {
@@ -46,13 +47,13 @@ export class CacheImpl<T> extends BehaviorSubject<Wrapped<T>> implements Cache<T
   }
 
   clear(): void {
-    this.atom.set(idle as CacheState<T>)
+    this.atom.set(idleCache as CacheState<T>)
   }
 
   private _onSourceValue(x: CacheState<T>) {
     switch (x.status) {
       case "idle":
-        Atom.set(this._atom, fromPromise(this._loader())).subscribe()
+        save(this._loader(), this._atom).then()
         this.next(pendingWrapped)
         break
       case "pending":
@@ -110,4 +111,11 @@ async function getFinalValue<T>(state$: Observable<Wrapped<T>>): Promise<T> {
     default:
       throw new Error("Never happens")
   }
+}
+
+export async function save<T>(promise: PromiseLike<T>, atom: Atom<CacheState<T>>) {
+  const observable = fromPromise(promise).pipe(
+    rxjsMap(toCache),
+  )
+  await Atom.set(atom, observable).toPromise()
 }
