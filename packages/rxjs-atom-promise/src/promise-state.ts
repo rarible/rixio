@@ -51,11 +51,16 @@ export const createPromiseStatePending = <T>(emptyValue?: T): PromiseState<T> =>
 
 export function mapPromiseState<F, T>(mapper: (value: F) => T): (state: PromiseState<F>) => PromiseState<T> {
 	return state => {
-		let value: T | undefined
-		if (state.value) {
-			value = mapper(state.value)
+		switch (state.status) {
+			case "idle":
+				return createPromiseStateIdle()
+			case "pending":
+				return createPromiseStatePending()
+			case "fulfilled":
+				return createPromiseStateFulfilled(mapper(state.value))
+			case "rejected":
+				return createPromiseStateRejected(state.error)
 		}
-		return { ...state, value: value as T }
 	}
 }
 
