@@ -1,6 +1,6 @@
 {
 	"name": "@rixio/rxjs-cache",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"main": "build/index.js",
 	"types": "build/index.d.ts",
 	"files": [

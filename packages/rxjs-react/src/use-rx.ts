@@ -2,8 +2,8 @@ import { useState, useMemo, useRef } from "react"
 import { Observable } from "rxjs"
 import { first } from "rxjs/operators"
 import { Wrapped, wrap, WrappedObservable } from "@rixio/rxjs-wrapped"
-import { useSubscription } from "./use-subscription"
 import { ReadOnlyAtom } from "@rixio/rxjs-atom"
+import { useSubscription } from "./use-subscription"
 
 export type ImmediateFulfilled<T> = {
 	status: "fulfilled"

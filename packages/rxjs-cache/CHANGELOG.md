@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.4](https://github.com/roborox/rixio/compare/@rixio/rxjs-cache@0.0.3...@rixio/rxjs-cache@0.0.4) (2020-11-23)
+
+
+### Bug Fixes
+
+* useAtom, simplier version of useRx ([d994f6f](https://github.com/roborox/rixio/commit/d994f6f33ace8e6aa7bec61d813741354505ca18))
+* useAtom, simplier version of useRx ([0fdb5c6](https://github.com/roborox/rixio/commit/0fdb5c6b38b436bc5106b46621e147934104fdc0))
+
+
+
+
+
 ## [0.0.3](https://github.com/roborox/rixio/compare/@rixio/rxjs-cache@0.0.2...@rixio/rxjs-cache@0.0.3) (2020-11-23)
 
 

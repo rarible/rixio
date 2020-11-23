@@ -1,0 +1,55 @@
+93 error Error: Command failed: git commit -F /tmp/6360d469-addd-44aa-a9a4-f9453e32e81c/lerna-commit.txt
+93 error husky > pre-commit (node v12.16.0)
+93 error $ yarn workspaces run verify
+93 error
+93 error > @rixio/form-store
+93 error $ tsc --noEmit
+93 error
+93 error > @rixio/lens
+93 error $ tsc --noEmit
+93 error
+93 error > @rixio/list-react-native
+93 error $ tsc --noEmit
+93 error
+93 error > @rixio/list
+93 error $ tsc --noEmit
+93 error
+93 error > @rixio/rxjs-atom
+93 error $ tsc --noEmit
+93 error
+93 error > @rixio/rxjs-cache
+93 error $ tsc --noEmit
+93 error
+93 error > @rixio/rxjs-react-native
+93 error $ tsc --noEmit
+93 error
+93 error > @rixio/rxjs-react
+93 error $ tsc --noEmit
+93 error
+93 error > @rixio/rxjs-wrapped
+93 error $ tsc --noEmit
+93 error ℹ No staged files match any configured task.
+93 error $ eslint --ext .js,.jsx,.ts,.tsx ./
+93 error
+93 error /home/quadro/Projects/frontend/rixio/packages/rxjs-atom/src/atom.test.ts
+93 error   762:10  warning  '_' is assigned a value but never used  @typescript-eslint/no-unused-vars
+93 error
+93 error /home/quadro/Projects/frontend/rixio/packages/rxjs-atom/src/base.ts
+93 error   272:2  warning  Useless constructor  @typescript-eslint/no-useless-constructor
+93 error
+93 error /home/quadro/Projects/frontend/rixio/packages/rxjs-react/src/rx.test.tsx
+93 error   82:6  warning  Imported JSX component span must be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+93 error
+93 error /home/quadro/Projects/frontend/rixio/packages/rxjs-react/src/use-rx.ts
+93 error   6:1  error  `@rixio/rxjs-atom` import should occur before import of `./use-subscription`  import/order
+93 error
+93 error ✖ 4 problems (1 error, 3 warnings)
+93 error   1 error and 0 warnings potentially fixable with the `--fix` option.
+93 error
+93 error error Command failed with exit code 1.
+93 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+93 error husky > pre-commit hook failed (add --no-verify to bypass)
+93 error
+93 error     at makeError (/home/quadro/Projects/frontend/rixio/node_modules/execa/index.js:174:9)
+93 error     at /home/quadro/Projects/frontend/rixio/node_modules/execa/index.js:278:16
+93 error     at processTicksAndRejections (internal/process/task_queues.js:97:5)

@@ -5,7 +5,8 @@ import {
 	Wrapped,
 	SimpleRejected,
 	createFulfilledWrapped,
-	pendingWrapped, createRejectedWrapped,
+	pendingWrapped,
+	createRejectedWrapped,
 } from "@rixio/rxjs-wrapped"
 import { Atom } from "@rixio/rxjs-atom"
 
