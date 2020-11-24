@@ -1,6 +1,6 @@
 {
   "name": "@rixio/list",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "keywords": [
     "frp",
     "lens",
@@ -27,7 +27,7 @@
     "verify": "tsc --noEmit"
   },
   "dependencies": {
-    "@rixio/rxjs-cache": "^0.0.9",
+    "@rixio/rxjs-cache": "^0.0.10",
     "@rixio/rxjs-react": "^0.8.6"
   },
   "devDependencies": {

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.10](https://github.com/roborox/rixio/compare/@rixio/rxjs-cache@0.0.9...@rixio/rxjs-cache@0.0.10) (2020-11-24)
+
+
+### Bug Fixes
+
+* support sheduling of profiles loading ([fd705f5](https://github.com/roborox/rixio/commit/fd705f5a78b01afbe8a24878bb9b0adaf7add16e))
+
+
+
+
+
 ## [0.0.9](https://github.com/roborox/rixio/compare/@rixio/rxjs-cache@0.0.8...@rixio/rxjs-cache@0.0.9) (2020-11-24)
 
 
