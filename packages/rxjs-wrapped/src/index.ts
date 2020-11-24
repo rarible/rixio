@@ -59,4 +59,4 @@ export {
 	Rejected,
 	Wrapped,
 } from "./domain"
-export { combineLatest, fromPromise, map, flatMap } from "./operators"
+export { cond, combineLatest, fromPromise, map, flatMap } from "./operators"

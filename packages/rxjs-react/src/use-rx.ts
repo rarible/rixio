@@ -3,6 +3,7 @@ import { Observable } from "rxjs"
 import { first } from "rxjs/operators"
 import { Wrapped, wrap, WrappedObservable } from "@rixio/rxjs-wrapped"
 import { ReadOnlyAtom } from "@rixio/rxjs-atom"
+import { toPlainOrThrow } from "../../rxjs-wrapped/src";
 import { useSubscription } from "./use-subscription"
 
 export type ImmediateFulfilled<T> = {
@@ -57,6 +58,10 @@ export function useRx<T>(observable: WrappedObservable<T>): Wrapped<T> {
 		}
 	})
 	return state
+}
+
+export function useRxOrThrow<T>(observable: WrappedObservable<T>): T {
+	return toPlainOrThrow(useRx(observable))
 }
 
 export function useAtom<T>(atom: ReadOnlyAtom<T>): T {
