@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.3](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.2...@rixio/rxjs-react@0.8.3) (2020-11-24)
+
+
+### Bug Fixes
+
+* minor fixes ([6cf3d91](https://github.com/roborox/rixio/commit/6cf3d915cc2e083183e2e7dfc5fdf3103274d27b))
+* useRxOrThrow, cond operator ([eb870cf](https://github.com/roborox/rixio/commit/eb870cfe8695c421411ab9cd552d450905cf2ee6))
+
+
+
+
+
 ## [0.8.2](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.0...@rixio/rxjs-react@0.8.2) (2020-11-23)
 
 

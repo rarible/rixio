@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/roborox/rixio/compare/@rixio/rxjs-wrapped@0.1.0...@rixio/rxjs-wrapped@0.1.1) (2020-11-24)
+
+
+### Bug Fixes
+
+* useRxOrThrow, cond operator ([eb870cf](https://github.com/roborox/rixio/commit/eb870cfe8695c421411ab9cd552d450905cf2ee6))
+
+
+
+
+
 # 0.1.0 (2020-11-23)
 
 
