@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.4](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.3...@rixio/rxjs-react@0.8.4) (2020-11-24)
+
+
+### Bug Fixes
+
+* toObservable ([12a685b](https://github.com/roborox/rixio/commit/12a685be2e0d1a97e9f6ed6a91f45e0c3a3027a5))
+
+
+
+
+
 ## [0.8.3](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.2...@rixio/rxjs-react@0.8.3) (2020-11-24)
 
 

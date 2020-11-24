@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/roborox/rixio/compare/@rixio/rxjs-wrapped@0.1.1...@rixio/rxjs-wrapped@0.1.2) (2020-11-24)
+
+
+### Bug Fixes
+
+* toObservable ([12a685b](https://github.com/roborox/rixio/commit/12a685be2e0d1a97e9f6ed6a91f45e0c3a3027a5))
+
+
+
+
+
 ## [0.1.1](https://github.com/roborox/rixio/compare/@rixio/rxjs-wrapped@0.1.0...@rixio/rxjs-wrapped@0.1.1) (2020-11-24)
 
 
