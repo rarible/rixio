@@ -4,9 +4,6 @@ import {
 	Pending,
 	Wrapped,
 	SimpleRejected,
-	createFulfilledWrapped,
-	pendingWrapped,
-	createRejectedWrapped,
 } from "@rixio/rxjs-wrapped"
 import { Atom } from "@rixio/rxjs-atom"
 
@@ -26,27 +23,6 @@ export function createRejectedCache(error: any): CacheState<any> {
 }
 export function createFulfilledCache<T>(value: T): CacheState<T> {
 	return { status: "fulfilled", value, [cache]: symbol }
-}
-export function toCache<T>(wrapped: Wrapped<T>): CacheState<T> {
-	switch (wrapped.status) {
-		case "fulfilled":
-			return createFulfilledCache(wrapped.value)
-		case "pending":
-			return pendingCache
-		case "rejected":
-			return createRejectedCache(wrapped.error)
-	}
-}
-export function toWrapped<T>(cache: CacheState<T>): Wrapped<T> {
-	switch (cache.status) {
-		case "fulfilled":
-			return createFulfilledWrapped(cache.value)
-		case "idle":
-		case "pending":
-			return pendingWrapped
-		case "rejected":
-			return createRejectedWrapped(cache.error)
-	}
 }
 
 export type AtomStateStatus = Idle | Pending | SimpleRejected | { status: "fulfilled" }
@@ -68,3 +44,4 @@ export interface Cache<T> extends Observable<Wrapped<T>> {
 
 export { save, CacheImpl } from "./impl"
 export { KeyCache, KeyCacheImpl, ListDataLoader, DataLoader, byKeyWithDefault, byKey } from "./key"
+export { toWrapped, toCache } from "./utils"
