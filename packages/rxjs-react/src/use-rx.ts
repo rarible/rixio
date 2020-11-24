@@ -1,9 +1,8 @@
 import { useState, useMemo, useRef } from "react"
 import { Observable } from "rxjs"
 import { first } from "rxjs/operators"
-import { Wrapped, wrap, WrappedObservable } from "@rixio/rxjs-wrapped"
+import { Wrapped, wrap, WrappedObservable, toPlainOrThrow } from "@rixio/rxjs-wrapped"
 import { ReadOnlyAtom } from "@rixio/rxjs-atom"
-import { toPlainOrThrow } from "../../rxjs-wrapped/src";
 import { useSubscription } from "./use-subscription"
 
 export type ImmediateFulfilled<T> = {
