@@ -1,9 +1,8 @@
 import React, { useCallback } from "react"
 import type { Index } from "react-virtualized"
-import { InfiniteList, InfiniteListState } from "@rixio/list"
+import { RenderInfo, RxInfiniteList } from "@rixio/list"
 import { InfiniteLoader } from "react-virtualized/dist/es/InfiniteLoader"
 import { List, ListProps } from "react-virtualized/dist/es/List"
-import { Rx } from "@rixio/rxjs-react"
 import { InfiniteListProps } from "@rixio/list/build/component"
 import type { ListReactRenderer, ListReactRendererItem } from "../domain"
 
@@ -22,7 +21,7 @@ export type VerticalListProps<T, C> = Omit<InfiniteListProps<T, C>, "children"> 
 
 export function VerticalList<T, C>({ state$, rect, renderer, listProps = {}, ...restProps }: VerticalListProps<T, C>) {
 	const children = useCallback(
-		(load: () => Promise<void>, { items, status, finished }: InfiniteListState<T, C>) => {
+		({ load, items, status, finished }: RenderInfo<T, C>) => {
 			const isRowLoaded = ({ index }: Index) => finished || index < items.length
 			const rowCount = status === "pending" ? items.length + 1 : items.length
 			const renderableRaw = items.map(x => ({ type: "item", data: x }))
@@ -62,9 +61,5 @@ export function VerticalList<T, C>({ state$, rect, renderer, listProps = {}, ...
 		[renderer, listProps, rect]
 	)
 
-	return (
-		<Rx value$={state$}>
-			{state => <InfiniteList state$={state$} children={load => children(load, state)} {...restProps} />}
-		</Rx>
-	)
+	return <RxInfiniteList state$={state$} children={children} {...restProps} />
 }

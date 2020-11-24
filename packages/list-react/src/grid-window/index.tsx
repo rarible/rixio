@@ -1,7 +1,5 @@
 import React, { useCallback, useMemo } from "react"
-import { Rx } from "@rixio/rxjs-react"
-import { InfiniteList } from "@rixio/list"
-import { InfiniteListState } from "@rixio/list"
+import { RenderInfo, RxInfiniteList } from "@rixio/list"
 import { InfiniteLoader } from "react-virtualized/dist/es/InfiniteLoader"
 import { Grid, GridProps, RenderedSection } from "react-virtualized/dist/es/Grid"
 import { WindowScroller } from "react-virtualized/dist/es/WindowScroller"
@@ -32,7 +30,7 @@ export function GridWindowList<T, C>({
 	const pending = useMemo(() => new Array(rect.columnCount).fill({ type: "pending" }), [rect.columnCount])
 
 	const children = useCallback(
-		(load: () => Promise<void>, { items, status, finished }: InfiniteListState<T, C>) => {
+		({ load, items, status, finished }: RenderInfo<T, C>) => {
 			const itemRowCount = Math.ceil(items.length / rect.columnCount)
 			const rowCount = status === "pending" ? itemRowCount + 1 : itemRowCount
 			const renderableRaw = items.map(x => ({ type: "item", data: x }))
@@ -103,9 +101,5 @@ export function GridWindowList<T, C>({
 		[renderer, gridProps, rect, pending]
 	)
 
-	return (
-		<Rx value$={state$}>
-			{state => <InfiniteList state$={state$} children={load => children(load, state)} {...restProps} />}
-		</Rx>
-	)
+	return <RxInfiniteList state$={state$} children={children} {...restProps} />
 }

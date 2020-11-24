@@ -43,6 +43,8 @@ storiesOf("grid-window-list", module).add("basic", () => (
 		<GridWindowList<number, number>
 			state$={state$}
 			loader={load}
+			pending={<div>First load</div>}
+			rejected={() => <div>Some error</div>}
 			rect={{
 				rowHeight: 300,
 				columnCount: 5,

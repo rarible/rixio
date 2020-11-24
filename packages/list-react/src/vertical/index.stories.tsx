@@ -36,6 +36,8 @@ storiesOf("vertical-list", module).add("basic", () => (
 	<VerticalList<number, number>
 		state$={state$}
 		loader={load}
+		pending={<div>First load</div>}
+		rejected={() => <div>Some error</div>}
 		rect={{
 			width: 500,
 			height: 400,
