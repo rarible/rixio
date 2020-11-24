@@ -91,7 +91,5 @@ export function fromPromise<T>(promise: PromiseLike<T>): Observable<Wrapped<T>> 
 }
 
 export function cond<T>(ifTrue: T, ifFalse: T): F<WrappedObservable<any>, Observable<Wrapped<T>>> {
-	return (wrapped) => wrap(wrapped).pipe(
-		map(value => value ? ifTrue : ifFalse),
-	)
+	return wrapped => wrap(wrapped).pipe(map(value => (value ? ifTrue : ifFalse)))
 }

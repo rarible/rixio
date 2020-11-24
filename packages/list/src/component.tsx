@@ -1,22 +1,16 @@
 import React, { useEffect, useCallback } from "react"
-import { Atom } from "@rixio/rxjs-atom"
-import { useRx, OrReactChild } from "@rixio/rxjs-react"
-import { toPlainOrThrow } from "@rixio/rxjs-wrapped"
-import { AtomStateStatus } from "@rixio/rxjs-cache"
-import { InfiniteListState, ListPartLoader, listStateIdle } from "./domain"
+import { useRxOrThrow } from "@rixio/rxjs-react"
+import type { AtomStateStatus } from "@rixio/rxjs-cache"
+import { InfiniteListPropsShared, InfiniteListState, listStateIdle } from "./domain"
 import { loadNext } from "./load-next"
 
-export interface InfiniteListProps<T, C> {
-	state$: Atom<InfiniteListState<T, C>>
-	loader: ListPartLoader<T, C>
-	pending?: React.ReactNode
+export type InfiniteListProps<T, C> = InfiniteListPropsShared<T, C> & {
 	children: (load: () => Promise<void>) => React.ReactNode
-	rejected?: OrReactChild<(error: any, reload: () => Promise<void>) => React.ReactNode>
 }
 
 export function InfiniteList<T, C>({ state$, loader, pending, children, rejected }: InfiniteListProps<T, C>) {
 	const load = useCallback(() => loadNext(state$, loader), [state$, loader])
-	const state = toPlainOrThrow(useRx(state$))
+	const state = useRxOrThrow(state$)
 	const initialStatus = getInitalStatus(state)
 	useEffect(() => {
 		if (initialStatus.status === "idle") {

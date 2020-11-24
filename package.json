@@ -7,10 +7,11 @@
   "scripts": {
     "bootstrap": "lerna bootstrap && lerna link",
     "clean": "yarn workspaces run clean",
-    "build-all": "yarn run build-lens && yarn run build-rxjs-atom && yarn run build-rxjs-wrapped && yarn run build-rxjs-cache && yarn run build-rxjs-react && yarn run build-rxjs-react-native && yarn run build-list && yarn run build-list-react-native && yarn run build-form-store",
+    "build-all": "yarn run build-lens && yarn run build-rxjs-atom && yarn run build-rxjs-wrapped && yarn run build-rxjs-cache && yarn run build-rxjs-react && yarn run build-rxjs-react-native && yarn run build-list && yarn run build-list-react-native && yarn run build-form-store && yarn run build-list-react",
     "build-lens": "yarn workspace @rixio/lens run build",
     "build-rxjs-atom": "yarn workspace @rixio/rxjs-atom run build",
     "build-list": "yarn workspace @rixio/list run build",
+    "build-list-react": "yarn workspace @rixio/list-react run build",
     "build-list-react-native": "yarn workspace @rixio/list-react-native run build",
     "build-rxjs-react": "yarn workspace @rixio/rxjs-react run build",
     "build-rxjs-wrapped": "yarn workspace @rixio/rxjs-wrapped run build",
