@@ -4,7 +4,7 @@ import { filter, first } from "rxjs/operators"
 import { createFulfilledWrapped, createRejectedWrapped, pendingWrapped, Wrapped } from "@rixio/rxjs-wrapped"
 import { fromPromise } from "@rixio/rxjs-wrapped/build/operators"
 import { map as rxjsMap } from "rxjs/operators"
-import { Cache, CacheState, createFulfilledCache, idleCache, toCache } from "."
+import { Cache, CacheState, createFulfilledCache, idleCache, toCache } from "./index"
 
 export class CacheImpl<T> extends BehaviorSubject<Wrapped<T>> implements Cache<T> {
 	private _subscription: Subscription | null = null
