@@ -1,4 +1,4 @@
-import { Observable } from "rxjs"
+import { Observable, of } from "rxjs"
 import {
 	createFulfilledWrapped,
 	createRejectedWrapped,
@@ -6,7 +6,16 @@ import {
 	pendingWrapped,
 	Wrapped,
 	WrappedObservable,
+	ObservableLike,
 } from "./domain"
+
+export function toObservable<T>(like: ObservableLike<T>): Observable<Wrapped<T>> {
+	if (like instanceof Observable) {
+		return wrap(like)
+	} else {
+		return of(toWrapped(like))
+	}
+}
 
 export function wrap<T>(observable: WrappedObservable<T>): Observable<Wrapped<T>> {
 	return new Observable(s => {
@@ -58,5 +67,6 @@ export {
 	SimpleRejected,
 	Rejected,
 	Wrapped,
+	ObservableLike,
 } from "./domain"
 export { cond, combineLatest, fromPromise, map, flatMap } from "./operators"

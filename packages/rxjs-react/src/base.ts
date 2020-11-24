@@ -1,11 +1,16 @@
 import React from "react"
 import { Observable, Subscription } from "rxjs"
 import { Lens } from "@rixio/lens"
-import { Wrapped, createRejectedWrapped, toWrapped, pendingWrapped, Rejected } from "@rixio/rxjs-wrapped"
+import {
+	Wrapped,
+	createRejectedWrapped,
+	toWrapped,
+	pendingWrapped,
+	Rejected,
+	ObservableLike,
+} from "@rixio/rxjs-wrapped"
 
 export type OrReactChild<T> = React.ReactChild | React.ReactChild[] | T
-
-export type ObservableLike<T> = T | Observable<T> | Observable<Wrapped<T>>
 
 export type Lifted<T> = {
 	[K in keyof T]: ObservableLike<T[K]>

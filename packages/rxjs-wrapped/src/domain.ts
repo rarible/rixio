@@ -20,6 +20,8 @@ export type Rejected = SimpleRejected & {
 	reload: () => void
 }
 
+export type ObservableLike<T> = T | Observable<T> | Observable<Wrapped<T>>
+
 export type WrappedObservable<T> = Observable<T | Wrapped<T>>
 
 export type Wrapped<T> = (Fulfilled<T> | Pending | Rejected) & HasFlag
