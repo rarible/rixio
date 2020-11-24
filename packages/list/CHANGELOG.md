@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.10](https://github.com/roborox/rixio/compare/@rixio/list@0.3.9...@rixio/list@0.3.10) (2020-11-24)
+
+
+### Bug Fixes
+
+* simplify 'list-react' ([5f92e1d](https://github.com/roborox/rixio/commit/5f92e1d04b987c7fd44796d08f8f97355af747b0))
+
+
+
+
+
 ## [0.3.9](https://github.com/roborox/rixio/compare/@rixio/list@0.3.8...@rixio/list@0.3.9) (2020-11-24)
 
 **Note:** Version bump only for package @rixio/list

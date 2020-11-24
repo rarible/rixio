@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/roborox/rixio/compare/@rixio/rxjs-wrapped@0.1.2...@rixio/rxjs-wrapped@0.2.0) (2020-11-24)
+
+
+### Features
+
+* add 'list-react' package ([048249a](https://github.com/roborox/rixio/commit/048249aebddcc5ae6e1f724fda6d40172e146184))
+
+
+
+
+
 ## [0.1.2](https://github.com/roborox/rixio/compare/@rixio/rxjs-wrapped@0.1.1...@rixio/rxjs-wrapped@0.1.2) (2020-11-24)
 
 
