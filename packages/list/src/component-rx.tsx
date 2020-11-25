@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react"
+import React, { memo, useCallback, useEffect } from "react"
 import { useRxOrThrow } from "@rixio/rxjs-react"
 import { loadNext } from "./load-next"
 import type { InfiniteListPropsShared, InfiniteListState } from "./domain"
@@ -11,7 +11,7 @@ export type RxInfiniteListProps<T, C> = InfiniteListPropsShared<T, C> & {
 	children: (renderInfo: RenderInfo<T, C>) => React.ReactNode
 }
 
-export function RxInfiniteList<T, C>({
+function RxInfiniteListRaw<T, C>({
 	state$,
 	loader,
 	pending,
@@ -58,3 +58,5 @@ export function RxInfiniteList<T, C>({
 			}
 	}
 }
+
+export const RxInfiniteList = memo(RxInfiniteListRaw) as <T, C>(props: RxInfiniteListProps<T, C>) => React.ReactElement

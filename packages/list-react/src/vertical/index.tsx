@@ -17,20 +17,26 @@ export type VerticalListProps<T, C> = Omit<InfiniteListProps<T, C>, "children"> 
 	rect: VerticalListRect
 	renderer: ListReactRenderer<T>
 	listProps?: Partial<ListProps>
+	threshold?: number
 }
 
-export function VerticalList<T, C>({ state$, rect, renderer, listProps = {}, ...restProps }: VerticalListProps<T, C>) {
+export function VerticalList<T, C>({
+	threshold,
+	state$,
+	rect,
+	renderer,
+	listProps = {},
+	...restProps
+}: VerticalListProps<T, C>) {
 	const children = useCallback(
 		({ load, items, status, finished }: RenderInfo<T, C>) => {
 			const isRowLoaded = ({ index }: Index) => finished || index < items.length
 			const rowCount = status === "pending" ? items.length + 1 : items.length
-			const renderableRaw = items.map(x => ({ type: "item", data: x }))
-			const renderable = (status === "pending"
-				? [...renderableRaw, { type: "pending" }]
-				: renderableRaw) as ListReactRendererItem<T>[]
+			const raw = items.map(x => ({ type: "item", data: x }))
+			const renderable = (status === "pending" ? [...raw, { type: "pending" }] : raw) as ListReactRendererItem<T>[]
 
 			return (
-				<InfiniteLoader rowCount={Infinity} isRowLoaded={isRowLoaded} loadMoreRows={load}>
+				<InfiniteLoader threshold={threshold} rowCount={Infinity} isRowLoaded={isRowLoaded} loadMoreRows={load}>
 					{({ registerChild, ...rest }) => {
 						return (
 							<List
@@ -58,7 +64,7 @@ export function VerticalList<T, C>({ state$, rect, renderer, listProps = {}, ...
 				</InfiniteLoader>
 			)
 		},
-		[renderer, listProps, rect]
+		[renderer, listProps, rect, threshold]
 	)
 
 	return <RxInfiniteList state$={state$} children={children} {...restProps} />
