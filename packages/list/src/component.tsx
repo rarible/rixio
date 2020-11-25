@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react"
+import React, { useEffect, useCallback, memo } from "react"
 import { useRxOrThrow } from "@rixio/rxjs-react"
 import type { AtomStateStatus } from "@rixio/rxjs-cache"
 import { InfiniteListPropsShared, InfiniteListState, listStateIdle } from "./domain"
@@ -8,7 +8,7 @@ export type InfiniteListProps<T, C> = InfiniteListPropsShared<T, C> & {
 	children: (load: () => Promise<void>) => React.ReactNode
 }
 
-export function InfiniteList<T, C>({ state$, loader, pending, children, rejected }: InfiniteListProps<T, C>) {
+function InfiniteListRaw<T, C>({ state$, loader, pending, children, rejected }: InfiniteListProps<T, C>) {
 	const load = useCallback(() => loadNext(state$, loader), [state$, loader])
 	const state = useRxOrThrow(state$)
 	const initialStatus = getInitalStatus(state)
@@ -51,3 +51,5 @@ function getInitalStatus(state: InfiniteListState<any, any>): AtomStateStatus {
 		return rest
 	}
 }
+
+export const InfiniteList = memo(InfiniteListRaw) as <T, C>(props: InfiniteListProps<T, C>) => React.ReactElement

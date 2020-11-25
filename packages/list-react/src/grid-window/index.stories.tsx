@@ -1,5 +1,5 @@
 import "react-virtualized/styles.css"
-import React from "react"
+import React, { memo } from "react"
 import { storiesOf } from "@storybook/react"
 import { Atom } from "@rixio/rxjs-atom"
 import { listStateIdle } from "@rixio/list"
@@ -9,7 +9,7 @@ import { GridWindowList } from "./index"
 export function delay(timeout: number): Promise<number> {
 	return new Promise(resolve => setTimeout(resolve, timeout))
 }
-const items = new Array(100).fill(1).map((_, i) => i)
+const items = new Array(50).fill(1).map((_, i) => i)
 
 async function load(c: number | null): Promise<[number[], number]> {
 	await delay(1500)
@@ -19,7 +19,10 @@ async function load(c: number | null): Promise<[number[], number]> {
 
 const state$ = Atom.create(listStateIdle)
 
-const renderer = (item: ListReactRendererItem<number>) => {
+type Props = {
+	item: ListReactRendererItem<number>
+}
+const Memoized = memo(({ item }: Props) => {
 	if (!item) {
 		return null
 	}
@@ -31,7 +34,19 @@ const renderer = (item: ListReactRendererItem<number>) => {
 		)
 	}
 	return <div>Loading..</div>
+})
+
+const renderer = (item: ListReactRendererItem<number>) => {
+	return <Memoized item={item} />
 }
+
+const rect = {
+	rowHeight: 300,
+	columnCount: 5,
+	gap: 16,
+}
+
+const pending = <div>First load</div>
 
 storiesOf("grid-window-list", module).add("basic", () => (
 	<React.Fragment>
@@ -40,17 +55,6 @@ storiesOf("grid-window-list", module).add("basic", () => (
 				__html: "<style>* { box-sizing: border-box }</style>",
 			}}
 		/>
-		<GridWindowList<number, number>
-			state$={state$}
-			loader={load}
-			pending={<div>First load</div>}
-			rejected={() => <div>Some error</div>}
-			rect={{
-				rowHeight: 300,
-				columnCount: 5,
-				gap: 16,
-			}}
-			renderer={renderer}
-		/>
+		<GridWindowList<number, number> state$={state$} loader={load} pending={pending} rect={rect} renderer={renderer} />
 	</React.Fragment>
 ))
