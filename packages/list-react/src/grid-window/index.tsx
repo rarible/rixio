@@ -20,6 +20,7 @@ export type GridWindowListProps<T, C> = Omit<InfiniteListProps<T, C>, "children"
 	renderer: ListReactRenderer<T>
 	gridProps?: Partial<GridProps>
 	threshold?: number
+	minimumBatchRequest?: number
 }
 
 const cache = new CellMeasurerCache({
@@ -30,6 +31,7 @@ const cache = new CellMeasurerCache({
 export function GridWindowList<T, C>({
 	state$,
 	rect,
+	minimumBatchRequest,
 	renderer,
 	gridProps = {},
 	threshold,
@@ -63,13 +65,19 @@ export function GridWindowList<T, C>({
 			)
 
 			return (
-				<InfiniteLoader threshold={threshold} isRowLoaded={isRowLoaded} rowCount={Infinity} loadMoreRows={load}>
+				<InfiniteLoader 
+					threshold={threshold} 
+					isRowLoaded={isRowLoaded} 
+					rowCount={Infinity} 
+					loadMoreRows={load}
+					minimumBatchRequest={minimumBatchRequest}
+				>
 					{({ registerChild, onRowsRendered }) => {
 						if (!onRowsRenderedRef.current) {
 							onRowsRenderedRef.current = (r: RenderedSection) => {
 								onRowsRendered({
-									startIndex: r.rowStartIndex * rect.columnCount + r.columnStartIndex,
-									stopIndex: r.rowStopIndex * rect.columnCount + r.columnStopIndex,
+									startIndex: r.rowStartIndex,
+									stopIndex: r.rowStopIndex,
 								})
 							}
 						}
@@ -103,7 +111,7 @@ export function GridWindowList<T, C>({
 				</InfiniteLoader>
 			)
 		},
-		[renderer, gridProps, rect, pending, threshold]
+		[renderer, gridProps, rect, pending, threshold, minimumBatchRequest]
 	)
 
 	return <RxInfiniteList state$={state$} children={children} {...restProps} />

@@ -55,6 +55,13 @@ storiesOf("grid-window-list", module).add("basic", () => (
 				__html: "<style>* { box-sizing: border-box }</style>",
 			}}
 		/>
-		<GridWindowList<number, number> state$={state$} loader={load} pending={pending} rect={rect} renderer={renderer} />
+		<GridWindowList 
+			state$={state$} 
+			loader={load} 
+			pending={pending} 
+			rect={rect} 
+			threshold={1}
+			renderer={renderer} 
+		/>
 	</React.Fragment>
 ))

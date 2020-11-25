@@ -18,12 +18,14 @@ export type VerticalListProps<T, C> = Omit<InfiniteListProps<T, C>, "children"> 
 	renderer: ListReactRenderer<T>
 	listProps?: Partial<ListProps>
 	threshold?: number
+	minimumBatchRequest?: number
 }
 
 export function VerticalList<T, C>({
 	threshold,
 	state$,
 	rect,
+	minimumBatchRequest,
 	renderer,
 	listProps = {},
 	...restProps
@@ -36,7 +38,13 @@ export function VerticalList<T, C>({
 			const renderable = (status === "pending" ? [...raw, { type: "pending" }] : raw) as ListReactRendererItem<T>[]
 
 			return (
-				<InfiniteLoader threshold={threshold} rowCount={Infinity} isRowLoaded={isRowLoaded} loadMoreRows={load}>
+				<InfiniteLoader 
+					threshold={threshold} 
+					rowCount={Infinity} 
+					isRowLoaded={isRowLoaded} 
+					loadMoreRows={load}
+					minimumBatchRequest={minimumBatchRequest}
+				>
 					{({ registerChild, ...rest }) => {
 						return (
 							<List
@@ -64,7 +72,7 @@ export function VerticalList<T, C>({
 				</InfiniteLoader>
 			)
 		},
-		[renderer, listProps, rect, threshold]
+		[renderer, listProps, rect, threshold, minimumBatchRequest]
 	)
 
 	return <RxInfiniteList state$={state$} children={children} {...restProps} />
