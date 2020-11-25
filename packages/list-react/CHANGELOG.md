@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4](https://github.com/roborox/rixio/compare/@rixio/list-react@0.1.3...@rixio/list-react@0.1.4) (2020-11-25)
+
+
+### Bug Fixes
+
+* fix row counting in list-react ([395fc61](https://github.com/roborox/rixio/commit/395fc613304b72d278f81b70817afcf7bb9e3eff))
+
+
+
+
+
 ## [0.1.3](https://github.com/roborox/rixio/compare/@rixio/list-react@0.1.2...@rixio/list-react@0.1.3) (2020-11-25)
 
 
