@@ -8,6 +8,7 @@
 import { structEq, setKey, conservatively, findIndex, Option } from "./utils"
 
 import { Lens, Prism } from "./base"
+import { SimpleCache } from "./simple-cache"
 
 // @NOTE only need this interface to add JSDocs for this call.
 export interface KeyImplFor<TObject> {
@@ -27,8 +28,7 @@ export interface KeyImplFor<TObject> {
 	 * }
 	 *
 	 * const lens = Lens.key<SomeObject>()('someProp')
-	 */
-	<K extends keyof TObject>(k: K): Lens<TObject, TObject[K]>
+	 */ <K extends keyof TObject>(k: K): Lens<TObject, TObject[K]>
 }
 
 /**
@@ -78,32 +78,14 @@ export function keyImpl<TObject>(k?: string) {
 	return k === undefined
 		? // type-safe key
 		  <K extends keyof TObject>(k: K): Lens<TObject, TObject[K]> =>
-				Lens.create<TObject, TObject[K]>(
-					(s: TObject) => s[k],
-					(v: TObject[K], s: TObject) => setKey(k, v, s)
-				)
+				keyCache.getOrCreate(k as string) as Lens<TObject, TObject[K]>
 		: // untyped key
-		  Lens.create(
-				(s: { [k: string]: any }) => s[k] as Option<any>,
-				(v: any, s: { [k: string]: any }) => setKey(k, v, s)
-		  )
+		  keyCache.getOrCreate(k)
 }
 
 export function indexImpl<TItem>(i: number): Prism<TItem[], TItem> {
 	if (i < 0) throw new TypeError(`${i} is not a valid array index, expected >= 0`)
-
-	return Prism.create(
-		(xs: TItem[]) => xs[i] as Option<TItem>,
-		(v: TItem, xs: TItem[]) => {
-			if (xs.length <= i) {
-				return xs.concat(Array(i - xs.length), [v])
-			} else if (structEq(v, xs[i])) {
-				return xs
-			} else {
-				return xs.slice(0, i).concat([v], xs.slice(i + 1))
-			}
-		}
-	)
+	return indexCache.getOrCreate(i)
 }
 
 export function withDefaultImpl<T>(defaultValue: T): Lens<Option<T>, T> {
@@ -177,3 +159,24 @@ Lens.index = indexImpl
 Lens.withDefault = withDefaultImpl
 Lens.replace = replaceImpl
 Lens.find = findImpl
+
+const keyCache = new SimpleCache<string, Lens<any, any>>(key =>
+	Lens.create<any, any>(
+		s => s[key],
+		(v, s) => setKey(key, v, s)
+	)
+)
+const indexCache = new SimpleCache<number, Prism<any[], any>>(
+	i => Prism.create(
+		(xs) => xs[i],
+		(v, xs) => {
+			if (xs.length <= i) {
+				return xs.concat(Array(i - xs.length), [v])
+			} else if (structEq(v, xs[i])) {
+				return xs
+			} else {
+				return xs.slice(0, i).concat([v], xs.slice(i + 1))
+			}
+		}
+	)
+)

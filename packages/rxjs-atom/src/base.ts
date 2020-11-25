@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary,no-plusplus */
-import { Lens, Prism, structEq, Option } from "@rixio/lens"
+import { Lens, Prism, structEq, Option, SimpleCache } from "@rixio/lens";
 
 import { Observable, Subscriber, Subscription, BehaviorSubject, combineLatest } from "rxjs"
 
@@ -220,6 +220,10 @@ export interface Atom<T> extends ReadOnlyAtom<T> {
 }
 
 export abstract class AbstractReadOnlyAtom<T> extends BehaviorSubject<T> implements ReadOnlyAtom<T> {
+	private readonly viewedAtomsCache = new SimpleCache<Lens<T, any>, ReadOnlyAtom<any>>(
+		lens => new AtomViewImpl(this, lens.get)
+	)
+
 	abstract get(): T
 
 	view(): ReadOnlyAtom<T>
@@ -229,24 +233,25 @@ export abstract class AbstractReadOnlyAtom<T> extends BehaviorSubject<T> impleme
 	view<K extends keyof T>(k: K): ReadOnlyAtom<T[K]>
 
 	view<U>(...args: any[]): ReadOnlyAtom<any> {
-		// tslint:disable no-use-before-declare
-		return args[0] !== undefined
-			? // view(getter) case
-			  typeof args[0] === "function"
-				? new AtomViewImpl<T, U>(this, args[0] as (x: T) => U)
-				: // view('key') case
-				typeof args[0] === "string"
-				? new AtomViewImpl<T, U>(this, Lens.compose<T, U>(...args.map(Lens.key())).get)
-				: // view(lens) and view(prism) cases
-				  // @NOTE single case handles both lens and prism arg
-				  new AtomViewImpl<T, U>(this, x => (args[0] as Lens<T, U>).get(x))
-			: // view() case
-			  (this as ReadOnlyAtom<T>)
-		// tslint:enable no-use-before-declare
+		if (args[0] === undefined) {
+			return this
+		} else if (typeof args[0] === "function") {
+			return new AtomViewImpl<T, U>(this, args[0] as (x: T) => U)
+		} else if (typeof args[0] === "string") {
+			const lens = Lens.compose<T, U>(...args.map(Lens.key()))
+			return this.viewedAtomsCache.getOrCreate(lens)
+		} else {
+			return new AtomViewImpl<T, U>(this, x => (args[0] as Lens<T, U>).get(x))
+		}
 	}
 }
 
 export abstract class AbstractAtom<T> extends AbstractReadOnlyAtom<T> implements Atom<T> {
+	private readonly lensedAtomsCache: SimpleCache<Lens<any, any>, LensedAtom<any, any>> = new SimpleCache<
+		Lens<any, any>,
+		LensedAtom<any, any>
+	>(lens => new LensedAtom(this, lens, structEq))
+
 	abstract modify(updateFn: (x: T) => T): void
 
 	set(x: T) {
@@ -257,14 +262,10 @@ export abstract class AbstractAtom<T> extends AbstractReadOnlyAtom<T> implements
 	lens<K extends keyof T>(k: K): Atom<T[K]>
 
 	lens<U>(arg1: Lens<T, U> | string, ...args: string[]): Atom<any> {
-		// tslint:disable no-use-before-declare
+		const lens =
+			typeof arg1 === "string" ? Lens.compose(Lens.key(arg1), ...args.map(k => Lens.key(k))) : (arg1 as Lens<T, U>)
 
-		// lens(prop expr) case
-		return typeof arg1 === "string"
-			? new LensedAtom(this, Lens.compose(Lens.key(arg1), ...args.map(k => Lens.key(k))), structEq)
-			: // lens(lens) case
-			  new LensedAtom<T, U>(this, arg1 as Lens<T, U>, structEq)
-		// tslint:enable no-use-before-declare
+		return this.lensedAtomsCache.getOrCreate(lens)
 	}
 }
 

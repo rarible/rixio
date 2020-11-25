@@ -1,4 +1,5 @@
 import { Option } from "./utils"
+import { SimpleCache } from "./simple-cache";
 
 export interface Optic<TSource, T, U> {
 	get(s: TSource): T
@@ -93,16 +94,20 @@ export namespace Lens {
 		getter: (s: TSource) => T,
 		setter: (v: T, s: TSource) => TSource
 	): Lens<TSource, T> {
+		const cache = new SimpleCache<any, Lens<TSource, any>>(
+			next => create(
+				(s: TSource) => next.get(getter(s)),
+				(v: any, s: TSource) => setter(next.set(v, getter(s)), s)
+			)
+		)
+
 		return {
 			get: getter,
 			set: setter,
 			modify: createModify(getter, setter),
 
 			compose<U>(next: Lens<T, U>): Lens<TSource, U> {
-				return create(
-					(s: TSource) => next.get(getter(s)),
-					(v: U, s: TSource) => setter(next.set(v, getter(s)), s)
-				)
+				return cache.getOrCreate(next)
 			},
 		}
 	}
@@ -147,11 +152,8 @@ export namespace Lens {
 		} else if (lenses.length === 1) {
 			return lenses[0]
 		} else {
-			let r = lenses[0]
-			lenses.slice(1).forEach(l => {
-				r = r.compose(l)
-			})
-			return r as Lens<T, U>
+			return lenses.slice(1)
+				.reduce((c, l) => c.compose(l), lenses[0]) as Lens<T, U>
 		}
 	}
 

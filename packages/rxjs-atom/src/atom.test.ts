@@ -224,6 +224,16 @@ describe("atom", () => {
 	})
 
 	describe("lens", () => {
+		describe("lensed atoms cached", () => {
+			const atom = Atom.create({ a: { b: { c: 1 } } })
+			const la1 = atom.lens("a")
+			const la2 = atom.lens("a")
+			expect(la1).toStrictEqual(la2)
+			const lab1 = atom.lens("a", "b")
+			const lab2 = atom.lens("a", "b")
+			expect(lab1).toStrictEqual(lab2)
+		})
+
 		describe("lensed, nested safe key", () => {
 			testAtom(x => {
 				const source = Atom.create({ a: { b: { c: x } } })
@@ -386,6 +396,16 @@ describe("atom", () => {
 
 			expect(source.get()).toEqual(6)
 			expect(view.get()).toEqual(7)
+		})
+
+		describe("viewed atoms are cached", () => {
+			const atom = Atom.create({ a: { b: { c: 1 } } })
+			const la1 = atom.view("a")
+			const la2 = atom.view("a")
+			expect(la1).toStrictEqual(la2)
+			const lab1 = atom.view("a", "b")
+			const lab2 = atom.view("a", "b")
+			expect(lab1).toStrictEqual(lab2)
 		})
 
 		describe("readonly, safe key, simple", () => {

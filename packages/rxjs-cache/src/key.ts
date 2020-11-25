@@ -1,6 +1,6 @@
 import { Map as IM } from "immutable"
 import { Atom } from "@rixio/rxjs-atom"
-import { Lens, Prism } from "@rixio/lens"
+import { Lens, Prism, SimpleCache } from "@rixio/lens"
 import { Subject, ReplaySubject } from "rxjs"
 import { filter, first } from "rxjs/operators"
 import { CacheImpl } from "./impl"
@@ -29,9 +29,12 @@ export interface KeyCache<K, V> {
 
 //todo we can schedule all requests to individual items and load them in batch (if supported)
 export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
-	private readonly singles: Map<K, Cache<V>> = new Map()
 	private readonly batchHelper: BatchHelper<K>
 	private readonly results: Subject<[K, V | undefined]> = new ReplaySubject(0)
+	private readonly lensFactory = byKeyWithDefaultFactory<K, CacheState<V>>(idleCache)
+	private readonly singles = new SimpleCache<K, Cache<V>>(
+		key => new CacheImpl(this.getAtom(key), () => this.load(key))
+	)
 
 	constructor(
 		private readonly map: Atom<IM<K, CacheState<V>>>,
@@ -52,13 +55,7 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	}
 
 	single(key: K): Cache<V> {
-		const existing = this.singles.get(key)
-		if (existing) {
-			return existing
-		}
-		const created = new CacheImpl(this.getAtom(key), () => this.load(key))
-		this.singles.set(key, created)
-		return created
+		return this.singles.getOrCreate(key)
 	}
 
 	get(key: K, force?: boolean): Promise<V> {
@@ -70,7 +67,7 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	}
 
 	getAtom(key: K): Atom<CacheState<V>> {
-		return this.map.lens(byKeyWithDefault(key, idleCache))
+		return this.map.lens(this.lensFactory(key))
 	}
 
 	async getMap(ids: K[]) {
@@ -103,15 +100,23 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 }
 
 export function byKey<K, V>(key: K): Prism<IM<K, V>, V> {
-	return Prism.create(
-		map => map.get(key),
-		(v, map) => map.set(key, v),
-	)
+	return byKeyCache.getOrCreate(key)
 }
 
-export function byKeyWithDefault<K, V>(key: K, defaultValue: V): Lens<IM<K, V>, V> {
-	return Lens.create(
-		map => map.get(key) || defaultValue,
+export function byKeyWithDefaultFactory<K, V>(defaultValue: V): (key: K) => Lens<IM<K, V>, V> {
+	const cache = new SimpleCache<K, Lens<IM<K, V>, V>>(
+		(key: K) =>
+			Lens.create(
+				(map: IM<K, V>) => map.get(key) || defaultValue,
+				(v, map) => map.set(key, v),
+			)
+	)
+	return key => cache.getOrCreate(key)
+}
+
+export const byKeyCache = new SimpleCache<any, Prism<IM<any, any>, any>>(
+	(key: any) => Prism.create(
+		(map: IM<any, any>) => map.get(key),
 		(v, map) => map.set(key, v),
 	)
-}
+)

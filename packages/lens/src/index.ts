@@ -27,3 +27,4 @@ import "./json"
 import { structEq, Option } from "./utils"
 
 export { Lens, Prism, Optic, structEq, Option }
+export { SimpleCache } from "./simple-cache"

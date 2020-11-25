@@ -30,6 +30,24 @@ describe("identity", () => {
 })
 
 describe("json", () => {
+	describe("key lenses are cached", () => {
+		const a1 = Lens.key("a")
+		const a2 = Lens.key("a")
+		const a3 = Lens.key()("a")
+		const b = Lens.key("b")
+		expect(a1).toStrictEqual(a2)
+		expect(a2).toStrictEqual(a3)
+		expect(a1).not.toStrictEqual(b)
+	})
+
+	describe("index lenses are cached", () => {
+		const a1 = Lens.index(0)
+		const a2 = Lens.index(0)
+		const a3 = Lens.index(1)
+		expect(a1).toStrictEqual(a2)
+		expect(a2).not.toStrictEqual(a3)
+	})
+
 	describe("simple", () => {
 		const a = Lens.key("a")
 		const b = Lens.key("b")
