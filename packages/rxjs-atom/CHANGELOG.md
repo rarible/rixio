@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6](https://github.com/roborox/rixio/compare/@rixio/rxjs-atom@0.3.5...@rixio/rxjs-atom@0.3.6) (2020-11-25)
+
+
+### Bug Fixes
+
+* Atom.lens, Atom.view, Lenses are cached and not recreated ([f9ec1cc](https://github.com/roborox/rixio/commit/f9ec1cc0a9ada4cf237aa2748aa9d87ad13b0ec4))
+
+
+
+
+
 ## [0.3.5](https://github.com/roborox/rixio/compare/@rixio/rxjs-atom@0.3.4...@rixio/rxjs-atom@0.3.5) (2020-11-23)
 
 **Note:** Version bump only for package @rixio/rxjs-atom

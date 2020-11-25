@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/roborox/rixio/compare/@rixio/list-react@0.1.2...@rixio/list-react@0.1.3) (2020-11-25)
+
+
+### Bug Fixes
+
+* improve perfomance for GridWindowList ([4a85a42](https://github.com/roborox/rixio/commit/4a85a428d09d37a18485c8b44d47d6e441b5ea52))
+
+
+
+
+
 ## [0.1.2](https://github.com/roborox/rixio/compare/@rixio/list-react@0.1.1...@rixio/list-react@0.1.2) (2020-11-24)
 
 **Note:** Version bump only for package @rixio/list-react

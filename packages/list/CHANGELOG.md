@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.13](https://github.com/roborox/rixio/compare/@rixio/list@0.3.12...@rixio/list@0.3.13) (2020-11-25)
+
+
+### Bug Fixes
+
+* improve perfomance for GridWindowList ([4a85a42](https://github.com/roborox/rixio/commit/4a85a428d09d37a18485c8b44d47d6e441b5ea52))
+
+
+
+
+
 ## [0.3.12](https://github.com/roborox/rixio/compare/@rixio/list@0.3.11...@rixio/list@0.3.12) (2020-11-24)
 
 **Note:** Version bump only for package @rixio/list
