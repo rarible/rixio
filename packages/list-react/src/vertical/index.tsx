@@ -33,7 +33,7 @@ export function VerticalList<T, C>({
 	const children = useCallback(
 		({ load, items, status, finished }: RenderInfo<T, C>) => {
 			const isRowLoaded = ({ index }: Index) => finished || index < items.length
-			const rowCount = status === "pending" ? items.length + 1 : items.length
+			const rowCount = finished ? items.length : items.length + 1
 			const raw = items.map(x => ({ type: "item", data: x }))
 			const renderable = (status === "pending" ? [...raw, { type: "pending" }] : raw) as ListReactRendererItem<T>[]
 

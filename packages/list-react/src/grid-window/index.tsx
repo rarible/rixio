@@ -5,7 +5,6 @@ import { InfiniteLoader } from "react-virtualized/dist/es/InfiniteLoader"
 import { Grid, GridCellRenderer, GridProps, RenderedSection } from "react-virtualized/dist/es/Grid"
 import { WindowScroller } from "react-virtualized/dist/es/WindowScroller"
 import { AutoSizer } from "react-virtualized/dist/es/AutoSizer"
-import { CellMeasurer, CellMeasurerCache, MeasuredCellParent } from "react-virtualized/dist/es/CellMeasurer"
 import type { Index } from "react-virtualized"
 import { ListReactRenderer, ListReactRendererItem } from "../domain"
 
@@ -23,11 +22,6 @@ export type GridWindowListProps<T, C> = Omit<InfiniteListProps<T, C>, "children"
 	minimumBatchRequest?: number
 }
 
-const cache = new CellMeasurerCache({
-	fixedHeight: true,
-	fixedWidth: true,
-})
-
 export function GridWindowList<T, C>({
 	state$,
 	rect,
@@ -43,16 +37,15 @@ export function GridWindowList<T, C>({
 	const children = useCallback(
 		({ load, items, status, finished }: RenderInfo<T, C>) => {
 			const itemRowCount = Math.ceil(items.length / rect.columnCount)
-			const rowCount = status === "pending" ? itemRowCount + 1 : itemRowCount
+			const rowCount = finished ? itemRowCount : itemRowCount + 1
 			const raw = items.map(x => ({ type: "item", data: x }))
 			const renderableItems = (status === "pending" ? [...raw, ...pending] : raw) as ListReactRendererItem<T>[]
 			const isRowLoaded = ({ index }: Index) => finished || index < rowCount - 1
 
-			const cellRenderer: GridCellRenderer = ({ key, style, parent, columnIndex, rowIndex }) => (
+			const cellRenderer: GridCellRenderer = ({ key, style, columnIndex, rowIndex }) => (
 				<GridWindowListCell
 					gap={rect.gap}
 					style={style}
-					parent={parent}
 					rowIndex={rowIndex}
 					columnIndex={columnIndex}
 					key={key}
@@ -60,7 +53,6 @@ export function GridWindowList<T, C>({
 					rowCount={rowCount}
 					renderer={renderer}
 					items={renderableItems}
-					cache={cache}
 				/>
 			)
 
@@ -84,14 +76,15 @@ export function GridWindowList<T, C>({
 
 						return (
 							<WindowScroller>
-								{({ height, isScrolling, scrollTop }) => (
-									<AutoSizer disableHeight>
+								{({ height, isScrolling, scrollTop, scrollLeft }) => (
+									<AutoSizer>
 										{({ width }) => (
 											<Grid
 												columnCount={rect.columnCount}
+												scrollTop={scrollTop}
+												scrollLeft={scrollLeft}
 												columnWidth={width / rect.columnCount}
 												rowCount={rowCount}
-												scrollTop={scrollTop}
 												rowHeight={rect.rowHeight}
 												isScrolling={isScrolling}
 												cellRenderer={cellRenderer}
@@ -125,21 +118,17 @@ type GridWindowListCellProps = {
 	renderer: ListReactRenderer<any>
 	gap: number
 	rowCount: number
-	cache: CellMeasurerCache
-	parent: MeasuredCellParent
 	items: ListReactRendererItem<any>[]
 }
 
 const getStylesWithGap = (gap: number, row: number, col: number, rowCount: number, columnCount: number) => ({
 	paddingLeft: col !== 0 ? gap / 2 : 0,
 	paddingRight: col !== columnCount - 1 ? gap / 2 : 0,
-	paddingTop: row !== 0 ? gap / 2 : 0,
+	paddingTop: row !== 0 ? gap : 0,
 	paddingBottom: row !== rowCount - 1 ? gap / 2 : 0,
 })
 
 const GridWindowListCell = memo(function GridWindowListCell({
-	parent,
-	cache,
 	renderer,
 	rowIndex,
 	columnCount,
@@ -154,8 +143,8 @@ const GridWindowListCell = memo(function GridWindowListCell({
 		return getStylesWithGap(gap, rowIndex, columnIndex, rowCount, columnCount)
 	}, [gap, rowIndex, columnIndex, rowCount, columnCount])
 	return (
-		<CellMeasurer cache={cache} columnIndex={columnIndex} parent={parent} rowIndex={rowIndex}>
-			<div style={{ ...style, ...styles }}>{renderer(items[index])}</div>
-		</CellMeasurer>
+		<div style={{ ...style, ...styles }}>
+			{renderer(items[index])}
+		</div>
 	)
 })

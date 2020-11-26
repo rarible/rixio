@@ -17,17 +17,13 @@ export function toListDataLoader<K, V>(loader: DataLoader<K, V>): ListDataLoader
 
 export interface KeyCache<K, V> {
 	get(key: K, force?: boolean): Promise<V>
-
 	set(key: K, value: V): void
-
 	getMap(ids: K[]): Promise<IM<K, V>>
-
 	getAtom(key: K): Atom<CacheState<V>>
-
 	single(key: K): Cache<V>
 }
 
-//todo we can schedule all requests to individual items and load them in batch (if supported)
+// @todo we can schedule all requests to individual items and load them in batch (if supported)
 export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	private readonly batchHelper: BatchHelper<K>
 	private readonly results: Subject<[K, V | undefined]> = new ReplaySubject(0)
@@ -63,6 +59,7 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	}
 
 	set(key: K, value: V): void {
+
 		this.map.modify(map => map.set(key, createFulfilledCache(value)))
 	}
 
@@ -77,8 +74,8 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 			const state = current.get(x)
 			return !state || state.status === "idle"
 		})
-		//todo do not use reduce. change Map at once
-		//todo error handling. should we mark items as errors?
+		// @todo do not use reduce. change Map at once
+		// @todo error handling. should we mark items as errors?
 		this.map.modify(map => notLoaded.reduce((map, id) => map.set(id, pendingCache), map))
 		const values = await this.loader(notLoaded)
 		this.map.modify(map => values.reduce((map, [id, v]) => map.set(id, createFulfilledCache(v)), map))
