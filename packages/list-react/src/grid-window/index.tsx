@@ -77,7 +77,7 @@ export function GridWindowList<T, C>({
 						return (
 							<WindowScroller>
 								{({ height, isScrolling, scrollTop, scrollLeft }) => (
-									<AutoSizer>
+									<AutoSizer disableHeight>
 										{({ width }) => (
 											<Grid
 												columnCount={rect.columnCount}

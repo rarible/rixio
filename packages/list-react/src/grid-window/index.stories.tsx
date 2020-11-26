@@ -73,5 +73,8 @@ storiesOf("grid-window-list", module).add("basic", () => (
 			threshold={1}
 			renderer={renderer} 
 		/>
+		<div>
+			Content from bottom
+		</div>
 	</React.Fragment>
 ))
