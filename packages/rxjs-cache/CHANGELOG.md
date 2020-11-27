@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.12](https://github.com/roborox/rixio/compare/@rixio/rxjs-cache@0.0.11...@rixio/rxjs-cache@0.0.12) (2020-11-27)
+
+
+### Bug Fixes
+
+* fix jumping in 'list-react' ([07517ad](https://github.com/roborox/rixio/commit/07517ad283045d6249ab94dbda05a73a789de645))
+
+
+
+
+
 ## [0.0.11](https://github.com/roborox/rixio/compare/@rixio/rxjs-cache@0.0.10...@rixio/rxjs-cache@0.0.11) (2020-11-25)
 
 

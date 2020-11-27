@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/roborox/rixio/compare/@rixio/list-react@0.1.4...@rixio/list-react@0.1.5) (2020-11-27)
+
+
+### Bug Fixes
+
+* fix autoheight for grid-window component ([84e60de](https://github.com/roborox/rixio/commit/84e60de02b73de66be734f79e15792ab09ecb754))
+* fix jumping in 'list-react' ([07517ad](https://github.com/roborox/rixio/commit/07517ad283045d6249ab94dbda05a73a789de645))
+* improve grid performance ([006209d](https://github.com/roborox/rixio/commit/006209d430fcbfdad87b46b5fb9dc87e5bce5e71))
+* rxjs version ([0eceeb9](https://github.com/roborox/rixio/commit/0eceeb975d2667a60d1d39d7eb75f46e0efe15a5))
+
+
+
+
+
 ## [0.1.4](https://github.com/roborox/rixio/compare/@rixio/list-react@0.1.3...@rixio/list-react@0.1.4) (2020-11-25)
 
 
