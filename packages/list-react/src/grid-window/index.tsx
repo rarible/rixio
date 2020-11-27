@@ -57,10 +57,10 @@ export function GridWindowList<T, C>({
 			)
 
 			return (
-				<InfiniteLoader 
-					threshold={threshold} 
-					isRowLoaded={isRowLoaded} 
-					rowCount={Infinity} 
+				<InfiniteLoader
+					threshold={threshold}
+					isRowLoaded={isRowLoaded}
+					rowCount={Infinity}
 					loadMoreRows={load}
 					minimumBatchRequest={minimumBatchRequest}
 				>
@@ -104,7 +104,7 @@ export function GridWindowList<T, C>({
 				</InfiniteLoader>
 			)
 		},
-		[renderer, gridProps, rect, pending, threshold, minimumBatchRequest]
+		[rect.columnCount, rect.gap, rect.rowHeight, pending, threshold, minimumBatchRequest, renderer, gridProps]
 	)
 
 	return <RxInfiniteList state$={state$} children={children} {...restProps} />
@@ -139,12 +139,13 @@ const GridWindowListCell = memo(function GridWindowListCell({
 	rowCount,
 }: GridWindowListCellProps) {
 	const index = rowIndex * columnCount + columnIndex
-	const styles = useMemo(() => {
-		return getStylesWithGap(gap, rowIndex, columnIndex, rowCount, columnCount)
-	}, [gap, rowIndex, columnIndex, rowCount, columnCount])
+	const finalStyle = useMemo(
+		() => ({ ...style, ...(getStylesWithGap(gap, rowIndex, columnIndex, rowCount, columnCount)) }),
+		[columnCount, columnIndex, gap, rowCount, rowIndex, style],
+	)
+	const item = items[index]
+	const children = useMemo(() => renderer(item), [item, renderer])
 	return (
-		<div style={{ ...style, ...styles }}>
-			{renderer(items[index])}
-		</div>
+		<div style={finalStyle} children={children}/>
 	)
 })
