@@ -30,7 +30,6 @@
 	},
 	"devDependencies": {
 		"@types/jest": "26.0.14",
-		"immutable": "4.0.0-rc.12",
 		"jest": "26.4.2",
 		"rxjs": "6.6.3",
 		"ts-jest": "26.4.1",
@@ -38,7 +37,6 @@
 		"wait-for-expect": "3.0.2"
 	},
 	"peerDependencies": {
-		"immutable": ">= 4.0.0-rc.12",
 		"rxjs": ">= 6.5.0 < 7.0.0-0"
 	}
 }
