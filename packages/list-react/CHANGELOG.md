@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6](https://github.com/roborox/rixio/compare/@rixio/list-react@0.1.5...@rixio/list-react@0.1.6) (2020-11-30)
+
+
+### Bug Fixes
+
+* add 'absolute' prop for grid-window ([86c892f](https://github.com/roborox/rixio/commit/86c892f10de4e6334999d396188d72309cf27508))
+
+
+
+
+
 ## [0.1.5](https://github.com/roborox/rixio/compare/@rixio/list-react@0.1.4...@rixio/list-react@0.1.5) (2020-11-27)
 
 

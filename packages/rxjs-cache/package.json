@@ -1,6 +1,6 @@
 {
 	"name": "@rixio/rxjs-cache",
-	"version": "0.0.12",
+	"version": "0.0.13",
 	"main": "build/index.js",
 	"types": "build/index.d.ts",
 	"files": [
@@ -31,7 +31,7 @@
 	},
 	"dependencies": {
 		"@rixio/rxjs-atom": "^0.3.6",
-		"@rixio/rxjs-wrapped": "^0.2.1"
+		"@rixio/rxjs-wrapped": "^0.2.2"
 	},
 	"devDependencies": {
 		"@types/jest": "26.0.14",

@@ -1,6 +1,6 @@
 {
   "name": "@rixio/rxjs-react",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@rixio/lens": "^0.4.3",
-    "@rixio/rxjs-wrapped": "^0.2.1"
+    "@rixio/rxjs-wrapped": "^0.2.2"
   },
   "devDependencies": {
     "@rixio/rxjs-atom": "^0.3.6",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/roborox/rixio/compare/@rixio/rxjs-wrapped@0.2.1...@rixio/rxjs-wrapped@0.2.2) (2020-11-30)
+
+
+### Bug Fixes
+
+* remove unneeded peer dep ([a850cce](https://github.com/roborox/rixio/commit/a850cced0196907708ee624fbccbe85b4169f1a9))
+
+
+
+
+
 ## [0.2.1](https://github.com/roborox/rixio/compare/@rixio/rxjs-wrapped@0.2.0...@rixio/rxjs-wrapped@0.2.1) (2020-11-24)
 
 
