@@ -20,6 +20,7 @@ export type GridWindowListProps<T, C> = Omit<InfiniteListProps<T, C>, "children"
 	gridProps?: Partial<GridProps>
 	threshold?: number
 	minimumBatchRequest?: number
+	absolute?: boolean
 }
 
 export function GridWindowList<T, C>({
@@ -29,6 +30,7 @@ export function GridWindowList<T, C>({
 	renderer,
 	gridProps = {},
 	threshold,
+	absolute,
 	...restProps
 }: GridWindowListProps<T, C>) {
 	const pending = useMemo(() => new Array(rect.columnCount).fill({ type: "pending" }), [rect.columnCount])
@@ -77,7 +79,7 @@ export function GridWindowList<T, C>({
 						return (
 							<WindowScroller>
 								{({ height, isScrolling, scrollTop, scrollLeft }) => (
-									<AutoSizer disableHeight>
+									<AutoSizer disableHeight={!absolute}>
 										{({ width }) => (
 											<Grid
 												columnCount={rect.columnCount}
@@ -104,7 +106,7 @@ export function GridWindowList<T, C>({
 				</InfiniteLoader>
 			)
 		},
-		[rect.columnCount, rect.gap, rect.rowHeight, pending, threshold, minimumBatchRequest, renderer, gridProps]
+		[rect, absolute, pending, threshold, minimumBatchRequest, renderer, gridProps]
 	)
 
 	return <RxInfiniteList state$={state$} children={children} {...restProps} />
