@@ -54,16 +54,22 @@ export class CacheImpl<T> extends BehaviorSubject<Wrapped<T>> implements Cache<T
 		switch (x.status) {
 			case "idle":
 				save(this._loader(), this._atom).then()
-				this.next(pendingWrapped)
+				this.checkAndNext(pendingWrapped)
 				break
 			case "pending":
-				this.next(pendingWrapped)
+				this.checkAndNext(pendingWrapped)
 				break
 			case "rejected":
-				this.next(createRejectedWrapped(x.error, this.clear))
+				this.checkAndNext(createRejectedWrapped(x.error, this.clear))
 				break
 			case "fulfilled":
-				this.next(createFulfilledWrapped(x.value))
+				this.checkAndNext(createFulfilledWrapped(x.value))
+		}
+	}
+
+	private checkAndNext(value: Wrapped<T>) {
+		if (value !== this.getValue()) {
+			this.next(value)
 		}
 	}
 

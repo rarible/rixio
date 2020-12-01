@@ -1,7 +1,7 @@
 import { Map as IM } from "immutable"
 import { Atom } from "@rixio/rxjs-atom"
 import { Lens, Prism, SimpleCache } from "@rixio/lens"
-import { Subject, ReplaySubject } from "rxjs"
+import { Subject } from "rxjs"
 import { filter, first } from "rxjs/operators"
 import { CacheImpl } from "./impl"
 import { BatchHelper } from "./key-batch"
@@ -26,7 +26,7 @@ export interface KeyCache<K, V> {
 // @todo we can schedule all requests to individual items and load them in batch (if supported)
 export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	private readonly batchHelper: BatchHelper<K>
-	private readonly results: Subject<[K, V | undefined]> = new ReplaySubject(0)
+	private readonly results: Subject<[K, V | undefined]> = new Subject()
 	private readonly lensFactory = byKeyWithDefaultFactory<K, CacheState<V>>(idleCache)
 	private readonly singles = new SimpleCache<K, Cache<V>>(
 		key => new CacheImpl(this.getAtom(key), () => this.load(key))
@@ -59,7 +59,6 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	}
 
 	set(key: K, value: V): void {
-
 		this.map.modify(map => map.set(key, createFulfilledCache(value)))
 	}
 

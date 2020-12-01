@@ -1,7 +1,9 @@
 import { Atom } from "@rixio/rxjs-atom"
 import { Map as IM } from "immutable"
 import waitForExpect from "wait-for-expect"
-import { KeyCacheImpl } from "./key"
+import { createFulfilledWrapped, pendingWrapped, Wrapped } from "@rixio/rxjs-wrapped";
+import { waitFor } from "@testing-library/react"
+import { KeyCacheImpl, toListDataLoader } from "./key"
 import { CacheState, createFulfilledCache } from "./index"
 
 describe("KeyCacheImpl", () => {
@@ -31,5 +33,28 @@ describe("KeyCacheImpl", () => {
 		expect(requests.length).toBe(2)
 		expect(requests[1]).toStrictEqual(["other2"])
 		expect(state$.get().size).toBe(3)
+	})
+
+	test("should be reloaded if cleared", async () => {
+		let value: number = 10
+		const cache = new KeyCacheImpl<string, number>(
+			Atom.create(IM()),
+			toListDataLoader(() => Promise.resolve(value))
+		)
+
+		const emitted: Wrapped<number>[] = []
+		cache.single("key1").subscribe(value => emitted.push(value))
+		await waitFor(() => {
+			expect(emitted.length).toBe(2)
+			expect(emitted[0]).toStrictEqual(pendingWrapped)
+			expect((emitted[1])).toStrictEqual(createFulfilledWrapped(10))
+		})
+		value = 20
+		cache.single("key1").clear()
+		await waitFor(() => {
+			expect(emitted.length).toBe(4)
+			expect(emitted[2]).toStrictEqual(pendingWrapped)
+			expect((emitted[3])).toStrictEqual(createFulfilledWrapped(20))
+		})
 	})
 })
