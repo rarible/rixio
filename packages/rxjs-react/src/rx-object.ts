@@ -1,13 +1,13 @@
-import { combineLatest, Observable, of } from "rxjs"
+import { Observable, of } from "rxjs"
 import { Lens } from "@rixio/lens"
-import { map } from "rxjs/operators"
+import { map, combineLatest, Wrapped, wrap } from "@rixio/rxjs-wrapped"
 import { Lifted } from "./base"
 
 type InferObservableInTuple<T extends any[]> = {
 	[I in keyof T]: T[I] extends Observable<infer T> ? T : T[I]
 }
-export function rxObject<T extends any[]>(lifted: [...T]): Observable<InferObservableInTuple<T>>
-export function rxObject<T>(lifted: Lifted<T>): Observable<T>
+export function rxObject<T extends any[]>(lifted: [...T]): Observable<Wrapped<InferObservableInTuple<T>>>
+export function rxObject<T>(lifted: Lifted<T>): Observable<Wrapped<T>>
 export function rxObject(lifted: any): Observable<any> {
 	const observables: Observable<any>[] = []
 	const lenses: Lens<Lifted<any>, any>[] = []
@@ -18,7 +18,7 @@ export function rxObject(lifted: any): Observable<any> {
 		}
 	})
 	if (observables.length === 0) {
-		return of(lifted)
+		return wrap(of(lifted))
 	}
 	return combineLatest(observables).pipe(map(values => lenses.reduce((acc, l, idx) => l.set(values[idx], acc), lifted)))
 }
