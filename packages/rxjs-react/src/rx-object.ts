@@ -1,6 +1,6 @@
 import { Observable, of } from "rxjs"
 import { Lens } from "@rixio/lens"
-import { map, combineLatest, Wrapped, wrap } from "@rixio/rxjs-wrapped"
+import { map, combineLatest, Wrapped, createFulfilledWrapped } from "@rixio/rxjs-wrapped"
 import { Lifted } from "./base"
 
 type InferObservableInTuple<T extends any[]> = {
@@ -18,7 +18,7 @@ export function rxObject(lifted: any): Observable<any> {
 		}
 	})
 	if (observables.length === 0) {
-		return wrap(of(lifted))
+		return of(createFulfilledWrapped(lifted))
 	}
 	return combineLatest(observables).pipe(map(values => lenses.reduce((acc, l, idx) => l.set(values[idx], acc), lifted)))
 }
