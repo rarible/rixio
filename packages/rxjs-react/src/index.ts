@@ -7,3 +7,4 @@ export { useAtom, useRx, useRxOrThrow, getImmediate, getImmediateOrThrow } from 
 export { RxIf, RxIfProps } from "./rx-if"
 export { Rx, RxPropsBase } from "./rx"
 export { R } from "./rx-html"
+export { rxObject } from "./rx-object"
