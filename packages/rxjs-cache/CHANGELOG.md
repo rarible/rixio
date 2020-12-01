@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.14](https://github.com/roborox/rixio/compare/@rixio/rxjs-cache@0.0.13...@rixio/rxjs-cache@0.0.14) (2020-12-01)
+
+
+### Bug Fixes
+
+* fix KeyCacheImpl ([3e54011](https://github.com/roborox/rixio/commit/3e540118bcd4613c13fc683fe0e12da7519c77c8))
+
+
+
+
+
 ## [0.0.13](https://github.com/roborox/rixio/compare/@rixio/rxjs-cache@0.0.12...@rixio/rxjs-cache@0.0.13) (2020-11-30)
 
 **Note:** Version bump only for package @rixio/rxjs-cache
