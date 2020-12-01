@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.10](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.9...@rixio/rxjs-react@0.8.10) (2020-12-01)
+
+
+### Bug Fixes
+
+* export rxObject in index ([7669668](https://github.com/roborox/rixio/commit/76696687c71b0c62a53f1cca9684a8745896d81b))
+* improve rxObject to work with Wrapped ([bf855b7](https://github.com/roborox/rixio/commit/bf855b7875505f71a393544699aeb6e9b1741723))
+* improve rxObject to work with Wrapped ([3ebbfea](https://github.com/roborox/rixio/commit/3ebbfea0e40330d2ff4b6785449896cefb8f0d25))
+
+
+
+
+
 ## [0.8.9](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.8...@rixio/rxjs-react@0.8.9) (2020-12-01)
 
 **Note:** Version bump only for package @rixio/rxjs-react
