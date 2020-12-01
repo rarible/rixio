@@ -2,8 +2,9 @@ import React, { ReactElement } from "react"
 import { act, render, waitFor } from "@testing-library/react"
 import { Atom } from "@rixio/rxjs-atom"
 import { R } from "@rixio/rxjs-react"
-import { ReplaySubject, Observable, BehaviorSubject } from "rxjs"
-import { pendingWrapped, Wrapped, createFulfilledWrapped } from "@rixio/rxjs-wrapped"
+import { BehaviorSubject, Observable, ReplaySubject } from "rxjs"
+import { createFulfilledWrapped, pendingWrapped, Wrapped } from "@rixio/rxjs-wrapped"
+import { CacheImpl, createFulfilledCache, idleCache } from "@rixio/rxjs-cache";
 import { Rx } from "./rx"
 
 describe("Rx", () => {
@@ -45,6 +46,32 @@ describe("Rx", () => {
 		})
 		await waitFor(() => {
 			expect(r.getByTestId("test")).toHaveTextContent(number.toString())
+		})
+	})
+
+	test("Rx should work with cache", async () => {
+		let value: number = 10
+		const cache = new CacheImpl<number>(Atom.create(idleCache), () => Promise.resolve(value))
+		const r = render(
+			<span data-testid="test">
+				<Rx value$={cache} pending="pending" />
+			</span>
+		)
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("10")
+		})
+		act(() => {
+			value = 20
+			cache.clear()
+		})
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("20")
+		})
+		act(() => {
+			cache.atom.set(createFulfilledCache(30))
+		})
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("30")
 		})
 	})
 
