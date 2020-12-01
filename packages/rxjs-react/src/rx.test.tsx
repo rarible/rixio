@@ -4,7 +4,9 @@ import { Atom } from "@rixio/rxjs-atom"
 import { R } from "@rixio/rxjs-react"
 import { BehaviorSubject, Observable, ReplaySubject } from "rxjs"
 import { createFulfilledWrapped, pendingWrapped, Wrapped } from "@rixio/rxjs-wrapped"
-import { CacheImpl, createFulfilledCache, idleCache } from "@rixio/rxjs-cache";
+import { CacheImpl, createFulfilledCache, idleCache, KeyCacheImpl } from "@rixio/rxjs-cache"
+import { Map as IM } from "immutable"
+import { toListDataLoader } from "@rixio/rxjs-cache/build/key"
 import { Rx } from "./rx"
 
 describe("Rx", () => {
@@ -69,6 +71,35 @@ describe("Rx", () => {
 		})
 		act(() => {
 			cache.atom.set(createFulfilledCache(30))
+		})
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("30")
+		})
+	})
+
+	test("Rx should work with key cache", async () => {
+		let value: number = 10
+		const cache = new KeyCacheImpl<string, number>(
+			Atom.create(IM()),
+			toListDataLoader(() => Promise.resolve(value))
+		)
+		const r = render(
+			<span data-testid="test">
+				<Rx value$={cache.single("key1")} pending="pending" />
+			</span>
+		)
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("10")
+		})
+		act(() => {
+			value = 20
+			cache.single("key1").clear()
+		})
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("20")
+		})
+		act(() => {
+			cache.single("key1").atom.set(createFulfilledCache(30))
 		})
 		await waitFor(() => {
 			expect(r.getByTestId("test")).toHaveTextContent("30")
