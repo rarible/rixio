@@ -39,7 +39,7 @@ export function getImmediateOrThrow<T>(observable: Observable<T>): T {
 export function useRx<T>(observable: WrappedObservable<T>): Wrapped<T> {
 	const wrapped = useMemo(() => wrap(observable), [observable])
 	const [state, setState] = useState<Wrapped<T>>(() => getImmediateOrThrow(wrapped))
-	const ref = useRef<Wrapped<T>>()
+	const ref = useRef<Wrapped<T>>(state)
 	useSubscription(wrapped, value => {
 		const current = ref.current
 		if (current !== undefined) {
