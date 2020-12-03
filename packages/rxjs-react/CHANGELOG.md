@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.12](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.11...@rixio/rxjs-react@0.8.12) (2020-12-03)
+
+
+### Bug Fixes
+
+* move rxObject, Lifted to rxjs-wrapped ([f63033b](https://github.com/roborox/rixio/commit/f63033b83292df7488a715de0e5ccfd8929628e8))
+* reload in reject forces resubscription ([ec29cae](https://github.com/roborox/rixio/commit/ec29cae4090549834a0a9ab2b44018f980294907))
+
+
+
+
+
 ## [0.8.11](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.10...@rixio/rxjs-react@0.8.11) (2020-12-02)
 
 

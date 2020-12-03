@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7](https://github.com/roborox/rixio/compare/@rixio/rxjs-atom@0.3.6...@rixio/rxjs-atom@0.3.7) (2020-12-03)
+
+
+### Bug Fixes
+
+* move rxObject, Lifted to rxjs-wrapped ([f63033b](https://github.com/roborox/rixio/commit/f63033b83292df7488a715de0e5ccfd8929628e8))
+
+
+
+
+
 ## [0.3.6](https://github.com/roborox/rixio/compare/@rixio/rxjs-atom@0.3.5...@rixio/rxjs-atom@0.3.6) (2020-11-25)
 
 

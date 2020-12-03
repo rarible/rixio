@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.10](https://github.com/roborox/rixio/compare/@rixio/list-react@0.1.9...@rixio/list-react@0.1.10) (2020-12-03)
+
+
+### Bug Fixes
+
+* move rxObject, Lifted to rxjs-wrapped ([f63033b](https://github.com/roborox/rixio/commit/f63033b83292df7488a715de0e5ccfd8929628e8))
+
+
+
+
+
 ## [0.1.9](https://github.com/roborox/rixio/compare/@rixio/list-react@0.1.8...@rixio/list-react@0.1.9) (2020-12-02)
 
 **Note:** Version bump only for package @rixio/list-react

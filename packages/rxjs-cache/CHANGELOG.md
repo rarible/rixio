@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.15](https://github.com/roborox/rixio/compare/@rixio/rxjs-cache@0.0.14...@rixio/rxjs-cache@0.0.15) (2020-12-03)
+
+
+### Bug Fixes
+
+* move rxObject, Lifted to rxjs-wrapped ([f63033b](https://github.com/roborox/rixio/commit/f63033b83292df7488a715de0e5ccfd8929628e8))
+* wrap performance improvement ([3740e30](https://github.com/roborox/rixio/commit/3740e30d990778880e75a9b546b4108be92d2bea))
+
+
+
+
+
 ## [0.0.14](https://github.com/roborox/rixio/compare/@rixio/rxjs-cache@0.0.13...@rixio/rxjs-cache@0.0.14) (2020-12-01)
 
 
