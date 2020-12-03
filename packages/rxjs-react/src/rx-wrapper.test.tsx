@@ -1,7 +1,8 @@
 import React from "react"
 import { act, render, fireEvent } from "@testing-library/react"
-import { Observable, ReplaySubject } from "rxjs"
+import { Observable, ReplaySubject, defer } from "rxjs"
 import { Wrapped, createRejectedWrapped, createFulfilledWrapped } from "@rixio/rxjs-wrapped"
+import waitForExpect from "wait-for-expect"
 import { RxWrapper } from "./rx-wrapper"
 
 type TestProps = { value1: string; value2: string }
@@ -86,6 +87,37 @@ describe("RxWrapper", () => {
 		expect(reloaded).toBeTruthy()
 		act(() => obs.next(createFulfilledWrapped(text)))
 		expect(r.getByTestId("value")).toHaveTextContent(text)
+	})
+
+	test("should resubscribe failed observable", async() => {
+		const text = Math.random().toString()
+		let promise: Promise<string> = Promise.reject(text)
+		const obs = defer(() => promise)
+
+		const r = render(
+			<RxWrapper<TestProps>
+				component={Test}
+				value1={obs}
+				value2="static"
+				rejected={(e, reload) => <Testing text={e} reload={reload} />}
+			/>
+		)
+		await waitForExpect(() => {
+			expect(r.getByTestId("testing")).toHaveTextContent(text)
+		})
+		expect(() => r.getByTestId("value")).toThrow()
+		act(() => {
+			fireEvent.click(r.getByTestId("reload"))
+		})
+		expect(r.getByTestId("testing")).toHaveTextContent(text)
+		const successText = Math.random().toString()
+		promise = Promise.resolve(successText)
+		act(() => {
+			fireEvent.click(r.getByTestId("reload"))
+		})
+		await waitForExpect(() => {
+			expect(r.getByTestId("value")).toHaveTextContent(successText)
+		})
 	})
 
 	test("should react to props changes", () => {

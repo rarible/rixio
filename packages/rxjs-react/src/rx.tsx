@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from "react"
+import React, { ReactNode, useMemo, useState, useCallback } from "react"
 import { WrappedObservable, combineLatest } from "@rixio/rxjs-wrapped"
 import { useRx } from "./use-rx"
 import { OrReactChild } from "./base"
@@ -39,13 +39,18 @@ export function Rx<T1, T2, T3>(props: Rx3Props<T1, T2, T3>): React.ReactElement
 export function Rx<T1, T2, T3, T4>(props: Rx4Props<T1, T2, T3, T4>): React.ReactElement
 export function Rx({ pending, rejected, children, value$ }: RxProps): React.ReactElement | null {
 	const observables = useObservables(value$)
-	const value = useRx(observables)
+	const [nonce, setNonce] = useState(0)
+	const value = useRx(observables, [nonce])
 	switch (value.status) {
 		case "pending":
 			return <>{pending}</>
 		case "rejected":
 			if (typeof rejected === "function") {
-				return <>{rejected(value.error, value.reload)}</>
+				const reload = () => {
+					value.reload()
+					setNonce(nonce + 1)
+				}
+				return <>{rejected(value.error, reload)}</>
 			}
 			return <>{rejected}</>
 		case "fulfilled":

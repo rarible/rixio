@@ -27,7 +27,7 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 > {
 	private _state: Lifted<P>
 	private _mounted: boolean = false
-	private subscriptions: Map<Observable<any>, Subscription> = new Map<Observable<any>, Subscription>()
+	private subscriptions: Map<Observable<any>, [Subscription, Lens<Lifted<P>, any>]> = new Map()
 
 	constructor(props: RProps) {
 		super(props)
@@ -99,7 +99,7 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 						plain => self.handle(lens, toWrapped(plain)),
 						error => self.handle(lens, createRejectedWrapped(error))
 					)
-					self.subscriptions.set(value, s)
+					self.subscriptions.set(value, [s, lens])
 				}
 			} else {
 				self._state = lens.set(value, self._state)
@@ -111,7 +111,7 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 		const self = this
 		walk(oldProps, (value, lens) => {
 			if (value instanceof Observable && lens.get(newProps) !== value) {
-				self.subscriptions.get(value)!.unsubscribe()
+				self.subscriptions.get(value)![0].unsubscribe()
 				self.subscriptions.delete(value)
 			}
 		})
@@ -128,6 +128,7 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 	}
 
 	private checkObservables(): Lifted<P> | Wrapped<any> {
+		const self = this
 		let foundPending = false
 		const rejected: Rejected[] = []
 		let props = this._state
@@ -148,6 +149,14 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 		if (rejected.length > 0) {
 			const reload = () => {
 				rejected.forEach(r => r.reload())
+				self.subscriptions.forEach(([s, lens], obs) => {
+					s.unsubscribe()
+					const newSubscription = obs.subscribe(
+						plain => self.handle(lens, toWrapped(plain)),
+						error => self.handle(lens, createRejectedWrapped(error))
+					)
+					self.subscriptions.set(obs, [newSubscription, lens])
+				})
 			}
 			return createRejectedWrapped(rejected[0].error, reload)
 		}

@@ -1,13 +1,25 @@
 import React, { ReactElement } from "react"
-import { act, render, waitFor } from "@testing-library/react"
+import { act, render, waitFor, fireEvent } from "@testing-library/react"
 import { Atom } from "@rixio/rxjs-atom"
 import { R } from "@rixio/rxjs-react"
-import { BehaviorSubject, Observable, ReplaySubject } from "rxjs"
+import { BehaviorSubject, Observable, ReplaySubject, defer } from "rxjs"
 import { createFulfilledWrapped, pendingWrapped, Wrapped } from "@rixio/rxjs-wrapped"
 import { CacheImpl, createFulfilledCache, idleCache, KeyCacheImpl } from "@rixio/rxjs-cache"
 import { Map as IM } from "immutable"
 import { toListDataLoader } from "@rixio/rxjs-cache/build/key"
+import waitForExpect from "wait-for-expect"
 import { Rx } from "./rx"
+
+const Testing = ({ text, reload }: { text?: any; reload?: () => void }) => {
+	return (
+		<>
+			<span data-testid="testing">{text || "BLABLABLA"}</span>
+			<button data-testid="reload" onClick={reload}>
+				reload
+			</button>
+		</>
+	)
+}
 
 describe("Rx", () => {
 	test("should display pending if is pending", async () => {
@@ -120,6 +132,34 @@ describe("Rx", () => {
 		})
 		await waitFor(() => {
 			expect(r.getByTestId("test")).toHaveTextContent(text)
+		})
+	})
+
+	test("should resubscribe to observable if reloaded", async () => {
+		const text = Math.random().toString()
+		let promise: Promise<string> = Promise.reject(text)
+		const obs = defer(() => promise)
+		const r = render(
+			<span data-testid="test">
+				<Rx value$={obs} pending="pending" rejected={(err, reload) => <Testing text={err} reload={reload}/>} />
+			</span>
+		)
+		await waitForExpect(() => {
+			expect(r.getByTestId("testing")).toHaveTextContent(text)
+		})
+		act(() => {
+			fireEvent.click(r.getByTestId("reload"))
+		})
+		await waitForExpect(() => {
+			expect(r.getByTestId("testing")).toHaveTextContent(text)
+		})
+		const successText = Math.random().toString()
+		promise = Promise.resolve(successText)
+		act(() => {
+			fireEvent.click(r.getByTestId("reload"))
+		})
+		await waitForExpect(() => {
+			expect(r.getByTestId("test")).toHaveTextContent(successText)
 		})
 	})
 
