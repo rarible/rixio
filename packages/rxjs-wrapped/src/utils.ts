@@ -9,6 +9,9 @@ import {
 	ObservableLike,
 } from "./domain"
 
+const wrapped = "___wrapped___"
+const symbol = Symbol.for(wrapped)
+
 export function toObservable<T>(like: ObservableLike<T>): Observable<Wrapped<T>> {
 	if (like instanceof Observable) {
 		return wrap(like)
@@ -18,7 +21,10 @@ export function toObservable<T>(like: ObservableLike<T>): Observable<Wrapped<T>>
 }
 
 export function wrap<T>(observable: WrappedObservable<T>): Observable<Wrapped<T>> {
-	return new Observable(s => {
+	if (isWrappedObservable(observable)) {
+		return observable as Observable<Wrapped<T>>
+	}
+	const result = new Observable<Wrapped<T>>(s => {
 		let got = false
 		const subscription = observable.subscribe(
 			value => {
@@ -38,7 +44,9 @@ export function wrap<T>(observable: WrappedObservable<T>): Observable<Wrapped<T>
 			s.next(pendingWrapped)
 		}
 		s.add(subscription)
-	})
+	});
+	markWrappedObservable(result)
+	return result
 }
 
 export function toWrapped<T>(value: T | Wrapped<T>): Wrapped<T> {
@@ -54,4 +62,12 @@ export function toPlainOrThrow<T>(value: Wrapped<T>): T {
 		return value.value
 	}
 	throw new Error("not fulfilled")
+}
+
+function isWrappedObservable(observable: Observable<any>) {
+	return (observable as any)[wrapped] === symbol
+}
+
+export function markWrappedObservable(observable: Observable<Wrapped<any>>) {
+	(observable as any)[wrapped] = symbol
 }

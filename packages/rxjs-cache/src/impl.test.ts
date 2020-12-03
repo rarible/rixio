@@ -1,6 +1,6 @@
 import { Atom } from "@rixio/rxjs-atom"
 import waitForExpect from "wait-for-expect"
-import { Wrapped, pendingWrapped } from "@rixio/rxjs-wrapped"
+import { pendingWrapped, wrap, Wrapped } from "@rixio/rxjs-wrapped"
 import { CacheImpl } from "./impl"
 import { CacheState, idleCache } from "./index"
 
@@ -94,5 +94,10 @@ describe("CacheImpl", () => {
 		await waitForExpect(() => {
 			expect(value.status).toBe("fulfilled")
 		})
+	})
+
+	test("cache is already wrapped", () => {
+		const cache = new CacheImpl(Atom.create(idleCache as CacheState<string>), () => Promise.reject("reason"))
+		expect(wrap(cache)).toStrictEqual(cache)
 	})
 })

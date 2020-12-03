@@ -24,6 +24,13 @@ describe("wrap", () => {
 		expect((em3 as any).error).toBe("reason")
 	})
 
+	test("wrap should return the same observable if it's already wrapped", () => {
+		const s = new Subject<number>()
+		const wrapped = wrap(s)
+		expect(wrapped).not.toStrictEqual(s)
+		expect(wrap(wrapped)).toStrictEqual(wrapped)
+	})
+
 	test("should do nothing if it's already wrapped", () => {
 		const s = new Subject<Wrapped<number>>()
 		const wrapped = wrap(s)

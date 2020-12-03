@@ -1,7 +1,13 @@
 import { Atom } from "@rixio/rxjs-atom/build"
 import { Observable, Subscriber, Subscription, BehaviorSubject } from "rxjs"
 import { filter, first } from "rxjs/operators"
-import { createFulfilledWrapped, createRejectedWrapped, pendingWrapped, Wrapped } from "@rixio/rxjs-wrapped"
+import {
+	createFulfilledWrapped,
+	createRejectedWrapped,
+	markWrappedObservable,
+	pendingWrapped,
+	Wrapped
+} from "@rixio/rxjs-wrapped";
 import { fromPromise } from "@rixio/rxjs-wrapped/build/operators"
 import { map as rxjsMap } from "rxjs/operators"
 import { Cache, CacheState, createFulfilledCache, idleCache, toCache } from "./index"
@@ -12,6 +18,7 @@ export class CacheImpl<T> extends BehaviorSubject<Wrapped<T>> implements Cache<T
 
 	constructor(private readonly _atom: Atom<CacheState<T>>, private readonly _loader: () => Promise<T>) {
 		super(pendingWrapped)
+		markWrappedObservable(this)
 		this._onSourceValue = this._onSourceValue.bind(this)
 		this.clear = this.clear.bind(this)
 	}

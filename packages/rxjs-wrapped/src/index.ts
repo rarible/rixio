@@ -12,4 +12,4 @@ export {
 	ObservableLike,
 } from "./domain"
 export { cond, combineLatest, fromPromise, map, flatMap } from "./operators"
-export { toObservable, toWrapped, wrap, toPlainOrThrow } from "./utils"
+export { toObservable, toWrapped, wrap, toPlainOrThrow, markWrappedObservable } from "./utils"
