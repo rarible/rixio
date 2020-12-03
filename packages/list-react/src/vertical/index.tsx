@@ -38,10 +38,10 @@ export function VerticalList<T, C>({
 			const renderable = (status === "pending" ? [...raw, { type: "pending" }] : raw) as ListReactRendererItem<T>[]
 
 			return (
-				<InfiniteLoader 
-					threshold={threshold} 
-					rowCount={Infinity} 
-					isRowLoaded={isRowLoaded} 
+				<InfiniteLoader
+					threshold={threshold}
+					rowCount={Infinity}
+					isRowLoaded={isRowLoaded}
 					loadMoreRows={load}
 					minimumBatchRequest={minimumBatchRequest}
 				>

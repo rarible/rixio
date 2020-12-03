@@ -48,3 +48,7 @@ export function createFulfilledWrapped<T>(value: T): Fulfilled<T> & HasFlag {
 export function isWrapped(value: any) {
 	return value && value[wrapped] === symbol
 }
+
+export type Lifted<T> = {
+	[K in keyof T]: ObservableLike<T[K]>
+}

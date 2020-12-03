@@ -142,12 +142,10 @@ const GridWindowListCell = memo(function GridWindowListCell({
 }: GridWindowListCellProps) {
 	const index = rowIndex * columnCount + columnIndex
 	const finalStyle = useMemo(
-		() => ({ ...style, ...(getStylesWithGap(gap, rowIndex, columnIndex, rowCount, columnCount)) }),
-		[columnCount, columnIndex, gap, rowCount, rowIndex, style],
+		() => ({ ...style, ...getStylesWithGap(gap, rowIndex, columnIndex, rowCount, columnCount) }),
+		[columnCount, columnIndex, gap, rowCount, rowIndex, style]
 	)
 	const item = items[index]
 	const children = useMemo(() => renderer(item), [item, renderer])
-	return (
-		<div style={finalStyle} children={children}/>
-	)
+	return <div style={finalStyle} children={children} />
 })

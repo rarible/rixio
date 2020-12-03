@@ -40,18 +40,22 @@ export function useRx<T>(observable: WrappedObservable<T>, deps: any[] = []): Wr
 	const wrapped = useMemo(() => wrap(observable), [observable])
 	const [state, setState] = useState<Wrapped<T>>(() => getImmediateOrThrow(wrapped))
 	const ref = useRef<Wrapped<T>>(state)
-	useSubscription(wrapped, value => {
-		const current = ref.current
-		if (current.status === "fulfilled") {
-			if (value.status === "fulfilled" && value.value !== current.value) {
+	useSubscription(
+		wrapped,
+		value => {
+			const current = ref.current
+			if (current.status === "fulfilled") {
+				if (value.status === "fulfilled" && value.value !== current.value) {
+					ref.current = value
+					setState(value)
+				}
+			} else {
 				ref.current = value
 				setState(value)
 			}
-		} else {
-			ref.current = value
-			setState(value)
-		}
-	}, deps)
+		},
+		deps
+	)
 	return state
 }
 

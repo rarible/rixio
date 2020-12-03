@@ -2,10 +2,7 @@ export class BatchHelper<K> {
 	private timer: number | null = null
 	private readonly batch: Set<K> = new Set()
 
-	constructor(
-		private readonly onDrop: (items: K[]) => void,
-		private readonly timeout: number,
-	) {
+	constructor(private readonly onDrop: (items: K[]) => void, private readonly timeout: number) {
 		this.drop = this.drop.bind(this)
 	}
 

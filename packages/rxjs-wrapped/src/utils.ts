@@ -44,7 +44,7 @@ export function wrap<T>(observable: WrappedObservable<T>): Observable<Wrapped<T>
 			s.next(pendingWrapped)
 		}
 		s.add(subscription)
-	});
+	})
 	markWrappedObservable(result)
 	return result
 }
@@ -69,5 +69,5 @@ function isWrappedObservable(observable: Observable<any>) {
 }
 
 export function markWrappedObservable(observable: Observable<Wrapped<any>>) {
-	(observable as any)[wrapped] = symbol
+	;(observable as any)[wrapped] = symbol
 }

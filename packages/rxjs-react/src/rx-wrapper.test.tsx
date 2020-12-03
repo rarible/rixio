@@ -89,7 +89,7 @@ describe("RxWrapper", () => {
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 	})
 
-	test("should resubscribe failed observable", async() => {
+	test("should resubscribe failed observable", async () => {
 		const text = Math.random().toString()
 		let promise: Promise<string> = Promise.reject(text)
 		const obs = defer(() => promise)

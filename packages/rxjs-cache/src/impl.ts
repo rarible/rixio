@@ -6,8 +6,8 @@ import {
 	createRejectedWrapped,
 	markWrappedObservable,
 	pendingWrapped,
-	Wrapped
-} from "@rixio/rxjs-wrapped";
+	Wrapped,
+} from "@rixio/rxjs-wrapped"
 import { fromPromise } from "@rixio/rxjs-wrapped/build/operators"
 import { map as rxjsMap } from "rxjs/operators"
 import { Cache, CacheState, createFulfilledCache, idleCache, toCache } from "./index"

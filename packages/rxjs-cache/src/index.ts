@@ -1,10 +1,5 @@
 import { Observable } from "rxjs"
-import {
-	Fulfilled,
-	Pending,
-	Wrapped,
-	SimpleRejected,
-} from "@rixio/rxjs-wrapped"
+import { Fulfilled, Pending, Wrapped, SimpleRejected } from "@rixio/rxjs-wrapped"
 import { Atom } from "@rixio/rxjs-atom"
 
 const cache = "___cache___"

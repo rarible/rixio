@@ -141,7 +141,7 @@ describe("Rx", () => {
 		const obs = defer(() => promise)
 		const r = render(
 			<span data-testid="test">
-				<Rx value$={obs} pending="pending" rejected={(err, reload) => <Testing text={err} reload={reload}/>} />
+				<Rx value$={obs} pending="pending" rejected={(err, reload) => <Testing text={err} reload={reload} />} />
 			</span>
 		)
 		await waitForExpect(() => {

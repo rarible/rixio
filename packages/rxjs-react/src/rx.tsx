@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo, useState, useCallback } from "react"
+import React, { ReactNode, useMemo, useState } from "react"
 import { WrappedObservable, combineLatest } from "@rixio/rxjs-wrapped"
 import { useRx } from "./use-rx"
 import { OrReactChild } from "./base"

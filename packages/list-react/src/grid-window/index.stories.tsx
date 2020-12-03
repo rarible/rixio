@@ -65,16 +65,7 @@ storiesOf("grid-window-list", module).add("basic", () => (
 				`,
 			}}
 		/>
-		<GridWindowList 
-			state$={state$} 
-			loader={load} 
-			pending={pending} 
-			rect={rect} 
-			threshold={1}
-			renderer={renderer} 
-		/>
-		<div>
-			Content from bottom
-		</div>
+		<GridWindowList state$={state$} loader={load} pending={pending} rect={rect} threshold={1} renderer={renderer} />
+		<div>Content from bottom</div>
 	</React.Fragment>
 ))

@@ -1,5 +1,6 @@
 import { ComponentType } from "react"
-import { Lifted, RxBaseProps, RxWrapperBase } from "./base"
+import { Lifted } from "@rixio/rxjs-wrapped"
+import { RxBaseProps, RxWrapperBase } from "./base"
 
 export type RxWrapperProps<P extends object> = Lifted<P> &
 	RxBaseProps & {

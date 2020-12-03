@@ -166,9 +166,9 @@ const keyCache = new SimpleCache<string, Lens<any, any>>(key =>
 		(v, s) => setKey(key, v, s)
 	)
 )
-const indexCache = new SimpleCache<number, Prism<any[], any>>(
-	i => Prism.create(
-		(xs) => xs[i],
+const indexCache = new SimpleCache<number, Prism<any[], any>>(i =>
+	Prism.create(
+		xs => xs[i],
 		(v, xs) => {
 			if (xs.length <= i) {
 				return xs.concat(Array(i - xs.length), [v])

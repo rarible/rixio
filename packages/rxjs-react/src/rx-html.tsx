@@ -1,5 +1,6 @@
 import React, { LegacyRef, ReactHTML, DetailedHTMLFactory } from "react"
-import { Lifted, RxBaseProps, RxWrapperBase } from "./base"
+import { Lifted } from "@rixio/rxjs-wrapped"
+import { RxBaseProps, RxWrapperBase } from "./base"
 
 type InferHtmlProps<K extends keyof React.ReactHTML> = React.ReactHTML[K] extends DetailedHTMLFactory<infer P, any>
 	? P

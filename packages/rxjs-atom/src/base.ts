@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary,no-plusplus */
-import { Lens, Prism, structEq, Option, SimpleCache } from "@rixio/lens";
+import { Lens, Prism, structEq, Option, SimpleCache } from "@rixio/lens"
 
 import { Observable, Subscriber, Subscription, BehaviorSubject, combineLatest } from "rxjs"
 

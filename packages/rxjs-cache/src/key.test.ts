@@ -1,7 +1,7 @@
 import { Atom } from "@rixio/rxjs-atom"
 import { Map as IM } from "immutable"
 import waitForExpect from "wait-for-expect"
-import { createFulfilledWrapped, pendingWrapped, Wrapped } from "@rixio/rxjs-wrapped";
+import { createFulfilledWrapped, pendingWrapped, Wrapped } from "@rixio/rxjs-wrapped"
 import { waitFor } from "@testing-library/react"
 import { KeyCacheImpl, toListDataLoader } from "./key"
 import { CacheState, createFulfilledCache } from "./index"
@@ -47,14 +47,14 @@ describe("KeyCacheImpl", () => {
 		await waitFor(() => {
 			expect(emitted.length).toBe(2)
 			expect(emitted[0]).toStrictEqual(pendingWrapped)
-			expect((emitted[1])).toStrictEqual(createFulfilledWrapped(10))
+			expect(emitted[1]).toStrictEqual(createFulfilledWrapped(10))
 		})
 		value = 20
 		cache.single("key1").clear()
 		await waitFor(() => {
 			expect(emitted.length).toBe(4)
 			expect(emitted[2]).toStrictEqual(pendingWrapped)
-			expect((emitted[3])).toStrictEqual(createFulfilledWrapped(20))
+			expect(emitted[3]).toStrictEqual(createFulfilledWrapped(20))
 		})
 	})
 })

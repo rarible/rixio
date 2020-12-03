@@ -1,20 +1,9 @@
 import React from "react"
 import { Observable, Subscription } from "rxjs"
 import { Lens } from "@rixio/lens"
-import {
-	Wrapped,
-	createRejectedWrapped,
-	toWrapped,
-	pendingWrapped,
-	Rejected,
-	ObservableLike,
-} from "@rixio/rxjs-wrapped"
+import { Wrapped, createRejectedWrapped, toWrapped, pendingWrapped, Rejected, Lifted } from "@rixio/rxjs-wrapped"
 
 export type OrReactChild<T> = React.ReactChild | React.ReactChild[] | T
-
-export type Lifted<T> = {
-	[K in keyof T]: ObservableLike<T[K]>
-}
 
 export type RxBaseProps = {
 	pending?: React.ReactNode
