@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.16](https://github.com/roborox/rixio/compare/@rixio/rxjs-cache@0.0.15...@rixio/rxjs-cache@0.0.16) (2020-12-04)
+
+
+### Bug Fixes
+
+* resolve cyclic dep ([3b56f95](https://github.com/roborox/rixio/commit/3b56f95e75095fb1949fb304c947b2eeaab59a4a))
+
+
+
+
+
 ## [0.0.15](https://github.com/roborox/rixio/compare/@rixio/rxjs-cache@0.0.14...@rixio/rxjs-cache@0.0.15) (2020-12-03)
 
 

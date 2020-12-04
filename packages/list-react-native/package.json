@@ -1,6 +1,6 @@
 {
   "name": "@rixio/list-react-native",
-  "version": "0.3.19",
+  "version": "0.3.20",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -32,8 +32,8 @@
   },
   "devDependencies": {
     "@babel/core": "7.11.6",
-    "@rixio/list": "^0.3.19",
-    "@rixio/rxjs-react": "^0.8.12",
+    "@rixio/list": "^0.3.20",
+    "@rixio/rxjs-react": "^0.8.13",
     "@testing-library/jest-native": "3.4.3",
     "@types/jest": "26.0.14",
     "@types/react": "16.9.37",
