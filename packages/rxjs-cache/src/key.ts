@@ -5,7 +5,7 @@ import { Subject } from "rxjs"
 import { filter, first } from "rxjs/operators"
 import { CacheImpl } from "./impl"
 import { BatchHelper } from "./key-batch"
-import { Cache, CacheState, createFulfilledCache, idleCache, pendingCache } from "./index"
+import { Cache, CacheState, createFulfilledCache, idleCache, pendingCache } from "./domain"
 
 export type DataLoader<K, V> = (key: K) => Promise<V>
 
