@@ -37,7 +37,7 @@ Components from R are reactive - every prop (including children) can be Observab
 
 #### RxWrapper component
 
-It can be used to transform regular components to reactive
+It can be used to transform regular components to reactive:
 
 ```typescript
 function Wrapper() {
