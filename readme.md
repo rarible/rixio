@@ -1,4 +1,4 @@
-Typesafe state management for React applications
+Typesafe state management for React applications.
 
 ### Inspiration
 
@@ -24,7 +24,7 @@ You can check some working examples [here](https://codesandbox.io/s/github/robor
 
 #### Reactive html components 
 
-You can embed observables: 
+You can embed observables in R. components: 
 ```typescript
 function Html() {
     const rx$ = useMemo(() => from(getRandomNumber(1000)).pipe(delay(500)), [])
@@ -33,7 +33,7 @@ function Html() {
 
 ```
 
-Components from R are reactive - every prop (including children) can be Observable. If observable doesn't immediately emit a value, component is not rendered.
+Components from R are reactive - every prop (including children) can be Observable. If observable doesn't immediately emit a value or emits an error, component is not rendered.
 
 #### RxWrapper component
 
@@ -64,12 +64,12 @@ RxWrapper here transforms DisplayPerson component to reactive alternative. This 
 
 #### lift function
 
-lift does pretty the same as RxWrapper, but it can be used if you need to use reactive version of the component many times (it's hoc, creates new component)
+lift does pretty the same as RxWrapper, but it can be used if you need to use the reactive version of the component many times (it's hoc, creates new component)
 
 ```typescript
 export const RxDisplayPerson = lift(DisplayPerson, {
-	pending: "Wait, please",
-	rejected: "Oops",
+    pending: "Wait, please",
+    rejected: "Oops",
 })
 
 function UsingLifted() {
@@ -80,4 +80,59 @@ function UsingLifted() {
 
 Also, check second argument to lift function. You can define pending and rejected here. Check type of rejected prop here. It can be component or function 
 
-### TBC
+### Atom
+
+Atom is a special kind of observable. It has get, set and modify. Atoms can be created using `Atom.create`. Initial value should be supplied:
+
+```typescript
+const atom: Atom<number> = Atom.create(10)
+atom.get() // is 10
+atom.set(20) // sets value to 20
+atom.modify(n => n + 1) // will be 21
+```
+
+#### Lenses
+
+Lens allows to decompose atoms
+
+```typescript
+interface Form {
+    firstName: string
+    lastName: string
+    gender: "male" | "female"
+}
+
+const form: Atom<Form> = Atom.create({ firstName: "Brad", lastName: "Pitt" })
+const firstName: Atom<string> = form.lens("firstName")
+const gender: Atom<"male" | "female"> = form.lens("gender")
+```
+
+See the types of lensed atoms (for firstName is `Atom<string>` and for gender is `Atom<"male" | "female">`).
+
+When lensed atoms are changed, parent atoms are updated too. For example, if we change firstName using `firstName.set("Jack")`, then form Atom will be updated and will have `{ firstName: "Jack", lastName: "Pitt" }` value.
+
+Custom lenses can be created too. This can be done using `Lens.create`.
+
+When lensed atoms are created using `Atom.lens`, these values are cached, so when you invoke `form.lens("firstName")` multiple times, the same instance returned every time. This is useful to prevent React components rerendering.
+
+#### Views
+
+`ReadOnlyAtom` can be created using `view`:
+
+```typescript
+const firstNameView: ReadOnlyAtom<string> = form.view("firstName")
+```
+
+This kind of atoms can not be changed 
+
+### Wrapped and cache
+
+We have one more special kind of observable: Cache. It's a combination of Atom and function to load some data.
+
+Let's look closer at its type: `Cache<T>` is `Observable<Wrapped<T>>` (will see what's Wrapped bit later). To create Cache you need to invoke `new CacheImpl<T>(atom: Atom<CacheState<T>>, loader: () => Promise<T>)`
+
+Every time when observer subsribes to cache, it checks if it's already loaded (in provided atom). If not, then cache tries to load data. When the data is loaded, observers get loaded data.
+
+#### What's Wrapped?
+
+TBC 
