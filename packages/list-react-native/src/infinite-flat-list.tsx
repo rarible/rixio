@@ -33,10 +33,22 @@ export function InfiniteFlatList<T, C>({
 	FooterComponent,
 	...rest
 }: InfiniteFlatListProps<T, C>) {
-	const simpleStatus$: Observable<AtomStateStatus> = useMemo(() => state$.pipe(
-		map(({items, continuation, finished, ...rest}) => rest),
-		distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
-	), [state$])
+	const simpleStatus$: Observable<AtomStateStatus> = useMemo(
+		() =>
+			state$.pipe(
+				map(({ items, continuation, finished, ...rest }) => rest),
+				distinctUntilChanged((prev, curr) => {
+					if (prev.status !== curr.status) {
+						return false
+					}
+					if (prev.status === "rejected" && curr.status === "rejected") {
+						return prev.error === curr.error
+					}
+					return true
+				})
+			),
+		[state$]
+	)
 	return (
 		<InfiniteList state$={state$} loader={loader} pending={pending} rejected={rejected}>
 			{load => (
@@ -44,7 +56,9 @@ export function InfiniteFlatList<T, C>({
 					state$={state$}
 					renderItem={renderItem}
 					load={load}
-					ListFooterComponent={<RxWrapper<FooterComponentProps> component={FooterComponent} reload={load} status={simpleStatus$}/>}
+					ListFooterComponent={
+						<RxWrapper<FooterComponentProps> component={FooterComponent} reload={load} status={simpleStatus$} />
+					}
 					{...rest}
 				/>
 			)}
