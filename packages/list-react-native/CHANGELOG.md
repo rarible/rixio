@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.23](https://github.com/roborox/rixio/compare/@rixio/list-react-native@0.3.22...@rixio/list-react-native@0.3.23) (2020-12-08)
+
+
+### Bug Fixes
+
+* improve FooterComponentProps ([8628908](https://github.com/roborox/rixio/commit/862890841eafd9207eb3e7f62fde638eedec5212))
+
+
+
+
+
 ## [0.3.22](https://github.com/roborox/rixio/compare/@rixio/list-react-native@0.3.21...@rixio/list-react-native@0.3.22) (2020-12-08)
 
 
