@@ -1,12 +1,18 @@
-import React from "react"
+import React, { useMemo } from "react"
 import { RxFlatList, RxFlatListProps, RxListRenderItem } from "@rixio/rxjs-react-native"
 import { InfiniteList, InfiniteListState, ListPartLoader } from "@rixio/list"
 import { Atom } from "@rixio/rxjs-atom"
-import { OrReactChild } from "@rixio/rxjs-react"
+import { OrReactChild, RxWrapper } from "@rixio/rxjs-react"
+import { AtomStateStatus } from "@rixio/rxjs-cache"
+import { distinctUntilChanged, map } from "rxjs/operators"
+import { Observable } from "rxjs"
 import { useInfiniteListScrollEvent } from "./use-infinite-list-scroll-event"
+
+export type FooterStatus = { status: "fulfilled" } | { status: "pending" } | {}
 
 export type FooterComponentProps = {
 	reload: () => Promise<void>
+	status: AtomStateStatus
 }
 
 export interface InfiniteFlatListProps<T, C>
@@ -27,6 +33,10 @@ export function InfiniteFlatList<T, C>({
 	FooterComponent,
 	...rest
 }: InfiniteFlatListProps<T, C>) {
+	const simpleStatus$: Observable<AtomStateStatus> = useMemo(() => state$.pipe(
+		map(({items, continuation, finished, ...rest}) => rest),
+		distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
+	), [state$])
 	return (
 		<InfiniteList state$={state$} loader={loader} pending={pending} rejected={rejected}>
 			{load => (
@@ -34,7 +44,7 @@ export function InfiniteFlatList<T, C>({
 					state$={state$}
 					renderItem={renderItem}
 					load={load}
-					ListFooterComponent={<FooterComponent reload={load} />}
+					ListFooterComponent={<RxWrapper<FooterComponentProps> component={FooterComponent} reload={load} status={simpleStatus$}/>}
 					{...rest}
 				/>
 			)}
