@@ -4,7 +4,6 @@ import { InfiniteListProps } from "@rixio/list/build/component"
 import { InfiniteLoader } from "react-virtualized/dist/es/InfiniteLoader"
 import { Grid, GridCellRenderer, GridProps, RenderedSection } from "react-virtualized/dist/es/Grid"
 import { WindowScroller } from "react-virtualized/dist/es/WindowScroller"
-import { AutoSizer } from "react-virtualized/dist/es/AutoSizer"
 import type { Index } from "react-virtualized"
 import { ListReactRenderer, ListReactRendererItem } from "../domain"
 
@@ -12,6 +11,7 @@ export type GridRect = {
 	rowHeight: number
 	columnCount: number
 	gap: number
+	width: number
 }
 
 export type GridWindowListProps<T, C> = Omit<InfiniteListProps<T, C>, "children"> & {
@@ -20,7 +20,6 @@ export type GridWindowListProps<T, C> = Omit<InfiniteListProps<T, C>, "children"
 	gridProps?: Partial<GridProps>
 	threshold?: number
 	minimumBatchRequest?: number
-	absolute?: boolean
 }
 
 export function GridWindowList<T, C>({
@@ -30,7 +29,6 @@ export function GridWindowList<T, C>({
 	renderer,
 	gridProps = {},
 	threshold,
-	absolute,
 	...restProps
 }: GridWindowListProps<T, C>) {
 	const pending = useMemo(() => new Array(rect.columnCount).fill({ type: "pending" }), [rect.columnCount])
@@ -78,27 +76,23 @@ export function GridWindowList<T, C>({
 
 						return (
 							<WindowScroller>
-								{({ height, isScrolling, scrollTop, scrollLeft }) => (
-									<AutoSizer disableHeight={!absolute}>
-										{({ width }) => (
-											<Grid
-												columnCount={rect.columnCount}
-												scrollTop={scrollTop}
-												scrollLeft={scrollLeft}
-												columnWidth={width / rect.columnCount}
-												rowCount={rowCount}
-												rowHeight={rect.rowHeight}
-												isScrolling={isScrolling}
-												cellRenderer={cellRenderer}
-												{...gridProps}
-												autoHeight
-												height={height}
-												width={width}
-												ref={registerChild}
-												onSectionRendered={onRowsRenderedRef.current}
-											/>
-										)}
-									</AutoSizer>
+								{({ height, isScrolling, onChildScroll, scrollTop }) => (
+									<Grid
+										columnCount={rect.columnCount}
+										scrollTop={scrollTop}
+										onScroll={onChildScroll}
+										columnWidth={rect.width / rect.columnCount}
+										rowCount={rowCount}
+										rowHeight={rect.rowHeight}
+										isScrolling={isScrolling}
+										cellRenderer={cellRenderer}
+										{...gridProps}
+										autoHeight
+										height={height}
+										width={rect.width}
+										ref={registerChild}
+										onSectionRendered={onRowsRenderedRef.current}
+									/>
 								)}
 							</WindowScroller>
 						)
@@ -106,7 +100,7 @@ export function GridWindowList<T, C>({
 				</InfiniteLoader>
 			)
 		},
-		[rect, absolute, pending, threshold, minimumBatchRequest, renderer, gridProps]
+		[rect, pending, threshold, minimumBatchRequest, renderer, gridProps]
 	)
 
 	return <RxInfiniteList state$={state$} children={children} {...restProps} />

@@ -44,6 +44,7 @@ const rect = {
 	rowHeight: 300,
 	columnCount: 5,
 	gap: 16,
+	width: 1000
 }
 
 const pending = <div>First load</div>
