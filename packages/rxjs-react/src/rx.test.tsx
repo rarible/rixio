@@ -2,7 +2,7 @@ import React, { ReactElement } from "react"
 import { act, render, waitFor, fireEvent } from "@testing-library/react"
 import { Atom } from "@rixio/rxjs-atom"
 import { R } from "@rixio/rxjs-react"
-import { BehaviorSubject, Observable, ReplaySubject, defer } from "rxjs"
+import { BehaviorSubject, Observable, ReplaySubject, defer, Subject } from "rxjs"
 import { createFulfilledWrapped, pendingWrapped, Wrapped } from "@rixio/rxjs-wrapped"
 import { CacheImpl, createFulfilledCache, idleCache, KeyCacheImpl } from "@rixio/rxjs-cache"
 import { Map as IM } from "immutable"
@@ -115,6 +115,28 @@ describe("Rx", () => {
 		})
 		await waitFor(() => {
 			expect(r.getByTestId("test")).toHaveTextContent("30")
+		})
+	})
+
+	test("should show rejected if error occured after success", async () => {
+		const subj = new Subject<number>()
+		const r = render(
+			<span data-testid="test">
+				<Rx value$={subj} pending="pending" rejected={x => x} />
+			</span>
+		)
+		expect(r.getByTestId("test")).toHaveTextContent("pending")
+		act(() => {
+			subj.next(10)
+		})
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("10")
+		})
+		act(() => {
+			subj.error("error1")
+		})
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("error1")
 		})
 	})
 

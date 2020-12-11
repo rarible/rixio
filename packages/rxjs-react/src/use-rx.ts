@@ -45,7 +45,7 @@ export function useRx<T>(observable: WrappedObservable<T>, deps: any[] = []): Wr
 		value => {
 			const current = ref.current
 			if (current.status === "fulfilled") {
-				if (value.status === "fulfilled" && value.value !== current.value) {
+				if (value.status !== "fulfilled" || value.value !== current.value) {
 					ref.current = value
 					setState(value)
 				}
