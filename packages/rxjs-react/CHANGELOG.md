@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.15](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.14...@rixio/rxjs-react@0.8.15) (2020-12-11)
+
+
+### Bug Fixes
+
+* fix error when observable is rejected ([28aaf38](https://github.com/roborox/rixio/commit/28aaf38cea1865dd90992d15257711da90af3611))
+
+
+
+
+
 ## [0.8.14](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.13...@rixio/rxjs-react@0.8.14) (2020-12-04)
 
 **Note:** Version bump only for package @rixio/rxjs-react
