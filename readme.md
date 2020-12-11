@@ -127,12 +127,21 @@ This kind of atoms can not be changed
 
 ### Wrapped and cache
 
-We have one more special kind of observable: Cache. It's a combination of Atom and function to load some data.
+We have one more special kind of observable: Cache. It's an observable data that can be cached. It can be used as any other observable data.
 
 Let's look closer at its type: `Cache<T>` is `Observable<Wrapped<T>>` (will see what's Wrapped bit later). To create Cache you need to invoke `new CacheImpl<T>(atom: Atom<CacheState<T>>, loader: () => Promise<T>)`
 
 Every time when observer subsribes to cache, it checks if it's already loaded (in provided atom). If not, then cache tries to load data. When the data is loaded, observers get loaded data.
 
-#### What's Wrapped?
+#### What's Wrapped and why we need it?
 
-TBC 
+Wrapped is introduced by rixio to overcome some limitations of rxjs Observables. There are 2 goals:
+- overcome some limitations with handling errors (observable can't be used anymore if error is thrown)
+- wrapped observables always immediately emit values (if source observable didn't yet emit value, then `pending` is emitted) 
+
+`Wrapped<T>` - is a wrapper type around any generic T. It has some states: "pending", "rejected", "fulfilled". 
+
+#### rxjs operators for `Wrapped<T>`
+
+We designed some operators to work with wrapped observables: map, flatMap, combineLatest, catchError
+They work pretty the same way as regular rxjs operators, but support both wrapped and regular observables. Check out [tests](packages/rxjs-wrapped/src/operators.test.ts) to see some examples.
