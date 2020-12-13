@@ -1,17 +1,22 @@
 import { first } from "rxjs/operators"
 import { of } from "rxjs"
 import { rxObject } from "./rx-object"
+import { wrap } from "./utils";
 
 describe("rxObject", () => {
 	test("should work with plain objects", async () => {
-		const value = await rxObject({ key: "value" }).pipe(first()).toPromise()
+		const observable = rxObject({ key: "value" })
+		expect(wrap(observable)).toStrictEqual(observable)
+		const value = await observable.pipe(first()).toPromise()
 		expect(value.status).toBe("fulfilled")
 		expect((value as any).value.key).toBe("value")
 	})
 
 	test("should work with one observable", async () => {
 		const num = Math.random()
-		const value = await rxObject({ key: "value", obs: of(num) })
+		const obs = rxObject({ key: "value", obs: of(num) })
+		expect(wrap(obs)).toStrictEqual(obs)
+		const value = await obs
 			.pipe(first())
 			.toPromise()
 		expect(value.status).toBe("fulfilled")

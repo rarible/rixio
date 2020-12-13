@@ -2,6 +2,7 @@ import { Subject } from "rxjs"
 import waitForExpect from "wait-for-expect"
 import { combineLatest, flatMap, map } from "./operators"
 import { createRejectedWrapped, Rejected, Wrapped } from "./domain"
+import { wrap } from "./utils";
 
 describe("operators", () => {
 	test("map should work with plain observables", () => {
@@ -9,6 +10,7 @@ describe("operators", () => {
 		const mapped = s.pipe(map(x => `${x}`))
 		const emitted: Wrapped<string>[] = []
 		mapped.subscribe(v => emitted.push(v))
+		expect(wrap(mapped)).toStrictEqual(mapped)
 		expect(emitted.length).toBe(1)
 		expect(emitted[0].status).toBe("pending")
 
