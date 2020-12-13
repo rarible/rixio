@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.4](https://github.com/roborox/rixio/compare/@rixio/rxjs-wrapped@0.2.3...@rixio/rxjs-wrapped@0.2.4) (2020-12-13)
+
+
+### Bug Fixes
+
+* improve wrap performance ([bc97e58](https://github.com/roborox/rixio/commit/bc97e58f0c120dd7840da0e7c0145c4d4b44bc43))
+
+
+
+
+
 ## [0.2.3](https://github.com/roborox/rixio/compare/@rixio/rxjs-wrapped@0.2.2...@rixio/rxjs-wrapped@0.2.3) (2020-12-03)
 
 

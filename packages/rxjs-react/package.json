@@ -1,6 +1,6 @@
 {
   "name": "@rixio/rxjs-react",
-  "version": "0.8.15",
+  "version": "0.8.16",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -31,11 +31,11 @@
   },
   "dependencies": {
     "@rixio/lens": "^0.4.4",
-    "@rixio/rxjs-wrapped": "^0.2.3"
+    "@rixio/rxjs-wrapped": "^0.2.4"
   },
   "devDependencies": {
     "@rixio/rxjs-atom": "^0.3.7",
-    "@rixio/rxjs-cache": "^0.0.17",
+    "@rixio/rxjs-cache": "^0.0.18",
     "@testing-library/jest-dom": "5.11.4",
     "@testing-library/react": "11.0.4",
     "@types/jest": "26.0.14",

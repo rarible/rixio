@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.18](https://github.com/roborox/rixio/compare/@rixio/rxjs-cache@0.0.17...@rixio/rxjs-cache@0.0.18) (2020-12-13)
+
+**Note:** Version bump only for package @rixio/rxjs-cache
+
+
+
+
+
 ## [0.0.17](https://github.com/roborox/rixio/compare/@rixio/rxjs-cache@0.0.16...@rixio/rxjs-cache@0.0.17) (2020-12-04)
 
 
