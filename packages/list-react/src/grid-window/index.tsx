@@ -1,10 +1,11 @@
-import React, { memo, useCallback, useMemo, useRef } from "react"
+import React, { memo, useCallback, useMemo, useRef, CSSProperties } from "react"
 import { RenderInfo, RxInfiniteList } from "@rixio/list"
 import { InfiniteListProps } from "@rixio/list/build/component"
 import { InfiniteLoader } from "react-virtualized/dist/es/InfiniteLoader"
 import { Grid, GridCellRenderer, GridProps, RenderedSection } from "react-virtualized/dist/es/Grid"
 import { WindowScroller } from "react-virtualized/dist/es/WindowScroller"
 import type { Index } from "react-virtualized"
+import { Property } from "csstype"
 import { ListReactRenderer, ListReactRendererItem } from "../domain"
 
 export type GridRect = {
@@ -45,7 +46,10 @@ export function GridWindowList<T, C>({
 			const cellRenderer: GridCellRenderer = ({ key, style, columnIndex, rowIndex }) => (
 				<GridWindowListCell
 					gap={rect.gap}
-					style={style}
+					width={style.width}
+					height={style.height}
+					top={style.top}
+					left={style.left}
 					rowIndex={rowIndex}
 					columnIndex={columnIndex}
 					key={key}
@@ -109,7 +113,10 @@ export function GridWindowList<T, C>({
 type GridWindowListCellProps = {
 	rowIndex: number
 	columnIndex: number
-	style: React.CSSProperties
+	width?: Property.Width<number>
+	height?: Property.Height<number>
+	top?: Property.Top<number>
+	left?: Property.Left<number>
 	columnCount: number
 	renderer: ListReactRenderer<any>
 	gap: number
@@ -117,29 +124,32 @@ type GridWindowListCellProps = {
 	items: ListReactRendererItem<any>[]
 }
 
-const getStylesWithGap = (gap: number, row: number, col: number, rowCount: number, columnCount: number) => ({
-	paddingLeft: col !== 0 ? gap / 2 : 0,
-	paddingRight: col !== columnCount - 1 ? gap / 2 : 0,
-	paddingTop: row !== 0 ? gap : 0,
-	paddingBottom: row !== rowCount - 1 ? gap / 2 : 0,
-})
-
 const GridWindowListCell = memo(function GridWindowListCell({
 	renderer,
 	rowIndex,
 	columnCount,
 	columnIndex,
-	style,
+	width,
+	height,
+	top,
+	left,
 	gap,
 	items,
 	rowCount,
 }: GridWindowListCellProps) {
 	const index = rowIndex * columnCount + columnIndex
-	const finalStyle = useMemo(
-		() => ({ ...style, ...getStylesWithGap(gap, rowIndex, columnIndex, rowCount, columnCount) }),
-		[columnCount, columnIndex, gap, rowCount, rowIndex, style]
+	const finalStyle = useMemo<CSSProperties>(
+		() => ({ position: "absolute", width, height, top, left, ...getStylesWithGap(gap, rowIndex, columnIndex, rowCount, columnCount) }),
+		[columnCount, columnIndex, gap, rowCount, rowIndex, width, height, top, left]
 	)
 	const item = items[index]
 	const children = useMemo(() => renderer(item), [item, renderer])
 	return <div style={finalStyle} children={children} />
+})
+
+const getStylesWithGap = (gap: number, row: number, col: number, rowCount: number, columnCount: number) => ({
+	paddingLeft: col !== 0 ? gap / 2 : 0,
+	paddingRight: col !== columnCount - 1 ? gap / 2 : 0,
+	paddingTop: row !== 0 ? gap : 0,
+	paddingBottom: row !== rowCount - 1 ? gap / 2 : 0,
 })
