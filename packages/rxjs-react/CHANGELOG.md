@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.17](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.16...@rixio/rxjs-react@0.8.17) (2020-12-14)
+
+
+### Bug Fixes
+
+* fix useRx, only one subscribe is needed ([4dac9d5](https://github.com/roborox/rixio/commit/4dac9d5fdd97a83376f1352656e825fcc1d1bfcd))
+
+
+
+
+
 ## [0.8.16](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.15...@rixio/rxjs-react@0.8.16) (2020-12-13)
 
 **Note:** Version bump only for package @rixio/rxjs-react

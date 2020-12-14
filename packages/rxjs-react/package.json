@@ -1,6 +1,6 @@
 {
   "name": "@rixio/rxjs-react",
-  "version": "0.8.16",
+  "version": "0.8.17",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
