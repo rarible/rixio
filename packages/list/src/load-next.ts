@@ -1,4 +1,4 @@
-import { Atom } from "@rixio/rxjs-atom"
+import { Atom } from "@rixio/atom"
 import { InfiniteListState, ListPartLoader } from "./domain"
 
 export async function loadNext<T, C>(state$: Atom<InfiniteListState<T, C>>, partLoader: ListPartLoader<T, C>) {

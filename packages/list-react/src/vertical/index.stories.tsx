@@ -1,7 +1,7 @@
 import "react-virtualized/styles.css"
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import { Atom } from "@rixio/rxjs-atom"
+import { Atom } from "@rixio/atom"
 import { listStateIdle } from "@rixio/list"
 import { ListReactRenderer } from "../domain"
 import { VerticalList } from "./index"

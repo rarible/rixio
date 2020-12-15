@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, memo } from "react"
-import { useRxOrThrow } from "@rixio/rxjs-react"
-import type { AtomStateStatus } from "@rixio/rxjs-cache"
+import { useRxOrThrow } from "@rixio/react"
+import type { AtomStateStatus } from "@rixio/cache"
 import { InfiniteListPropsShared, InfiniteListState, listStateIdle } from "./domain"
 import { loadNext } from "./load-next"
 

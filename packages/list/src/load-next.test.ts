@@ -1,4 +1,4 @@
-import { Atom } from "@rixio/rxjs-atom"
+import { Atom } from "@rixio/atom"
 import { api, ApiData, LoadPageContinuation } from "../test/fixtures/api"
 import { InfiniteListState, ListPartLoader, listStateIdle } from "./domain"
 import { loadNext } from "./load-next"

@@ -26,7 +26,7 @@
     "verify": "tsc --noEmit"
   },
   "dependencies": {
-    "@rixio/rxjs-atom": "^0.3.7"
+    "@rixio/atom": "^0.3.7"
   },
   "devDependencies": {
     "@hapi/joi": "17.1.1",

@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect } from "react"
-import { useRxOrThrow } from "@rixio/rxjs-react"
+import { useRxOrThrow } from "@rixio/react"
 import { loadNext } from "./load-next"
 import type { InfiniteListPropsShared, InfiniteListState } from "./domain"
 

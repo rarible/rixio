@@ -1,5 +1,5 @@
 import { NativeSyntheticEvent, NativeScrollEvent } from "react-native"
-import { Atom } from "@rixio/rxjs-atom"
+import { Atom } from "@rixio/atom"
 import { InfiniteListState } from "@rixio/list"
 import { useCallback } from "react"
 

@@ -1,5 +1,5 @@
 import { Observable } from "rxjs"
-import { Atom } from "@rixio/rxjs-atom"
+import { Atom } from "@rixio/atom"
 import { map } from "rxjs/operators"
 import type { Validate, ValidationResult, ValidationResultSuccess, ValidationResultValidating } from "./domain"
 import { createValidationResult } from "./utils/create-validation-result"

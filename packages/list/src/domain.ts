@@ -1,6 +1,6 @@
-import type { Atom } from "@rixio/rxjs-atom"
-import type { AtomStateStatus } from "@rixio/rxjs-cache"
-import type { OrReactChild } from "@rixio/rxjs-react"
+import type { Atom } from "@rixio/atom"
+import type { AtomStateStatus } from "@rixio/cache"
+import type { OrReactChild } from "@rixio/react"
 
 export type ListPartLoader<T, C> = (continuation: C | null) => Promise<[T[], C | null]>
 

@@ -1,6 +1,6 @@
 import Joi from "@hapi/joi"
 import { filter, first, map, reduce, takeWhile } from "rxjs/operators"
-import { Atom } from "@rixio/rxjs-atom"
+import { Atom } from "@rixio/atom"
 import { Observable } from "rxjs"
 import { ValidationResult, ValidationResultError, ValidationResultSuccess, ValidationStatus } from "./domain"
 import { validateJoi } from "./utils/validate-joi"
