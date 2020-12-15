@@ -1,6 +1,6 @@
 {
 	"name": "@rixio/cache",
-	"version": "0.0.18",
+	"version": "0.0.19",
 	"main": "build/index.js",
 	"types": "build/index.d.ts",
 	"files": [
@@ -30,8 +30,8 @@
 		"access": "public"
 	},
 	"dependencies": {
-		"@rixio/atom": "^0.3.7",
-		"@rixio/wrapped": "^0.2.4"
+		"@rixio/atom": "^0.3.8",
+		"@rixio/wrapped": "^0.2.5"
 	},
 	"devDependencies": {
 		"@types/jest": "26.0.14",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.11](https://github.com/roborox/rixio/compare/@rixio/form-store@0.1.10...@rixio/form-store@0.1.11) (2020-12-15)
+
+
+### Bug Fixes
+
+* rename all rxjs-* packages, remove rxjs prefix ([6726aa6](https://github.com/roborox/rixio/commit/6726aa62b7b7b9b74cef48030468a6eddbce1545))
+
+
+
+
+
 ## [0.1.10](https://github.com/roborox/rixio/compare/@rixio/form-store@0.1.9...@rixio/form-store@0.1.10) (2020-12-03)
 
 **Note:** Version bump only for package @rixio/form-store

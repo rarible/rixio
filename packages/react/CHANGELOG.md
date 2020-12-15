@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.18 (2020-12-15)
+
+
+### Bug Fixes
+
+* rename all rxjs-* packages, remove rxjs prefix ([6726aa6](https://github.com/roborox/rixio/commit/6726aa62b7b7b9b74cef48030468a6eddbce1545))
+
+
+
+
+
 ## [0.8.17](https://github.com/roborox/rixio/compare/@rixio/rxjs-react@0.8.16...@rixio/rxjs-react@0.8.17) (2020-12-14)
 
 
