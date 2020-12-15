@@ -23,10 +23,11 @@ export interface KeyCache<K, V> {
 	single(key: K): Cache<V>
 }
 
-// @todo we can schedule all requests to individual items and load them in batch (if supported)
+const UNDEFINED = Symbol.for("UNDEFINED")
+
 export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	private readonly batchHelper: BatchHelper<K>
-	private readonly results: Subject<[K, V | undefined]> = new Subject()
+	private readonly results: Subject<[K, V | typeof UNDEFINED]> = new Subject()
 	private readonly lensFactory = byKeyWithDefaultFactory<K, CacheState<V>>(idleCache)
 	private readonly singles = new SimpleCache<K, Cache<V>>(key => new CacheImpl(this.getAtom(key), () => this.load(key)))
 
@@ -43,8 +44,11 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 		const values = await this.loader(keys)
 		const map = IM(values)
 		keys.forEach(key => {
-			const value = map.get(key)
-			this.results.next([key, value])
+			if (map.has(key)) {
+				this.results.next([key, map.get(key)!])
+			} else {
+				this.results.next([key, UNDEFINED])
+			}
 		})
 	}
 
@@ -84,11 +88,11 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 		this.batchHelper.add(key)
 		const [, v] = await this.results
 			.pipe(
-				filter(([k, v]) => key === k),
+				filter(([k]) => key === k),
 				first()
 			)
 			.toPromise()
-		if (v !== undefined) {
+		if (v !== UNDEFINED) {
 			return v
 		}
 		throw new Error("Not found")

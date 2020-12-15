@@ -35,6 +35,20 @@ describe("KeyCacheImpl", () => {
 		expect(state$.get().size).toBe(3)
 	})
 
+	test("should work with undefined values", async () => {
+		const cache = new KeyCacheImpl<string, number | undefined>(
+			Atom.create(IM()),
+			toListDataLoader(() => Promise.resolve(undefined))
+		)
+		const emitted: Wrapped<number | undefined>[] = []
+		cache.single("test").subscribe(value => emitted.push(value))
+		await waitFor(() => {
+			expect(emitted.length).toBe(2)
+			expect(emitted[0]).toStrictEqual(pendingWrapped)
+			expect(emitted[1]).toStrictEqual(createFulfilledWrapped(undefined))
+		})
+	})
+
 	test("should be reloaded if cleared", async () => {
 		let value: number = 10
 		const cache = new KeyCacheImpl<string, number>(
