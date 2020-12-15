@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.20](https://github.com/roborox/rixio/compare/@rixio/cache@0.0.19...@rixio/cache@0.0.20) (2020-12-15)
+
+
+### Bug Fixes
+
+* fix for undefined values in KeyCache ([5b517e1](https://github.com/roborox/rixio/commit/5b517e16d533059d6dc6acffa9e134b250b9ee81))
+
+
+
+
+
 ## 0.0.19 (2020-12-15)
 
 
