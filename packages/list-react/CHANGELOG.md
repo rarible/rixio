@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.21](https://github.com/roborox/rixio/compare/@rixio/list-react@0.1.20...@rixio/list-react@0.1.21) (2020-12-17)
+
+
+### Bug Fixes
+
+* support for pendingSize in GridWindowList ([4c2bae8](https://github.com/roborox/rixio/commit/4c2bae85355c858db2d73d918ff1ebc742b40149))
+
+
+
+
+
 ## [0.1.20](https://github.com/roborox/rixio/compare/@rixio/list-react@0.1.19...@rixio/list-react@0.1.20) (2020-12-16)
 
 **Note:** Version bump only for package @rixio/list-react
