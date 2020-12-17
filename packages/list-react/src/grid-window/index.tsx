@@ -20,28 +20,31 @@ export type GridWindowListProps<T, C> = Omit<InfiniteListProps<T, C>, "children"
 	renderer: ListReactRenderer<T>
 	gridProps?: Partial<GridProps>
 	threshold?: number
+	pendingSize?: number
 	minimumBatchRequest?: number
 }
 
 export function GridWindowList<T, C>({
 	state$,
 	rect,
-	minimumBatchRequest,
+	minimumBatchRequest = 10,
+	pendingSize = minimumBatchRequest,
 	renderer,
 	gridProps = {},
-	threshold,
+	threshold = 3,
 	...restProps
 }: GridWindowListProps<T, C>) {
-	const pending = useMemo(() => new Array(rect.columnCount).fill({ type: "pending" }), [rect.columnCount])
+	const pending = useMemo(() => new Array(pendingSize).fill({ type: "pending" }), [pendingSize])
 	const onRowsRenderedRef = useRef<((params: RenderedSection) => any) | undefined>()
 
 	const children = useCallback(
-		({ load, items, status, finished }: RenderInfo<T, C>) => {
+		({ load, items, finished }: RenderInfo<T, C>) => {
 			const itemRowCount = Math.ceil(items.length / rect.columnCount)
-			const rowCount = finished ? itemRowCount : itemRowCount + 1
+			const fakeItemsCount = finished ? items.length : (items.length + pendingSize)
+			const rowCount = Math.ceil(fakeItemsCount / rect.columnCount)
 			const raw = items.map(x => ({ type: "item", data: x }))
-			const renderableItems = (status === "pending" ? [...raw, ...pending] : raw) as ListReactRendererItem<T>[]
-			const isRowLoaded = ({ index }: Index) => finished || index < rowCount - 1
+			const renderableItems = (finished ? raw : [...raw, ...pending]) as ListReactRendererItem<T>[]
+			const isRowLoaded = ({ index }: Index) => finished || index < itemRowCount
 
 			const cellRenderer: GridCellRenderer = ({ key, style, columnIndex, rowIndex }) => (
 				<GridWindowListCell
