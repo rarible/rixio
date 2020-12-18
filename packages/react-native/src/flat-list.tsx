@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React, { Ref, useCallback } from "react"
 import { FlatList, FlatListProps, ListRenderItemInfo } from "react-native"
 import { Observable, of } from "rxjs"
 import { useRx } from "@rixio/react"
@@ -16,12 +16,14 @@ export interface RxFlatListProps<T>
 	data: Observable<T[] | undefined | null>
 	renderItem: RxListRenderItem<T>
 	refreshing?: Observable<boolean>
+	ref?: Ref<FlatList<T>>
 }
 
 export function RxFlatList<T>({
 	data,
 	renderItem: render,
 	refreshing = of(false),
+	ref,
 	...rest
 }: RxFlatListProps<T>): React.ReactElement | null {
 	const list = toPlainOrThrow(useRx(data))
@@ -38,7 +40,7 @@ export function RxFlatList<T>({
 	)
 
 	if (list) {
-		return <FlatList data={list} renderItem={renderItem} refreshing={isRefreshing} {...rest} />
+		return <FlatList ref={ref} data={list} renderItem={renderItem} refreshing={isRefreshing} {...rest} />
 	}
 	return null
 }
