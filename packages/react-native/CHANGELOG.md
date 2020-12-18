@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.22](https://github.com/roborox/rixio/compare/@rixio/react-native@0.5.21...@rixio/react-native@0.5.22) (2020-12-18)
+
+
+### Bug Fixes
+
+* add ref to react native lists ([96e10d5](https://github.com/roborox/rixio/commit/96e10d5f3a1c59168f4f1deeec3dcdbabf2671d5))
+
+
+
+
+
 ## [0.5.21](https://github.com/roborox/rixio/compare/@rixio/react-native@0.5.20...@rixio/react-native@0.5.21) (2020-12-15)
 
 **Note:** Version bump only for package @rixio/react-native

@@ -1,6 +1,6 @@
 {
   "name": "@rixio/list-react-native",
-  "version": "0.3.29",
+  "version": "0.3.30",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
