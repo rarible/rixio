@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/roborox/rixio/compare/@rixio/list-react-native@0.3.30...@rixio/list-react-native@0.4.0) (2020-12-29)
+
+
+### Features
+
+* InfiniteList with mapper function is Observable, can be used in some variants of lists ([1401c15](https://github.com/roborox/rixio/commit/1401c15f386a891f436b3ebfb1b5a28dbdaa1c2e))
+
+
+
+
+
 ## [0.3.30](https://github.com/roborox/rixio/compare/@rixio/list-react-native@0.3.29...@rixio/list-react-native@0.3.30) (2020-12-18)
 
 

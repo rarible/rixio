@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/roborox/rixio/compare/@rixio/react@0.8.19...@rixio/react@0.9.0) (2020-12-29)
+
+
+### Features
+
+* InfiniteList with mapper function is Observable, can be used in some variants of lists ([1401c15](https://github.com/roborox/rixio/commit/1401c15f386a891f436b3ebfb1b5a28dbdaa1c2e))
+
+
+
+
+
 ## [0.8.19](https://github.com/roborox/rixio/compare/@rixio/react@0.8.18...@rixio/react@0.8.19) (2020-12-15)
 
 **Note:** Version bump only for package @rixio/react
