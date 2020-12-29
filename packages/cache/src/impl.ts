@@ -1,25 +1,21 @@
 import { Atom } from "@rixio/atom"
-import { Observable, Subscriber, Subscription, BehaviorSubject } from "rxjs"
-import { filter, first } from "rxjs/operators"
+import { Observable } from "rxjs"
+import { filter, first, map as rxjsMap } from "rxjs/operators"
 import {
 	createFulfilledWrapped,
 	createRejectedWrapped,
+	fromPromise,
 	markWrappedObservable,
 	pendingWrapped,
-	fromPromise,
 	Wrapped,
 } from "@rixio/wrapped"
-import { map as rxjsMap } from "rxjs/operators"
+import { MappedSubject } from "./mapped-subject"
 import { Cache, CacheState, createFulfilledCache, idleCache, toCache } from "./index"
 
-export class CacheImpl<T> extends BehaviorSubject<Wrapped<T>> implements Cache<T> {
-	private _subscription: Subscription | null = null
-	private _refCount = 0
-
+export class CacheImpl<T> extends MappedSubject<CacheState<T>, Wrapped<T>> implements Cache<T> {
 	constructor(private readonly _atom: Atom<CacheState<T>>, private readonly _loader: () => Promise<T>) {
-		super(pendingWrapped)
+		super(_atom, pendingWrapped)
 		markWrappedObservable(this)
-		this._onSourceValue = this._onSourceValue.bind(this)
 		this.clear = this.clear.bind(this)
 	}
 
@@ -57,7 +53,7 @@ export class CacheImpl<T> extends BehaviorSubject<Wrapped<T>> implements Cache<T
 		this.atom.set(idleCache as CacheState<T>)
 	}
 
-	private _onSourceValue(x: CacheState<T>) {
+	protected _onValue(x: CacheState<T>) {
 		switch (x.status) {
 			case "idle":
 				save(this._loader(), this._atom).then()
@@ -78,34 +74,6 @@ export class CacheImpl<T> extends BehaviorSubject<Wrapped<T>> implements Cache<T
 		if (value !== this.getValue()) {
 			this.next(value)
 		}
-	}
-
-	_subscribe(subscriber: Subscriber<Wrapped<T>>): Subscription {
-		// tslint:disable-line function-name
-		if (!this._subscription) {
-			this._subscription = this._atom.subscribe(this._onSourceValue)
-		}
-		this._refCount = this._refCount + 1
-
-		const sub = new Subscription(() => {
-			this._refCount = this._refCount - 1
-			if (this._refCount <= 0 && this._subscription) {
-				this._subscription.unsubscribe()
-				this._subscription = null
-			}
-		})
-		sub.add(super._subscribe(subscriber))
-		return sub
-	}
-
-	unsubscribe() {
-		if (this._subscription) {
-			this._subscription.unsubscribe()
-			this._subscription = null
-		}
-		this._refCount = 0
-
-		super.unsubscribe()
 	}
 }
 

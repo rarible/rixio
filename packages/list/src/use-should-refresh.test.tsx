@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useMemo } from "react"
 import { Atom } from "@rixio/atom"
 import { RxIf } from "@rixio/react"
 import { fireEvent, render, waitFor } from "@testing-library/react"
 import { act } from "react-dom/test-utils"
 import { InfiniteListState, ListPartLoader } from "./domain"
 import { useShouldRefresh } from "./use-should-refresh"
+import { InfiniteList, mapperFactory } from "./infinite-list";
 
 function CheckShouldRefresh({
 	state$,
@@ -13,7 +14,8 @@ function CheckShouldRefresh({
 	state$: Atom<InfiniteListState<string, string>>
 	loader: ListPartLoader<string, string>
 }) {
-	const { shouldRefresh$, refreshing$, refresh } = useShouldRefresh({ state$, loader })
+	const list$ = useMemo(() => new InfiniteList(state$, loader, 10, mapperFactory()), [loader, state$])
+	const { shouldRefresh$, refreshing$, refresh } = useShouldRefresh({ list$ })
 	return (
 		<>
 			<RxIf test$={shouldRefresh$}>
@@ -31,7 +33,7 @@ function CheckShouldRefresh({
 describe("useShouldRefresh", () => {
 	it("should be false, if list not changed", async () => {
 		const state$ = Atom.create<InfiniteListState<string, string>>({ items: ["1"], status: "fulfilled", continuation: "1", finished: true })
-		const loader: ListPartLoader<string, string> = c => Promise.resolve([["1"], "1"])
+		const loader: ListPartLoader<string, string> = () => Promise.resolve([["1"], "1"])
 		const r = render(<CheckShouldRefresh state$={state$} loader={loader}/>)
 		await delay(50)
 		expect(() => r.getByTestId("refresh")).toThrow()

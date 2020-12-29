@@ -1,12 +1,11 @@
 import { Atom } from "@rixio/atom"
 import { Observable } from "rxjs"
-import { useEffect, useMemo, useCallback } from "react"
+import { useCallback, useEffect, useMemo } from "react"
 import { CacheState, idleCache, save } from "@rixio/cache"
-import { InfiniteListState, ListPartLoader } from "./domain"
+import { InfiniteList } from "./infinite-list"
 
 export type ShouldRefreshProps<T, C> = {
-	state$: Atom<InfiniteListState<T, C>>
-	loader: ListPartLoader<T, C>
+	list$: InfiniteList<T, C, any>
 	mapId?: (x: T) => any
 	onRefresh?: () => void
 }
@@ -18,24 +17,24 @@ export type ShouldRefreshReturnType = {
 }
 
 export function useShouldRefresh<T, C>({
-	state$, loader, mapId = (e) => e, onRefresh
+	list$, mapId = e => e, onRefresh
 }: ShouldRefreshProps<T, C>): ShouldRefreshReturnType {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const shouldRefresh$ = useMemo(() => Atom.create(false), [state$, loader])
+	const shouldRefresh$ = useMemo(() => Atom.create(false), [list$])
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const saveState$ = useMemo(() => Atom.create<CacheState<void>>(idleCache), [shouldRefresh$])
 	const refreshing$ = useMemo(() => saveState$.view("status").view(x => x === "pending"), [saveState$])
 	const refresh = useCallback(() => {
 		const job = async () => {
 			onRefresh?.()
-			await loadFirstPage(state$, loader)
+			await loadFirstPage(list$)
 			shouldRefresh$.set(false)
 		}
 		return save(job(), saveState$)
-	}, [loader, onRefresh, saveState$, shouldRefresh$, state$])
+	}, [list$, onRefresh, saveState$, shouldRefresh$])
 
 	useEffect(() => {
-		shouldRefresh(state$, loader, mapId)
+		shouldRefresh(list$, mapId)
 			.then(should => {
 				switch (should) {
 					case "explicitly":
@@ -49,7 +48,7 @@ export function useShouldRefresh<T, C>({
 						break;
 				}
 			})
-	}, [loader, mapId, state$, shouldRefresh$, refresh])
+	}, [list$, mapId, shouldRefresh$, refresh])
 
 	return {
 		shouldRefresh$,
@@ -59,11 +58,11 @@ export function useShouldRefresh<T, C>({
 }
 
 async function shouldRefresh<T, C>(
-	state$: Atom<InfiniteListState<T, C>>, loader: ListPartLoader<T, C>, mapId: (x: T) => any,
+	list$: InfiniteList<T, C, any>, mapId: (x: T) => any,
 ) {
-	const { status, items } = state$.get()
+	const { status, items } = list$.state$.get()
 	if (status === "fulfilled") {
-		const [nextItems] = await loader(null)
+		const [nextItems] = await list$.loadPage(null)
 		if (!mapId(items[0])) {
 			return "explicitly"
 		}
@@ -75,10 +74,10 @@ async function shouldRefresh<T, C>(
 	return "never"
 }
 
-async function loadFirstPage<T, C>(state$: Atom<InfiniteListState<T, C>>, partLoader: ListPartLoader<T, C>) {
-	const [items, continuation] = await Promise.all([partLoader(null), delay(500)]).then(x => x[0])
+async function loadFirstPage<T, C>(list$: InfiniteList<T, C, any>) {
+	const [items, continuation] = await Promise.all([list$.loadPage(null), delay(500)]).then(x => x[0])
 	const finished = items.length === 0 || continuation === null
-	state$.set({
+	list$.state$.set({
 		finished,
 		items,
 		continuation,

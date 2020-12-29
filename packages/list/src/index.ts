@@ -1,5 +1,3 @@
-export { InfiniteListState, ListPartLoader, listStateIdle } from "./domain"
-export { InfiniteList, InfiniteListProps } from "./component"
-export { loadNext } from "./load-next"
+export { InfiniteListState, ListPartLoader, listStateIdle, InfiniteListPropsShared } from "./domain"
+export { InfiniteList, isFakeItem, FakeItem, InfiniteListMapper, MapperFactoryProps, mapperFactory, ListItem } from "./infinite-list"
 export { reactiveList } from "./reactive-list"
-export { RxInfiniteList, RxInfiniteListProps, RenderInfo } from "./component-rx"

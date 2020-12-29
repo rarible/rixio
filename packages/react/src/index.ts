@@ -1,5 +1,4 @@
 export { RxWrapper, RxWrapperProps } from "./rx-wrapper"
-export { useRxChange } from "./use-rx-change"
 export { useSubscription } from "./use-subscription"
 export { lift } from "./lift"
 export { OrReactChild, RxBaseProps, RxWrapperBase } from "./base"

@@ -4,7 +4,7 @@ import { useEffect } from "react"
 export function useSubscription<T>(
 	observable: Observable<T>,
 	observer?: PartialObserver<T> | ((value: T) => void),
-	deps: any[] = []
+	deps: any[] = [observable]
 ) {
 	useEffect(() => {
 		if (typeof observer === "function") {
@@ -19,5 +19,5 @@ export function useSubscription<T>(
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [observable, ...deps])
+	}, deps)
 }

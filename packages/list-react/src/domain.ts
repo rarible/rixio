@@ -1,2 +1,3 @@
-export type ListReactRendererItem<T> = { type: "item"; data: T } | { type: "pending" } | null
-export type ListReactRenderer<T> = (item: ListReactRendererItem<T>) => React.ReactNode
+import React from "react";
+
+export type ListReactRenderer<T> = (item: T) => React.ReactNode

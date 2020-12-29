@@ -36,7 +36,7 @@ export function getImmediateOrThrow<T>(observable: Observable<T>): T {
 	return immediate.value
 }
 
-export function useRx<T>(observable: WrappedObservable<T>, deps: any[] = []): Wrapped<T> {
+export function useRx<T>(observable: WrappedObservable<T>, deps: any[] = [observable]): Wrapped<T> {
 	const [, setCount] = useState<number>(0)
 	const wrapped = useMemo(() => wrap(observable), [observable])
 	const value = useRef<Wrapped<T>>(pendingWrapped)
@@ -53,7 +53,7 @@ export function useRx<T>(observable: WrappedObservable<T>, deps: any[] = []): Wr
 			}
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}), [wrapped, ...deps])
+	}), deps)
 	useEffect(() => {
 		return () => sub.unsubscribe()
 	}, [sub])

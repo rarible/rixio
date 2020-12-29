@@ -1,12 +1,13 @@
-import React, { memo, useCallback, useMemo, useRef, CSSProperties } from "react"
-import { RenderInfo, RxInfiniteList } from "@rixio/list"
-import { InfiniteListProps } from "@rixio/list/build/component"
+import React, { CSSProperties, memo, useCallback, useMemo, useRef } from "react"
+import { isFakeItem } from "@rixio/list"
 import { InfiniteLoader } from "react-virtualized/dist/es/InfiniteLoader"
 import { Grid, GridCellRenderer, GridProps, RenderedSection } from "react-virtualized/dist/es/Grid"
 import { WindowScroller } from "react-virtualized/dist/es/WindowScroller"
 import type { Index } from "react-virtualized"
+import { IndexRange } from "react-virtualized"
 import { Property } from "csstype"
-import { ListReactRenderer, ListReactRendererItem } from "../domain"
+import { ListReactRenderer } from "../domain"
+import { liftReactList, RxReactListProps } from "../rx";
 
 export type GridRect = {
 	rowHeight: number
@@ -15,105 +16,97 @@ export type GridRect = {
 	width: number
 }
 
-export type GridWindowListProps<T, C> = Omit<InfiniteListProps<T, C>, "children"> & {
-	rect: GridRect
+export type GridWindowListProps<T> = {
 	renderer: ListReactRenderer<T>
+	data: T[]
+	rect: GridRect
 	gridProps?: Partial<GridProps>
 	threshold?: number
 	pendingSize?: number
 	minimumBatchRequest?: number
+	loadNext: () => void
 }
 
 export function GridWindowList<T, C>({
-	state$,
+	data,
 	rect,
 	minimumBatchRequest = 10,
-	pendingSize = minimumBatchRequest,
 	renderer,
 	gridProps = {},
 	threshold = 3,
-	...restProps
-}: GridWindowListProps<T, C>) {
-	const pending = useMemo(() => new Array(pendingSize).fill({ type: "pending" }), [pendingSize])
+	loadNext,
+}: GridWindowListProps<T>) {
+
 	const onRowsRenderedRef = useRef<((params: RenderedSection) => any) | undefined>()
+	const isRowLoaded = useCallback(({ index }: Index) => {
+		const rowStart = rect.columnCount * index
+		return rowStart < data.length && !isFakeItem(data[rowStart])
+	}, [data, rect.columnCount])
+	const loadMoreRows = useCallback<(params: IndexRange) => Promise<any>>(async () => loadNext(), [loadNext])
 
-	const children = useCallback(
-		({ load, items, finished }: RenderInfo<T, C>) => {
-			const itemRowCount = Math.ceil(items.length / rect.columnCount)
-			const fakeItemsCount = finished ? items.length : (items.length + pendingSize)
-			const rowCount = Math.ceil(fakeItemsCount / rect.columnCount)
-			const raw = items.map(x => ({ type: "item", data: x }))
-			const renderableItems = (finished ? raw : [...raw, ...pending]) as ListReactRendererItem<T>[]
-			const isRowLoaded = ({ index }: Index) => finished || index < itemRowCount
-
-			const cellRenderer: GridCellRenderer = ({ key, style, columnIndex, rowIndex }) => (
-				<GridWindowListCell
-					gap={rect.gap}
-					width={style.width}
-					height={style.height}
-					top={style.top}
-					left={style.left}
-					rowIndex={rowIndex}
-					columnIndex={columnIndex}
-					key={key}
-					columnCount={rect.columnCount}
-					rowCount={rowCount}
-					renderer={renderer}
-					items={renderableItems}
-				/>
-			)
-
-			return (
-				<InfiniteLoader
-					threshold={threshold}
-					isRowLoaded={isRowLoaded}
-					rowCount={Infinity}
-					loadMoreRows={load}
-					minimumBatchRequest={minimumBatchRequest}
-				>
-					{({ registerChild, onRowsRendered }) => {
-						if (!onRowsRenderedRef.current) {
-							onRowsRenderedRef.current = (r: RenderedSection) => {
-								onRowsRendered({
-									startIndex: r.rowStartIndex,
-									stopIndex: r.rowStopIndex,
-								})
-							}
-						}
-
-						return (
-							<WindowScroller>
-								{({ height, isScrolling, onChildScroll, scrollTop }) => (
-									<Grid
-										columnCount={rect.columnCount}
-										scrollTop={scrollTop}
-										onScroll={onChildScroll}
-										columnWidth={rect.width / rect.columnCount}
-										rowCount={rowCount}
-										rowHeight={rect.rowHeight}
-										isScrolling={isScrolling}
-										cellRenderer={cellRenderer}
-										{...gridProps}
-										autoHeight
-										height={height}
-										width={rect.width}
-										ref={registerChild}
-										onSectionRendered={onRowsRenderedRef.current}
-									/>
-								)}
-							</WindowScroller>
-						)
-					}}
-				</InfiniteLoader>
-			)
-		},
-		[rect, pending, threshold, minimumBatchRequest, renderer, gridProps]
+	const cellRenderer: GridCellRenderer = ({ key, style, columnIndex, rowIndex }) => (
+		<GridWindowListCell
+			gap={rect.gap}
+			width={style.width}
+			height={style.height}
+			top={style.top}
+			left={style.left}
+			rowIndex={rowIndex}
+			columnIndex={columnIndex}
+			key={key}
+			columnCount={rect.columnCount}
+			rowCount={data.length}
+			renderer={renderer}
+			data={data}
+		/>
 	)
 
-	return <RxInfiniteList state$={state$} children={children} {...restProps} />
+	return (
+		<InfiniteLoader
+			threshold={threshold}
+			isRowLoaded={isRowLoaded}
+			rowCount={Infinity}
+			loadMoreRows={loadMoreRows}
+			minimumBatchRequest={minimumBatchRequest}
+		>
+			{({ registerChild, onRowsRendered }) => {
+				if (!onRowsRenderedRef.current) {
+					onRowsRenderedRef.current = (r: RenderedSection) => {
+						onRowsRendered({
+							startIndex: r.rowStartIndex,
+							stopIndex: r.rowStopIndex,
+						})
+					}
+				}
+
+				return (
+					<WindowScroller>
+						{({ height, isScrolling, onChildScroll, scrollTop }) => (
+							<Grid
+								columnCount={rect.columnCount}
+								scrollTop={scrollTop}
+								onScroll={onChildScroll}
+								columnWidth={rect.width / rect.columnCount}
+								rowCount={data.length}
+								rowHeight={rect.rowHeight}
+								isScrolling={isScrolling}
+								cellRenderer={cellRenderer}
+								{...gridProps}
+								autoHeight
+								height={height}
+								width={rect.width}
+								ref={registerChild}
+								onSectionRendered={onRowsRenderedRef.current}
+							/>
+						)}
+					</WindowScroller>
+				)
+			}}
+		</InfiniteLoader>
+	)
 }
 
-type GridWindowListCellProps = {
+type GridWindowListCellProps<T> = {
 	rowIndex: number
 	columnIndex: number
 	width?: Property.Width<number>
@@ -124,10 +117,10 @@ type GridWindowListCellProps = {
 	renderer: ListReactRenderer<any>
 	gap: number
 	rowCount: number
-	items: ListReactRendererItem<any>[]
+	data: T[]
 }
 
-const GridWindowListCell = memo(function GridWindowListCell({
+const GridWindowListCell = memo(function GridWindowListCell<T>({
 	renderer,
 	rowIndex,
 	columnCount,
@@ -137,15 +130,15 @@ const GridWindowListCell = memo(function GridWindowListCell({
 	top,
 	left,
 	gap,
-	items,
+	data,
 	rowCount,
-}: GridWindowListCellProps) {
+}: GridWindowListCellProps<T>) {
 	const index = rowIndex * columnCount + columnIndex
 	const finalStyle = useMemo<CSSProperties>(
 		() => ({ position: "absolute", width, height, top, left, ...getStylesWithGap(gap, rowIndex, columnIndex, rowCount, columnCount) }),
 		[columnCount, columnIndex, gap, rowCount, rowIndex, width, height, top, left]
 	)
-	const item = items[index]
+	const item = data[index]
 	const children = useMemo(() => renderer(item), [item, renderer])
 	return <div style={finalStyle} children={children} />
 })
@@ -156,3 +149,5 @@ const getStylesWithGap = (gap: number, row: number, col: number, rowCount: numbe
 	paddingTop: row !== 0 ? gap : 0,
 	paddingBottom: row !== rowCount - 1 ? gap / 2 : 0,
 })
+
+export const RxGridWindowList: <T>(props: RxReactListProps<T, GridWindowListProps<T>>) => JSX.Element = liftReactList(GridWindowList) as any

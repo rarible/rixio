@@ -40,7 +40,7 @@ export function Rx<T1, T2, T3, T4>(props: Rx4Props<T1, T2, T3, T4>): React.React
 export function Rx({ pending, rejected, children, value$ }: RxProps): React.ReactElement | null {
 	const observables = useObservables(value$)
 	const [nonce, setNonce] = useState(0)
-	const value = useRx(observables, [nonce])
+	const value = useRx(observables, [observables, nonce])
 	switch (value.status) {
 		case "pending":
 			return <>{pending}</>
@@ -48,7 +48,7 @@ export function Rx({ pending, rejected, children, value$ }: RxProps): React.Reac
 			if (typeof rejected === "function") {
 				const reload = () => {
 					value.reload()
-					setNonce(nonce + 1)
+					setNonce(n => n + 1)
 				}
 				return <>{rejected(value.error, reload)}</>
 			}

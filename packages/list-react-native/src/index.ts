@@ -1,1 +1,9 @@
-export { FooterComponentProps, InfiniteFlatListProps, InfiniteFlatList } from "./infinite-flat-list"
+export {
+	liftFlatList,
+	RxFlatList,
+	RxAnimatedFlatList,
+	RxListRenderItem,
+	RxListRenderItemInfo,
+	RxFlatListProps,
+	RxAnimatedFlatListProps,
+} from "./rx-flat-list"

@@ -2,30 +2,28 @@ import "react-virtualized/styles.css"
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import { Atom } from "@rixio/atom"
-import { listStateIdle } from "@rixio/list"
+import { InfiniteList, InfiniteListState, ListItem, listStateIdle, mapperFactory } from "@rixio/list";
 import { ListReactRenderer } from "../domain"
-import { VerticalList } from "./index"
+import { RxVerticalList } from "./index";
 export function delay(timeout: number): Promise<number> {
 	return new Promise(resolve => setTimeout(resolve, timeout))
 }
 const items = new Array(100).fill(1).map((_, i) => i)
 
-async function load(c: number | null): Promise<[number[], number]> {
+async function load(pageSize: number, c: number | null): Promise<[number[], number]> {
 	await delay(1500)
 	const current = c || 0
-	return [items.slice(current, current + 10), current + 10]
+	return [items.slice(current, current + pageSize), current + pageSize]
 }
 
-const state$ = Atom.create(listStateIdle)
+const state$ = Atom.create<InfiniteListState<number, number>>(listStateIdle)
+const list$ = new InfiniteList(state$, load, 20, mapperFactory({ initial: "fake" }))
 
-const renderer: ListReactRenderer<number> = item => {
-	if (!item) {
-		return null
-	}
+const renderer: ListReactRenderer<ListItem<number>> = item => {
 	if (item.type === "item") {
 		return (
-			<article style={{ display: "flex", height: "100%", background: "grey" }} key={item.data.toString()}>
-				<h3>{item.data}</h3>
+			<article style={{ display: "flex", height: "100%", background: "grey" }} key={item.value.toString()}>
+				<h3>{item.value}</h3>
 			</article>
 		)
 	}
@@ -33,9 +31,8 @@ const renderer: ListReactRenderer<number> = item => {
 }
 
 storiesOf("vertical-list", module).add("basic", () => (
-	<VerticalList<number, number>
-		state$={state$}
-		loader={load}
+	<RxVerticalList
+		data$={list$}
 		pending={<div>First load</div>}
 		rejected={() => <div>Some error</div>}
 		rect={{
