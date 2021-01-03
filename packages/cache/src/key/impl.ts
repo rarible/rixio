@@ -3,53 +3,35 @@ import { Atom } from "@rixio/atom"
 import { Lens, Prism, SimpleCache } from "@rixio/lens"
 import { Subject } from "rxjs"
 import { filter, first } from "rxjs/operators"
-import { CacheImpl } from "./impl"
-import { BatchHelper } from "./key-batch"
-import { Cache, CacheState, createFulfilledCache, idleCache } from "./domain"
-
-export type DataLoader<K, V> = (key: K) => Promise<V>
-
-export type ListDataLoader<K, V> = (keys: K[]) => Promise<[K, V][]>
-
-export function toListDataLoader<K, V>(loader: DataLoader<K, V>): ListDataLoader<K, V> {
-	return ids => Promise.all(ids.map(id => loader(id).then(v => [id, v] as [K, V])))
-}
-
-export interface KeyCache<K, V> {
-	get(key: K, force?: boolean): Promise<V>
-	set(key: K, value: V): void
-	getMap(ids: K[]): Promise<IM<K, V | undefined>>
-	getAtom(key: K): Atom<CacheState<V>>
-	single(key: K): Cache<V>
-}
-
-const UNDEFINED = Symbol.for("UNDEFINED")
+import { CacheImpl } from "../impl"
+import { Cache, CacheState, createFulfilledCache, idleCache } from "../domain"
+import { BatchHelper } from "./batch-helper"
+import { KeyCache, ListDataLoader, UNDEFINED } from "./domain"
 
 export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
-	private readonly batchHelper: BatchHelper<K>
-	private readonly results: Subject<[K, V | typeof UNDEFINED]> = new Subject()
+	private readonly batcher: BatchHelper<K>
+	private readonly results = new Subject<[K, V | typeof UNDEFINED]>()
 	private readonly lensFactory = byKeyWithDefaultFactory<K, CacheState<V>>(idleCache)
-	private readonly singles = new SimpleCache<K, Cache<V>>(key => new CacheImpl(this.getAtom(key), () => this.load(key)))
+	private readonly singles = new SimpleCache<K, Cache<V>>(key => {
+		return new CacheImpl(this.getAtom(key), () => this.load(key))
+	})
 
 	constructor(
 		private readonly map: Atom<IM<K, CacheState<V>>>,
 		private readonly loader: ListDataLoader<K, V>,
 		timeout: number = 50
 	) {
-		this.onBatchLoad = this.onBatchLoad.bind(this)
-		this.batchHelper = new BatchHelper<K>(this.onBatchLoad, timeout)
-	}
-
-	private async onBatchLoad(keys: K[]) {
-		const values = await this.loader(keys)
-		const map = IM(values)
-		keys.forEach(key => {
-			if (map.has(key)) {
-				this.results.next([key, map.get(key)!])
-			} else {
-				this.results.next([key, UNDEFINED])
-			}
-		})
+		this.batcher = new BatchHelper<K>(async keys => {
+			const values = await this.loader(keys)
+			const map = IM(values)
+			keys.forEach(key => {
+				if (map.has(key)) {
+					this.results.next([key, map.get(key)!])
+				} else {
+					this.results.next([key, UNDEFINED])
+				}
+			})
+		}, timeout)
 	}
 
 	single(key: K): Cache<V> {
@@ -78,15 +60,17 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 		const values = await this.loader(notLoaded)
 		this.map.modify(map => values.reduce((map, [id, v]) => map.set(id, createFulfilledCache(v)), map))
 		const allValues = await Promise.all(
-			ids.map(id => this.get(id)
-				.then(v => [id, v] as [K, V])
-				.catch(() => [id, undefined] as [K, undefined]))
+			ids.map(id =>
+				this.get(id)
+					.then(v => [id, v] as [K, V])
+					.catch(() => [id, undefined] as [K, undefined])
+			)
 		)
 		return IM(allValues)
 	}
 
 	private async load(key: K): Promise<V> {
-		this.batchHelper.add(key)
+		this.batcher.add(key)
 		const [, v] = await this.results
 			.pipe(
 				filter(([k]) => key === k),

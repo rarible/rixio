@@ -2,7 +2,7 @@ import { Subject } from "rxjs"
 import waitForExpect from "wait-for-expect"
 import { combineLatest, flatMap, map } from "./operators"
 import { createRejectedWrapped, Rejected, Wrapped } from "./domain"
-import { wrap } from "./utils";
+import { wrap } from "./utils"
 
 describe("operators", () => {
 	test("map should work with plain observables", () => {

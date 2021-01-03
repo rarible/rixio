@@ -1,7 +1,7 @@
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useRef, useEffect } from "react"
 import { Observable } from "rxjs"
 import { first } from "rxjs/operators"
-import { Wrapped, wrap, WrappedObservable, toPlainOrThrow, pendingWrapped } from "@rixio/wrapped";
+import { Wrapped, wrap, WrappedObservable, toPlainOrThrow, pendingWrapped } from "@rixio/wrapped"
 import { ReadOnlyAtom } from "@rixio/atom"
 import { useSubscription } from "./use-subscription"
 
@@ -41,19 +41,23 @@ export function useRx<T>(observable: WrappedObservable<T>, deps: any[] = [observ
 	const wrapped = useMemo(() => wrap(observable), [observable])
 	const value = useRef<Wrapped<T>>(pendingWrapped)
 	const initial = useRef(true)
-	const sub = useMemo(() => wrapped.subscribe(next => {
-		const current = value.current
-		value.current = next
-		if (!initial.current) {
-			if (
-				current.status !== next.status ||
-				(current.status === "fulfilled" && next.status === "fulfilled" && current.value !== next.value)
-			) {
-				setCount(c => c + 1)
-			}
-		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}), deps)
+	const sub = useMemo(
+		() =>
+			wrapped.subscribe(next => {
+				const current = value.current
+				value.current = next
+				if (!initial.current) {
+					if (
+						current.status !== next.status ||
+						(current.status === "fulfilled" && next.status === "fulfilled" && current.value !== next.value)
+					) {
+						setCount(c => c + 1)
+					}
+				}
+				// eslint-disable-next-line react-hooks/exhaustive-deps
+			}),
+		deps
+	)
 	useEffect(() => {
 		return () => sub.unsubscribe()
 	}, [sub])

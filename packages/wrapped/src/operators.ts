@@ -8,7 +8,7 @@ import {
 	Wrapped,
 	WrappedObservable,
 } from "./domain"
-import { markWrappedObservable, wrap } from "./index";
+import { markWrappedObservable, wrap } from "./index"
 
 type F<T, R> = (value: T) => R
 
@@ -97,7 +97,5 @@ export function fromPromise<T>(promise: PromiseLike<T>): Observable<Wrapped<T>> 
 }
 
 export function cond<T>(ifTrue: T, ifFalse: T): F<WrappedObservable<any>, Observable<Wrapped<T>>> {
-	return wrapped => markWrappedObservable(
-		wrap(wrapped).pipe(map(value => (value ? ifTrue : ifFalse)))
-	)
+	return wrapped => markWrappedObservable(wrap(wrapped).pipe(map(value => (value ? ifTrue : ifFalse))))
 }

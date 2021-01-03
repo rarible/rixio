@@ -2,7 +2,7 @@ import { Observable, of } from "rxjs"
 import { Lens } from "@rixio/lens"
 import { Lifted, Wrapped, createFulfilledWrapped } from "./domain"
 import { combineLatest, map } from "./operators"
-import { markWrappedObservable } from "./utils";
+import { markWrappedObservable } from "./utils"
 
 type InferObservableInTuple<T extends any[]> = {
 	[I in keyof T]: T[I] extends Observable<infer T> ? T : T[I]

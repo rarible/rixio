@@ -1,7 +1,7 @@
 import { first } from "rxjs/operators"
 import { of } from "rxjs"
 import { rxObject } from "./rx-object"
-import { wrap } from "./utils";
+import { wrap } from "./utils"
 
 describe("rxObject", () => {
 	test("should work with plain objects", async () => {
@@ -16,9 +16,7 @@ describe("rxObject", () => {
 		const num = Math.random()
 		const obs = rxObject({ key: "value", obs: of(num) })
 		expect(wrap(obs)).toStrictEqual(obs)
-		const value = await obs
-			.pipe(first())
-			.toPromise()
+		const value = await obs.pipe(first()).toPromise()
 		expect(value.status).toBe("fulfilled")
 		expect((value as any).value.key).toBe("value")
 		expect((value as any).value.obs).toBe(num)

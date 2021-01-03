@@ -17,7 +17,9 @@ export type ShouldRefreshReturnType = {
 }
 
 export function useShouldRefresh<T, C>({
-	list$, mapId = e => e, onRefresh
+	list$,
+	mapId = e => e,
+	onRefresh,
 }: ShouldRefreshProps<T, C>): ShouldRefreshReturnType {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const shouldRefresh$ = useMemo(() => Atom.create(false), [list$])
@@ -34,20 +36,19 @@ export function useShouldRefresh<T, C>({
 	}, [list$, onRefresh, saveState$, shouldRefresh$])
 
 	useEffect(() => {
-		shouldRefresh(list$, mapId)
-			.then(should => {
-				switch (should) {
-					case "explicitly":
-						refresh()
-						break;
-					case "should":
-						shouldRefresh$.set(true)
-						break;
-					case "never":
-						shouldRefresh$.set(false)
-						break;
-				}
-			})
+		shouldRefresh(list$, mapId).then(should => {
+			switch (should) {
+				case "explicitly":
+					refresh()
+					break
+				case "should":
+					shouldRefresh$.set(true)
+					break
+				case "never":
+					shouldRefresh$.set(false)
+					break
+			}
+		})
 	}, [list$, mapId, shouldRefresh$, refresh])
 
 	return {
@@ -57,9 +58,7 @@ export function useShouldRefresh<T, C>({
 	}
 }
 
-async function shouldRefresh<T, C>(
-	list$: InfiniteList<T, C, any>, mapId: (x: T) => any,
-) {
+async function shouldRefresh<T, C>(list$: InfiniteList<T, C, any>, mapId: (x: T) => any) {
 	const { status, items } = list$.state$.get()
 	if (status === "fulfilled") {
 		const [nextItems] = await list$.loadPage(null)

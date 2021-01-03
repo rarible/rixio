@@ -1,5 +1,5 @@
 import { Atom } from "@rixio/atom"
-import { Observable } from "rxjs"
+import type { Observable } from "rxjs"
 import { filter, first, map as rxjsMap } from "rxjs/operators"
 import {
 	createFulfilledWrapped,
@@ -24,8 +24,7 @@ export class CacheImpl<T> extends MappedSubject<CacheState<T>, Wrapped<T>> imple
 	}
 
 	get valueAtom(): Atom<T> {
-		// @ts-ignore
-		return this._atom.lens("value")
+		return (this._atom as any).lens("value")
 	}
 
 	get(force: boolean = false): Promise<T> {

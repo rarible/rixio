@@ -2,7 +2,7 @@ import "react-virtualized/styles.css"
 import React, { memo } from "react"
 import { storiesOf } from "@storybook/react"
 import { Atom } from "@rixio/atom"
-import { InfiniteList, InfiniteListState, ListItem, listStateIdle, mapperFactory } from "@rixio/list";
+import { InfiniteList, InfiniteListState, ListItem, listStateIdle, mapperFactory } from "@rixio/list"
 import { RxGridWindowList } from "./index"
 
 export function delay(timeout: number): Promise<number> {
@@ -41,7 +41,7 @@ const rect = {
 	rowHeight: 300,
 	columnCount: 5,
 	gap: 16,
-	width: 1000
+	width: 1000,
 }
 
 storiesOf("grid-window-list", module).add("basic", () => (

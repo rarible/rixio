@@ -2,9 +2,9 @@ import "react-virtualized/styles.css"
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import { Atom } from "@rixio/atom"
-import { InfiniteList, InfiniteListState, ListItem, listStateIdle, mapperFactory } from "@rixio/list";
+import { InfiniteList, InfiniteListState, ListItem, listStateIdle, mapperFactory } from "@rixio/list"
 import { ListReactRenderer } from "../domain"
-import { RxVerticalList } from "./index";
+import { RxVerticalList } from "./index"
 export function delay(timeout: number): Promise<number> {
 	return new Promise(resolve => setTimeout(resolve, timeout))
 }

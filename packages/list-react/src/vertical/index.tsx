@@ -5,7 +5,7 @@ import { InfiniteLoader } from "react-virtualized/dist/es/InfiniteLoader"
 import { List, ListProps } from "react-virtualized/dist/es/List"
 import { isFakeItem } from "@rixio/list"
 import { ListReactRenderer } from "../domain"
-import { liftReactList, RxReactListProps } from "../rx";
+import { liftReactList, RxReactListProps } from "../rx"
 
 export type VerticalListRect = {
 	width: number
@@ -31,7 +31,7 @@ export function VerticalList<T>({
 	minimumBatchRequest,
 	renderer,
 	listProps = {},
-	loadNext
+	loadNext,
 }: VerticalListProps<T>) {
 	const isRowLoaded = useCallback(({ index }: Index) => index < data.length && !isFakeItem(data[index]), [data])
 	const loadMoreRows = useCallback<(params: IndexRange) => Promise<any>>(async () => loadNext(), [loadNext])
@@ -72,4 +72,6 @@ export function VerticalList<T>({
 	)
 }
 
-export const RxVerticalList: <T>(props: RxReactListProps<T, VerticalListProps<T>>) => (JSX.Element | null) = liftReactList(VerticalList) as any
+export const RxVerticalList: <T>(
+	props: RxReactListProps<T, VerticalListProps<T>>
+) => JSX.Element | null = liftReactList(VerticalList) as any

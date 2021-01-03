@@ -122,9 +122,14 @@ export function mapperFactory<T, C>(props?: MapperFactoryProps): InfiniteListMap
 		switch (state.status) {
 			case "idle":
 			case "pending":
-				return createFulfilledWrapped(createRealListItems(state.items).concat(createPendingPage(pendingPageSize, list$)))
+				return createFulfilledWrapped(
+					createRealListItems(state.items).concat(createPendingPage(pendingPageSize, list$))
+				)
 			case "rejected":
-				return createFulfilledWrapped([...createRealListItems(state.items), createRejectedItem(state.error, () => list$.loadNext(true))])
+				return createFulfilledWrapped([
+					...createRealListItems(state.items),
+					createRejectedItem(state.error, () => list$.loadNext(true)),
+				])
 		}
 		if (state.finished) {
 			return createFulfilledWrapped(createRealListItems(state.items))
