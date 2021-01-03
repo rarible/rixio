@@ -39,7 +39,7 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 		this._mounted = false
 	}
 
-	shouldComponentUpdate(nextProps: Readonly<RProps>, nextState: Readonly<Lifted<P>>, nextContext: any): boolean {
+	shouldComponentUpdate(nextProps: Readonly<RProps>): boolean {
 		if (this.props !== nextProps) {
 			const oldProps: Lifted<P> = this.extractProps(this.props as any)
 			const newProps: Lifted<P> = this.extractProps(nextProps as any)

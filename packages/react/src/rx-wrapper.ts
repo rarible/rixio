@@ -8,7 +8,7 @@ export type RxWrapperProps<P extends object> = Lifted<P> &
 	}
 
 export class RxWrapper<P extends object> extends RxWrapperBase<P, RxWrapperProps<P>> {
-	extractRxBaseProps(props: RxWrapperProps<P>): RxBaseProps | undefined {
+	extractRxBaseProps(): RxBaseProps | undefined {
 		return this.props
 	}
 

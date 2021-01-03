@@ -128,8 +128,8 @@ export type RxFlatListProps<T> = LiftedFlatListProps<T, FlatListProps<T>>
 export const RxAnimatedFlatList: <T>(props: RxAnimatedFlatListProps<T>) => JSX.Element | null = liftFlatList(
 	Animated.FlatList as any
 ) as any
-// @ts-ignore
 export type RxAnimatedFlatListProps<T> = LiftedFlatListProps<
 	T,
+	// @ts-ignore
 	Animated.AnimatedProps<React.ComponentPropsWithRef<FlatList>>
 >

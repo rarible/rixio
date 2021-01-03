@@ -54,8 +54,8 @@ export function useRx<T>(observable: WrappedObservable<T>, deps: any[] = [observ
 						setCount(c => c + 1)
 					}
 				}
-				// eslint-disable-next-line react-hooks/exhaustive-deps
 			}),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		deps
 	)
 	useEffect(() => {

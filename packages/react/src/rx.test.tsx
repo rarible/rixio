@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import React, { ReactElement } from "react"
 import { act, render, waitFor, fireEvent } from "@testing-library/react"
 import { Atom } from "@rixio/atom"
@@ -32,8 +33,8 @@ describe("Rx", () => {
 				</Rx>
 			</span>
 		)
-		await expect(r.getByTestId("test")).toHaveTextContent("pending")
-		await expect(r.getByTestId("test")).not.toHaveTextContent("content")
+		expect(r.getByTestId("test")).toHaveTextContent("pending")
+		expect(r.getByTestId("test")).not.toHaveTextContent("content")
 	})
 
 	test("should display content if loaded", async () => {
@@ -212,7 +213,7 @@ describe("Rx", () => {
 				<Rx value$={state$}>{v => <span>{`${v}`}</span>}</Rx>
 			</span>
 		)
-		await expect(r.getByTestId("test")).toHaveTextContent("null")
+		expect(r.getByTestId("test")).toHaveTextContent("null")
 	})
 })
 
