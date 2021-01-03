@@ -3,7 +3,7 @@ import { Map as IM } from "immutable"
 import waitForExpect from "wait-for-expect"
 import { createFulfilledWrapped, pendingWrapped, Wrapped } from "@rixio/wrapped"
 import { waitFor } from "@testing-library/react"
-import { CacheState, createFulfilledCache } from "../domain"
+import { CacheState, createFulfilledCache, createRejectedCache, pendingCache } from "../domain"
 import { KeyCacheImpl } from "./impl"
 import { toListDataLoader } from "./utils"
 
@@ -71,5 +71,30 @@ describe("KeyCacheImpl", () => {
 			expect(emitted[2]).toStrictEqual(pendingWrapped)
 			expect(emitted[3]).toStrictEqual(createFulfilledWrapped(20))
 		})
+	})
+
+	test("should resolve map when one of item is missed", async () => {
+		const state$ = Atom.create(IM<string, CacheState<string>>())
+		const cache = new KeyCacheImpl(state$, keys => {
+			return Promise.resolve(keys.map(k => [k, k]).slice(0, keys.length - 1) as [string, string][])
+		})
+		const fulfilled = cache.single("1")
+		const promise = cache.getMap(["1", "2", "3"])
+		fulfilled.subscribe()
+		expect(fulfilled.atom.get()).toStrictEqual(pendingCache)
+		await waitForExpect(() => {
+			expect(fulfilled.atom.get()).toStrictEqual(createFulfilledCache("1"))
+		})
+		const missed = cache.single("3")
+		await waitForExpect(() => {
+			expect(missed.atom.get()).toStrictEqual(createRejectedCache(new Error("Not found")))
+		})
+		expect(await promise).toStrictEqual(
+			IM([
+				["1", "1"],
+				["2", "2"],
+				["3", undefined],
+			])
+		)
 	})
 })
