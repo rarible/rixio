@@ -1,11 +1,11 @@
-import { Map as IM } from "immutable"
+import { Map as IM, Set as IS } from "immutable"
 import { Atom } from "@rixio/atom"
 import { Lens, Prism, SimpleCache } from "@rixio/lens"
 import { Subject } from "rxjs"
 import { filter, first } from "rxjs/operators"
 import { CacheImpl } from "./impl"
 import { BatchHelper } from "./key-batch"
-import { Cache, CacheState, createFulfilledCache, idleCache, pendingCache } from "./domain"
+import { Cache, CacheState, createFulfilledCache, createRejectedCache, idleCache, pendingCache } from "./domain";
 
 export type DataLoader<K, V> = (key: K) => Promise<V>
 
@@ -79,9 +79,19 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 		// @todo error handling. should we mark items as errors?
 		this.map.modify(map => notLoaded.reduce((map, id) => map.set(id, pendingCache), map))
 		const values = await this.loader(notLoaded)
-		this.map.modify(map => values.reduce((map, [id, v]) => map.set(id, createFulfilledCache(v)), map))
-		const allValues = await Promise.all(ids.map(id => this.get(id).then(v => [id, v] as [K, V])))
-		return IM(allValues)
+		this.map.modify(map => {
+			const foundKeys = IS(values.map(p => p[0]))
+			const notFoundKeys = notLoaded.filter(k => !foundKeys.contains(k))
+			const afterFound = values.reduce((map, [id, v]) => map.set(id, createFulfilledCache(v)), map)
+			return notFoundKeys.reduce((map, k) => map.set(k, createRejectedCache(new Error(`key not found: ${k}`))), afterFound)
+		})
+		const promises = ids.map(id =>
+			this.get(id)
+				.then(v => [id, v] as [K, V])
+				.catch(e => [id, undefined])
+		)
+		const pairs = await Promise.all(promises)
+		return IM(pairs.filter(p => p[1] !== undefined) as [K, V][])
 	}
 
 	private async load(key: K): Promise<V> {
