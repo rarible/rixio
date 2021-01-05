@@ -18,7 +18,6 @@ export function toListDataLoader<K, V>(loader: DataLoader<K, V>): ListDataLoader
 export interface KeyCache<K, V> {
 	get(key: K, force?: boolean): Promise<V>
 	set(key: K, value: V): void
-	getMap(ids: K[]): Promise<IM<K, V>>
 	getAtom(key: K): Atom<CacheState<V>>
 	single(key: K): Cache<V>
 }
@@ -66,22 +65,6 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 
 	getAtom(key: K): Atom<CacheState<V>> {
 		return this.map.lens(this.lensFactory(key))
-	}
-
-	async getMap(ids: K[]) {
-		const current = this.map.get()
-		current.entries()
-		const notLoaded = ids.filter(x => {
-			const state = current.get(x)
-			return !state || state.status === "idle"
-		})
-		// @todo do not use reduce. change Map at once
-		// @todo error handling. should we mark items as errors?
-		this.map.modify(map => notLoaded.reduce((map, id) => map.set(id, pendingCache), map))
-		const values = await this.loader(notLoaded)
-		this.map.modify(map => values.reduce((map, [id, v]) => map.set(id, createFulfilledCache(v)), map))
-		const allValues = await Promise.all(ids.map(id => this.get(id).then(v => [id, v] as [K, V])))
-		return IM(allValues)
 	}
 
 	private async load(key: K): Promise<V> {
