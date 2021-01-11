@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/roborox/rixio/compare/@rixio/list@0.4.0...@rixio/list@0.4.1) (2021-01-11)
+
+
+### Bug Fixes
+
+* performance issues ([b0cf7e6](https://github.com/roborox/rixio/commit/b0cf7e62e7a7f17aa21a8f8cf69dfa764927c78f))
+
+
+
+
+
 # [0.4.0](https://github.com/roborox/rixio/compare/@rixio/list@0.3.27...@rixio/list@0.4.0) (2020-12-29)
 
 

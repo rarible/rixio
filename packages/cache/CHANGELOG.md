@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/roborox/rixio/compare/@rixio/cache@0.1.0...@rixio/cache@0.1.1) (2021-01-11)
+
+
+### Bug Fixes
+
+* removed getMap from KeyCache ([2cece76](https://github.com/roborox/rixio/commit/2cece76b375a474cf767c8bab8f24653eed4e862))
+
+
+
+
+
 # [0.1.0](https://github.com/roborox/rixio/compare/@rixio/cache@0.0.20...@rixio/cache@0.1.0) (2020-12-29)
 
 
