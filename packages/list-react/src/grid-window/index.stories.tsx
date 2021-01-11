@@ -17,7 +17,7 @@ async function load(pageSize: number, c: number | null): Promise<[number[], numb
 }
 
 const state$ = Atom.create<InfiniteListState<number, number>>(listStateIdle)
-const list$ = new InfiniteList(state$, load, 20, mapperFactory({ initial: "fake" }))
+const list$ = new InfiniteList(state$, load, 20, { initial: "fake" })
 
 const Memoized = memo(({ item }: { item: ListItem<number> }) => {
 	if (!item) {

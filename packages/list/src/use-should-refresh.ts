@@ -2,10 +2,10 @@ import { Atom } from "@rixio/atom"
 import { Observable } from "rxjs"
 import { useCallback, useEffect, useMemo } from "react"
 import { CacheState, idleCache, save } from "@rixio/cache"
-import { InfiniteList } from "./infinite-list"
+import { BaseInfiniteList } from "./infinite-list"
 
 export type ShouldRefreshProps<T, C> = {
-	list$: InfiniteList<T, C, any>
+	list$: BaseInfiniteList<T, C, any>
 	mapId?: (x: T) => any
 	onRefresh?: () => void
 }
@@ -58,7 +58,7 @@ export function useShouldRefresh<T, C>({
 }
 
 async function shouldRefresh<T, C>(
-	list$: InfiniteList<T, C, any>, mapId: (x: T) => any,
+	list$: BaseInfiniteList<T, C, any>, mapId: (x: T) => any,
 ) {
 	const { status, items } = list$.state$.get()
 	if (status === "fulfilled") {
@@ -74,7 +74,7 @@ async function shouldRefresh<T, C>(
 	return "never"
 }
 
-async function loadFirstPage<T, C>(list$: InfiniteList<T, C, any>) {
+async function loadFirstPage<T, C>(list$: BaseInfiniteList<T, C, any>) {
 	const [items, continuation] = await Promise.all([list$.loadPage(null), delay(500)]).then(x => x[0])
 	const finished = items.length === 0 || continuation === null
 	list$.state$.set({

@@ -72,4 +72,5 @@ export function VerticalList<T>({
 	)
 }
 
-export const RxVerticalList: <T>(props: RxReactListProps<T, VerticalListProps<T>>) => (JSX.Element | null) = liftReactList(VerticalList) as any
+export type RxVerticalListProps<T> = RxReactListProps<T, VerticalListProps<T>>
+export const RxVerticalList: <T>(props: RxVerticalListProps<T>) => JSX.Element | null = liftReactList(VerticalList) as any

@@ -13,7 +13,7 @@ describe("mapper", () => {
 			loadNext(force?: boolean) {
 				loadNextInvocations.push(Boolean(force))
 			}
-		} as InfiniteList<number, number, ListItem<number>>
+		} as InfiniteList<number, number>
 		return [mapper, loadNextInvocations, fakeList$] as const
 	}
 
@@ -101,7 +101,7 @@ describe("InfiniteList", () => {
 			requests.push([size, cont])
 			return [[0, 1, 2], "first"]
 		}
-		const list$ = new InfiniteList(state$, loader, 10, mapperFactory({ pendingPageSize: 0 }))
+		const list$ = new InfiniteList(state$, loader, 10, { pendingPageSize: 0 })
 		const results: Array<Wrapped<ListItem<number>[]>> = []
 		list$.subscribe(next => results.push(next))
 

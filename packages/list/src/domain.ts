@@ -1,7 +1,7 @@
 import type { AtomStateStatus } from "@rixio/cache"
 import type { OrReactChild } from "@rixio/react"
 import React from "react"
-import { InfiniteList } from "./infinite-list"
+import { BaseInfiniteList } from "./infinite-list"
 
 export type ListPartLoader<T, C> = (size: number, continuation: C | null) => Promise<[T[], C | null]>
 
@@ -19,7 +19,7 @@ export const listStateIdle: InfiniteListState<any, any> = {
 }
 
 export interface InfiniteListPropsShared<T, C, R> {
-	list$: InfiniteList<T, C, R>
+	list$: BaseInfiniteList<T, C, R>
 	pending?: React.ReactNode
 	rejected?: OrReactChild<(error: any, reload: () => Promise<void>) => React.ReactNode>
 }

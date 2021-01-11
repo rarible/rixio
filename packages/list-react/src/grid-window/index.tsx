@@ -38,27 +38,29 @@ export function GridWindowList<T, C>({
 }: GridWindowListProps<T>) {
 
 	const onRowsRenderedRef = useRef<((params: RenderedSection) => any) | undefined>()
+	const rowCount = useMemo(() => Math.ceil(data.length / rect.columnCount), [data.length, rect.columnCount])
 	const isRowLoaded = useCallback(({ index }: Index) => {
 		const rowStart = rect.columnCount * index
 		return rowStart < data.length && !isFakeItem(data[rowStart])
 	}, [data, rect.columnCount])
 	const loadMoreRows = useCallback<(params: IndexRange) => Promise<any>>(async () => loadNext(), [loadNext])
-
-	const cellRenderer: GridCellRenderer = ({ key, style, columnIndex, rowIndex }) => (
-		<GridWindowListCell
-			gap={rect.gap}
-			width={style.width}
-			height={style.height}
-			top={style.top}
-			left={style.left}
-			rowIndex={rowIndex}
-			columnIndex={columnIndex}
-			key={key}
-			columnCount={rect.columnCount}
-			rowCount={data.length}
-			renderer={renderer}
-			data={data}
-		/>
+	const cellRenderer = useCallback<GridCellRenderer>(({ key, style, columnIndex, rowIndex }) => (
+			<GridWindowListCell
+				gap={rect.gap}
+				width={style.width}
+				height={style.height}
+				top={style.top}
+				left={style.left}
+				rowIndex={rowIndex}
+				columnIndex={columnIndex}
+				key={key}
+				columnCount={rect.columnCount}
+				rowCount={rowCount}
+				renderer={renderer}
+				data={data}
+			/>
+		),
+		[data, rect.columnCount, rect.gap, renderer, rowCount],
 	)
 
 	return (
@@ -87,7 +89,7 @@ export function GridWindowList<T, C>({
 								scrollTop={scrollTop}
 								onScroll={onChildScroll}
 								columnWidth={rect.width / rect.columnCount}
-								rowCount={data.length}
+								rowCount={rowCount}
 								rowHeight={rect.rowHeight}
 								isScrolling={isScrolling}
 								cellRenderer={cellRenderer}
@@ -150,4 +152,5 @@ const getStylesWithGap = (gap: number, row: number, col: number, rowCount: numbe
 	paddingBottom: row !== rowCount - 1 ? gap / 2 : 0,
 })
 
-export const RxGridWindowList: <T>(props: RxReactListProps<T, GridWindowListProps<T>>) => JSX.Element = liftReactList(GridWindowList) as any
+export type RxGridWindowListProps<T> = RxReactListProps<T, GridWindowListProps<T>>
+export const RxGridWindowList: <T>(props: RxGridWindowListProps<T>) => JSX.Element = liftReactList(GridWindowList) as any

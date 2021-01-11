@@ -9,9 +9,9 @@ import { Atom } from "@rixio/atom"
 import { MappedSubject } from "@rixio/cache/build/mapped-subject"
 import { InfiniteListState, ListPartLoader, listStateIdle } from "./domain"
 
-export type InfiniteListMapper<T, C, R> = (state: InfiniteListState<T, C>, list$: InfiniteList<T, C, any>) => Wrapped<R>
+export type InfiniteListMapper<T, C, R> = (state: InfiniteListState<T, C>, list$: BaseInfiniteList<T, C, any>) => Wrapped<R>
 
-export class InfiniteList<T, C, R> extends MappedSubject<InfiniteListState<T, C>, Wrapped<R>> {
+export class BaseInfiniteList<T, C, R> extends MappedSubject<InfiniteListState<T, C>, Wrapped<R>> {
 	constructor(
 		readonly state$: Atom<InfiniteListState<T, C>>,
 		readonly loader: ListPartLoader<T, C>,
@@ -76,6 +76,12 @@ export class InfiniteList<T, C, R> extends MappedSubject<InfiniteListState<T, C>
 				error,
 			}))
 		}
+	}
+}
+
+export class InfiniteList<T, C> extends BaseInfiniteList<T, C, ListItem<T>[]> {
+	constructor(state$: Atom<InfiniteListState<T, C>>, loader: ListPartLoader<T, C>, pageSize: number, props?: MapperFactoryProps) {
+		super(state$, loader, pageSize, mapperFactory(props));
 	}
 }
 
@@ -145,7 +151,7 @@ function createRealListItem<T>(value: T): RealListItem<T> {
 	}
 }
 
-function createPendingPage(pageSize: number, list: InfiniteList<any, any, any>) {
+function createPendingPage(pageSize: number, list: BaseInfiniteList<any, any, any>) {
 	const pendingItem = createPendingItem(() => list.loadNext())
 	return new Array(pageSize).fill(pendingItem)
 }

@@ -5,7 +5,7 @@ import { fireEvent, render, waitFor } from "@testing-library/react"
 import { act } from "react-dom/test-utils"
 import { InfiniteListState, ListPartLoader } from "./domain"
 import { useShouldRefresh } from "./use-should-refresh"
-import { InfiniteList, mapperFactory } from "./infinite-list";
+import { InfiniteList } from "./infinite-list"
 
 function CheckShouldRefresh({
 	state$,
@@ -14,7 +14,7 @@ function CheckShouldRefresh({
 	state$: Atom<InfiniteListState<string, string>>
 	loader: ListPartLoader<string, string>
 }) {
-	const list$ = useMemo(() => new InfiniteList(state$, loader, 10, mapperFactory()), [loader, state$])
+	const list$ = useMemo(() => new InfiniteList(state$, loader, 10), [loader, state$])
 	const { shouldRefresh$, refreshing$, refresh } = useShouldRefresh({ list$ })
 	return (
 		<>
