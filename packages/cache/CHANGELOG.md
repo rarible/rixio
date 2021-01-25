@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/roborox/rixio/compare/@rixio/cache@0.1.1...@rixio/cache@0.1.2) (2021-01-25)
+
+
+### Bug Fixes
+
+* fix KeyCache list loader rejected ([c534b71](https://github.com/roborox/rixio/commit/c534b71285bac3fc48c8073c8b73503d07d7422f))
+
+
+
+
+
 ## [0.1.1](https://github.com/roborox/rixio/compare/@rixio/cache@0.1.0...@rixio/cache@0.1.1) (2021-01-11)
 
 
