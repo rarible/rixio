@@ -5,7 +5,7 @@ import { Subject } from "rxjs"
 import { filter, first } from "rxjs/operators"
 import { CacheImpl } from "./impl"
 import { BatchHelper } from "./key-batch"
-import { Cache, CacheState, createFulfilledCache, idleCache, pendingCache } from "./domain"
+import { Cache, CacheState, createFulfilledCache, idleCache } from "./domain"
 
 export type DataLoader<K, V> = (key: K) => Promise<V>
 
@@ -40,15 +40,21 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	}
 
 	private async onBatchLoad(keys: K[]) {
-		const values = await this.loader(keys)
-		const map = IM(values)
-		keys.forEach(key => {
-			if (map.has(key)) {
-				this.results.next([key, map.get(key)!])
-			} else {
+		try {
+			const values = await this.loader(keys);
+			const map = IM(values)
+			keys.forEach(key => {
+				if (map.has(key)) {
+					this.results.next([key, map.get(key)!])
+				} else {
+					this.results.next([key, UNDEFINED])
+				}
+			})
+		} catch (e) {
+			keys.forEach(key => {
 				this.results.next([key, UNDEFINED])
-			}
-		})
+			})
+		}
 	}
 
 	single(key: K): Cache<V> {
