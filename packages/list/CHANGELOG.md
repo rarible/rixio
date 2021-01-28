@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.4](https://github.com/roborox/rixio/compare/@rixio/list@0.4.3...@rixio/list@0.4.4) (2021-01-28)
+
+
+### Bug Fixes
+
+* change useShouldRefresh api due to optimization ([ddaf1f7](https://github.com/roborox/rixio/commit/ddaf1f728c69ead7dcec68cc187c6debb39cbf55))
+
+
+
+
+
 ## [0.4.3](https://github.com/roborox/rixio/compare/@rixio/list@0.4.2...@rixio/list@0.4.3) (2021-01-25)
 
 **Note:** Version bump only for package @rixio/list

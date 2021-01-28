@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/roborox/rixio/compare/@rixio/list-react@0.2.3...@rixio/list-react@0.3.0) (2021-01-28)
+
+
+### Features
+
+* improve grid, vertical lists (support dynamic height) ([e80feb2](https://github.com/roborox/rixio/commit/e80feb209d82746a8e8096d902052879044cd9a9))
+
+
+
+
+
 ## [0.2.3](https://github.com/roborox/rixio/compare/@rixio/list-react@0.2.2...@rixio/list-react@0.2.3) (2021-01-25)
 
 **Note:** Version bump only for package @rixio/list-react
