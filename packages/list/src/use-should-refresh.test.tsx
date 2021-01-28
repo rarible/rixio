@@ -15,7 +15,7 @@ function CheckShouldRefresh({
 	loader: ListPartLoader<string, string>
 }) {
 	const list$ = useMemo(() => new InfiniteList(state$, loader, 10), [loader, state$])
-	const { shouldRefresh$, refreshing$, refresh } = useShouldRefresh({ list$ })
+	const { shouldRefresh$, refreshing$, refresh } = useShouldRefresh(list$)
 	return (
 		<>
 			<RxIf test$={shouldRefresh$}>

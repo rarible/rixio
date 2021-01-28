@@ -1,14 +1,8 @@
 import { Atom } from "@rixio/atom"
-import { Observable } from "rxjs"
+import type { Observable } from "rxjs"
 import { useCallback, useEffect, useMemo } from "react"
 import { CacheState, idleCache, save } from "@rixio/cache"
-import { BaseInfiniteList } from "./infinite-list"
-
-export type ShouldRefreshProps<T, C> = {
-	list$: BaseInfiniteList<T, C, any>
-	mapId?: (x: T) => any
-	onRefresh?: () => void
-}
+import type { BaseInfiniteList } from "./infinite-list"
 
 export type ShouldRefreshReturnType = {
 	shouldRefresh$: Observable<boolean>
@@ -16,13 +10,16 @@ export type ShouldRefreshReturnType = {
 	refresh: () => Promise<void>
 }
 
-export function useShouldRefresh<T, C>({
-	list$, mapId = e => e, onRefresh
-}: ShouldRefreshProps<T, C>): ShouldRefreshReturnType {
+export function useShouldRefresh<T, C>(
+	list$: BaseInfiniteList<T, C, any>, 
+	mapId: (x: T) => any = identity,
+	onRefresh?: () => void, 
+): ShouldRefreshReturnType {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const shouldRefresh$ = useMemo(() => Atom.create(false), [list$])
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const saveState$ = useMemo(() => Atom.create<CacheState<void>>(idleCache), [shouldRefresh$])
+
 	const refreshing$ = useMemo(() => saveState$.view("status").view(x => x === "pending"), [saveState$])
 	const refresh = useCallback(() => {
 		const job = async () => {
@@ -36,30 +33,18 @@ export function useShouldRefresh<T, C>({
 	useEffect(() => {
 		shouldRefresh(list$, mapId)
 			.then(should => {
-				switch (should) {
-					case "explicitly":
-						refresh()
-						break;
-					case "should":
-						shouldRefresh$.set(true)
-						break;
-					case "never":
-						shouldRefresh$.set(false)
-						break;
+				if (should === "explicitly") {
+					refresh()
+				} else {
+					shouldRefresh$.set(should === "should")
 				}
 			})
 	}, [list$, mapId, shouldRefresh$, refresh])
 
-	return {
-		shouldRefresh$,
-		refreshing$,
-		refresh,
-	}
+	return { shouldRefresh$, refreshing$, refresh }
 }
 
-async function shouldRefresh<T, C>(
-	list$: BaseInfiniteList<T, C, any>, mapId: (x: T) => any,
-) {
+async function shouldRefresh<T, C>(list$: BaseInfiniteList<T, C, any>, mapId: (x: T) => any) {
 	const { status, items } = list$.state$.get()
 	if (status === "fulfilled") {
 		const [nextItems] = await list$.loadPage(null)
@@ -87,4 +72,8 @@ async function loadFirstPage<T, C>(list$: BaseInfiniteList<T, C, any>) {
 
 function delay(timeout: number): Promise<number> {
 	return new Promise(resolve => setTimeout(resolve, timeout))
+}
+
+function identity<T>(x: T) {
+	return x
 }
