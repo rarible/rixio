@@ -6,6 +6,7 @@ import { WindowScroller, WindowScrollerChildProps } from "react-virtualized/dist
 import type { Index, IndexRange } from "react-virtualized"
 import type { GridReactRenderer } from "../domain"
 import { liftReactList, RxReactListProps } from "../rx"
+import { identity } from "../utils"
 
 export type GridRect = {
 	rowHeight: number
@@ -22,10 +23,11 @@ export type GridListProps<T> = Partial<Pick<InfiniteLoaderProps, "minimumBatchRe
 	gridProps?: Partial<GridProps>
 	pendingSize?: number
 	loadNext: () => void
+	mapKey?: (key: string) => string
 }
 
 export function GridList<T>(props: GridListProps<T>) {
-	const { data, rect, minimumBatchRequest = 10, renderer, gridProps = {}, threshold = 3, loadNext } = props
+	const { mapKey = identity, data, rect, minimumBatchRequest = 10, renderer, gridProps = {}, threshold = 3, loadNext } = props
 	const rowCount = useMemo(() => Math.ceil(data.length / rect.columnCount), [data.length, rect.columnCount])
 	const isRowLoaded = useCallback(
 		({ index }: Index) => {
@@ -36,17 +38,18 @@ export function GridList<T>(props: GridListProps<T>) {
 	)
 	const loadMoreRows = useCallback<(params: IndexRange) => Promise<any>>(async () => loadNext(), [loadNext])
 	const cellRenderer = useCallback<GridCellRenderer>(
-		cellProps => (
+		({ key, ...restCellProps }) => (
 			<GridListCell
 				gap={rect.gap}
 				columnCount={rect.columnCount}
 				rowCount={rowCount}
 				renderer={renderer}
 				data={data}
-				{...cellProps}
+				key={mapKey(key)}
+				{...restCellProps}
 			/>
 		),
-		[data, rect.columnCount, rect.gap, renderer, rowCount]
+		[data, mapKey, rect.columnCount, rect.gap, renderer, rowCount]
 	)
 
 	return (

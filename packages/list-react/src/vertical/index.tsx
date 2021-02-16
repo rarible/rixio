@@ -7,6 +7,7 @@ import { WindowScroller } from "react-virtualized/dist/es/WindowScroller"
 import { isFakeItem, ListItem } from "@rixio/list"
 import type { ListReactRenderer } from "../domain"
 import { liftReactList, RxReactListProps } from "../rx"
+import { identity } from "../utils"
 
 export type VerticalListRect = {
 	width: number
@@ -20,10 +21,11 @@ export type VerticalListProps<T> = Partial<Pick<InfiniteLoaderProps, "minimumBat
 	rect: VerticalListRect
 	listProps?: Partial<ListProps>
 	loadNext: () => void
+	mapKey?: (key: string) => string
 }
 
 export function VerticalList<T>(props: VerticalListProps<T>) {
-	const { data, rect, renderer, listProps = {}, loadNext, ...restProps } = props
+	const { mapKey = identity, data, rect, renderer, listProps = {}, loadNext, ...restProps } = props
 	const isRowLoaded = useCallback(({ index }: Index) => index < data.length && !isFakeItem(data[index]), [data])
 	const loadMoreRows = useCallback(() => Promise.resolve(loadNext()), [loadNext])
 	const cellMeasurerCache = useMemo(
@@ -36,10 +38,16 @@ export function VerticalList<T>(props: VerticalListProps<T>) {
 	)
 
 	const rowRenderer = useCallback(
-		(rowProps: ListRowProps) => (
-			<VerticalListRow<T> {...rowProps} cellMeasurerCache={cellMeasurerCache} renderer={renderer} data={data} />
+		({ key, ...rest }: ListRowProps) => (
+			<VerticalListRow<T> 
+				{...rest}
+				key={mapKey(key)}
+				cellMeasurerCache={cellMeasurerCache} 
+				renderer={renderer} 
+				data={data} 
+			/>
 		),
-		[data, renderer, cellMeasurerCache]
+		[data, mapKey, renderer, cellMeasurerCache]
 	)
 
 	return (
