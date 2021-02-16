@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/roborox/rixio/compare/@rixio/list-react@0.3.0...@rixio/list-react@0.4.0) (2021-02-16)
+
+
+### Features
+
+* add onkey handler for lists ([32e1fb2](https://github.com/roborox/rixio/commit/32e1fb291437f52829d0bad8ee268e9182c5ab0c))
+
+
+
+
+
 # [0.3.0](https://github.com/roborox/rixio/compare/@rixio/list-react@0.2.3...@rixio/list-react@0.3.0) (2021-01-28)
 
 
