@@ -1,5 +1,5 @@
 import { Atom } from "@rixio/atom"
-import type { Observable } from "rxjs"
+import { identity, Observable } from "rxjs"
 import { useCallback, useEffect, useMemo } from "react"
 import { CacheState, idleCache, save } from "@rixio/cache"
 import type { BaseInfiniteList } from "./infinite-list"
@@ -12,15 +12,15 @@ export type ShouldRefreshReturnType = {
 
 export function useShouldRefresh<T, C>(
 	list$: BaseInfiniteList<T, C, any>, 
-	mapId: (x: T) => any = identity,
+	mapId: (x?: T) => any = identity,
 	onRefresh?: () => void, 
 ): ShouldRefreshReturnType {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const shouldRefresh$ = useMemo(() => Atom.create(false), [list$])
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const saveState$ = useMemo(() => Atom.create<CacheState<void>>(idleCache), [shouldRefresh$])
-
 	const refreshing$ = useMemo(() => saveState$.view("status").view(x => x === "pending"), [saveState$])
+
 	const refresh = useCallback(() => {
 		const job = async () => {
 			onRefresh?.()
@@ -31,32 +31,22 @@ export function useShouldRefresh<T, C>(
 	}, [list$, onRefresh, saveState$, shouldRefresh$])
 
 	useEffect(() => {
-		shouldRefresh(list$, mapId)
-			.then(should => {
-				if (should === "explicitly") {
-					refresh()
-				} else {
-					shouldRefresh$.set(should === "should")
-				}
-			})
-	}, [list$, mapId, shouldRefresh$, refresh])
+		shouldRefresh(list$, mapId).then(should => {
+			shouldRefresh$.set(should)
+		})
+	}, [list$, mapId, shouldRefresh$])
 
 	return { shouldRefresh$, refreshing$, refresh }
 }
 
-async function shouldRefresh<T, C>(list$: BaseInfiniteList<T, C, any>, mapId: (x: T) => any) {
+async function shouldRefresh<T, C>(list$: BaseInfiniteList<T, C, any>, mapId: (x?: T) => any) {
 	const { status, items } = list$.state$.get()
 	if (status === "fulfilled") {
-		const [nextItems] = await list$.loadPage(null)
-		if (!mapId(items[0])) {
-			return "explicitly"
-		}
-		const last = nextItems.length - 1
-		if (mapId(nextItems[0]) !== mapId(items[0]) || mapId(nextItems[last]) !== mapId(items[last])) {
-			return "should"
-		}
+		const [next] = await list$.loadPage(null)
+		const last = next.length - 1
+		return mapId(next[0]) !== mapId(items[0]) || mapId(next[last]) !== mapId(items[last])
 	}
-	return "never"
+	return false
 }
 
 async function loadFirstPage<T, C>(list$: BaseInfiniteList<T, C, any>) {
@@ -72,8 +62,4 @@ async function loadFirstPage<T, C>(list$: BaseInfiniteList<T, C, any>) {
 
 function delay(timeout: number): Promise<number> {
 	return new Promise(resolve => setTimeout(resolve, timeout))
-}
-
-function identity<T>(x: T) {
-	return x
 }
