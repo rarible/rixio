@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/roborox/rixio/compare/@rixio/list@0.4.4...@rixio/list@0.5.0) (2021-02-20)
+
+
+### Features
+
+* remove instant refresh in useShouldRefresh ([4d975c1](https://github.com/roborox/rixio/commit/4d975c196623bc5553d8fe0527f3f8add33088a9))
+
+
+
+
+
 ## [0.4.4](https://github.com/roborox/rixio/compare/@rixio/list@0.4.3...@rixio/list@0.4.4) (2021-01-28)
 
 
