@@ -22,6 +22,12 @@ export interface KeyCache<K, V> {
 	single(key: K): Cache<V>
 }
 
+export type KeyCacheEventType = "add" | "remove"
+export interface KeyCacheEvent<K> {
+	type: KeyCacheEventType
+	key: K
+}
+
 const UNDEFINED = Symbol.for("UNDEFINED")
 
 export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
@@ -29,7 +35,9 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	private readonly results: Subject<[K, V | typeof UNDEFINED]> = new Subject()
 	private readonly lensFactory = byKeyWithDefaultFactory<K, CacheState<V>>(idleCache)
 	private readonly singles = new SimpleCache<K, Cache<V>>(key => new CacheImpl(this.getAtom(key), () => this.load(key)))
-
+	private readonly _events: Subject<KeyCacheEvent<K>> = new Subject()
+	public readonly events = this._events.pipe()
+	
 	constructor(
 		private readonly map: Atom<IM<K, CacheState<V>>>,
 		private readonly loader: ListDataLoader<K, V>,
@@ -58,7 +66,7 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	}
 
 	single(key: K): Cache<V> {
-		return this.singles.getOrCreate(key)
+		return this.singles.getOrCreate(key, () => this.onCreate(key))
 	}
 
 	get(key: K, force?: boolean): Promise<V> {
@@ -66,7 +74,12 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	}
 
 	set(key: K, value: V): void {
-		this.map.modify(map => map.set(key, createFulfilledCache(value)))
+		this.map.modify(x => x.set(key, createFulfilledCache(value)))
+		this.onCreate(key)
+	}
+
+	onCreate(key: K) {
+		this._events.next({ type: "add", key })
 	}
 
 	getAtom(key: K): Atom<CacheState<V>> {
