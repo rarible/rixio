@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/roborox/rixio/compare/@rixio/cache@0.1.2...@rixio/cache@0.2.0) (2021-03-03)
+
+
+### Features
+
+* add ability to track new entries in key-cache ([4497c68](https://github.com/roborox/rixio/commit/4497c68b0b43c480805155f61a810c3e38f85611))
+
+
+
+
+
 ## [0.1.2](https://github.com/roborox/rixio/compare/@rixio/cache@0.1.1...@rixio/cache@0.1.2) (2021-01-25)
 
 

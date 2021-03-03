@@ -1,6 +1,6 @@
 {
   "name": "@rixio/react",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -30,12 +30,12 @@
     "access": "public"
   },
   "dependencies": {
-    "@rixio/lens": "^0.4.4",
+    "@rixio/lens": "^0.5.0",
     "@rixio/wrapped": "^0.2.5"
   },
   "devDependencies": {
-    "@rixio/atom": "^0.3.8",
-    "@rixio/cache": "^0.1.2",
+    "@rixio/atom": "^0.3.9",
+    "@rixio/cache": "^0.2.0",
     "@testing-library/jest-dom": "5.11.4",
     "@testing-library/react": "11.0.4",
     "@types/jest": "26.0.14",

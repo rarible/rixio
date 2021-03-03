@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.12](https://github.com/roborox/rixio/compare/@rixio/form-store@0.1.11...@rixio/form-store@0.1.12) (2021-03-03)
+
+**Note:** Version bump only for package @rixio/form-store
+
+
+
+
+
 ## [0.1.11](https://github.com/roborox/rixio/compare/@rixio/form-store@0.1.10...@rixio/form-store@0.1.11) (2020-12-15)
 
 
