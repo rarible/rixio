@@ -16,9 +16,10 @@ export type GridRect = {
 	width: number
 }
 
-export type GridListProps<T> = Partial<Pick<InfiniteLoaderProps, "minimumBatchRequest" | "threshold">> & {
+export type GridListProps<T> = Partial<Pick<InfiniteLoaderProps,  "threshold">> & {
 	renderer: GridReactRenderer<T>
 	data: T[]
+	minimumBatchRequest?: number
 	rect: GridRect
 	gridProps?: Partial<GridProps>
 	pendingSize?: number
@@ -58,7 +59,7 @@ export function GridList<T>(props: GridListProps<T>) {
 			isRowLoaded={isRowLoaded}
 			rowCount={Infinity}
 			loadMoreRows={loadMoreRows}
-			minimumBatchRequest={minimumBatchRequest}
+			minimumBatchSize={minimumBatchRequest}
 		>
 			{({ registerChild, onRowsRendered }) => (
 				<Grid
@@ -130,10 +131,11 @@ type GridListCellProps<T> = {
 	gap: number
 	rowCount: number
 	data: T[]
+	isScrolling: boolean
 }
 
 const GridListCell = memo(function GridListCell<T>(props: GridListCellProps<T>) {
-	const { renderer, rowIndex, columnCount, columnIndex, style, gap, data, rowCount } = props
+	const { renderer, rowIndex, columnCount, columnIndex, style, gap, data, rowCount, isScrolling } = props
 	const index = rowIndex * columnCount + columnIndex
 	const finalStyle = useMemo<CSSProperties>(
 		() => ({
@@ -147,7 +149,7 @@ const GridListCell = memo(function GridListCell<T>(props: GridListCellProps<T>) 
 		[columnCount, columnIndex, gap, rowCount, rowIndex, style]
 	)
 	const item = data[index]
-	const children = useMemo(() => renderer(item), [item, renderer])
+	const children = useMemo(() => renderer(item, isScrolling), [item, renderer, isScrolling])
 	return <div style={finalStyle} children={children} />
 })
 

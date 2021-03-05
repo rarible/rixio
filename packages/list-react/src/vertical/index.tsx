@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useMemo } from "react"
+import React, { useCallback, useMemo } from "react"
 import type { Index, WindowScrollerChildProps } from "react-virtualized"
 import { InfiniteLoader, InfiniteLoaderProps } from "react-virtualized/dist/es/InfiniteLoader"
 import { List, ListProps, ListRowProps } from "react-virtualized/dist/es/List"
 import { CellMeasurerCache, CellMeasurer } from "react-virtualized/dist/es/CellMeasurer"
 import { WindowScroller } from "react-virtualized/dist/es/WindowScroller"
-import { isFakeItem, ListItem } from "@rixio/list"
+import { isFakeItem } from "@rixio/list"
 import type { ListReactRenderer } from "../domain"
 import { liftReactList, RxReactListProps } from "../rx"
 import { identity } from "../utils"
@@ -15,9 +15,10 @@ export type VerticalListRect = {
 	minRowHeight: number
 }
 
-export type VerticalListProps<T> = Partial<Pick<InfiniteLoaderProps, "minimumBatchRequest" | "threshold">> & {
+export type VerticalListProps<T> = Partial<Pick<InfiniteLoaderProps,  "threshold">> & {
 	renderer: ListReactRenderer<T>
 	data: T[]
+	minimumBatchRequest?: number
 	rect: VerticalListRect
 	listProps?: Partial<ListProps>
 	loadNext: () => void
@@ -25,7 +26,7 @@ export type VerticalListProps<T> = Partial<Pick<InfiniteLoaderProps, "minimumBat
 }
 
 export function VerticalList<T>(props: VerticalListProps<T>) {
-	const { mapKey = identity, data, rect, renderer, listProps = {}, loadNext, ...restProps } = props
+	const { mapKey = identity, data, rect, minimumBatchRequest, renderer, listProps = {}, loadNext, ...restProps } = props
 	const isRowLoaded = useCallback(({ index }: Index) => index < data.length && !isFakeItem(data[index]), [data])
 	const loadMoreRows = useCallback(() => Promise.resolve(loadNext()), [loadNext])
 	const cellMeasurerCache = useMemo(
@@ -51,7 +52,13 @@ export function VerticalList<T>(props: VerticalListProps<T>) {
 	)
 
 	return (
-		<InfiniteLoader rowCount={Infinity} isRowLoaded={isRowLoaded} loadMoreRows={loadMoreRows} {...restProps}>
+		<InfiniteLoader 
+			minimumBatchSize={minimumBatchRequest} 
+			rowCount={Infinity} 
+			isRowLoaded={isRowLoaded} 
+			loadMoreRows={loadMoreRows} 
+			{...restProps}
+		>
 			{({ registerChild, onRowsRendered, ...rest }) => (
 				<List
 					renderer={renderer}
@@ -112,18 +119,11 @@ export type VerticalListRowProps<T> = ListRowProps & {
 	cellMeasurerCache: CellMeasurerCache
 	renderer: ListReactRenderer<T>
 }
-export function VerticalListRow<T>({
-	cellMeasurerCache,
-	renderer,
-	parent,
-	data,
-	index,
-	key,
-	style,
-}: VerticalListRowProps<T>) {
+export function VerticalListRow<T>(props: VerticalListRowProps<T>) {
+	const { cellMeasurerCache, renderer, parent, data, index, key, style, isScrolling } = props
 	return (
 		<CellMeasurer columnIndex={0} key={key} rowIndex={index} parent={parent} cache={cellMeasurerCache}>
-			{({ measure }) => <div style={style}>{renderer(data[index], measure)}</div>}
+			{({ measure }) => <div style={style}>{renderer(data[index], measure, isScrolling)}</div>}
 		</CellMeasurer>
 	)
 }
@@ -132,16 +132,3 @@ export type RxVerticalListProps<T> = RxReactListProps<T, VerticalListProps<T>>
 export const RxVerticalList: <T>(props: RxVerticalListProps<T>) => JSX.Element | null = liftReactList(
 	VerticalList
 ) as any
-
-type MemoizedListItemProps<T> = {
-	item: ListItem<T>
-	measure: () => void
-}
-export function createListRenderer<T>(render: (item: T) => React.ReactElement, pending: React.ReactElement) {
-	function MemoizedListItem({ item, measure }: MemoizedListItemProps<T>) {
-		useEffect(() => (item.type === "item" ? measure() : undefined), [measure, item.type])
-		return item.type === "item" ? render(item.value) : pending
-	}
-	const renderer: ListReactRenderer<ListItem<T>> = (item, measure) => <MemoizedListItem item={item} measure={measure} />
-	return renderer
-}
