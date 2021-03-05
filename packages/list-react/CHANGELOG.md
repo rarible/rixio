@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/roborox/rixio/compare/@rixio/list-react@0.4.2...@rixio/list-react@0.5.0) (2021-03-05)
+
+
+### Bug Fixes
+
+* fix invalid prop name ([397fa1a](https://github.com/roborox/rixio/commit/397fa1a5326ab3b898429976803c0d09e351cc79))
+
+
+### Features
+
+* add isScrolling flag to renderer ([2421398](https://github.com/roborox/rixio/commit/24213983f697f8b2ff2b1583fdc5ed321ddd1dc0))
+
+
+
+
+
 ## [0.4.2](https://github.com/roborox/rixio/compare/@rixio/list-react@0.4.1...@rixio/list-react@0.4.2) (2021-03-03)
 
 **Note:** Version bump only for package @rixio/list-react
