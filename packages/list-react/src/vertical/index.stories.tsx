@@ -2,8 +2,9 @@ import "react-virtualized/styles.css"
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import { Atom } from "@rixio/atom"
-import { InfiniteList, InfiniteListState, listStateIdle } from "@rixio/list"
-import { createListRenderer, RxVerticalList, RxVerticalListWindow } from "./index"
+import { InfiniteList, InfiniteListState, ListItem, listStateIdle } from "@rixio/list"
+import { ListReactRenderer } from "../domain"
+import { RxVerticalList, RxVerticalListWindow } from "./index"
 
 const delay = (timeout: number) => new Promise<number>(r => setTimeout(r, timeout))
 function randomNumber(min: number, max: number) {
@@ -28,14 +29,22 @@ async function load(pageSize: number, c: number | null): Promise<[Item[], number
 const state$ = Atom.create<InfiniteListState<Item, number>>(listStateIdle)
 const list$ = new InfiniteList(state$, load, 20, { initial: "fake" })
 
-const renderer = createListRenderer<Item>(
-	x => (
-		<div style={{ display: "flex", margin: 10, background: "grey", height: x.height }} key={x.toString()}>
-			<h3 style={{ margin: 0 }}>{x.height}</h3>
+const Comp = ({ item, isScrolling }: { item: ListItem<Item>, isScrolling: boolean }) => {
+	if (item && item.type === "item") {
+		return (
+			<div 
+				style={{ display: "flex", margin: 10, background: "grey", height: item.value.height }} 
+				key={item.value.height.toString()}
+			>
+			<h3 style={{ margin: 0 }}>{isScrolling ? "scrolling" : item.value.height}</h3>
 		</div>
-	),
-	<div style={{ margin: 10 }}>Loading..</div>
-)
+		)
+	}
+	return <div style={{ margin: 10 }}>Loading..</div>
+}
+const renderer: ListReactRenderer<ListItem<Item>> = (item, onMeasure, isScrolling) => {
+	return <Comp item={item} isScrolling={isScrolling} />
+}
 
 const rect = {
 	width: 500,

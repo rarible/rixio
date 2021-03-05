@@ -130,10 +130,11 @@ type GridListCellProps<T> = {
 	gap: number
 	rowCount: number
 	data: T[]
+	isScrolling: boolean
 }
 
 const GridListCell = memo(function GridListCell<T>(props: GridListCellProps<T>) {
-	const { renderer, rowIndex, columnCount, columnIndex, style, gap, data, rowCount } = props
+	const { renderer, rowIndex, columnCount, columnIndex, style, gap, data, rowCount, isScrolling } = props
 	const index = rowIndex * columnCount + columnIndex
 	const finalStyle = useMemo<CSSProperties>(
 		() => ({
@@ -147,7 +148,7 @@ const GridListCell = memo(function GridListCell<T>(props: GridListCellProps<T>) 
 		[columnCount, columnIndex, gap, rowCount, rowIndex, style]
 	)
 	const item = data[index]
-	const children = useMemo(() => renderer(item), [item, renderer])
+	const children = useMemo(() => renderer(item, isScrolling), [item, renderer, isScrolling])
 	return <div style={finalStyle} children={children} />
 })
 

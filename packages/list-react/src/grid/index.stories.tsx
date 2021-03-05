@@ -1,8 +1,9 @@
 import "react-virtualized/styles.css"
-import React, { memo } from "react"
+import React from "react"
 import { storiesOf } from "@storybook/react"
 import { Atom } from "@rixio/atom"
 import { InfiniteList, InfiniteListState, ListItem, listStateIdle } from "@rixio/list"
+import { GridReactRenderer } from "../domain"
 import { GridRect, RxGridList, RxGridListWindow } from "./index"
 
 const delay = (timeout: number) => new Promise<number>(r => setTimeout(r, timeout))
@@ -17,18 +18,20 @@ async function load(pageSize: number, c: number | null): Promise<[number[], numb
 const state$ = Atom.create<InfiniteListState<number, number>>(listStateIdle)
 const list$ = new InfiniteList(state$, load, 20, { initial: "fake" })
 
-const Memoized = memo(({ item }: { item: ListItem<number> }) => {
+const Comp = ({ item, isScrolling }: { item: ListItem<number>, isScrolling: boolean }) => {
 	if (item && item.type === "item") {
 		return (
 			<article style={{ display: "flex", height: "100%", background: "grey" }} key={item.value.toString()}>
-				<h3>{item.value}</h3>
+				<h3>{isScrolling ? "scrolling" : item.value}</h3>
 			</article>
 		)
 	}
 	return <div>Loading..</div>
-})
+}
 
-const renderer = (item: ListItem<number>) => <Memoized item={item} />
+const renderer: GridReactRenderer<ListItem<number>> = (item, isScrolling) => {
+	return <Comp item={item} isScrolling={isScrolling} />
+}
 const rect: GridRect = {
 	rowHeight: 300,
 	columnCount: 5,

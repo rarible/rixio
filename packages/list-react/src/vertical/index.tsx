@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useMemo } from "react"
+import React, { useCallback, useMemo } from "react"
 import type { Index, WindowScrollerChildProps } from "react-virtualized"
 import { InfiniteLoader, InfiniteLoaderProps } from "react-virtualized/dist/es/InfiniteLoader"
 import { List, ListProps, ListRowProps } from "react-virtualized/dist/es/List"
 import { CellMeasurerCache, CellMeasurer } from "react-virtualized/dist/es/CellMeasurer"
 import { WindowScroller } from "react-virtualized/dist/es/WindowScroller"
-import { isFakeItem, ListItem } from "@rixio/list"
+import { isFakeItem } from "@rixio/list"
 import type { ListReactRenderer } from "../domain"
 import { liftReactList, RxReactListProps } from "../rx"
 import { identity } from "../utils"
@@ -112,18 +112,11 @@ export type VerticalListRowProps<T> = ListRowProps & {
 	cellMeasurerCache: CellMeasurerCache
 	renderer: ListReactRenderer<T>
 }
-export function VerticalListRow<T>({
-	cellMeasurerCache,
-	renderer,
-	parent,
-	data,
-	index,
-	key,
-	style,
-}: VerticalListRowProps<T>) {
+export function VerticalListRow<T>(props: VerticalListRowProps<T>) {
+	const { cellMeasurerCache, renderer, parent, data, index, key, style, isScrolling } = props
 	return (
 		<CellMeasurer columnIndex={0} key={key} rowIndex={index} parent={parent} cache={cellMeasurerCache}>
-			{({ measure }) => <div style={style}>{renderer(data[index], measure)}</div>}
+			{({ measure }) => <div style={style}>{renderer(data[index], measure, isScrolling)}</div>}
 		</CellMeasurer>
 	)
 }
@@ -132,16 +125,3 @@ export type RxVerticalListProps<T> = RxReactListProps<T, VerticalListProps<T>>
 export const RxVerticalList: <T>(props: RxVerticalListProps<T>) => JSX.Element | null = liftReactList(
 	VerticalList
 ) as any
-
-type MemoizedListItemProps<T> = {
-	item: ListItem<T>
-	measure: () => void
-}
-export function createListRenderer<T>(render: (item: T) => React.ReactElement, pending: React.ReactElement) {
-	function MemoizedListItem({ item, measure }: MemoizedListItemProps<T>) {
-		useEffect(() => (item.type === "item" ? measure() : undefined), [measure, item.type])
-		return item.type === "item" ? render(item.value) : pending
-	}
-	const renderer: ListReactRenderer<ListItem<T>> = (item, measure) => <MemoizedListItem item={item} measure={measure} />
-	return renderer
-}
