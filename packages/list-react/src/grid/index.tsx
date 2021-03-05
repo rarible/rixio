@@ -16,9 +16,10 @@ export type GridRect = {
 	width: number
 }
 
-export type GridListProps<T> = Partial<Pick<InfiniteLoaderProps, "minimumBatchRequest" | "threshold">> & {
+export type GridListProps<T> = Partial<Pick<InfiniteLoaderProps,  "threshold">> & {
 	renderer: GridReactRenderer<T>
 	data: T[]
+	minimumBatchRequest?: number
 	rect: GridRect
 	gridProps?: Partial<GridProps>
 	pendingSize?: number
@@ -58,7 +59,7 @@ export function GridList<T>(props: GridListProps<T>) {
 			isRowLoaded={isRowLoaded}
 			rowCount={Infinity}
 			loadMoreRows={loadMoreRows}
-			minimumBatchRequest={minimumBatchRequest}
+			minimumBatchSize={minimumBatchRequest}
 		>
 			{({ registerChild, onRowsRendered }) => (
 				<Grid

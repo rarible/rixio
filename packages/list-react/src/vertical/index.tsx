@@ -15,9 +15,10 @@ export type VerticalListRect = {
 	minRowHeight: number
 }
 
-export type VerticalListProps<T> = Partial<Pick<InfiniteLoaderProps, "minimumBatchRequest" | "threshold">> & {
+export type VerticalListProps<T> = Partial<Pick<InfiniteLoaderProps,  "threshold">> & {
 	renderer: ListReactRenderer<T>
 	data: T[]
+	minimumBatchRequest?: number
 	rect: VerticalListRect
 	listProps?: Partial<ListProps>
 	loadNext: () => void
@@ -25,7 +26,7 @@ export type VerticalListProps<T> = Partial<Pick<InfiniteLoaderProps, "minimumBat
 }
 
 export function VerticalList<T>(props: VerticalListProps<T>) {
-	const { mapKey = identity, data, rect, renderer, listProps = {}, loadNext, ...restProps } = props
+	const { mapKey = identity, data, rect, minimumBatchRequest, renderer, listProps = {}, loadNext, ...restProps } = props
 	const isRowLoaded = useCallback(({ index }: Index) => index < data.length && !isFakeItem(data[index]), [data])
 	const loadMoreRows = useCallback(() => Promise.resolve(loadNext()), [loadNext])
 	const cellMeasurerCache = useMemo(
@@ -51,7 +52,13 @@ export function VerticalList<T>(props: VerticalListProps<T>) {
 	)
 
 	return (
-		<InfiniteLoader rowCount={Infinity} isRowLoaded={isRowLoaded} loadMoreRows={loadMoreRows} {...restProps}>
+		<InfiniteLoader 
+			minimumBatchSize={minimumBatchRequest} 
+			rowCount={Infinity} 
+			isRowLoaded={isRowLoaded} 
+			loadMoreRows={loadMoreRows} 
+			{...restProps}
+		>
 			{({ registerChild, onRowsRendered, ...rest }) => (
 				<List
 					renderer={renderer}
