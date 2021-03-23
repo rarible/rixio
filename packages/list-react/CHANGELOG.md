@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/roborox/rixio/compare/@rixio/list-react@0.5.0...@rixio/list-react@0.5.1) (2021-03-23)
+
+
+### Bug Fixes
+
+* fix grid list layouting ([164e90a](https://github.com/roborox/rixio/commit/164e90ac7955aabbfc4f0f26484b10f58cba29a1))
+
+
+
+
+
 # [0.5.0](https://github.com/roborox/rixio/compare/@rixio/list-react@0.4.2...@rixio/list-react@0.5.0) (2021-03-05)
 
 
