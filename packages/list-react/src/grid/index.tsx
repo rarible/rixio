@@ -153,9 +153,12 @@ const GridListCell = memo(function GridListCell<T>(props: GridListCellProps<T>) 
 	return <div style={finalStyle} children={children} />
 })
 
-const getStylesWithGap = (gap: number, row: number, col: number, rowCount: number, columnCount: number) => ({
-	paddingLeft: col !== 0 ? gap / 2 : 0,
-	paddingRight: col !== columnCount - 1 ? gap / 2 : 0,
-	paddingTop: row !== 0 ? gap : 0,
-	paddingBottom: row !== rowCount - 1 ? gap / 2 : 0,
-})
+const getStylesWithGap = (gap: number, row: number, col: number, rowCount: number, columnCount: number) => {
+	const halfGap = gap / 2
+	return {
+		paddingLeft: col !== 0 ? halfGap : 0,
+		paddingRight: col !== columnCount - 1 ? halfGap : 0,
+		paddingTop: halfGap,
+		paddingBottom: halfGap,
+	}
+}
