@@ -1,7 +1,7 @@
-import React, { CSSProperties, memo, useCallback, useMemo } from "react"
+import React, { CSSProperties, memo, useCallback, useMemo, useRef, useState } from "react"
 import { isFakeItem } from "@rixio/list"
 import { InfiniteLoader, InfiniteLoaderProps } from "react-virtualized/dist/es/InfiniteLoader"
-import { Grid, GridCellRenderer, GridProps } from "react-virtualized/dist/es/Grid"
+import { Grid, GridCellRenderer, GridProps, RenderedSection } from "react-virtualized/dist/es/Grid"
 import { WindowScroller, WindowScrollerChildProps } from "react-virtualized/dist/es/WindowScroller"
 import type { Index, IndexRange } from "react-virtualized"
 import type { GridReactRenderer } from "../domain"
@@ -16,9 +16,11 @@ export type GridRect = {
 	width: number
 }
 
-export type GridListProps<T> = Partial<Pick<InfiniteLoaderProps,  "threshold">> & {
+export type GridListProps<T> = Partial<Pick<InfiniteLoaderProps, "threshold">> & {
 	renderer: GridReactRenderer<T>
 	data: T[]
+	rowsToPreview?: number
+	loadButton?: (onClick: () => void) => React.ReactElement
 	minimumBatchRequest?: number
 	rect: GridRect
 	gridProps?: Partial<GridProps>
@@ -27,16 +29,35 @@ export type GridListProps<T> = Partial<Pick<InfiniteLoaderProps,  "threshold">> 
 	mapKey?: (key: string) => string
 }
 
-export function GridList<T>(props: GridListProps<T>) {
-	const { mapKey = identity, data, rect, minimumBatchRequest = 10, renderer, gridProps = {}, threshold = 3, loadNext } = props
-	const rowCount = useMemo(() => Math.ceil(data.length / rect.columnCount), [data.length, rect.columnCount])
+export function GridList<T>({
+	mapKey = identity,
+	loadButton,
+	rowsToPreview = 2,
+	data,
+	rect,
+	minimumBatchRequest = 10,
+	renderer,
+	gridProps = {},
+	threshold = 3,
+	loadNext,
+}: GridListProps<T>) {
+	const [preview, setPreview] = useState(() => Boolean(loadButton))
+	const onSectionRendered = useRef<(r: RenderedSection) => void>()
+
+	const renderable = useMemo(() => {
+		return preview ? data.slice(0, rect.columnCount * rowsToPreview) : data
+	}, [preview, data, rowsToPreview, rect.columnCount])
+
+	const rowCount = useMemo(() => Math.ceil(renderable.length / rect.columnCount), [renderable.length, rect.columnCount])
+
 	const isRowLoaded = useCallback(
 		({ index }: Index) => {
 			const rowStart = rect.columnCount * index
-			return rowStart < data.length && !isFakeItem(data[rowStart])
+			return rowStart < renderable.length && !isFakeItem(renderable[rowStart])
 		},
-		[data, rect.columnCount]
+		[renderable, rect.columnCount]
 	)
+
 	const loadMoreRows = useCallback<(params: IndexRange) => Promise<any>>(async () => loadNext(), [loadNext])
 	const cellRenderer = useCallback<GridCellRenderer>(
 		({ key, ...restCellProps }) => (
@@ -45,42 +66,56 @@ export function GridList<T>(props: GridListProps<T>) {
 				columnCount={rect.columnCount}
 				rowCount={rowCount}
 				renderer={renderer}
-				data={data}
+				data={renderable}
 				key={mapKey(key)}
 				{...restCellProps}
 			/>
 		),
-		[data, mapKey, rect.columnCount, rect.gap, renderer, rowCount]
+		[renderable, mapKey, rect.columnCount, rect.gap, renderer, rowCount]
 	)
 
+	const loadMoreSection = useMemo(() => {
+		if (preview && loadButton) {
+			return loadButton(() => setPreview(false))
+		}
+		return null
+	}, [preview, loadButton])
+
 	return (
-		<InfiniteLoader
-			threshold={threshold}
-			isRowLoaded={isRowLoaded}
-			rowCount={Infinity}
-			loadMoreRows={loadMoreRows}
-			minimumBatchSize={minimumBatchRequest}
-		>
-			{({ registerChild, onRowsRendered }) => (
-				<Grid
-					columnCount={rect.columnCount}
-					columnWidth={rect.width / rect.columnCount}
-					rowCount={rowCount}
-					rowHeight={rect.rowHeight}
-					cellRenderer={cellRenderer}
-					height={rect.height}
-					width={rect.width}
-					{...gridProps}
-					ref={registerChild}
-					onSectionRendered={r =>
-						onRowsRendered({
-							startIndex: r.rowStartIndex,
-							stopIndex: r.rowStopIndex,
-						})
+		<React.Fragment>
+			<InfiniteLoader
+				threshold={threshold}
+				isRowLoaded={isRowLoaded}
+				loadMoreRows={loadMoreRows}
+				minimumBatchSize={minimumBatchRequest}
+				rowCount={Infinity}
+			>
+				{({ registerChild, onRowsRendered }) => {
+					if (!onSectionRendered.current) {
+						onSectionRendered.current = (r: RenderedSection) =>
+							onRowsRendered({
+								startIndex: r.rowStartIndex,
+								stopIndex: r.rowStopIndex,
+							})
 					}
-				/>
-			)}
-		</InfiniteLoader>
+					return (
+						<Grid
+							columnCount={rect.columnCount}
+							columnWidth={rect.width / rect.columnCount}
+							rowCount={rowCount}
+							rowHeight={rect.rowHeight}
+							cellRenderer={cellRenderer}
+							height={rect.height}
+							width={rect.width}
+							{...gridProps}
+							ref={registerChild}
+							onSectionRendered={onSectionRendered.current}
+						/>
+					)
+				}}
+			</InfiniteLoader>
+			{loadMoreSection}
+		</React.Fragment>
 	)
 }
 

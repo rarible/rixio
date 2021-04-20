@@ -18,7 +18,7 @@ async function load(pageSize: number, c: number | null): Promise<[number[], numb
 const state$ = Atom.create<InfiniteListState<number, number>>(listStateIdle)
 const list$ = new InfiniteList(state$, load, 20, { initial: "fake" })
 
-const Comp = ({ item, isScrolling }: { item: ListItem<number>, isScrolling: boolean }) => {
+const Comp = ({ item, isScrolling }: { item: ListItem<number>; isScrolling: boolean }) => {
 	if (item && item.type === "item") {
 		return (
 			<article style={{ display: "flex", height: "100%", background: "grey" }} key={item.value.toString()}>
@@ -52,4 +52,13 @@ storiesOf("grid-window-list", module)
 			<RxGridListWindow data$={list$} rect={rect} threshold={1} renderer={renderer} />
 			<div>Content from bottom</div>
 		</React.Fragment>
+	))
+	.add("with throttling", () => (
+		<RxGridList
+			data$={list$}
+			rect={rect}
+			threshold={1}
+			renderer={renderer}
+			loadButton={load => <button onClick={load}>Load more</button>}
+		/>
 	))
