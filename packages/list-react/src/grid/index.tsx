@@ -75,11 +75,14 @@ export function GridList<T>({
 	)
 
 	const loadMoreSection = useMemo(() => {
-		if (preview && loadButton) {
-			return loadButton(() => setPreview(false))
+		if (preview && loadButton && data > renderable) {
+			const last = data[rowsToPreview * rect.columnCount]
+			if (last && !isFakeItem(last)) {
+				return loadButton(() => setPreview(false))
+			}
 		}
 		return null
-	}, [preview, loadButton])
+	}, [preview, loadButton, renderable, data, rect, rowsToPreview])
 
 	return (
 		<React.Fragment>
