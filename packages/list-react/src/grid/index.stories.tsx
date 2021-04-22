@@ -7,7 +7,7 @@ import { GridReactRenderer } from "../domain"
 import { GridRect, RxGridList, RxGridListWindow } from "./index"
 
 const delay = (timeout: number) => new Promise<number>(r => setTimeout(r, timeout))
-const items = new Array(50).fill(1).map((_, i) => i)
+const items = new Array(12).fill(1).map((_, i) => i)
 
 async function load(pageSize: number, c: number | null): Promise<[number[], number]> {
 	await delay(1000)
@@ -16,17 +16,22 @@ async function load(pageSize: number, c: number | null): Promise<[number[], numb
 }
 
 const state$ = Atom.create<InfiniteListState<number, number>>(listStateIdle)
-const list$ = new InfiniteList(state$, load, 20, { initial: "fake" })
+const list$ = new InfiniteList(state$, load, 20, { initial: "wrapped" })
 
 const Comp = ({ item, isScrolling }: { item: ListItem<number>; isScrolling: boolean }) => {
-	if (item && item.type === "item") {
-		return (
-			<article style={{ display: "flex", height: "100%", background: "grey" }} key={item.value.toString()}>
-				<h3>{isScrolling ? "scrolling" : item.value}</h3>
-			</article>
-		)
+	if (item) {
+		if (item.type === "item") {
+			return (
+				<article style={{ display: "flex", height: "100%", background: "grey" }} key={item.value.toString()}>
+					<h3>{isScrolling ? "scrolling" : item.value}</h3>
+				</article>
+			)
+		}
+		if (item.type === "pending") {
+			return <div>Loading..</div>
+		}
 	}
-	return <div>Loading..</div>
+	return null
 }
 
 const renderer: GridReactRenderer<ListItem<number>> = (item, isScrolling) => {
