@@ -13,6 +13,7 @@ export type VerticalListRect = {
 	width: number
 	height: number
 	minRowHeight: number
+	gap: number
 }
 
 export type VerticalListProps<T> = Partial<Pick<InfiniteLoaderProps,  "threshold">> & {
@@ -34,8 +35,10 @@ export function VerticalList<T>(props: VerticalListProps<T>) {
 			new CellMeasurerCache({
 				fixedWidth: true,
 				minHeight: rect.minRowHeight,
+				defaultHeight: rect.minRowHeight,
+				defaultWidth: rect.width,
 			}),
-		[rect.minRowHeight]
+		[rect.minRowHeight, rect.width]
 	)
 
 	const rowRenderer = useCallback(
@@ -43,12 +46,14 @@ export function VerticalList<T>(props: VerticalListProps<T>) {
 			<VerticalListRow<T> 
 				{...rest}
 				key={mapKey(key)}
+				rowCount={data.length}
+				gap={rect.gap}
 				cellMeasurerCache={cellMeasurerCache} 
-				renderer={renderer} 
-				data={data} 
+				renderer={renderer}
+				data={data}
 			/>
 		),
-		[data, mapKey, renderer, cellMeasurerCache]
+		[data, mapKey, rect.gap, renderer, cellMeasurerCache]
 	)
 
 	return (
@@ -118,12 +123,18 @@ export type VerticalListRowProps<T> = ListRowProps & {
 	data: T[]
 	cellMeasurerCache: CellMeasurerCache
 	renderer: ListReactRenderer<T>
+	gap: number
+	rowCount: number
 }
 export function VerticalListRow<T>(props: VerticalListRowProps<T>) {
-	const { cellMeasurerCache, renderer, parent, data, index, key, style, isScrolling } = props
+	const { cellMeasurerCache, rowCount, renderer, parent, gap, data, index, style, isScrolling } = props
 	return (
-		<CellMeasurer columnIndex={0} key={key} rowIndex={index} parent={parent} cache={cellMeasurerCache}>
-			{({ measure }) => <div style={style}>{renderer(data[index], measure, isScrolling)}</div>}
+		<CellMeasurer columnIndex={0} rowIndex={index} parent={parent} cache={cellMeasurerCache}>
+			{({ measure }) => (
+				<div style={getStylesWithGap(style, gap, index, rowCount)}>
+					{renderer(data[index], measure, isScrolling)}
+				</div>
+			)}
 		</CellMeasurer>
 	)
 }
@@ -132,3 +143,10 @@ export type RxVerticalListProps<T> = RxReactListProps<T, VerticalListProps<T>>
 export const RxVerticalList: <T>(props: RxVerticalListProps<T>) => JSX.Element | null = liftReactList(
 	VerticalList
 ) as any
+
+const getStylesWithGap = (styles: Object, gap: number, row: number, rowCount: number) => {
+	return {
+		...styles,
+		paddingBottom: row === rowCount - 1 ? 0 : gap,
+	}
+}

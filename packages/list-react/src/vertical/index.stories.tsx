@@ -1,5 +1,5 @@
 import "react-virtualized/styles.css"
-import React from "react"
+import React, { useEffect } from "react"
 import { storiesOf } from "@storybook/react"
 import { Atom } from "@rixio/atom"
 import { InfiniteList, InfiniteListState, ListItem, listStateIdle } from "@rixio/list"
@@ -29,27 +29,53 @@ async function load(pageSize: number, c: number | null): Promise<[Item[], number
 const state$ = Atom.create<InfiniteListState<Item, number>>(listStateIdle)
 const list$ = new InfiniteList(state$, load, 20, { initial: "fake" })
 
-const Comp = ({ item, isScrolling }: { item: ListItem<Item>, isScrolling: boolean }) => {
-	if (item && item.type === "item") {
-		return (
-			<div 
-				style={{ display: "flex", margin: 10, background: "grey", height: item.value.height }} 
-				key={item.value.height.toString()}
-			>
-			<h3 style={{ margin: 0 }}>{isScrolling ? "scrolling" : item.value.height}</h3>
+type BlockProps = {
+	height: number | string
+	children: React.ReactNode
+}
+const Block = ({ height, children }: BlockProps) => {
+	return (
+		<div style={{ background: "grey", height }}>
+			{children}
 		</div>
-		)
+	)
+}
+
+type Props = {
+	item: ListItem<Item>
+	isScrolling: boolean
+	onRender: () => void
+}
+const Comp = ({ item, ...rest }: Props) => {
+	if (item && item.type === "item") {
+		return <Loaded item={item.value} {...rest} />
 	}
-	return <div style={{ margin: 10 }}>Loading..</div>
+	return <Block height="auto" children="Loading.." />
+}
+
+type LoadedProps = Omit<Props, "item"> & {
+	item: Item
+}
+const Loaded = ({ item, onRender, isScrolling }: LoadedProps) => {
+	useEffect(() => {
+		onRender()
+	}, [onRender])
+
+	return (
+		<Block height={item.height}>
+			<span>{isScrolling ? "scrolling" : item.height}</span>
+		</Block>
+	)
 }
 const renderer: ListReactRenderer<ListItem<Item>> = (item, onMeasure, isScrolling) => {
-	return <Comp item={item} isScrolling={isScrolling} />
+	return <Comp item={item} onRender={onMeasure} isScrolling={isScrolling} />
 }
 
 const rect = {
 	width: 500,
 	minRowHeight: 100,
 	height: 400,
+	gap: 32
 }
 
 storiesOf("vertical-list", module)
