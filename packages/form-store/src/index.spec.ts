@@ -1,7 +1,7 @@
 import Joi from "@hapi/joi"
 import { filter, first, map, reduce, takeWhile } from "rxjs/operators"
 import { Atom } from "@rixio/atom"
-import { Observable } from "rxjs"
+import { Observable, timer } from "rxjs"
 import { ValidationResult, ValidationResultError, ValidationResultSuccess, ValidationStatus } from "./domain"
 import { validateJoi } from "./utils/validate-joi"
 import { FormStore } from "./index"
@@ -37,16 +37,18 @@ function collectTill<T>(vr: Observable<ValidationResult<T>>, status: ValidationS
 		.toPromise()
 }
 
+const joiValidation = validateJoi<SignUpForm>(schema)
+
 async function validateAsync(value: SignUpForm) {
 	await delay(100)
-	return validateJoi<SignUpForm>(schema)(value)
+	return joiValidation(value)
 }
 
 describe("FormStore", () => {
 	it("create FormStore and perform validation", async () => {
 		expect.assertions(2)
 		const atom = createSignUpAtom()
-		const form = FormStore.create(atom, validateJoi(schema))
+		const form = FormStore.create(atom, joiValidation)
 		const firstNameValidation = form.bind("firstName").validationResult
 
 		const withError = await firstNameValidation
@@ -80,6 +82,34 @@ describe("FormStore", () => {
 		const tillError = await collectTill(form.validationResult, "error")
 		expect(tillError.length).toBe(2)
 		expect(tillError[0].status).toBe("validating")
+		expect(tillError[1].status).toBe("error")
+	})
+
+	it("should display validating status while perform async validation (with Observable)", async () => {
+		const atom = createSignUpAtom()
+		const validate = (form: SignUpForm): Observable<ValidationResult<SignUpForm>> => {
+			return timer(0, 1000).pipe(
+				map(x => {
+					if (x > 0) {
+						return {
+							status: "error",
+							error: "some value",
+							children: {},
+						}
+					} else {
+						return {
+							status: "success",
+						}
+					}
+				})
+			)
+		}
+		const form = FormStore.create(atom, validate)
+
+		await collectTill(form.validationResult, "success")
+		const tillError = await collectTill(form.validationResult, "error")
+		expect(tillError.length).toBe(2)
+		expect(tillError[0].status).toBe("success")
 		expect(tillError[1].status).toBe("error")
 	})
 
