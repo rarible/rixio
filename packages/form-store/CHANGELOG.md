@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/roborox/rixio/compare/@rixio/form-store@0.1.12...@rixio/form-store@0.2.0) (2021-05-14)
+
+
+### Features
+
+* add possibility to use Observable ValidationResults ([580ed7d](https://github.com/roborox/rixio/commit/580ed7de9d16e11e2f2072623703826e0632c60d))
+
+
+
+
+
 ## [0.1.12](https://github.com/roborox/rixio/compare/@rixio/form-store@0.1.11...@rixio/form-store@0.1.12) (2021-03-03)
 
 **Note:** Version bump only for package @rixio/form-store
