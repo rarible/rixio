@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.4](https://github.com/roborox/rixio/compare/@rixio/react-native@0.6.3...@rixio/react-native@0.6.4) (2021-05-24)
+
+**Note:** Version bump only for package @rixio/react-native
+
+
+
+
+
 ## [0.6.3](https://github.com/roborox/rixio/compare/@rixio/react-native@0.6.2...@rixio/react-native@0.6.3) (2021-03-03)
 
 **Note:** Version bump only for package @rixio/react-native

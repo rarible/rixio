@@ -1,6 +1,6 @@
 {
 	"name": "@rixio/list-react",
-	"version": "0.5.4",
+	"version": "0.5.5",
 	"keywords": [
 		"frp",
 		"lens",
@@ -30,8 +30,8 @@
 		"verify": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@rixio/list": "^0.5.1",
-		"@rixio/react": "^0.9.3",
+		"@rixio/list": "^0.5.2",
+		"@rixio/react": "^0.9.4",
 		"react-virtualized": "9.22.2"
 	},
 	"devDependencies": {
