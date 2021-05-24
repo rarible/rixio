@@ -1,5 +1,6 @@
 import { combineLatest as rxjsCombineLatest, from, Observable, of } from "rxjs"
 import { distinctUntilChanged, map as rxjsMap, mergeMap as rxjsMergeMap } from "rxjs/operators"
+
 import {
 	createFulfilledWrapped,
 	createRejectedWrapped,
@@ -90,6 +91,30 @@ export function flatMap<T, R>(
 				distinctUntilChanged()
 			)
 		)
+}
+
+export function catchError<T, R>(mapper: (value: any) => WrappedObservable<R> | R): F<WrappedObservable<T>, Observable<Wrapped<R>>> {
+	return observable =>
+		markWrappedObservable(
+			wrap(observable).pipe(
+				rxjsMap(v => {
+					switch (v.status) {
+						case "fulfilled":
+							return v
+						case "pending":
+							return wrappedPending
+						case "rejected":
+							return createFulfilledWrapped(mapper(v.error))
+					}
+				}),
+			)
+		)
+}
+
+export function catchErrorAndThrow<T>(): F<WrappedObservable<T>, Observable<Wrapped<T>>> {
+	return observable => observable.pipe(catchError(x => {
+		throw x
+	}))
 }
 
 export function fromPromise<T>(promise: PromiseLike<T>): Observable<Wrapped<T>> {

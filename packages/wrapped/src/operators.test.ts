@@ -1,7 +1,7 @@
-import { Subject } from "rxjs"
+import { identity, Subject } from "rxjs"
 import waitForExpect from "wait-for-expect"
-import { combineLatest, flatMap, map } from "./operators"
-import { createRejectedWrapped, Rejected, Wrapped } from "./domain"
+import { catchError, catchErrorAndThrow, combineLatest, flatMap, map } from "./operators"
+import { createRejectedWrapped, Fulfilled, Rejected, Wrapped } from "./domain"
 import { wrap } from "./utils";
 
 describe("operators", () => {
@@ -83,6 +83,48 @@ describe("operators", () => {
 		expect(invoked).toBe(false)
 		rej.reload()
 		expect(invoked).toBe(true)
+	})
+
+	test("catchError should catch rejected status of Wrapped", async () => {
+		const s = new Subject<number>()
+		const mapped = s.pipe(map(identity), catchError(x => { throw x }))
+		const values: Wrapped<number>[] = []
+		const errors: Array<any> = []
+		mapped.subscribe(x => values.push(x), x => errors.push(x))
+		expect(wrap(mapped)).toStrictEqual(mapped)
+		expect(values.length).toBe(1)
+		expect(values[0].status).toBe("pending")
+
+		s.next(1)
+		expect(values.length).toBe(2)
+		expect(values[1].status).toBe("fulfilled")
+		expect((values[1] as Fulfilled<number>).value).toBe(1)
+		const ERROR = "error"
+		s.error(new Error(ERROR))
+		expect(errors.length).toBe(1)
+		expect(errors[0].message).toBe(ERROR)
+		expect(s.hasError).toBe(true)
+	})
+
+	test("catchErrorAndThrow should catch rejected status of Wrapped", async () => {
+		const s = new Subject<number>()
+		const mapped = s.pipe(map(identity), catchErrorAndThrow())
+		const values: Wrapped<number>[] = []
+		const errors: Array<any> = []
+		mapped.subscribe(x => values.push(x), x => errors.push(x))
+		expect(wrap(mapped)).toStrictEqual(mapped)
+		expect(values.length).toBe(1)
+		expect(values[0].status).toBe("pending")
+
+		s.next(1)
+		expect(values.length).toBe(2)
+		expect(values[1].status).toBe("fulfilled")
+		expect((values[1] as Fulfilled<number>).value).toBe(1)
+		const ERROR = "error"
+		s.error(new Error(ERROR))
+		expect(errors.length).toBe(1)
+		expect(errors[0].message).toBe(ERROR)
+		expect(s.hasError).toBe(true)
 	})
 })
 
