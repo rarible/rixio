@@ -1,7 +1,7 @@
 import { identity, Subject } from "rxjs"
 import waitForExpect from "wait-for-expect"
-import { catchError, catchErrorAndThrow, combineLatest, flatMap, map } from "./operators"
-import { createRejectedWrapped, Fulfilled, Rejected, Wrapped } from "./domain"
+import { catchError, combineLatest, flatMap, map, unwrap } from "./operators"
+import { createFulfilledWrapped, createRejectedWrapped, Fulfilled, Rejected, Wrapped } from "./domain"
 import { wrap } from "./utils";
 
 describe("operators", () => {
@@ -85,46 +85,56 @@ describe("operators", () => {
 		expect(invoked).toBe(true)
 	})
 
-	test("catchError should catch rejected status of Wrapped", async () => {
-		const s = new Subject<number>()
-		const mapped = s.pipe(map(identity), catchError(x => { throw x }))
+	test("catchError should map rejected status of Wrapped", async () => {
+		const catchMapper = (x: any) => x + 2
+		const s = new Subject<Wrapped<number>>()
+		const mapped = s.pipe(catchError(catchMapper))
 		const values: Wrapped<number>[] = []
-		const errors: Array<any> = []
-		mapped.subscribe(x => values.push(x), x => errors.push(x))
+		mapped.subscribe(x => values.push(x))
 		expect(wrap(mapped)).toStrictEqual(mapped)
 		expect(values.length).toBe(1)
 		expect(values[0].status).toBe("pending")
 
-		s.next(1)
+		s.next(createFulfilledWrapped(1))
 		expect(values.length).toBe(2)
 		expect(values[1].status).toBe("fulfilled")
 		expect((values[1] as Fulfilled<number>).value).toBe(1)
-		const ERROR = "error"
-		s.error(new Error(ERROR))
-		expect(errors.length).toBe(1)
-		expect(errors[0].message).toBe(ERROR)
-		expect(s.hasError).toBe(true)
+		s.next(createRejectedWrapped(1))
+		expect(values.length).toBe(3)
+		expect(values[2].status).toBe("fulfilled")
+		expect((values[2] as Fulfilled<number>).value).toBe(catchMapper(1))
 	})
 
-	test("catchErrorAndThrow should catch rejected status of Wrapped", async () => {
+	test("unwrap should accept WrappedObservable<T> and return Observable<T>", async () => {
 		const s = new Subject<number>()
-		const mapped = s.pipe(map(identity), catchErrorAndThrow())
-		const values: Wrapped<number>[] = []
+		const mapped = s.pipe(map(identity), unwrap())
+		const values: number[] = []
 		const errors: Array<any> = []
 		mapped.subscribe(x => values.push(x), x => errors.push(x))
-		expect(wrap(mapped)).toStrictEqual(mapped)
-		expect(values.length).toBe(1)
-		expect(values[0].status).toBe("pending")
+		expect(values.length).toBe(0)
 
 		s.next(1)
-		expect(values.length).toBe(2)
-		expect(values[1].status).toBe("fulfilled")
-		expect((values[1] as Fulfilled<number>).value).toBe(1)
+		expect(values.length).toBe(1)
+		expect(values[0]).toBe(1)
+	})
+
+	test("unwrap should throw error if receive rejected status", async () => {
+		const s = new Subject<Wrapped<number>>()
+		const original = s.pipe(map(identity))
+		const unwrapped = original.pipe(unwrap())
+		const originalValues: Wrapped<number>[] = []
+		const values: number[] = []
+		const unwrappedErrors: any[] = []
+		unwrapped.subscribe(x => values.push(x), x => unwrappedErrors.push(x))
+		original.subscribe(x => originalValues.push(x))
+		expect(values.length).toBe(0)
+		expect(originalValues.length).toBe(1)
+		expect(originalValues[0].status).toBe("pending")
+
 		const ERROR = "error"
-		s.error(new Error(ERROR))
-		expect(errors.length).toBe(1)
-		expect(errors[0].message).toBe(ERROR)
-		expect(s.hasError).toBe(true)
+		s.next(createRejectedWrapped(ERROR))
+		expect(unwrappedErrors.length).toBe(1)
+		expect(unwrappedErrors[0]).toBe(ERROR)
 	})
 })
 

@@ -1,5 +1,5 @@
-import { combineLatest as rxjsCombineLatest, from, Observable, of } from "rxjs"
-import { distinctUntilChanged, map as rxjsMap, mergeMap as rxjsMergeMap } from "rxjs/operators"
+import { combineLatest as rxjsCombineLatest, from, NEVER, Observable, of, throwError } from "rxjs"
+import { distinctUntilChanged, map as rxjsMap, mergeMap as rxjsMergeMap,  } from "rxjs/operators"
 
 import {
 	createFulfilledWrapped,
@@ -97,24 +97,40 @@ export function catchError<T, R>(mapper: (value: any) => WrappedObservable<R> | 
 	return observable =>
 		markWrappedObservable(
 			wrap(observable).pipe(
-				rxjsMap(v => {
+				rxjsMergeMap(v => {
 					switch (v.status) {
 						case "fulfilled":
-							return v
+							return of(v)
 						case "pending":
-							return wrappedPending
+							return of(wrappedPending)
 						case "rejected":
-							return createFulfilledWrapped(mapper(v.error))
+							const result = mapper(v.error)
+							if (result instanceof Observable) {
+								return wrap(result)
+							} else {
+								return wrap(of(createFulfilledWrapped(result)))
+							}
 					}
 				}),
 			)
 		)
 }
 
-export function catchErrorAndThrow<T>(): F<WrappedObservable<T>, Observable<Wrapped<T>>> {
-	return observable => observable.pipe(catchError(x => {
-		throw x
-	}))
+export function unwrap<T>(): F<WrappedObservable<T>, Observable<T>> {
+	return observable =>
+		wrap(observable).pipe(
+			rxjsMergeMap(v => {
+				switch (v.status) {
+					case "fulfilled":
+						return of(v.value)
+					case "pending":
+						return NEVER
+					case "rejected": {
+						return throwError(v.error)
+					}
+				}
+			}),
+		)
 }
 
 export function fromPromise<T>(promise: PromiseLike<T>): Observable<Wrapped<T>> {
