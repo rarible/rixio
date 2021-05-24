@@ -19,8 +19,13 @@ export function map<T, R>(mapper: (value: T) => R): F<WrappedObservable<T>, Obse
 			wrap(observable).pipe(
 				rxjsMap(v => {
 					switch (v.status) {
-						case "fulfilled":
-							return createFulfilledWrapped(mapper(v.value))
+						case "fulfilled": {
+							try {
+								return createFulfilledWrapped(mapper(v.value))
+							} catch (error) {
+								return createRejectedWrapped(error)
+							}
+						}
 						case "pending":
 							return v
 						case "rejected":

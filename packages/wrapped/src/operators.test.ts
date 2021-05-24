@@ -20,6 +20,24 @@ describe("operators", () => {
 		expect((emitted[1] as any).value).toBe("1")
 	})
 
+	test("map should catch error in mapper function", () => {
+		const s = new Subject<number>()
+		const ERROR = "error"
+		const mapped = s.pipe(map(() => {
+			throw new Error(ERROR)
+		}))
+		const emitted: Wrapped<string>[] = []
+		mapped.subscribe(v => emitted.push(v))
+		expect(wrap(mapped)).toStrictEqual(mapped)
+		expect(emitted.length).toBe(1)
+		expect(emitted[0].status).toBe("pending")
+
+		s.next(1)
+		expect(emitted.length).toBe(2)
+		expect(emitted[1].status).toBe("rejected")
+		expect((emitted[1] as any).error.message).toBe(ERROR)
+	})
+
 	test("combineLatest should lift plain observables", () => {
 		const n = new Subject<number>()
 		const s = new Subject<string>()
