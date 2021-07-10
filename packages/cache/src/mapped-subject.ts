@@ -30,7 +30,9 @@ export abstract class MappedSubject<S, T> extends BehaviorSubject<T> {
 
   unsubscribe() {
     if (this._subscription) {
-      this._subscription.unsubscribe()
+      if (!this._subscription.closed) {
+        this._subscription.unsubscribe()
+      }
       this._subscription = null
     }
     this._refCount = 0

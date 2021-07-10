@@ -10,12 +10,16 @@ export function useSubscription<T>(
 		if (typeof observer === "function") {
 			const s = observable.subscribe(observer)
 			return () => {
-				s.unsubscribe()
+				if (!s.closed) {
+					s.unsubscribe()
+				}
 			}
 		} else {
 			const s = observable.subscribe(observer)
 			return () => {
-				s.unsubscribe()
+				if (!s.closed) {
+					s.unsubscribe()
+				}
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

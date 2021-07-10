@@ -55,7 +55,11 @@ export function useRx<T>(observable: WrappedObservable<T>, deps: any[] = [observ
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}), deps)
 	useEffect(() => {
-		return () => sub.unsubscribe()
+		return () => {
+			if (!sub.closed) {
+				sub.unsubscribe()
+			}
+		}
 	}, [sub])
 	initial.current = false
 	return value.current
