@@ -26,7 +26,7 @@ export function wrap<T>(observable: WrappedObservable<T>): Observable<Wrapped<T>
 	}
 	const result = new Observable<Wrapped<T>>(s => {
 		let got = false
-		const sub = observable.subscribe(
+		const subscription = observable.subscribe(
 			value => {
 				got = true
 				s.next(toWrapped(value))
@@ -43,7 +43,7 @@ export function wrap<T>(observable: WrappedObservable<T>): Observable<Wrapped<T>
 		if (!got) {
 			s.next(pendingWrapped)
 		}
-		s.add(sub)
+		s.add(subscription)
 	})
 	return markWrappedObservable(result)
 }

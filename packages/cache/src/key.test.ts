@@ -101,7 +101,7 @@ describe("KeyCacheImpl", () => {
 			expect(emitted.length).toBe(1)
 			expect(emitted[0]).toStrictEqual({
 				type: "add",
-				key: "test"
+				key: "test",
 			})
 		})
 
@@ -110,7 +110,7 @@ describe("KeyCacheImpl", () => {
 			expect(emitted.length).toBe(2)
 			expect(emitted[1]).toStrictEqual({
 				type: "add",
-				key: "test2"
+				key: "test2",
 			})
 		})
 
@@ -119,7 +119,7 @@ describe("KeyCacheImpl", () => {
 			expect(emitted.length).toBe(3)
 			expect(emitted[2]).toStrictEqual({
 				type: "add",
-				key: "test3"
+				key: "test3",
 			})
 		})
 	})

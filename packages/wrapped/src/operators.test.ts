@@ -2,7 +2,7 @@ import { identity, Subject } from "rxjs"
 import waitForExpect from "wait-for-expect"
 import { catchError, combineLatest, flatMap, map, unwrap } from "./operators"
 import { createFulfilledWrapped, createRejectedWrapped, Fulfilled, Rejected, Wrapped } from "./domain"
-import { wrap } from "./utils";
+import { wrap } from "./utils"
 
 describe("operators", () => {
 	test("map should work with plain observables", () => {
@@ -23,9 +23,11 @@ describe("operators", () => {
 	test("map should catch error in mapper function", () => {
 		const s = new Subject<number>()
 		const ERROR = "error"
-		const mapped = s.pipe(map(() => {
-			throw new Error(ERROR)
-		}))
+		const mapped = s.pipe(
+			map(() => {
+				throw new Error(ERROR)
+			})
+		)
 		const emitted: Wrapped<string>[] = []
 		mapped.subscribe(v => emitted.push(v))
 		expect(wrap(mapped)).toStrictEqual(mapped)
@@ -128,7 +130,10 @@ describe("operators", () => {
 		const mapped = s.pipe(map(identity), unwrap())
 		const values: number[] = []
 		const errors: Array<any> = []
-		mapped.subscribe(x => values.push(x), x => errors.push(x))
+		mapped.subscribe(
+			x => values.push(x),
+			x => errors.push(x)
+		)
 		expect(values.length).toBe(0)
 
 		s.next(1)
@@ -143,7 +148,10 @@ describe("operators", () => {
 		const originalValues: Wrapped<number>[] = []
 		const values: number[] = []
 		const unwrappedErrors: any[] = []
-		unwrapped.subscribe(x => values.push(x), x => unwrappedErrors.push(x))
+		unwrapped.subscribe(
+			x => values.push(x),
+			x => unwrappedErrors.push(x)
+		)
 		original.subscribe(x => originalValues.push(x))
 		expect(values.length).toBe(0)
 		expect(originalValues.length).toBe(1)

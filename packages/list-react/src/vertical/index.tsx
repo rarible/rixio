@@ -16,7 +16,7 @@ export type VerticalListRect = {
 	gap: number
 }
 
-export type VerticalListProps<T> = Partial<Pick<InfiniteLoaderProps,  "threshold">> & {
+export type VerticalListProps<T> = Partial<Pick<InfiniteLoaderProps, "threshold">> & {
 	renderer: ListReactRenderer<T>
 	data: T[]
 	minimumBatchRequest?: number
@@ -43,12 +43,12 @@ export function VerticalList<T>(props: VerticalListProps<T>) {
 
 	const rowRenderer = useCallback(
 		({ key, ...rest }: ListRowProps) => (
-			<VerticalListRow<T> 
+			<VerticalListRow<T>
 				{...rest}
 				key={mapKey(key)}
 				rowCount={data.length}
 				gap={rect.gap}
-				cellMeasurerCache={cellMeasurerCache} 
+				cellMeasurerCache={cellMeasurerCache}
 				renderer={renderer}
 				data={data}
 			/>
@@ -57,11 +57,11 @@ export function VerticalList<T>(props: VerticalListProps<T>) {
 	)
 
 	return (
-		<InfiniteLoader 
-			minimumBatchSize={minimumBatchRequest} 
-			rowCount={Infinity} 
-			isRowLoaded={isRowLoaded} 
-			loadMoreRows={loadMoreRows} 
+		<InfiniteLoader
+			minimumBatchSize={minimumBatchRequest}
+			rowCount={Infinity}
+			isRowLoaded={isRowLoaded}
+			loadMoreRows={loadMoreRows}
 			{...restProps}
 		>
 			{({ registerChild, onRowsRendered, ...rest }) => (
@@ -131,9 +131,7 @@ export function VerticalListRow<T>(props: VerticalListRowProps<T>) {
 	return (
 		<CellMeasurer columnIndex={0} rowIndex={index} parent={parent} cache={cellMeasurerCache}>
 			{({ measure }) => (
-				<div style={getStylesWithGap(style, gap, index, rowCount)}>
-					{renderer(data[index], measure, isScrolling)}
-				</div>
+				<div style={getStylesWithGap(style, gap, index, rowCount)}>{renderer(data[index], measure, isScrolling)}</div>
 			)}
 		</CellMeasurer>
 	)
