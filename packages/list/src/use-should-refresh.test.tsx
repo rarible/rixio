@@ -8,7 +8,10 @@ import { useShouldRefresh } from "./use-should-refresh"
 import { InfiniteList } from "./infinite-list"
 
 const mapId = (x?: string) => x
-function CheckShouldRefresh({ state$, loader }: {
+function CheckShouldRefresh({
+	state$,
+	loader,
+}: {
 	state$: Atom<InfiniteListState<string, string>>
 	loader: ListPartLoader<string, string>
 }) {
@@ -30,7 +33,12 @@ function CheckShouldRefresh({ state$, loader }: {
 
 describe("useShouldRefresh", () => {
 	it("should be false, if list not changed", async () => {
-		const state$ = Atom.create<InfiniteListState<string, string>>({ items: ["1"], status: "fulfilled", continuation: "1", finished: false })
+		const state$ = Atom.create<InfiniteListState<string, string>>({
+			items: ["1"],
+			status: "fulfilled",
+			continuation: "1",
+			finished: false,
+		})
 		let loadCount = 0
 		const loader: ListPartLoader<string, string> = () => {
 			loadCount = loadCount + 1
@@ -44,7 +52,12 @@ describe("useShouldRefresh", () => {
 	})
 
 	it("should be true, if list changed", async () => {
-		const state$ = Atom.create<InfiniteListState<string, string>>({ items: ["1"], status: "fulfilled", continuation: "1", finished: false })
+		const state$ = Atom.create<InfiniteListState<string, string>>({
+			items: ["1"],
+			status: "fulfilled",
+			continuation: "1",
+			finished: false,
+		})
 		let loadCount = 0
 		const loader: ListPartLoader<string, string> = c => {
 			loadCount = loadCount + 1

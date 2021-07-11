@@ -37,9 +37,7 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 
 	componentWillUnmount() {
 		this.subscriptions.forEach(([subscription], key, map) => {
-			if (!subscription.closed) {
-				subscription.unsubscribe()
-			}
+			subscription.unsubscribe()
 			map.delete(key)
 		})
 		this._mounted = false
@@ -104,10 +102,7 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 	private doUnsubscribe(oldProps: Lifted<P>, newProps: Lifted<P>) {
 		walk(oldProps, (value, lens) => {
 			if (value instanceof Observable && lens.get(newProps) !== value) {
-				const sub = this.subscriptions.get(value)
-				if (sub && !sub[0].closed) {
-					sub[0].unsubscribe()
-				}
+				this.subscriptions.get(value)![0].unsubscribe()
 				this.subscriptions.delete(value)
 			}
 		})
@@ -145,9 +140,7 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 			const reload = () => {
 				rejected.forEach(r => r.reload())
 				this.subscriptions.forEach(([s, lens], obs) => {
-					if (!s.closed) {
-						s.unsubscribe()
-					}
+					s.unsubscribe()
 					const newSubscription = obs.subscribe(
 						plain => this.handle(lens, toWrapped(plain)),
 						error => this.handle(lens, createRejectedWrapped(error))

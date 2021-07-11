@@ -1,7 +1,7 @@
 import { Atom } from "@rixio/atom"
-import { pendingWrapped, Wrapped } from "@rixio/wrapped";
+import { pendingWrapped, Wrapped } from "@rixio/wrapped"
 import { waitFor } from "@testing-library/react"
-import { InfiniteList, ListItem, mapperFactory, MapperFactoryProps } from "./infinite-list";
+import { InfiniteList, ListItem, mapperFactory, MapperFactoryProps } from "./infinite-list"
 import { InfiniteListState, ListPartLoader, listStateIdle } from "./domain"
 
 describe("mapper", () => {
@@ -12,7 +12,7 @@ describe("mapper", () => {
 			pageSize: 10,
 			loadNext(force?: boolean) {
 				loadNextInvocations.push(Boolean(force))
-			}
+			},
 		} as InfiniteList<number, number>
 		return [mapper, loadNextInvocations, fakeList$] as const
 	}
@@ -28,10 +28,13 @@ describe("mapper", () => {
 	it("should emit Wrapped rejected if nothing is loaded and initial = wrapped", () => {
 		const [mapper, loadNextInvocations, fakeList$] = init()
 
-		const rejected = mapper({ status: "rejected", error: "error1", finished: false, continuation: null, items: [] }, fakeList$)
+		const rejected = mapper(
+			{ status: "rejected", error: "error1", finished: false, continuation: null, items: [] },
+			fakeList$
+		)
 		expect(rejected.status).toBe("rejected")
-		expect((rejected as any).error).toBe("error1");
-		(rejected as any).reload()
+		expect((rejected as any).error).toBe("error1")
+		;(rejected as any).reload()
 		expect(loadNextInvocations.length).toBe(1)
 		expect(loadNextInvocations[0]).toBe(true)
 	})
@@ -43,8 +46,8 @@ describe("mapper", () => {
 		expect(pending.status).toBe("fulfilled")
 		expect((pending as any).value.length).toBe(10)
 		expect((pending as any).value[0].type).toBe("pending")
-		expect(loadNextInvocations.length).toBe(0);
-		(pending as any).value[0].loadNext()
+		expect(loadNextInvocations.length).toBe(0)
+		;(pending as any).value[0].loadNext()
 		expect(loadNextInvocations.length).toBe(1)
 		expect(loadNextInvocations[0]).toBe(false)
 	})
@@ -52,12 +55,15 @@ describe("mapper", () => {
 	it("should create fake rejected item if initial = fake", () => {
 		const [mapper, loadNextInvocations, fakeList$] = init({ initial: "fake" })
 
-		const rejected = mapper({ status: "rejected", error: "error1", finished: false, continuation: null, items: [] }, fakeList$)
+		const rejected = mapper(
+			{ status: "rejected", error: "error1", finished: false, continuation: null, items: [] },
+			fakeList$
+		)
 		expect(rejected.status).toBe("fulfilled")
 		expect((rejected as any).value.length).toBe(1)
 		expect((rejected as any).value[0].type).toBe("rejected")
-		expect(loadNextInvocations.length).toBe(0);
-		(rejected as any).value[0].reload()
+		expect(loadNextInvocations.length).toBe(0)
+		;(rejected as any).value[0].reload()
 		expect(loadNextInvocations.length).toBe(1)
 		expect(loadNextInvocations[0]).toBe(true)
 	})
@@ -71,8 +77,8 @@ describe("mapper", () => {
 		expect((pending as any).value[0].type).toBe("item")
 		expect((pending as any).value[0].value).toBe(0)
 		expect((pending as any).value[1].type).toBe("pending")
-		expect(loadNextInvocations.length).toBe(0);
-		(pending as any).value[1].loadNext()
+		expect(loadNextInvocations.length).toBe(0)
+		;(pending as any).value[1].loadNext()
 		expect(loadNextInvocations.length).toBe(1)
 		expect(loadNextInvocations[0]).toBe(false)
 	})
@@ -80,14 +86,17 @@ describe("mapper", () => {
 	it("should create fake rejected item for second page", () => {
 		const [mapper, loadNextInvocations, fakeList$] = init({ initial: "fake" })
 
-		const rejected = mapper({ status: "rejected", error: "error1", finished: false, continuation: 1, items: [0] }, fakeList$)
+		const rejected = mapper(
+			{ status: "rejected", error: "error1", finished: false, continuation: 1, items: [0] },
+			fakeList$
+		)
 		expect(rejected.status).toBe("fulfilled")
 		expect((rejected as any).value.length).toBe(2)
 		expect((rejected as any).value[0].type).toBe("item")
 		expect((rejected as any).value[0].value).toBe(0)
 		expect((rejected as any).value[1].type).toBe("rejected")
-		expect(loadNextInvocations.length).toBe(0);
-		(rejected as any).value[1].reload()
+		expect(loadNextInvocations.length).toBe(0)
+		;(rejected as any).value[1].reload()
 		expect(loadNextInvocations.length).toBe(1)
 		expect(loadNextInvocations[0]).toBe(true)
 	})
