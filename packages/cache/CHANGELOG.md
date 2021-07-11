@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/roborox/rixio/compare/@rixio/cache@0.2.2...@rixio/cache@0.2.3) (2021-07-11)
+
+
+### Bug Fixes
+
+* fix memory leak by kv9991 ([d4e6f58](https://github.com/roborox/rixio/commit/d4e6f581f92d73f3619712bc4e2c78a5ae90352f))
+
+
+
+
+
 ## [0.2.2](https://github.com/roborox/rixio/compare/@rixio/cache@0.2.1...@rixio/cache@0.2.2) (2021-05-25)
 
 **Note:** Version bump only for package @rixio/cache

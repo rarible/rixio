@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9](https://github.com/roborox/rixio/compare/@rixio/list-react-native@0.4.8...@rixio/list-react-native@0.4.9) (2021-07-11)
+
+
+### Bug Fixes
+
+* fix memory leak by kv9991 ([d4e6f58](https://github.com/roborox/rixio/commit/d4e6f581f92d73f3619712bc4e2c78a5ae90352f))
+
+
+
+
+
 ## [0.4.8](https://github.com/roborox/rixio/compare/@rixio/list-react-native@0.4.7...@rixio/list-react-native@0.4.8) (2021-05-25)
 
 **Note:** Version bump only for package @rixio/list-react-native
