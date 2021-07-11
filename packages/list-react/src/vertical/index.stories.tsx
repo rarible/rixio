@@ -34,11 +34,7 @@ type BlockProps = {
 	children: React.ReactNode
 }
 const Block = ({ height, children }: BlockProps) => {
-	return (
-		<div style={{ background: "grey", height }}>
-			{children}
-		</div>
-	)
+	return <div style={{ background: "grey", height }}>{children}</div>
 }
 
 type Props = {
@@ -75,7 +71,7 @@ const rect = {
 	width: 500,
 	minRowHeight: 100,
 	height: 400,
-	gap: 32
+	gap: 32,
 }
 
 storiesOf("vertical-list", module)

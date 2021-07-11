@@ -37,7 +37,7 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	private readonly singles = new SimpleCache<K, Cache<V>>(key => new CacheImpl(this.getAtom(key), () => this.load(key)))
 	private readonly _events: Subject<KeyCacheEvent<K>> = new Subject()
 	public readonly events = this._events.pipe()
-	
+
 	constructor(
 		private readonly map: Atom<IM<K, CacheState<V>>>,
 		private readonly loader: ListDataLoader<K, V>,
@@ -49,7 +49,7 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 
 	private async onBatchLoad(keys: K[]) {
 		try {
-			const values = await this.loader(keys);
+			const values = await this.loader(keys)
 			const map = IM(values)
 			keys.forEach(key => {
 				if (map.has(key)) {

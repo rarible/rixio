@@ -1,5 +1,5 @@
 import { combineLatest as rxjsCombineLatest, from, NEVER, Observable, of, throwError } from "rxjs"
-import { distinctUntilChanged, map as rxjsMap, mergeMap as rxjsMergeMap,  } from "rxjs/operators"
+import { distinctUntilChanged, map as rxjsMap, mergeMap as rxjsMergeMap } from "rxjs/operators"
 
 import {
 	createFulfilledWrapped,
@@ -9,7 +9,7 @@ import {
 	Wrapped,
 	WrappedObservable,
 } from "./domain"
-import { markWrappedObservable, wrap } from "./index";
+import { markWrappedObservable, wrap } from "./index"
 
 type F<T, R> = (value: T) => R
 
@@ -98,7 +98,9 @@ export function flatMap<T, R>(
 		)
 }
 
-export function catchError<T, R>(mapper: (value: any) => WrappedObservable<R> | R): F<WrappedObservable<T>, Observable<Wrapped<R>>> {
+export function catchError<T, R>(
+	mapper: (value: any) => WrappedObservable<R> | R
+): F<WrappedObservable<T>, Observable<Wrapped<R>>> {
 	return observable =>
 		markWrappedObservable(
 			wrap(observable).pipe(
@@ -116,7 +118,7 @@ export function catchError<T, R>(mapper: (value: any) => WrappedObservable<R> | 
 								return wrap(of(createFulfilledWrapped(result)))
 							}
 					}
-				}),
+				})
 			)
 		)
 }
@@ -134,7 +136,7 @@ export function unwrap<T>(): F<WrappedObservable<T>, Observable<T>> {
 						return throwError(v.error)
 					}
 				}
-			}),
+			})
 		)
 }
 
@@ -143,7 +145,5 @@ export function fromPromise<T>(promise: PromiseLike<T>): Observable<Wrapped<T>> 
 }
 
 export function cond<T>(ifTrue: T, ifFalse: T): F<WrappedObservable<any>, Observable<Wrapped<T>>> {
-	return wrapped => markWrappedObservable(
-		wrap(wrapped).pipe(map(value => (value ? ifTrue : ifFalse)))
-	)
+	return wrapped => markWrappedObservable(wrap(wrapped).pipe(map(value => (value ? ifTrue : ifFalse))))
 }

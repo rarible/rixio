@@ -11,9 +11,9 @@ export type ShouldRefreshReturnType = {
 }
 
 export function useShouldRefresh<T, C>(
-	list$: BaseInfiniteList<T, C, any>, 
+	list$: BaseInfiniteList<T, C, any>,
 	mapId: (x?: T) => any = identity,
-	onRefresh?: () => void, 
+	onRefresh?: () => void
 ): ShouldRefreshReturnType {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const shouldRefresh$ = useMemo(() => Atom.create(false), [list$])

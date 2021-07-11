@@ -1,5 +1,5 @@
 import { RxPropsBase, useRx } from "@rixio/react"
-import React, { ComponentType, useCallback, useState } from "react";
+import React, { ComponentType, useCallback, useState } from "react"
 import { WrappedObservable } from "@rixio/wrapped"
 import {
 	Animated,
@@ -14,10 +14,14 @@ type BaseListProps<T> = Pick<FlatListProps<T>, "data" | "renderItem" | "onScroll
 
 type InferItemType<Props extends BaseListProps<any>> = Props extends BaseListProps<infer T> ? T : never
 
-type LiftedFlatListProps<T, Props extends BaseListProps<T>> = Omit<Props, "data" | "renderItem" | "refreshing" | "onRefresh"> & RxPropsBase & {
-	data$: WrappedObservable<T[]>
-	renderItem: RxListRenderItem<T>
-}
+type LiftedFlatListProps<T, Props extends BaseListProps<T>> = Omit<
+	Props,
+	"data" | "renderItem" | "refreshing" | "onRefresh"
+> &
+	RxPropsBase & {
+		data$: WrappedObservable<T[]>
+		renderItem: RxListRenderItem<T>
+	}
 
 export function liftFlatList<Props extends BaseListProps<any>>(Component: ComponentType<Props>) {
 	function LiftedFlatList({
@@ -43,7 +47,7 @@ export function liftFlatList<Props extends BaseListProps<any>>(Component: Compon
 		)
 		const onRefresh = useCallback<() => void>(() => {
 			if ("clear" in data$ && typeof data$["clear"] === "function") {
-				(data$ as any)["clear"]()
+				;(data$ as any)["clear"]()
 			}
 		}, [data$])
 
@@ -53,8 +57,8 @@ export function liftFlatList<Props extends BaseListProps<any>>(Component: Compon
 			onScroll: finalOnScroll,
 		}
 		if ("clear" in data$) {
-			(common as any)["refreshing"] = data.status === "pending";
-			(common as any)["onRefresh"] = onRefresh
+			;(common as any)["refreshing"] = data.status === "pending"
+			;(common as any)["onRefresh"] = onRefresh
 		}
 		switch (data.status) {
 			case "fulfilled":
@@ -96,7 +100,7 @@ function useInfiniteListScrollEvent(
 		ev => {
 			onScroll?.(ev)
 			if (isScrollCloseToBottom(offset, ev) && "loadNext" in data$ && typeof data$["loadNext"] === "function") {
-				(data$ as any)["loadNext"]()
+				;(data$ as any)["loadNext"]()
 			}
 		},
 		[data$, offset, onScroll]
@@ -119,8 +123,12 @@ export type RxListRenderItem<T> = (info: RxListRenderItemInfo<T>) => React.React
 
 type OnScroll = (ev: NativeSyntheticEvent<NativeScrollEvent>) => void
 
-export const RxFlatList: <T>(props: RxFlatListProps<T>) => (JSX.Element | null) = liftFlatList(FlatList) as any
+export const RxFlatList: <T>(props: RxFlatListProps<T>) => JSX.Element | null = liftFlatList(FlatList) as any
 export type RxFlatListProps<T> = LiftedFlatListProps<T, FlatListProps<T>>
-export const RxAnimatedFlatList: <T>(props: RxAnimatedFlatListProps<T>) => (JSX.Element | null) = liftFlatList(Animated.FlatList as any) as any
+export const RxAnimatedFlatList: <T>(props: RxAnimatedFlatListProps<T>) => JSX.Element | null = liftFlatList(
+	Animated.FlatList as any
+) as any
 // @ts-ignore
-export type RxAnimatedFlatListProps<T> = LiftedFlatListProps<T, Animated.AnimatedProps<React.ComponentPropsWithRef<FlatList>>>
+type AnimatedFlatListProps = Animated.AnimatedProps<React.ComponentPropsWithRef<FlatList>>
+// @ts-ignore
+export type RxAnimatedFlatListProps<T> = LiftedFlatListProps<T, AnimatedFlatListProps>

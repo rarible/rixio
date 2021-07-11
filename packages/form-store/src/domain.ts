@@ -20,4 +20,6 @@ export interface ValidationResultError<T> {
 
 export type ValidationResult<T> = ValidationResultSuccess | ValidationResultValidating | ValidationResultError<T>
 
-export type Validate<T> = (value: T) => ValidationResult<T> | PromiseLike<ValidationResult<T>> | Observable<ValidationResult<T>>
+export type Validate<T> = (
+	value: T
+) => ValidationResult<T> | PromiseLike<ValidationResult<T>> | Observable<ValidationResult<T>>

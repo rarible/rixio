@@ -9,7 +9,10 @@ import { Atom } from "@rixio/atom"
 import { MappedSubject } from "@rixio/cache/build/mapped-subject"
 import { InfiniteListState, ListPartLoader, listStateIdle } from "./domain"
 
-export type InfiniteListMapper<T, C, R> = (state: InfiniteListState<T, C>, list$: BaseInfiniteList<T, C, any>) => Wrapped<R>
+export type InfiniteListMapper<T, C, R> = (
+	state: InfiniteListState<T, C>,
+	list$: BaseInfiniteList<T, C, any>
+) => Wrapped<R>
 
 export class BaseInfiniteList<T, C, R> extends MappedSubject<InfiniteListState<T, C>, Wrapped<R>> {
 	constructor(
@@ -80,8 +83,13 @@ export class BaseInfiniteList<T, C, R> extends MappedSubject<InfiniteListState<T
 }
 
 export class InfiniteList<T, C> extends BaseInfiniteList<T, C, ListItem<T>[]> {
-	constructor(state$: Atom<InfiniteListState<T, C>>, loader: ListPartLoader<T, C>, pageSize: number, props?: MapperFactoryProps) {
-		super(state$, loader, pageSize, mapperFactory(props));
+	constructor(
+		state$: Atom<InfiniteListState<T, C>>,
+		loader: ListPartLoader<T, C>,
+		pageSize: number,
+		props?: MapperFactoryProps
+	) {
+		super(state$, loader, pageSize, mapperFactory(props))
 	}
 }
 
@@ -128,9 +136,14 @@ export function mapperFactory<T, C>(props?: MapperFactoryProps): InfiniteListMap
 		switch (state.status) {
 			case "idle":
 			case "pending":
-				return createFulfilledWrapped(createRealListItems(state.items).concat(createPendingPage(pendingPageSize, list$)))
+				return createFulfilledWrapped(
+					createRealListItems(state.items).concat(createPendingPage(pendingPageSize, list$))
+				)
 			case "rejected":
-				return createFulfilledWrapped([...createRealListItems(state.items), createRejectedItem(state.error, () => list$.loadNext(true))])
+				return createFulfilledWrapped([
+					...createRealListItems(state.items),
+					createRejectedItem(state.error, () => list$.loadNext(true)),
+				])
 		}
 		if (state.finished) {
 			return createFulfilledWrapped(createRealListItems(state.items))
