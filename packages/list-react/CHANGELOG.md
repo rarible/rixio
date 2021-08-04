@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.8](https://github.com/roborox/rixio/compare/@rixio/list-react@0.5.7...@rixio/list-react@0.5.8) (2021-08-04)
+
+
+### Bug Fixes
+
+* list-react renderer function type, add index ([8b81ecf](https://github.com/roborox/rixio/commit/8b81ecfdf148d6bf43bef057e7ac82257e3107b4))
+
+
+
+
+
 ## [0.5.7](https://github.com/roborox/rixio/compare/@rixio/list-react@0.5.6...@rixio/list-react@0.5.7) (2021-07-11)
 
 
