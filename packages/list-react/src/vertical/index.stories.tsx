@@ -41,6 +41,7 @@ type Props = {
 	item: ListItem<Item>
 	isScrolling: boolean
 	onRender: () => void
+	index: number
 }
 const Comp = ({ item, ...rest }: Props) => {
 	if (item && item.type === "item") {
@@ -52,19 +53,19 @@ const Comp = ({ item, ...rest }: Props) => {
 type LoadedProps = Omit<Props, "item"> & {
 	item: Item
 }
-const Loaded = ({ item, onRender, isScrolling }: LoadedProps) => {
+const Loaded = ({ item, onRender, index, isScrolling }: LoadedProps) => {
 	useEffect(() => {
 		onRender()
 	}, [onRender])
 
 	return (
 		<Block height={item.height}>
-			<span>{isScrolling ? "scrolling" : item.height}</span>
+			<span>{isScrolling ? "scrolling" : `${item.height}-${index}`}</span>
 		</Block>
 	)
 }
-const renderer: ListReactRenderer<ListItem<Item>> = (item, onMeasure, isScrolling) => {
-	return <Comp item={item} onRender={onMeasure} isScrolling={isScrolling} />
+const renderer: ListReactRenderer<ListItem<Item>> = (item, onMeasure, index, isScrolling) => {
+	return <Comp item={item} onRender={onMeasure} index={index} isScrolling={isScrolling} />
 }
 
 const rect = {

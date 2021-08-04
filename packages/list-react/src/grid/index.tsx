@@ -64,14 +64,13 @@ export function GridList<T>({
 			<GridListCell
 				gap={rect.gap}
 				columnCount={rect.columnCount}
-				rowCount={rowCount}
 				renderer={renderer}
 				data={renderable}
 				key={mapKey(key)}
 				{...restCellProps}
 			/>
 		),
-		[renderable, mapKey, rect.columnCount, rect.gap, renderer, rowCount]
+		[renderable, mapKey, rect.columnCount, rect.gap, renderer]
 	)
 
 	const loadMoreSection = useMemo(() => {
@@ -167,13 +166,12 @@ type GridListCellProps<T> = {
 	columnCount: number
 	renderer: GridReactRenderer<any>
 	gap: number
-	rowCount: number
 	data: T[]
 	isScrolling: boolean
 }
 
 const GridListCell = memo(function GridListCell<T>(props: GridListCellProps<T>) {
-	const { renderer, rowIndex, columnCount, columnIndex, style, gap, data, rowCount, isScrolling } = props
+	const { renderer, rowIndex, columnCount, columnIndex, style, gap, data, isScrolling } = props
 	const index = rowIndex * columnCount + columnIndex
 	const finalStyle = useMemo<CSSProperties>(
 		() => ({
@@ -182,16 +180,16 @@ const GridListCell = memo(function GridListCell<T>(props: GridListCellProps<T>) 
 			height: style.height,
 			top: style.top,
 			left: style.left,
-			...getStylesWithGap(gap, rowIndex, columnIndex, rowCount, columnCount),
+			...getStylesWithGap(gap, columnIndex, columnCount),
 		}),
-		[columnCount, columnIndex, gap, rowCount, rowIndex, style]
+		[columnCount, columnIndex, gap, style]
 	)
 	const item = data[index]
-	const children = useMemo(() => renderer(item, isScrolling), [item, renderer, isScrolling])
+	const children = useMemo(() => renderer(item, index, isScrolling), [item, index, renderer, isScrolling])
 	return <div style={finalStyle} children={children} />
 })
 
-const getStylesWithGap = (gap: number, row: number, col: number, rowCount: number, columnCount: number) => {
+const getStylesWithGap = (gap: number, col: number, columnCount: number) => {
 	const halfGap = gap / 2
 	return {
 		paddingLeft: col !== 0 ? halfGap : 0,
