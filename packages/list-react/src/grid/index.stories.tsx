@@ -18,12 +18,14 @@ async function load(pageSize: number, c: number | null): Promise<[number[], numb
 const state$ = Atom.create<InfiniteListState<number, number>>(listStateIdle)
 const list$ = new InfiniteList(state$, load, 20, { initial: "wrapped" })
 
-const Comp = ({ item, index }: { index: number, item: ListItem<number> }) => {
+const Comp = ({ item, index }: { index: number; item: ListItem<number> }) => {
 	if (item) {
 		if (item.type === "item") {
 			return (
 				<article style={{ display: "flex", height: "100%", background: "grey" }} key={item.value.toString()}>
-					<h3>{item.value}-{index}</h3>
+					<h3>
+						{item.value}-{index}
+					</h3>
 				</article>
 			)
 		}

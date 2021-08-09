@@ -131,7 +131,9 @@ export function VerticalListRow<T>(props: VerticalListRowProps<T>) {
 	return (
 		<CellMeasurer columnIndex={0} rowIndex={index} parent={parent} cache={cellMeasurerCache}>
 			{({ measure }) => (
-				<div style={getStylesWithGap(style, gap, index, rowCount)}>{renderer(data[index], measure, index, isScrolling)}</div>
+				<div style={getStylesWithGap(style, gap, index, rowCount)}>
+					{renderer(data[index], measure, index, isScrolling)}
+				</div>
 			)}
 		</CellMeasurer>
 	)
