@@ -83,6 +83,8 @@ export function GridList<T>({
 		return null
 	}, [preview, loadButton, renderable, data, rect, rowsToPreview])
 
+	const { onScroll, ...restGridProps } = gridProps
+
 	return (
 		<React.Fragment>
 			<InfiniteLoader
@@ -109,7 +111,8 @@ export function GridList<T>({
 							cellRenderer={cellRenderer}
 							height={rect.height}
 							width={rect.width}
-							{...gridProps}
+							onScroll={rowCount > 0 ? onScroll : undefined}
+							{...restGridProps}
 							ref={registerChild}
 							onSectionRendered={onSectionRendered.current}
 						/>
