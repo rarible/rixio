@@ -1,7 +1,13 @@
 import React, { CSSProperties, memo, useCallback, useMemo, useRef, useState } from "react"
 import { isFakeItem } from "@rixio/list"
 import { InfiniteLoader, InfiniteLoaderProps } from "react-virtualized/dist/es/InfiniteLoader"
-import { Grid, GridCellRenderer, GridProps, RenderedSection } from "react-virtualized/dist/es/Grid"
+import {
+	Grid,
+	GridCellRenderer,
+	GridProps,
+	OverscanIndicesGetter,
+	RenderedSection,
+} from "react-virtualized/dist/es/Grid"
 import { WindowScroller, WindowScrollerChildProps } from "react-virtualized/dist/es/WindowScroller"
 import type { Index, IndexRange } from "react-virtualized"
 import type { GridReactRenderer } from "../domain"
@@ -113,6 +119,7 @@ export function GridList<T>({
 							width={rect.width}
 							onScroll={rowCount > 0 ? onScroll : undefined}
 							{...restGridProps}
+							overscanIndicesGetter={overscanIndicesGetter}
 							ref={registerChild}
 							onSectionRendered={onSectionRendered.current}
 						/>
@@ -123,6 +130,16 @@ export function GridList<T>({
 		</React.Fragment>
 	)
 }
+
+const overscanIndicesGetter: OverscanIndicesGetter = ({
+	cellCount, // Number of rows or columns in the current axis
+	overscanCellsCount, // Maximum number of cells to over-render in either direction
+	startIndex, // Begin of range of visible cells
+	stopIndex, // End of range of visible cells
+}) => ({
+	overscanStartIndex: Math.max(0, startIndex - overscanCellsCount),
+	overscanStopIndex: Math.min(cellCount - 1, stopIndex + overscanCellsCount),
+})
 
 export type RxGridListProps<T> = RxReactListProps<T, GridListProps<T>>
 export const RxGridList: <T>(props: RxGridListProps<T>) => JSX.Element = liftReactList(GridList) as any
