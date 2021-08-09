@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9](https://github.com/roborox/rixio/compare/@rixio/list-react@0.5.8...@rixio/list-react@0.5.9) (2021-08-09)
+
+
+### Bug Fixes
+
+* disable window scroller scroll logic for no content grid ([3104f39](https://github.com/roborox/rixio/commit/3104f39f56745a1cde9059a5908d96efbb4d8ff4))
+* override default overscanIndicesGetter ([edd8440](https://github.com/roborox/rixio/commit/edd84402b82d3e5769f569cec1bbc5b549788ec2))
+
+
+
+
+
 ## [0.5.8](https://github.com/roborox/rixio/compare/@rixio/list-react@0.5.7...@rixio/list-react@0.5.8) (2021-08-04)
 
 
