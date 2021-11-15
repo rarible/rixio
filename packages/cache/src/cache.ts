@@ -1,18 +1,17 @@
 import { Atom } from "@rixio/atom"
 import { Observable } from "rxjs"
-import { filter, first, map as rxjsMap } from "rxjs/operators"
+import { filter, first } from "rxjs/operators"
 import {
 	createFulfilledWrapped,
 	createRejectedWrapped,
-	fromPromise,
 	markWrappedObservable,
 	pendingWrapped,
 	Wrapped,
 } from "@rixio/wrapped"
-import { MappedSubject } from "./mapped-subject"
-import { Cache, CacheState, createFulfilledCache, idleCache, toCache } from "./index"
+import { MappedBehaviorSubject } from "./mapped-behavior-subject"
+import { Cache, CacheState, createFulfilledCache, idleCache, save } from "./index"
 
-export class CacheImpl<T> extends MappedSubject<CacheState<T>, Wrapped<T>> implements Cache<T> {
+export class CacheImpl<T> extends MappedBehaviorSubject<CacheState<T>, Wrapped<T>> implements Cache<T> {
 	constructor(private readonly _atom: Atom<CacheState<T>>, private readonly _loader: () => Promise<T>) {
 		super(_atom, pendingWrapped)
 		markWrappedObservable(this)
@@ -92,9 +91,4 @@ async function getFinalValue<T>(state$: Observable<Wrapped<T>>): Promise<T> {
 		default:
 			throw new Error("Never happens")
 	}
-}
-
-export async function save<T>(promise: PromiseLike<T>, atom: Atom<CacheState<T>>) {
-	const observable = fromPromise(promise).pipe(rxjsMap(toCache))
-	await Atom.set(atom, observable).toPromise()
 }

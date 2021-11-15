@@ -3,8 +3,9 @@ import { Map as IM } from "immutable"
 import waitForExpect from "wait-for-expect"
 import { createFulfilledWrapped, pendingWrapped, Wrapped } from "@rixio/wrapped"
 import { waitFor } from "@testing-library/react"
-import { KeyCacheEvent, KeyCacheImpl, toListDataLoader } from "./key"
-import { CacheState, createFulfilledCache } from "./index"
+import { KeyCacheImpl } from "./key-cache"
+import { KeyEvent } from "./domain"
+import { CacheState, createFulfilledCache, toListDataLoader } from "./index"
 
 describe("KeyCacheImpl", () => {
 	test("should create single caches", async () => {
@@ -93,7 +94,7 @@ describe("KeyCacheImpl", () => {
 			toListDataLoader(key => loadData(key))
 		)
 
-		const emitted: KeyCacheEvent<string>[] = []
+		const emitted: KeyEvent<string>[] = []
 		cache.events.subscribe(value => emitted.push(value))
 		cache.get("test").then()
 

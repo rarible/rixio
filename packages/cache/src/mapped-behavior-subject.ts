@@ -1,11 +1,11 @@
-import { Observable, Subject, Subscriber, Subscription } from "rxjs"
+import { BehaviorSubject, Observable, Subscriber, Subscription } from "rxjs"
 
-export abstract class MappedSubject<S, T> extends Subject<T> {
+export abstract class MappedBehaviorSubject<S, T> extends BehaviorSubject<T> {
 	protected _subscription: Subscription | null = null
 	private _refCount = 0
 
-	protected constructor(protected readonly _observable: Observable<S>) {
-		super()
+	protected constructor(protected readonly _observable: Observable<S>, initial: T) {
+		super(initial)
 	}
 
 	protected abstract _onValue(source: S): void

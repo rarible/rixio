@@ -7,15 +7,14 @@ export {
 	Cache,
 	AtomStateStatus,
 	Idle,
-} from "./domain"
-export { save, CacheImpl } from "./impl"
-export {
+	Memo,
 	KeyCache,
-	KeyCacheImpl,
-	ListDataLoader,
+	KeyMemo,
 	DataLoader,
-	byKeyWithDefaultFactory,
-	byKey,
-	toListDataLoader,
-} from "./key"
-export { toWrapped, toCache } from "./utils"
+	ListDataLoader,
+} from "./domain"
+export { CacheImpl } from "./cache"
+export { MemoImpl } from "./memo"
+export { KeyCacheImpl } from "./key-cache"
+export { KeyMemoImpl } from "./key-memo"
+export { byKey, byKeyWithDefaultFactory, save, toListDataLoader, toWrapped, toCache } from "./utils"

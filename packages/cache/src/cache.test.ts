@@ -1,7 +1,7 @@
 import { Atom } from "@rixio/atom"
 import waitForExpect from "wait-for-expect"
 import { pendingWrapped, wrap, Wrapped } from "@rixio/wrapped"
-import { CacheImpl } from "./impl"
+import { CacheImpl } from "./cache"
 import { CacheState, idleCache } from "./index"
 
 describe("CacheImpl", () => {

@@ -6,7 +6,7 @@ import {
 	Wrapped,
 } from "@rixio/wrapped"
 import { Atom } from "@rixio/atom"
-import { MappedSubject } from "@rixio/cache/build/mapped-subject"
+import { MappedBehaviorSubject } from "@rixio/cache/build/mapped-behavior-subject"
 import { InfiniteListState, ListPartLoader, listStateIdle } from "./domain"
 
 export type InfiniteListMapper<T, C, R> = (
@@ -14,7 +14,7 @@ export type InfiniteListMapper<T, C, R> = (
 	list$: BaseInfiniteList<T, C, any>
 ) => Wrapped<R>
 
-export class BaseInfiniteList<T, C, R> extends MappedSubject<InfiniteListState<T, C>, Wrapped<R>> {
+export class BaseInfiniteList<T, C, R> extends MappedBehaviorSubject<InfiniteListState<T, C>, Wrapped<R>> {
 	constructor(
 		readonly state$: Atom<InfiniteListState<T, C>>,
 		readonly loader: ListPartLoader<T, C>,
