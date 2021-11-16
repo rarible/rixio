@@ -11,7 +11,6 @@ export abstract class MappedBehaviorSubject<S, T> extends BehaviorSubject<T> {
 	protected abstract _onValue(source: S): void
 
 	_subscribe(subscriber: Subscriber<T>): Subscription {
-		// tslint:disable-line function-name
 		if (!this._subscription) {
 			this._subscription = this._observable.subscribe(v => this._onValue(v))
 		}
@@ -34,7 +33,6 @@ export abstract class MappedBehaviorSubject<S, T> extends BehaviorSubject<T> {
 			this._subscription = null
 		}
 		this._refCount = 0
-
 		super.unsubscribe()
 	}
 }

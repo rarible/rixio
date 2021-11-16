@@ -5,30 +5,26 @@ import { Subject } from "rxjs"
 import { filter, first } from "rxjs/operators"
 import { MemoImpl } from "./memo"
 import { BatchHelper } from "./key-batch"
-import {
-	CacheState,
-	createFulfilledCache,
-	idleCache,
-	KeyEvent,
-	KeyMemo,
-	ListDataLoader,
-	Memo,
-	UNDEFINED,
-} from "./domain"
+import * as Domain from "./domain"
 import { byKeyWithDefaultFactory } from "./utils"
 
-export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
+export class KeyMemoImpl<K, V> implements Domain.KeyMemo<K, V> {
 	private readonly batchHelper: BatchHelper<K>
-	private readonly results: Subject<[K, V | typeof UNDEFINED]> = new Subject()
-	private readonly lensFactory = byKeyWithDefaultFactory<K, CacheState<V>>(idleCache)
-	private readonly singles = new SimpleCache<K, Memo<V>>(key => new MemoImpl(this.getAtom(key), () => this.load(key)))
-	private readonly _events: Subject<KeyEvent<K>> = new Subject()
-	public readonly events = this._events.pipe()
+	private readonly results = new Subject<[K, V | Domain.NotFound]>()
+	private readonly lensFactory = byKeyWithDefaultFactory<K, Domain.CacheState<V>>(Domain.idleCache)
+	private readonly _events = new Subject<Domain.KeyEvent<K>>()
+	readonly events = this._events.pipe()
+
+	private readonly singles = new SimpleCache<K, Domain.Memo<V>>(key => {
+		return new MemoImpl(this.getAtom(key), () => {
+			return this.load(key)
+		})
+	})
 
 	constructor(
-		private readonly map: Atom<IM<K, CacheState<V>>>,
-		private readonly loader: ListDataLoader<K, V>,
-		timeout: number = 50
+		private readonly map: Atom<IM<K, Domain.CacheState<V>>>,
+		private readonly loader: Domain.ListDataLoader<K, V>,
+		timeout: number = 100
 	) {
 		this.onBatchLoad = this.onBatchLoad.bind(this)
 		this.batchHelper = new BatchHelper<K>(this.onBatchLoad, timeout)
@@ -37,23 +33,21 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 	private async onBatchLoad(keys: K[]) {
 		try {
 			const values = await this.loader(keys)
-			const map = IM(values)
-			keys.forEach(key => {
-				if (map.has(key)) {
-					this.results.next([key, map.get(key)!])
-				} else {
-					this.results.next([key, UNDEFINED])
-				}
+			values.forEach(([key, value]) => {
+				this.results.next([key, value])
 			})
 		} catch (e) {
-			keys.forEach(key => {
-				this.results.next([key, UNDEFINED])
+			console.error(e)
+			keys.forEach(k => {
+				this.results.next([k, Domain.UNDEFINED])
 			})
 		}
 	}
 
-	single(key: K): Memo<V> {
-		return this.singles.getOrCreate(key, () => this.onCreate(key))
+	single(key: K): Domain.Memo<V> {
+		return this.singles.getOrCreate(key, () => {
+			this.onCreate(key)
+		})
 	}
 
 	get(key: K, force?: boolean): Promise<V> {
@@ -61,15 +55,17 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 	}
 
 	set(key: K, value: V): void {
-		this.map.modify(x => x.set(key, createFulfilledCache(value)))
+		this.map.modify(x => {
+			return x.set(key, Domain.createFulfilledCache(value))
+		})
 		this.onCreate(key)
 	}
 
 	onCreate(key: K) {
-		this._events.next({ type: "add", key })
+		this._events.next(Domain.createAddEvent(key))
 	}
 
-	getAtom(key: K): Atom<CacheState<V>> {
+	getAtom(key: K): Atom<Domain.CacheState<V>> {
 		return this.map.lens(this.lensFactory(key))
 	}
 
@@ -81,9 +77,9 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 				first()
 			)
 			.toPromise()
-		if (v !== UNDEFINED) {
-			return v
+		if (Domain.isNotFound(v)) {
+			throw new Error(`Entity with key "${key}" not found`)
 		}
-		throw new Error("Not found")
+		return v
 	}
 }

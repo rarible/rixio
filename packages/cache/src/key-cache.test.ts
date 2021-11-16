@@ -57,8 +57,12 @@ describe("KeyCacheImpl", () => {
 		await waitFor(() => {
 			expect(emitted.length).toBe(2)
 			expect(emitted[0]).toStrictEqual(pendingWrapped)
-			expect((emitted[1] as any).status).toBe("rejected")
-			expect((emitted[1] as any).error).toStrictEqual(new Error("Not found"))
+			if (emitted[1].status === "rejected") {
+				expect(emitted[1].status).toBe("rejected")
+				expect(emitted[1].error).toStrictEqual(new Error('Entity with key "test" not found'))
+			} else {
+				fail()
+			}
 		})
 	})
 

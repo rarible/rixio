@@ -6,16 +6,10 @@ import { CacheState, createFulfilledCache, idleCache, Memo, save } from "./index
 export class MemoImpl<T> extends MappedSubject<CacheState<T>, T> implements Memo<T> {
 	constructor(private readonly _atom: Atom<CacheState<T>>, private readonly _loader: () => Promise<T>) {
 		super(_atom)
-		this.clear = this.clear.bind(this)
 	}
 
 	get atom(): Atom<CacheState<T>> {
 		return this._atom
-	}
-
-	get valueAtom(): Atom<T> {
-		// @ts-ignore
-		return this._atom.lens("value")
 	}
 
 	get(force: boolean = false): Promise<T> {

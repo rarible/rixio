@@ -93,8 +93,8 @@ export class InfiniteList<T, C> extends BaseInfiniteList<T, C, ListItem<T>[]> {
 	}
 }
 
-const fakeItem = "fake_item"
-const symbol = Symbol.for(fakeItem)
+const fakeItemKey = "__fake_item__"
+const fakeItemSymbol = Symbol.for(fakeItemKey)
 type PendingItem = {
 	type: "pending"
 	loadNext: () => Promise<void>
@@ -105,7 +105,7 @@ type RejectedItem = {
 	reload: () => Promise<void>
 }
 export type FakeItem = {
-	[fakeItem]: typeof symbol
+	[fakeItemKey]: typeof fakeItemSymbol
 } & (PendingItem | RejectedItem)
 
 export type RealListItem<T> = {
@@ -128,7 +128,8 @@ export function mapperFactory<T, C>(props?: MapperFactoryProps): InfiniteListMap
 			if (state.continuation === null && !state.finished) {
 				if (state.status === "idle" || state.status === "pending") {
 					return pendingWrapped
-				} else if (state.status === "rejected") {
+				}
+				if (state.status === "rejected") {
 					return createRejectedWrapped(state.error, () => list$.loadNext(true))
 				}
 			}
@@ -147,9 +148,8 @@ export function mapperFactory<T, C>(props?: MapperFactoryProps): InfiniteListMap
 		}
 		if (state.finished) {
 			return createFulfilledWrapped(createRealListItems(state.items))
-		} else {
-			return createFulfilledWrapped(createRealListItems(state.items).concat(createPendingPage(pendingPageSize, list$)))
 		}
+		return createFulfilledWrapped(createRealListItems(state.items).concat(createPendingPage(pendingPageSize, list$)))
 	}
 }
 
@@ -171,7 +171,7 @@ function createPendingPage(pageSize: number, list: BaseInfiniteList<any, any, an
 
 function createRejectedItem(error: any, reload: () => Promise<void>): FakeItem {
 	return {
-		[fakeItem]: symbol,
+		[fakeItemKey]: fakeItemSymbol,
 		type: "rejected",
 		error,
 		reload,
@@ -179,12 +179,12 @@ function createRejectedItem(error: any, reload: () => Promise<void>): FakeItem {
 }
 
 export function isFakeItem(object: any): boolean {
-	return typeof object === "object" && object[fakeItem] === symbol
+	return typeof object === "object" && object[fakeItemKey] === fakeItemSymbol
 }
 
 function createPendingItem(loadNext: () => Promise<void>): FakeItem {
 	return {
-		[fakeItem]: symbol,
+		[fakeItemKey]: fakeItemSymbol,
 		type: "pending",
 		loadNext,
 	}

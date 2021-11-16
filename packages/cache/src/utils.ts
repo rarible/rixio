@@ -3,26 +3,19 @@ import { map } from "rxjs/operators"
 import { Atom } from "@rixio/atom"
 import { Lens, Prism, SimpleCache } from "@rixio/lens"
 import { Wrapped, createFulfilledWrapped, pendingWrapped, createRejectedWrapped, fromPromise } from "@rixio/wrapped"
-import {
-	CacheState,
-	createFulfilledCache,
-	pendingCache,
-	createRejectedCache,
-	DataLoader,
-	ListDataLoader,
-} from "./domain"
+import * as Domain from "./domain"
 
-export function toCache<T>(wrapped: Wrapped<T>): CacheState<T> {
+export function toCache<T>(wrapped: Wrapped<T>): Domain.CacheState<T> {
 	switch (wrapped.status) {
 		case "fulfilled":
-			return createFulfilledCache(wrapped.value)
+			return Domain.createFulfilledCache(wrapped.value)
 		case "pending":
-			return pendingCache
+			return Domain.pendingCache
 		case "rejected":
-			return createRejectedCache(wrapped.error)
+			return Domain.createRejectedCache(wrapped.error)
 	}
 }
-export function toWrapped<T>(cache: CacheState<T>): Wrapped<T> {
+export function toWrapped<T>(cache: Domain.CacheState<T>): Wrapped<T> {
 	switch (cache.status) {
 		case "fulfilled":
 			return createFulfilledWrapped(cache.value)
@@ -34,12 +27,12 @@ export function toWrapped<T>(cache: CacheState<T>): Wrapped<T> {
 	}
 }
 
-export async function save<T>(promise: PromiseLike<T>, atom: Atom<CacheState<T>>) {
+export async function save<T>(promise: PromiseLike<T>, atom: Atom<Domain.CacheState<T>>) {
 	const observable = fromPromise(promise).pipe(map(toCache))
 	await Atom.set(atom, observable).toPromise()
 }
 
-export function toListDataLoader<K, V>(loader: DataLoader<K, V>): ListDataLoader<K, V> {
+export function toListDataLoader<K, V>(loader: Domain.DataLoader<K, V>): Domain.ListDataLoader<K, V> {
 	return ids => Promise.all(ids.map(id => loader(id).then(v => [id, v] as [K, V])))
 }
 

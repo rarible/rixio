@@ -5,7 +5,6 @@ export {
 	pendingCache,
 	idleCache,
 	Cache,
-	AtomStateStatus,
 	Idle,
 	Memo,
 	KeyCache,
