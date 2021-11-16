@@ -1,20 +1,28 @@
 import { Atom } from "@rixio/atom"
 import { Observable } from "rxjs"
 import { filter, first } from "rxjs/operators"
-import {
-	createFulfilledWrapped,
-	createRejectedWrapped,
-	markWrappedObservable,
-	pendingWrapped,
-	Wrapped,
-} from "@rixio/wrapped"
-import { MappedBehaviorSubject } from "./mapped-behavior-subject"
-import { Cache, CacheState, createFulfilledCache, idleCache, save } from "./index"
+import * as Wrapped from "@rixio/wrapped"
+import { MappedBehaviorSubject } from "../utils/mapped-behavior-subject"
+import { save } from "../utils/save"
+import { CacheState, createFulfilledCache, idleCache } from "./domain"
 
-export class CacheImpl<T> extends MappedBehaviorSubject<CacheState<T>, Wrapped<T>> implements Cache<T> {
+export interface Cache<T> extends Observable<Wrapped.Wrapped<T>> {
+	get(force?: boolean): Promise<T>
+	set(value: T): void
+	modifyIfFulfilled(updateFn: (currentValue: T) => T): void
+	clear(): void
+	atom: Atom<CacheState<T>>
+}
+
+
+/**
+ * @deprecated this type of cache deprecated
+ * please use memo instead
+ */
+export class CacheImpl<T> extends MappedBehaviorSubject<CacheState<T>, Wrapped.Wrapped<T>> implements Cache<T> {
 	constructor(private readonly _atom: Atom<CacheState<T>>, private readonly _loader: () => Promise<T>) {
-		super(_atom, pendingWrapped)
-		markWrappedObservable(this)
+		super(_atom, Wrapped.pendingWrapped)
+		Wrapped.markWrappedObservable(this)
 		this.clear = this.clear.bind(this)
 	}
 
@@ -46,34 +54,34 @@ export class CacheImpl<T> extends MappedBehaviorSubject<CacheState<T>, Wrapped<T
 	}
 
 	clear(): void {
-		this.atom.set(idleCache as CacheState<T>)
+		this.atom.set(idleCache)
 	}
 
 	protected _onValue(x: CacheState<T>) {
 		switch (x.status) {
 			case "idle":
 				save(this._loader(), this._atom).then()
-				this.checkAndNext(pendingWrapped)
+				this.checkAndNext(Wrapped.pendingWrapped)
 				break
 			case "pending":
-				this.checkAndNext(pendingWrapped)
+				this.checkAndNext(Wrapped.pendingWrapped)
 				break
 			case "rejected":
-				this.checkAndNext(createRejectedWrapped(x.error, this.clear))
+				this.checkAndNext(Wrapped.createRejectedWrapped(x.error, this.clear))
 				break
 			case "fulfilled":
-				this.checkAndNext(createFulfilledWrapped(x.value))
+				this.checkAndNext(Wrapped.createFulfilledWrapped(x.value))
 		}
 	}
 
-	private checkAndNext(value: Wrapped<T>) {
+	private checkAndNext(value: Wrapped.Wrapped<T>) {
 		if (value !== this.getValue()) {
 			this.next(value)
 		}
 	}
 }
 
-async function getFinalValue<T>(state$: Observable<Wrapped<T>>): Promise<T> {
+async function getFinalValue<T>(state$: Observable<Wrapped.Wrapped<T>>): Promise<T> {
 	const result = await state$
 		.pipe(
 			filter(x => x.status === "rejected" || x.status === "fulfilled"),

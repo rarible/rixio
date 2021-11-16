@@ -6,7 +6,7 @@ import {
 	Wrapped,
 } from "@rixio/wrapped"
 import { Atom } from "@rixio/atom"
-import { MappedBehaviorSubject } from "@rixio/cache/build/mapped-behavior-subject"
+import { MappedBehaviorSubject } from "@rixio/cache/build/utils/mapped-behavior-subject"
 import { InfiniteListState, ListPartLoader, listStateIdle } from "./domain"
 
 export type InfiniteListMapper<T, C, R> = (

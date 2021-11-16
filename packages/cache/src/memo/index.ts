@@ -1,7 +1,17 @@
-import { Atom } from "@rixio/atom"
+import type { Atom } from "@rixio/atom"
+import type { Observable } from "rxjs"
 import { first } from "rxjs/operators"
-import { MappedSubject } from "./mapped-subject"
-import { CacheState, createFulfilledCache, idleCache, Memo, save } from "./index"
+import { CacheState, idleCache, createFulfilledCache } from "../cache/domain"
+import { MappedSubject } from "../utils/mapped-subject"
+import { save } from "../utils/save"
+
+export interface Memo<T> extends Observable<T> {
+	get(force?: boolean): Promise<T>
+	set(value: T): void
+	modifyIfFulfilled(updateFn: (currentValue: T) => T): void
+	clear(): void
+	atom: Atom<CacheState<T>>
+}
 
 export class MemoImpl<T> extends MappedSubject<CacheState<T>, T> implements Memo<T> {
 	constructor(private readonly _atom: Atom<CacheState<T>>, private readonly _loader: () => Promise<T>) {
@@ -34,7 +44,7 @@ export class MemoImpl<T> extends MappedSubject<CacheState<T>, T> implements Memo
 	}
 
 	clear(): void {
-		this.atom.set(idleCache as CacheState<T>)
+		this.atom.set(idleCache)
 	}
 
 	protected _onValue(x: CacheState<T>) {

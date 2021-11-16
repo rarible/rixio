@@ -1,8 +1,8 @@
 import { Atom } from "@rixio/atom"
 import waitForExpect from "wait-for-expect"
 import { pendingWrapped, wrap, Wrapped } from "@rixio/wrapped"
-import { CacheImpl } from "./cache"
-import { CacheState, idleCache } from "./index"
+import { CacheState, idleCache } from "./domain"
+import { CacheImpl } from "."
 
 describe("CacheImpl", () => {
 	test("should load data when subscribed and idle", async () => {
