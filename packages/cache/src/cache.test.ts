@@ -36,7 +36,7 @@ describe("CacheImpl", () => {
 		const shouldReject = waitForExpect(() => {
 			expect(cache.atom.get().status).toBe("fulfilled")
 		}, 300)
-		await expect(shouldReject).rejects.toBeTruthy()
+		expect(shouldReject).rejects.toBeTruthy()
 		expect(cache.atom.get().status).toBe("idle")
 	})
 
@@ -56,7 +56,7 @@ describe("CacheImpl", () => {
 		const shouldReject = waitForExpect(() => {
 			expect(cache.atom.get().status).toBe("fulfilled")
 		}, 300)
-		await expect(shouldReject).rejects.toBeTruthy()
+		expect(shouldReject).rejects.toBeTruthy()
 		expect(cache.atom.get().status).toBe("idle")
 	})
 

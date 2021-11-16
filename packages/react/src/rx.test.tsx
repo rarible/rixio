@@ -32,8 +32,8 @@ describe("Rx", () => {
 				</Rx>
 			</span>
 		)
-		await expect(r.getByTestId("test")).toHaveTextContent("pending")
-		await expect(r.getByTestId("test")).not.toHaveTextContent("content")
+		expect(r.getByTestId("test")).toHaveTextContent("pending")
+		expect(r.getByTestId("test")).not.toHaveTextContent("content")
 	})
 
 	test("should display content if loaded", async () => {
@@ -199,7 +199,8 @@ describe("Rx", () => {
 				<Rx value$={state$} pending="pending">
 					simple text
 					<div>multiple elements</div>
-					<R.span>{state$}</R.span>
+					{/* eslint-disable-next-line react/jsx-pascal-case */}
+					<R.span children={state$} />
 				</Rx>
 			</span>
 		))
@@ -212,7 +213,7 @@ describe("Rx", () => {
 				<Rx value$={state$}>{v => <span>{`${v}`}</span>}</Rx>
 			</span>
 		)
-		await expect(r.getByTestId("test")).toHaveTextContent("null")
+		expect(r.getByTestId("test")).toHaveTextContent("null")
 	})
 })
 

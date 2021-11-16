@@ -5,12 +5,18 @@ import { Wrapped, wrap, WrappedObservable, toPlainOrThrow, pendingWrapped } from
 import { ReadOnlyAtom } from "@rixio/atom"
 import { useSubscription } from "./use-subscription"
 
-export type ImmediateFulfilled<T> = {
-	status: "fulfilled"
-	value: T
-}
-
-export type Immediate<T> = ImmediateFulfilled<T> | { status: "pending" } | { status: "rejected"; error: any }
+type Immediate<T> =
+	| {
+			status: "fulfilled"
+			value: T
+	  }
+	| {
+			status: "pending"
+	  }
+	| {
+			status: "rejected"
+			error: any
+	  }
 
 export function getImmediate<T>(observable: Observable<T>): Immediate<T> {
 	let immediate: Immediate<T> = { status: "pending" }
@@ -54,13 +60,11 @@ export function useRx<T>(observable: WrappedObservable<T>, deps: any[] = [observ
 						setCount(c => c + 1)
 					}
 				}
-				// eslint-disable-next-line react-hooks/exhaustive-deps
 			}),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		deps
 	)
-	useEffect(() => {
-		return () => sub.unsubscribe()
-	}, [sub])
+	useEffect(() => () => sub.unsubscribe(), [sub])
 	initial.current = false
 	return value.current
 }
