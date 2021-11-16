@@ -1,5 +1,5 @@
 export { CacheImpl, Cache } from "./cache"
-export { CacheState, idleCache, pendingCache, createFulfilledCache, createRejectedCache } from "./cache/domain"
+export { CacheState, idleCache, pendingCache, createFulfilledCache, createRejectedCache } from "./common/domain"
 export { KeyCacheImpl, KeyCache } from "./key-cache"
 export { MemoImpl, Memo } from "./memo"
 export { KeyMemoImpl, KeyMemo } from "./key-memo"

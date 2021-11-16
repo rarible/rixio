@@ -2,7 +2,7 @@ import type { Atom } from "@rixio/atom"
 import { noop, Observable } from "rxjs"
 import { first, skip } from "rxjs/operators"
 import { save } from ".."
-import { CacheState, idleCache, createFulfilledCache } from "../cache/domain"
+import { CacheState, idleCache, createFulfilledCache } from "../common/domain"
 import { MappedReplaySubject } from "../utils/mapped-replay-subject"
 
 export interface Memo<T> extends Observable<T> {

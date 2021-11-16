@@ -7,7 +7,7 @@ import { Memo, MemoImpl } from "../memo"
 import { BatchHelper } from "../utils/batch-helper"
 import { byKeyWithDefaultFactory } from "../utils"
 import { KeyEvent, NotFound, ListDataLoader, UNDEFINED, createAddEvent, isNotFound } from "../common/domain"
-import { CacheState, idleCache, createFulfilledCache } from "../cache/domain"
+import { CacheState, idleCache, createFulfilledCache } from "../common/domain"
 
 export interface KeyMemo<K, V> {
 	get(key: K, force?: boolean): Promise<V>

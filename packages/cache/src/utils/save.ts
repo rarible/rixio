@@ -2,7 +2,7 @@ import { Atom } from "@rixio/atom"
 import { fromPromise } from "@rixio/wrapped"
 import { noop } from "rxjs"
 import { map } from "rxjs/operators"
-import type { CacheState } from "../cache/domain"
+import type { CacheState } from "../common/domain"
 import { toCache } from "./to-cache"
 
 /**

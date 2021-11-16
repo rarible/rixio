@@ -7,7 +7,7 @@ import { BatchHelper } from "../utils/batch-helper"
 import { byKeyWithDefaultFactory } from "../utils"
 import { CacheImpl } from "../cache"
 import { createAddEvent, isNotFound, KeyEvent, ListDataLoader, NotFound, UNDEFINED } from "../common/domain"
-import { CacheState, createFulfilledCache, idleCache } from "../cache/domain"
+import { CacheState, createFulfilledCache, idleCache } from "../common/domain"
 import { Cache } from "../cache"
 
 export interface KeyCache<K, V> {

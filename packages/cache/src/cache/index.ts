@@ -4,7 +4,7 @@ import { filter, first } from "rxjs/operators"
 import * as Wrapped from "@rixio/wrapped"
 import { MappedBehaviorSubject } from "../utils/mapped-behavior-subject"
 import { save } from "../utils/save"
-import { CacheState, createFulfilledCache, idleCache } from "./domain"
+import { CacheState, createFulfilledCache, idleCache } from "../common/domain"
 
 export interface Cache<T> extends Observable<Wrapped.Wrapped<T>> {
 	get(force?: boolean): Promise<T>

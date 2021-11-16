@@ -1,5 +1,5 @@
 import { createFulfilledWrapped, createRejectedWrapped, pendingWrapped, Wrapped } from "@rixio/wrapped"
-import type { CacheState } from "../cache/domain"
+import type { CacheState } from "../common/domain"
 
 export function toWrapped<T>(cache: CacheState<T>): Wrapped<T> {
 	switch (cache.status) {

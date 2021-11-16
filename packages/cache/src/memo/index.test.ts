@@ -1,6 +1,6 @@
 import { Atom } from "@rixio/atom"
 import { first, map } from "rxjs/operators"
-import { CacheState, idleCache } from "../cache/domain"
+import { CacheState, idleCache } from "../common/domain"
 import { MemoImpl } from "."
 
 describe("MemoImpl", () => {

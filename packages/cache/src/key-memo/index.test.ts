@@ -2,9 +2,10 @@ import { Atom } from "@rixio/atom"
 import { Map as IM } from "immutable"
 import waitForExpect from "wait-for-expect"
 import { waitFor } from "@testing-library/react"
-import { KeyMemoImpl } from "./key-memo"
-import { KeyEvent } from "./domain"
-import { CacheState, createFulfilledCache, toListDataLoader } from "./index"
+import { KeyEvent } from "../common/domain"
+import { toListDataLoader } from "../utils/common"
+import { CacheState, createFulfilledCache } from "../common/domain"
+import { KeyMemoImpl } from "."
 
 describe("KeyMemoImpl", () => {
 	test("should create single caches", async () => {

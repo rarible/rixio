@@ -1,5 +1,5 @@
 export { DataLoader, ListDataLoader, KeyEvent, KeyEventType, NotFound } from "./common/domain"
-export { Idle, CacheState, idleCache, createFulfilledCache, createRejectedCache, pendingCache } from "./cache/domain"
+export { Idle, CacheState, idleCache, createFulfilledCache, createRejectedCache, pendingCache } from "./common/domain"
 export { KeyCache } from "./key-cache"
 export { Memo } from "./memo"
 export { Cache } from "./cache"
