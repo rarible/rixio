@@ -1,4 +1,4 @@
-import { Observable, PartialObserver } from "rxjs"
+import type { Observable, PartialObserver } from "rxjs"
 import { useEffect } from "react"
 
 export function useSubscription<T>(
@@ -9,15 +9,10 @@ export function useSubscription<T>(
 	useEffect(() => {
 		if (typeof observer === "function") {
 			const s = observable.subscribe(observer)
-			return () => {
-				s.unsubscribe()
-			}
-		} else {
-			const s = observable.subscribe(observer)
-			return () => {
-				s.unsubscribe()
-			}
+			return () => s.unsubscribe()
 		}
+		const s = observable.subscribe(observer)
+		return () => s.unsubscribe()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, deps)
 }
