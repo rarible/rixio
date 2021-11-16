@@ -11,7 +11,7 @@ import { toCache } from "./to-cache"
  * @param promise promise that should be mapped to state
  * @param atom where to save state of current promise
  */
-export function save<T>(promise: Promise<T>, atom: Atom<CacheState<T>>): Promise<void> {
+export async function save<T>(promise: Promise<T>, atom: Atom<CacheState<T>>): Promise<void> {
 	return Atom.set(atom, fromPromise(promise).pipe(map(toCache)))
 		.toPromise()
 		.then(noop)

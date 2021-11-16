@@ -1,11 +1,16 @@
-import { Observable, Subject, Subscriber, Subscription } from "rxjs"
+import { Observable, ReplaySubject, SchedulerLike, Subscriber, Subscription } from "rxjs"
 
-export abstract class MappedSubject<S, T> extends Subject<T> {
+export abstract class MappedReplaySubject<S, T> extends ReplaySubject<T> {
 	protected _subscription: Subscription | null = null
 	private _refCount = 0
 
-	protected constructor(protected readonly _observable: Observable<S>) {
-		super()
+	protected constructor(
+		protected readonly _observable: Observable<S>,
+		bufferSize?: number | undefined,
+		windowTime?: number | undefined,
+		scheduler?: SchedulerLike | undefined
+	) {
+		super(bufferSize, windowTime, scheduler)
 	}
 
 	protected abstract _onValue(source: S): void

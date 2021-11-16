@@ -14,7 +14,6 @@ export interface Cache<T> extends Observable<Wrapped.Wrapped<T>> {
 	atom: Atom<CacheState<T>>
 }
 
-
 /**
  * @deprecated this type of cache deprecated
  * please use memo instead

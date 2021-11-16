@@ -1,102 +1,76 @@
 import { Atom } from "@rixio/atom"
 import waitForExpect from "wait-for-expect"
-import { pendingWrapped, wrap, Wrapped } from "@rixio/wrapped"
+import { wrap } from "@rixio/wrapped"
 import { CacheState, idleCache } from "./domain"
 import { CacheImpl } from "."
 
 describe("CacheImpl", () => {
 	test("should load data when subscribed and idle", async () => {
-		let result: string = "loaded"
-		const cache = new CacheImpl(Atom.create(idleCache as CacheState<string>), () => Promise.resolve(result))
+		const cache = new CacheImpl(Atom.create(idleCache as CacheState<string>), () => Promise.resolve("loaded"))
 		expect(cache.atom.get().status).toBe("idle")
+		const sub1 = cache.subscribe()
+		expect(cache.atom.get().status).toBe("pending")
+		const data = await cache.get()
+		expect(data).toBe("loaded")
+		sub1.unsubscribe()
+	})
 
-		const s = cache.subscribe()
-		await waitForExpect(() => {
-			let value = cache.atom.get()
-			if (value.status === "fulfilled") {
-				expect(value.value).toBe("loaded")
-			} else {
-				fail()
-			}
-		})
-
-		result = "reloaded"
+	test("should set idle after clear", () => {
+		const cache = new CacheImpl(Atom.create(idleCache as CacheState<string>), () => Promise.resolve("test"))
+		expect(cache.atom.get().status).toBe("idle")
+		const sub1 = cache.subscribe()
+		expect(cache.atom.get().status).toBe("pending")
+		sub1.unsubscribe()
 		cache.clear()
-		await waitForExpect(() => {
-			const value = cache.atom.get()
-			if (value.status === "fulfilled") {
-				expect(value.value).toBe("reloaded")
-			} else {
-				fail()
-			}
-		})
-
-		s.unsubscribe()
-		cache.clear()
-		const shouldReject = waitForExpect(() => {
-			expect(cache.atom.get().status).toBe("fulfilled")
-		}, 300)
-		expect(shouldReject).rejects.toBeTruthy()
 		expect(cache.atom.get().status).toBe("idle")
 	})
 
-	test("get should work", async () => {
+	test("get should return value and invalidate after clear", async () => {
 		let result: string = "loaded"
 		const cache = new CacheImpl(Atom.create(idleCache as CacheState<string>), () => Promise.resolve(result))
 		expect(cache.atom.get().status).toBe("idle")
-
 		const value = await cache.get()
 		expect(value).toBe("loaded")
-
 		result = "other"
-		const value2 = await cache.get()
-		expect(value2).toBe("loaded")
-
+		expect(await cache.get()).toBe("loaded")
 		cache.clear()
-		const shouldReject = waitForExpect(() => {
-			expect(cache.atom.get().status).toBe("fulfilled")
-		}, 300)
-		expect(shouldReject).rejects.toBeTruthy()
 		expect(cache.atom.get().status).toBe("idle")
+		const value3 = await cache.get()
+		expect(value3).toBe("other")
 	})
 
 	test("set should work", async () => {
 		const cache = new CacheImpl(Atom.create(idleCache as CacheState<string>), () => Promise.resolve("other"))
-		expect(cache.atom.get().status).toBe("idle")
+		expect(await cache.get()).toBe("other")
 		cache.set("loaded")
 		expect(cache.atom.get().status).toBe("fulfilled")
-
-		const value = await cache.get()
-		expect(value).toBe("loaded")
+		expect(await cache.get()).toBe("loaded")
 	})
 
 	test("reload should work if rejected", async () => {
 		let promise: Promise<string> = Promise.reject("reason")
-		const cache = new CacheImpl(Atom.create(idleCache as CacheState<string>), () => promise)
-		expect(cache.atom.get().status).toBe("idle")
+		const atom$ = Atom.create<CacheState<string>>(idleCache)
+		const cache = new CacheImpl(atom$, () => promise)
+		expect(atom$.get().status).toBe("idle")
 
-		let value: Wrapped<string> = pendingWrapped
-		let error: any = null
-		cache.subscribe(
-			v => (value = v),
-			e => (error = e)
-		)
+		cache.subscribe()
 		await waitForExpect(() => {
-			expect(value.status).toBe("rejected")
+			expect(atom$.get().status).toBe("rejected")
 		})
-		expect(error).toBeNull()
-		if (value.status !== "rejected") {
+
+		if (cache.value.status === "rejected") {
+			promise = Promise.resolve("resolved")
+			cache.value.reload()
+			expect(atom$.get().status).toBe("pending")
+			await waitForExpect(() => {
+				expect(atom$.get().status).toBe("fulfilled")
+			})
+		} else {
 			fail()
 		}
-
-		promise = Promise.resolve("resolved")
-		value.reload()
-		await waitForExpect(() => {
-			expect(value.status).toBe("fulfilled")
-		})
 	})
 
-	test("cache is already wrapped", () => {
+	test("wrap utility should work", () => {
 		const cache = new CacheImpl(Atom.create(idleCache as CacheState<string>), () => Promise.reject("reason"))
 		expect(wrap(cache)).toStrictEqual(cache)
 	})
