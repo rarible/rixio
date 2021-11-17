@@ -47,6 +47,7 @@ export function Rx({ pending, rejected, children, value$ }: RxProps): React.Reac
 		case "rejected":
 			if (typeof rejected === "function") {
 				const reload = () => {
+					console.log("reloadingggg")
 					value.reload()
 					setNonce(n => n + 1)
 				}

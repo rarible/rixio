@@ -91,34 +91,39 @@ describe("MemoImpl", () => {
 		expect(value1).toBe("other1")
 	})
 
-    test("should start fetching after subscribe on rejected Memo", async () => {
-        const atom$ = Atom.create<CacheState<string>>(idleCache)
-        let counter = 0
-		const cache = new MemoImpl(atom$, () => {
-            counter = counter + 1
-            return new Promise((resolve, reject) => {
-                setTimeout(() => counter < 2 ? reject("rejected") : resolve("resolved"), 100)
-            })
-        })
-        expect(counter).toEqual(0)
-        const emitted: CacheState<any>["status"][] = []
+	test("should start fetching after subscribe on rejected Memo", async () => {
+		const atom$ = Atom.create<CacheState<string>>(idleCache)
+		let counter = 0
+		const cache = new MemoImpl(atom$, async () => {
+			counter = counter + 1
+			if (counter < 2) {
+				throw "rejected"
+			} else {
+				return "resolved"
+			}
+		})
+		expect(counter).toEqual(0)
+		const emitted: string[] = []
+		const emittedStatuses: CacheState<any>["status"][] = []
+		atom$.subscribe(x => emittedStatuses.push(x.status))
 
-        atom$.subscribe(x => emitted.push(x.status))
-        const sub1 = cache.subscribe(noop, noop)
-        expect(counter).toEqual(1)
-        await waitForExpect(() => {
-            expect(atom$.get().status).toBe("rejected")
-        })
-        sub1.unsubscribe()
-        expect(emitted).toEqual(["idle", "pending", "rejected"])
+		const sub1 = cache.subscribe(value => emitted.push(value), noop)
+		expect(counter).toEqual(1)
+		await waitForExpect(() => {
+			expect(atom$.get().status).toBe("rejected")
+		})
+		expect(emitted).toStrictEqual([])
+		sub1.unsubscribe()
+		expect(emittedStatuses).toStrictEqual(["idle", "pending", "rejected"])
 
-        const sub2 = cache.subscribe(noop, noop)
-        expect(counter).toEqual(2)
-        await waitForExpect(() => {
-            expect(atom$.get().status).toBe("fulfilled")
-        })
-        expect(counter).toEqual(2)
-        expect(emitted).toEqual(["idle", "pending", "rejected", "pending", "fulfilled"])
-        sub2.unsubscribe()
-    })
+		const sub2 = cache.subscribe(value => emitted.push(value), noop)
+		expect(counter).toEqual(2)
+		await waitForExpect(() => {
+			expect(atom$.get().status).toBe("fulfilled")
+		})
+		expect(counter).toEqual(2)
+		expect(emittedStatuses).toEqual(["idle", "pending", "rejected", "pending", "fulfilled"])
+		expect(emitted).toStrictEqual(["resolved"])
+		sub2.unsubscribe()
+	})
 })

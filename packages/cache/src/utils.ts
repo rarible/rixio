@@ -2,6 +2,7 @@ import { Wrapped, createFulfilledWrapped, pendingWrapped, createRejectedWrapped 
 import { CacheState, createFulfilledCache, pendingCache, createRejectedCache } from "./domain"
 
 export function toCache<T>(wrapped: Wrapped<T>): CacheState<T> {
+	console.log("toCache", wrapped)
 	switch (wrapped.status) {
 		case "fulfilled":
 			return createFulfilledCache(wrapped.value)
