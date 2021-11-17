@@ -1,9 +1,10 @@
 import { Atom } from "@rixio/atom"
 import { noop } from "rxjs"
-import { first, map } from "rxjs/operators"
+import { expand, first, map } from "rxjs/operators";
 import waitForExpect from "wait-for-expect"
 import { CacheState, idleCache } from "./domain"
 import { MemoImpl } from "./memo"
+import { waitFor } from "@testing-library/react";
 
 describe("MemoImpl", () => {
 	test("should load data when subscribed and idle", async () => {
@@ -89,6 +90,23 @@ describe("MemoImpl", () => {
 			)
 			.toPromise()
 		expect(value1).toBe("other1")
+	})
+
+	test("notifies observer if data is already fetched", async () => {
+		const atom$ = Atom.create<CacheState<string>>(idleCache)
+		let counter = 0
+		const cache = new MemoImpl(atom$, async () => {
+			counter = counter + 1
+			return "resolved"
+		})
+
+		const emitted: string[] = []
+		cache.subscribe(noop)
+		cache.subscribe(value => emitted.push(value))
+		await waitFor(() => {
+			expect(emitted).toStrictEqual(["resolved"])
+		})
+		expect(counter).toBe(1)
 	})
 
 	test("should start fetching after subscribe on rejected Memo", async () => {
