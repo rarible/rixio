@@ -9,7 +9,6 @@ import { MemoImpl } from "@rixio/cache"
 import { Map as IM } from "immutable"
 import { toListDataLoader } from "@rixio/cache"
 import waitForExpect from "wait-for-expect"
-import { NewMemoImpl } from "@rixio/cache/build/memo"
 import { Rx } from "./rx"
 
 const Testing = ({ text, reload }: { text?: any; reload?: () => void }) => {
@@ -27,7 +26,7 @@ describe("Rx", () => {
 
 	test.only("Rx should work with Memo and reload", async () => {
 		let counter = 0
-		const cache = new NewMemoImpl<string>(Atom.create(idleCache), async () => {
+		const cache = new MemoImpl<string>(Atom.create(idleCache), async () => {
 			counter = counter + 1
 			if (counter <= 1) {
 				throw "my-error"
@@ -51,7 +50,7 @@ describe("Rx", () => {
 			fireEvent.click(r.getByTestId("reload"))
 		})
 		await waitForExpect(() => {
-			expect(r.getByTestId("test")).toHaveTextContent("pending")
+			expect(r.getByTestId("test")).toHaveTextContent("resolved")
 		}, 2000)
 	})
 
