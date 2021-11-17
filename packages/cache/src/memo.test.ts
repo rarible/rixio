@@ -1,5 +1,7 @@
 import { Atom } from "@rixio/atom"
+import { noop } from "rxjs"
 import { first, map } from "rxjs/operators"
+import waitForExpect from "wait-for-expect"
 import { CacheState, idleCache } from "./domain"
 import { MemoImpl } from "./memo"
 
@@ -88,4 +90,35 @@ describe("MemoImpl", () => {
 			.toPromise()
 		expect(value1).toBe("other1")
 	})
+
+    test("should start fetching after subscribe on rejected Memo", async () => {
+        const atom$ = Atom.create<CacheState<string>>(idleCache)
+        let counter = 0
+		const cache = new MemoImpl(atom$, () => {
+            counter = counter + 1
+            return new Promise((resolve, reject) => {
+                setTimeout(() => counter < 2 ? reject("rejected") : resolve("resolved"), 100)
+            })
+        })
+        expect(counter).toEqual(0)
+        const emitted: CacheState<any>["status"][] = []
+
+        atom$.subscribe(x => emitted.push(x.status))
+        const sub1 = cache.subscribe(noop, noop)
+        expect(counter).toEqual(1)
+        await waitForExpect(() => {
+            expect(atom$.get().status).toBe("rejected")
+        })
+        sub1.unsubscribe()
+        expect(emitted).toEqual(["idle", "pending", "rejected"])
+
+        const sub2 = cache.subscribe(noop, noop)
+        expect(counter).toEqual(2)
+        await waitForExpect(() => {
+            expect(atom$.get().status).toBe("fulfilled")
+        })
+        expect(counter).toEqual(2)
+        expect(emitted).toEqual(["idle", "pending", "rejected", "pending", "fulfilled"])
+        sub2.unsubscribe()
+    })
 })

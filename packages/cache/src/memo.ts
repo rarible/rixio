@@ -15,6 +15,7 @@ export interface Memo<T> extends Observable<T> {
 
 export class MemoImpl<T> extends MappedReplaySubject<CacheState<T>, T> implements Memo<T> {
 	private skip: number = 0
+    private shouldRefetch = false
 
 	constructor(private readonly _atom$: Atom<CacheState<T>>, private readonly _loader: () => Promise<T>) {
 		super(_atom$, 1)
@@ -25,7 +26,7 @@ export class MemoImpl<T> extends MappedReplaySubject<CacheState<T>, T> implement
 	}
 
 	get(force = false): Promise<T> {
-		if (force) {
+		if (force || this.hasError) {
 			this.clear()
 		}
 		return this.pipe(skip(Math.max(this.skip, 0)), first()).toPromise()
@@ -53,12 +54,20 @@ export class MemoImpl<T> extends MappedReplaySubject<CacheState<T>, T> implement
 	}
 
 	protected _onValue(x: CacheState<T>) {
+        console.log(x.status)
 		switch (x.status) {
 			case "idle":
 				save(this._loader(), this._atom$).catch(noop)
 				break
 			case "rejected":
-				this.error(x.error)
+                if (this.shouldRefetch) {
+                    console.log("refetching")
+                    save(this._loader(), this._atom$).catch(noop)
+                    this.shouldRefetch = false
+                } else {
+                    this.error(x.error)
+                    this.shouldRefetch = true
+                }
 				break
 			case "fulfilled":
 				this.next(x.value)

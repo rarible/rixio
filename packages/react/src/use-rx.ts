@@ -38,30 +38,34 @@ export function getImmediateOrThrow<T>(observable: Observable<T>): T {
 
 export function useRx<T>(observable: WrappedObservable<T>, deps: any[] = [observable]): Wrapped<T> {
 	const [, setCount] = useState<number>(0)
-	const wrapped = useMemo(() => wrap(observable), [observable])
 	const value = useRef<Wrapped<T>>(pendingWrapped)
 	const initial = useRef(true)
+
 	const sub = useMemo(
 		() =>
-			wrapped.subscribe(next => {
+			wrap(observable).subscribe(next => {
 				const current = value.current
 				value.current = next
 				if (!initial.current) {
-					if (
-						current.status !== next.status ||
-						(current.status === "fulfilled" && next.status === "fulfilled" && current.value !== next.value)
-					) {
+					const fulfilled =
+						current.status === "fulfilled" && next.status === "fulfilled" && current.value !== next.value
+					if (current.status !== next.status || fulfilled) {
 						setCount(c => c + 1)
 					}
 				}
-				// eslint-disable-next-line react-hooks/exhaustive-deps
 			}),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		deps
 	)
-	useEffect(() => {
-		return () => sub.unsubscribe()
-	}, [sub])
+	useEffect(
+		() => () => {
+			console.log("unsub!!")
+			sub.unsubscribe()
+		},
+		[sub]
+	)
 	initial.current = false
+	console.log("CURRENT", value.current)
 	return value.current
 }
 

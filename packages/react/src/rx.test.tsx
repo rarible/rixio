@@ -4,7 +4,8 @@ import { Atom } from "@rixio/atom"
 import { R } from "@rixio/react"
 import { BehaviorSubject, Observable, ReplaySubject, defer, Subject } from "rxjs"
 import { createFulfilledWrapped, pendingWrapped, Wrapped } from "@rixio/wrapped"
-import { CacheImpl, createFulfilledCache, idleCache, KeyCacheImpl } from "@rixio/cache"
+import { CacheImpl, createFulfilledCache, idleCache, KeyCacheImpl, KeyMemoImpl } from "@rixio/cache"
+import { MemoImpl } from "@rixio/cache"
 import { Map as IM } from "immutable"
 import { toListDataLoader } from "@rixio/cache"
 import waitForExpect from "wait-for-expect"
@@ -32,8 +33,8 @@ describe("Rx", () => {
 				</Rx>
 			</span>
 		)
-		await expect(r.getByTestId("test")).toHaveTextContent("pending")
-		await expect(r.getByTestId("test")).not.toHaveTextContent("content")
+		expect(r.getByTestId("test")).toHaveTextContent("pending")
+		expect(r.getByTestId("test")).not.toHaveTextContent("content")
 	})
 
 	test("should display content if loaded", async () => {
@@ -63,7 +64,7 @@ describe("Rx", () => {
 		})
 	})
 
-	test("Rx should work with cache", async () => {
+	test("Rx should work with Cache", async () => {
 		let value: number = 10
 		const cache = new CacheImpl<number>(Atom.create(idleCache), () => Promise.resolve(value))
 		const r = render(
@@ -89,9 +90,123 @@ describe("Rx", () => {
 		})
 	})
 
-	test("Rx should work with key cache", async () => {
+	test("Rx should work with CacheImpl and reload", async () => {
+		let counter = 0
+		const cache = new CacheImpl<string>(Atom.create(idleCache), () => {
+			counter = counter + 1
+			return new Promise<string>((resolve, reject) => {
+				setTimeout(() => counter <= 1 ? reject("my-error") : resolve("resolved"), 0)
+			})
+		})
+		const r = render(
+			<span data-testid="test">
+				<Rx 
+					value$={cache}
+					pending="pending"
+					rejected={(err, reload) => <Testing text={err} reload={reload} />}
+				/>
+			</span>
+		)
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("my-error")
+		})
+		act(() => {
+			fireEvent.click(r.getByTestId("reload"))
+		})
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("resolved")
+		})
+	})
+
+	test("Rx should work with Memo", async () => {
+		let value: number = 10
+		const cache = new MemoImpl<number>(Atom.create(idleCache), () => Promise.resolve(value))
+		const r = render(
+			<span data-testid="test">
+				<Rx value$={cache} pending="pending" />
+			</span>
+		)
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("10")
+		})
+		act(() => {
+			value = 20
+			cache.clear()
+		})
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("20")
+		})
+		act(() => {
+			cache.atom.set(createFulfilledCache(30))
+		})
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("30")
+		})
+	})
+
+	test.only("Rx should work with Memo and reload", async () => {
+		let counter = 0
+		const cache = new MemoImpl<string>(Atom.create(idleCache), () => {
+			counter = counter + 1
+			return new Promise<string>((resolve, reject) => {
+				setTimeout(() => {
+					console.log(counter <= 1 ? 'REJECTS' : 'RESOLVE')
+					counter <= 1 ? reject("my-error") : resolve("resolved")
+				}, 0)
+			})
+		})
+		const r = render(
+			<span data-testid="test">
+				<Rx 
+					value$={cache}
+					pending="pending"
+					rejected={(err, reload) => <Testing text={err} reload={reload} />}
+				/>
+			</span>
+		)
+		await waitFor(() => {
+			expect(r.getByTestId("reload")).toBeInTheDocument()
+		})
+		act(() => {
+			fireEvent.click(r.getByTestId("reload"))
+		})
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("pending")
+		})
+	})
+
+	test("Rx should work with KeyCache", async () => {
 		let value: number = 10
 		const cache = new KeyCacheImpl<string, number>(
+			Atom.create(IM()),
+			toListDataLoader(() => Promise.resolve(value))
+		)
+		const r = render(
+			<span data-testid="test">
+				<Rx value$={cache.single("key1")} pending="pending" />
+			</span>
+		)
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("10")
+		})
+		act(() => {
+			value = 20
+			cache.single("key1").clear()
+		})
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("20")
+		})
+		act(() => {
+			cache.single("key1").atom.set(createFulfilledCache(30))
+		})
+		await waitFor(() => {
+			expect(r.getByTestId("test")).toHaveTextContent("30")
+		})
+	})
+
+	test("Rx should work with KeyMemo", async () => {
+		let value: number = 10
+		const cache = new KeyMemoImpl<string, number>(
 			Atom.create(IM()),
 			toListDataLoader(() => Promise.resolve(value))
 		)
@@ -163,7 +278,11 @@ describe("Rx", () => {
 		const obs = defer(() => promise)
 		const r = render(
 			<span data-testid="test">
-				<Rx value$={obs} pending="pending" rejected={(err, reload) => <Testing text={err} reload={reload} />} />
+				<Rx
+					value$={obs}
+					pending="pending"
+					rejected={(err, reload) => <Testing text={err} reload={reload} />}
+				/>
 			</span>
 		)
 		await waitForExpect(() => {
@@ -199,7 +318,8 @@ describe("Rx", () => {
 				<Rx value$={state$} pending="pending">
 					simple text
 					<div>multiple elements</div>
-					<R.span>{state$}</R.span>
+					{/* eslint-disable-next-line react/jsx-pascal-case */}
+					<R.span children={state$} />
 				</Rx>
 			</span>
 		))
@@ -212,7 +332,7 @@ describe("Rx", () => {
 				<Rx value$={state$}>{v => <span>{`${v}`}</span>}</Rx>
 			</span>
 		)
-		await expect(r.getByTestId("test")).toHaveTextContent("null")
+		expect(r.getByTestId("test")).toHaveTextContent("null")
 	})
 })
 

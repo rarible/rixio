@@ -18,7 +18,7 @@
 	"scripts": {
 		"build": "tsc --project tsconfig-build.json",
 		"clean": "rimraf ./build",
-		"test": "jest --silent",
+		"test": "jest",
 		"verify": "tsc --noEmit"
 	},
 	"license": "Apache-2.0",
