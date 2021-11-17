@@ -19,3 +19,5 @@ export {
 	toListDataLoader,
 } from "./key"
 export { toWrapped, toCache } from "./utils"
+export { Memo, MemoImpl } from "./memo"
+export { KeyMemo, KeyMemoImpl } from "./key-memo"
