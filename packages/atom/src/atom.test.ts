@@ -382,6 +382,20 @@ describe("atom", () => {
 				)
 			)
 		)
+
+		describe("string key lens then atom.get", () => {
+			const x1 = Atom.create({ y: { x: 123 } })
+			const x2 = x1.lens("y")
+
+			expect(x2.get()).toMatchObject({ x: 123 })
+		})
+
+		describe("number key lens then atom.get", () => {
+			const x1 = Atom.create([{ x: 123 }])
+			const x2 = x1.lens(0)
+
+			expect(x2.get()).toMatchObject({ x: 123 })
+		})
 	})
 
 	describe("view", () => {
