@@ -1,5 +1,5 @@
 {
 	"hooks": {
-		"pre-commit": "yarn run verify && lint-staged && yarn run lint && git add ."
+		"pre-commit": "yarn run verify && lint-staged && yarn run lint"
 	}
 }
