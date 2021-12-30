@@ -21,6 +21,9 @@ export function validateJoi<T>(
 				let current: ValidationResultError<any> = result
 				err.path.forEach(path => {
 					const next: ValidationResultError<any> = { status: "error", error: err.message, children: {} }
+					if (current.children[path] !== undefined && (current.children[path] as any).children !== undefined) {
+						next.children = (current.children[path] as any).children
+					}
 					current.children[path] = next
 					current = next
 				})
