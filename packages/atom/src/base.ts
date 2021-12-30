@@ -263,7 +263,9 @@ export abstract class AbstractAtom<T> extends AbstractReadOnlyAtom<T> implements
 
 	lens<U>(arg1: Lens<T, U> | string, ...args: string[]): Atom<any> {
 		const lens =
-			typeof arg1 === "string" ? Lens.compose(Lens.key(arg1), ...args.map(k => Lens.key(k))) : (arg1 as Lens<T, U>)
+			typeof arg1 === "string" || typeof arg1 === "number"
+				? Lens.compose(Lens.key(arg1), ...args.map(k => Lens.key(k)))
+				: (arg1 as Lens<T, U>)
 
 		return this.lensedAtomsCache.getOrCreate(lens)
 	}
