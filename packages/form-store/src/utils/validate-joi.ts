@@ -1,4 +1,4 @@
-import type { ObjectSchema, ValidationOptions } from "@hapi/joi"
+import type { ObjectSchema, ValidationOptions } from "joi"
 import type { ValidationResult, ValidationResultError, ValidationResultSuccess } from "../domain"
 
 export function validateJoi<T>(

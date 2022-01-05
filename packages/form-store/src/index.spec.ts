@@ -1,4 +1,4 @@
-import Joi from "@hapi/joi"
+import Joi from "joi"
 import { filter, first, map, reduce, takeWhile } from "rxjs/operators"
 import { Atom } from "@rixio/atom"
 import { Observable, timer } from "rxjs"
