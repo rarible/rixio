@@ -41,16 +41,20 @@ export function Rx({ pending, rejected, children, value$ }: RxProps): React.Reac
 	const observables = useObservables(value$)
 	const [nonce, setNonce] = useState(0)
 	const value = useRx(observables, [observables, nonce])
+
 	switch (value.status) {
 		case "pending":
 			return <>{pending}</>
 		case "rejected":
 			if (typeof rejected === "function") {
-				const reload = () => {
-					value.reload()
-					setNonce(n => n + 1)
-				}
-				return <>{rejected(value.error, reload)}</>
+				return (
+					<React.Fragment>
+						{rejected(value.error, () => {
+							value.reload()
+							setNonce(n => n + 1)
+						})}
+					</React.Fragment>
+				)
 			}
 			return <>{rejected}</>
 		case "fulfilled":
