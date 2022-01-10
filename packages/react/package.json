@@ -1,6 +1,6 @@
 {
   "name": "@rixio/react",
-  "version": "0.9.6",
+  "version": "0.10.0",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
@@ -34,8 +34,8 @@
     "@rixio/wrapped": "^0.2.8"
   },
   "devDependencies": {
-    "@rixio/atom": "^0.3.9",
-    "@rixio/cache": "^0.2.3",
+    "@rixio/atom": "^0.3.10",
+    "@rixio/cache": "^0.3.0",
     "@testing-library/jest-dom": "5.11.4",
     "@testing-library/react": "11.0.4",
     "@types/jest": "26.0.14",

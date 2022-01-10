@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/roborox/rixio/compare/@rixio/form-store@0.2.1...@rixio/form-store@0.3.0) (2022-01-10)
+
+
+### Bug Fixes
+
+* validation tree ([4ec050a](https://github.com/roborox/rixio/commit/4ec050a4252eb4e4693a882d403530257e4c6e2a))
+
+
+### Features
+
+* usage joi instead of hapi joi ([0ced659](https://github.com/roborox/rixio/commit/0ced659bceb84e75ec78f2bcb61708898ff75b5d))
+
+
+
+
+
 ## [0.2.1](https://github.com/roborox/rixio/compare/@rixio/form-store@0.2.0...@rixio/form-store@0.2.1) (2021-07-11)
 
 

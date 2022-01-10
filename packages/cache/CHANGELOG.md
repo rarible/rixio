@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/roborox/rixio/compare/@rixio/cache@0.2.3...@rixio/cache@0.3.0) (2022-01-10)
+
+
+### Features
+
+* add Memo, KeyMemo ([e21bb3c](https://github.com/roborox/rixio/commit/e21bb3cda3323e9c3e4404a5a8fc3f3c1ff5fa6c))
+
+
+
+
+
 ## [0.2.3](https://github.com/roborox/rixio/compare/@rixio/cache@0.2.2...@rixio/cache@0.2.3) (2021-07-11)
 
 

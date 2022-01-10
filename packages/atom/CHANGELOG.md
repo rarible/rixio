@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.10](https://github.com/roborox/rixio/compare/@rixio/atom@0.3.9...@rixio/atom@0.3.10) (2022-01-10)
+
+
+### Bug Fixes
+
+* lens by number ([abc05d2](https://github.com/roborox/rixio/commit/abc05d2a2305fe0e32468392eeefd02fe0ee364b))
+
+
+
+
+
 ## [0.3.9](https://github.com/roborox/rixio/compare/@rixio/atom@0.3.8...@rixio/atom@0.3.9) (2021-03-03)
 
 **Note:** Version bump only for package @rixio/atom
