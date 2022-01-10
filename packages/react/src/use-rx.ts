@@ -38,12 +38,13 @@ export function getImmediateOrThrow<T>(observable: Observable<T>): T {
 
 export function useRx<T>(observable: WrappedObservable<T>, deps: any[] = [observable]): Wrapped<T> {
 	const [, setCount] = useState<number>(0)
-	const wrapped = useMemo(() => wrap(observable), [observable])
 	const value = useRef<Wrapped<T>>(pendingWrapped)
 	const initial = useRef(true)
+	const memoized = useMemo(() => wrap(observable), [observable])
+
 	const sub = useMemo(
 		() =>
-			wrapped.subscribe(next => {
+			memoized.subscribe(next => {
 				const current = value.current
 				value.current = next
 				if (!initial.current) {
@@ -54,13 +55,11 @@ export function useRx<T>(observable: WrappedObservable<T>, deps: any[] = [observ
 						setCount(c => c + 1)
 					}
 				}
-				// eslint-disable-next-line react-hooks/exhaustive-deps
 			}),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		deps
 	)
-	useEffect(() => {
-		return () => sub.unsubscribe()
-	}, [sub])
+	useEffect(() => () => sub.unsubscribe(), [sub])
 	initial.current = false
 	return value.current
 }
