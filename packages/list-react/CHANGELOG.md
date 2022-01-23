@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.11](https://github.com/roborox/rixio/compare/@rixio/list-react@0.5.10...@rixio/list-react@0.5.11) (2022-01-23)
+
+**Note:** Version bump only for package @rixio/list-react
+
+
+
+
+
 ## [0.5.10](https://github.com/roborox/rixio/compare/@rixio/list-react@0.5.9...@rixio/list-react@0.5.10) (2022-01-10)
 
 **Note:** Version bump only for package @rixio/list-react

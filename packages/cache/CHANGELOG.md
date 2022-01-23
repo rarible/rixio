@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/roborox/rixio/compare/@rixio/cache@0.3.0...@rixio/cache@0.4.0) (2022-01-23)
+
+
+### Features
+
+* add error event for KeyCache, KeyMemo, remove redunant fields ([04bd1ab](https://github.com/roborox/rixio/commit/04bd1ab2e468fa73c6603cbdb8898caece1f92d5))
+
+
+
+
+
 # [0.3.0](https://github.com/roborox/rixio/compare/@rixio/cache@0.2.3...@rixio/cache@0.3.0) (2022-01-10)
 
 
