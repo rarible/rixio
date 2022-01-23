@@ -1,9 +1,10 @@
 import { Atom } from "@rixio/atom"
 import { Map as IM } from "immutable"
 import waitForExpect from "wait-for-expect"
-import { createFulfilledWrapped, pendingWrapped, Wrapped } from "@rixio/wrapped"
+import { createFulfilledWrapped, pendingWrapped, Rejected, Wrapped } from "@rixio/wrapped"
 import { waitFor } from "@testing-library/react"
-import { KeyCacheEvent, KeyCacheImpl, toListDataLoader } from "./key"
+import { KeyCacheImpl, toListDataLoader } from "./key"
+import { createAddKeyEvent, createErrorKeyEvent, KeyEvent } from "./domain"
 import { CacheState, createFulfilledCache } from "./index"
 
 describe("KeyCacheImpl", () => {
@@ -52,12 +53,19 @@ describe("KeyCacheImpl", () => {
 	test("should mark items as errors if load list fails", async () => {
 		const cache = new KeyCacheImpl<string, number | undefined>(Atom.create(IM()), () => Promise.reject("rejected"))
 		const emitted: Wrapped<number | undefined>[] = []
-		cache.single("test").subscribe(value => emitted.push(value))
+		const emittedEvents: KeyEvent<string>[] = []
+		cache.events.subscribe(x => emittedEvents.push(x))
+		cache.single("test").subscribe(x => emitted.push(x))
 		await waitFor(() => {
 			expect(emitted.length).toBe(2)
 			expect(emitted[0]).toStrictEqual(pendingWrapped)
-			expect((emitted[1] as any).status).toBe("rejected")
-			expect((emitted[1] as any).error).toStrictEqual(new Error("Not found"))
+			expect(emitted[1].status).toBe("rejected")
+			const error = new Error('Entity with key "test" not found')
+			expect((emitted[1] as Rejected).error).toStrictEqual(error)
+			expect(emittedEvents.length).toEqual(3)
+			expect(emittedEvents[0]).toStrictEqual(createAddKeyEvent("test"))
+			expect(emittedEvents[1]).toStrictEqual(createErrorKeyEvent("test", "rejected"))
+			expect(emittedEvents[2]).toStrictEqual(createErrorKeyEvent("test", error))
 		})
 	})
 
@@ -93,34 +101,25 @@ describe("KeyCacheImpl", () => {
 			toListDataLoader(key => loadData(key))
 		)
 
-		const emitted: KeyCacheEvent<string>[] = []
+		const emitted: KeyEvent<string>[] = []
 		cache.events.subscribe(value => emitted.push(value))
 		cache.get("test").then()
 
 		await waitFor(() => {
 			expect(emitted.length).toBe(1)
-			expect(emitted[0]).toStrictEqual({
-				type: "add",
-				key: "test",
-			})
+			expect(emitted[0]).toStrictEqual(createAddKeyEvent("test"))
 		})
 
 		cache.get("test2").then()
 		await waitFor(() => {
 			expect(emitted.length).toBe(2)
-			expect(emitted[1]).toStrictEqual({
-				type: "add",
-				key: "test2",
-			})
+			expect(emitted[1]).toStrictEqual(createAddKeyEvent("test2"))
 		})
 
 		cache.set("test3", "test3")
 		await waitFor(() => {
 			expect(emitted.length).toBe(3)
-			expect(emitted[2]).toStrictEqual({
-				type: "add",
-				key: "test3",
-			})
+			expect(emitted[2]).toStrictEqual(createAddKeyEvent("test3"))
 		})
 	})
 })

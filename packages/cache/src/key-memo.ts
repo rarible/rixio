@@ -3,7 +3,15 @@ import { Atom } from "@rixio/atom"
 import { SimpleCache } from "@rixio/lens"
 import { Observable, Subject } from "rxjs"
 import { filter, first } from "rxjs/operators"
-import { CacheState, idleCache, isNotFound, createAddEvent, UNDEFINED, KeyEvent } from "./domain"
+import {
+	CacheState,
+	idleCache,
+	isNotFound,
+	UNDEFINED,
+	KeyEvent,
+	createErrorKeyEvent,
+	createAddKeyEvent,
+} from "./domain"
 import { BatchHelper } from "./key-batch"
 import { byKeyWithDefaultFactory, ListDataLoader } from "./key"
 import { Memo, MemoImpl } from "./memo"
@@ -34,12 +42,13 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 		this._batch = new BatchHelper<K>(async keys => {
 			try {
 				const values = await this.loader(keys)
-				values.forEach(([key, value]) => {
-					this._results.next([key, value])
+				const map = IM(values)
+				keys.forEach(key => {
+					this._results.next([key, map.has(key) ? map.get(key)! : UNDEFINED])
 				})
 			} catch (e) {
-				console.error(e)
 				keys.forEach(k => {
+					this._events.next(createErrorKeyEvent(k, e))
 					this._results.next([k, UNDEFINED])
 				})
 			}
@@ -48,7 +57,7 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 
 	single(key: K): Memo<V> {
 		return this.singles.getOrCreate(key, () => {
-			this.onCreate(key)
+			this._events.next(createAddKeyEvent(key))
 		})
 	}
 
@@ -58,10 +67,6 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 
 	set(key: K, value: V): void {
 		this.single(key).set(value)
-	}
-
-	onCreate(key: K) {
-		this._events.next(createAddEvent(key))
 	}
 
 	getAtom(key: K): Atom<CacheState<V>> {
@@ -77,7 +82,9 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 			)
 			.toPromise()
 		if (isNotFound(v)) {
-			throw new Error(`Entity with key "${key}" not found`)
+			const error = new Error(`Entity with key "${key}" not found`)
+			this._events.next(createErrorKeyEvent(key, error))
+			throw error
 		}
 		return v
 	}

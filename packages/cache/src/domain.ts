@@ -29,19 +29,33 @@ export interface Cache<T> extends Observable<Wrapped<T>> {
 	modifyIfFulfilled(updateFn: (currentValue: T) => T): void
 	clear(): void
 	atom: Atom<CacheState<T>>
-	valueAtom: Atom<T>
 }
 
-export type KeyEventType = "add" | "remove"
-export interface KeyEvent<K> {
-	type: KeyEventType
+export type KeyEventAdd<K> = {
+	type: "add"
 	key: K
 }
 
-export function createAddEvent<T>(key: T) {
+export type KeyEventError<K> = {
+	type: "error"
+	key: K
+	error: unknown
+}
+
+export type KeyEvent<K> = KeyEventAdd<K> | KeyEventError<K>
+
+export function createAddKeyEvent<K>(key: K): KeyEventAdd<K> {
 	return {
+		type: "add",
 		key,
-		type: "add" as const,
+	}
+}
+
+export function createErrorKeyEvent<K>(key: K, error: unknown): KeyEventError<K> {
+	return {
+		type: "error",
+		key,
+		error,
 	}
 }
 
