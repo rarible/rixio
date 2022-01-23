@@ -5,7 +5,17 @@ import { Subject } from "rxjs"
 import { filter, first } from "rxjs/operators"
 import { CacheImpl } from "./impl"
 import { BatchHelper } from "./key-batch"
-import { Cache, CacheState, createFulfilledCache, idleCache } from "./domain"
+import {
+	Cache,
+	CacheState,
+	createAddKeyEvent,
+	createErrorKeyEvent,
+	createFulfilledCache,
+	idleCache,
+	isNotFound,
+	KeyEvent,
+	UNDEFINED,
+} from "./domain"
 
 export type DataLoader<K, V> = (key: K) => Promise<V>
 
@@ -22,21 +32,17 @@ export interface KeyCache<K, V> {
 	single(key: K): Cache<V>
 }
 
-export type KeyCacheEventType = "add" | "remove"
-export interface KeyCacheEvent<K> {
-	type: KeyCacheEventType
-	key: K
-}
-
-const UNDEFINED = Symbol.for("UNDEFINED")
-
 export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
+	private readonly _events: Subject<KeyEvent<K>> = new Subject()
+	public readonly events = this._events.pipe()
+
 	private readonly batchHelper: BatchHelper<K>
 	private readonly results: Subject<[K, V | typeof UNDEFINED]> = new Subject()
 	private readonly lensFactory = byKeyWithDefaultFactory<K, CacheState<V>>(idleCache)
-	private readonly singles = new SimpleCache<K, Cache<V>>(key => new CacheImpl(this.getAtom(key), () => this.load(key)))
-	private readonly _events: Subject<KeyCacheEvent<K>> = new Subject()
-	public readonly events = this._events.pipe()
+
+	private readonly singles = new SimpleCache<K, Cache<V>>(key => {
+		return new CacheImpl(this.getAtom(key), () => this.load(key))
+	})
 
 	constructor(
 		private readonly map: Atom<IM<K, CacheState<V>>>,
@@ -52,21 +58,20 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 			const values = await this.loader(keys)
 			const map = IM(values)
 			keys.forEach(key => {
-				if (map.has(key)) {
-					this.results.next([key, map.get(key)!])
-				} else {
-					this.results.next([key, UNDEFINED])
-				}
+				this.results.next([key, map.has(key) ? map.get(key)! : UNDEFINED])
 			})
 		} catch (e) {
 			keys.forEach(key => {
+				this._events.next(createErrorKeyEvent(key, e))
 				this.results.next([key, UNDEFINED])
 			})
 		}
 	}
 
 	single(key: K): Cache<V> {
-		return this.singles.getOrCreate(key, () => this.onCreate(key))
+		return this.singles.getOrCreate(key, () => {
+			this._events.next(createAddKeyEvent(key))
+		})
 	}
 
 	get(key: K, force?: boolean): Promise<V> {
@@ -75,11 +80,7 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 
 	set(key: K, value: V): void {
 		this.map.modify(x => x.set(key, createFulfilledCache(value)))
-		this.onCreate(key)
-	}
-
-	onCreate(key: K) {
-		this._events.next({ type: "add", key })
+		this._events.next(createAddKeyEvent(key))
 	}
 
 	getAtom(key: K): Atom<CacheState<V>> {
@@ -94,10 +95,13 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 				first()
 			)
 			.toPromise()
-		if (v !== UNDEFINED) {
-			return v
+
+		if (isNotFound(v)) {
+			const error = new Error(`Entity with key "${key}" not found`)
+			this._events.next(createErrorKeyEvent(key, error))
+			throw error
 		}
-		throw new Error("Not found")
+		return v
 	}
 }
 

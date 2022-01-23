@@ -23,11 +23,6 @@ export class CacheImpl<T> extends MappedSubject<CacheState<T>, Wrapped<T>> imple
 		return this._atom
 	}
 
-	get valueAtom(): Atom<T> {
-		// @ts-ignore
-		return this._atom.lens("value")
-	}
-
 	get(force: boolean = false): Promise<T> {
 		if (force) {
 			this.clear()
@@ -42,10 +37,12 @@ export class CacheImpl<T> extends MappedSubject<CacheState<T>, Wrapped<T>> imple
 	modifyIfFulfilled(updateFn: (currentValue: T) => T): void {
 		this.atom.modify(s => {
 			if (s.status === "fulfilled") {
-				return { ...s, value: updateFn(s.value) }
-			} else {
-				return s
+				return {
+					...s,
+					value: updateFn(s.value),
+				}
 			}
+			return s
 		})
 	}
 
