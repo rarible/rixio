@@ -1,6 +1,5 @@
 import { identity, Subject } from "rxjs"
-import waitForExpect from "wait-for-expect"
-import { catchError, combineLatest, flatMap, map, unwrap } from "./operators"
+import { catchError, combineLatest, filter, flatMap, map, switchMap, unwrap } from "./operators"
 import { createFulfilledWrapped, createRejectedWrapped, Fulfilled, Rejected, Wrapped } from "./domain"
 import { wrap } from "./utils"
 
@@ -16,8 +15,7 @@ describe("operators", () => {
 
 		s.next(1)
 		expect(emitted.length).toBe(2)
-		expect(emitted[1].status).toBe("fulfilled")
-		expect((emitted[1] as any).value).toBe("1")
+		expectValue(emitted[1], "1")
 	})
 
 	test("map should catch error in mapper function", () => {
@@ -78,11 +76,9 @@ describe("operators", () => {
 		expect(emitted.length).toBe(1)
 		expect(emitted[0].status).toBe("pending")
 
-		await waitForExpect(() => {
-			expect(emitted.length).toBe(2)
-		}, 150)
-		expect(emitted[1].status).toBe("fulfilled")
-		expect((emitted[1] as any).value).toBe(1)
+		await delay(120)
+		expect(emitted.length).toBe(2)
+		expectValue(emitted[1], 1)
 	})
 
 	test("flatMap should save reload function", async () => {
@@ -94,18 +90,115 @@ describe("operators", () => {
 		expect(emitted.length).toBe(1)
 		expect(emitted[0].status).toBe("pending")
 
-		let invoked = false
-		s.next(createRejectedWrapped("reason1", () => (invoked = true)))
+		const reload = jest.fn()
+		s.next(createRejectedWrapped("reason1", reload))
 		expect(emitted.length).toBe(2)
 		expect(emitted[1].status).toBe("rejected")
 		const rej = emitted[1] as Rejected
 		expect(rej.error).toBe("reason1")
-		expect(invoked).toBe(false)
+		expect(reload.mock.calls.length).toEqual(0)
 		rej.reload()
-		expect(invoked).toBe(true)
+		expect(reload.mock.calls.length).toEqual(1)
 	})
 
-	test("catchError should map rejected status of Wrapped", async () => {
+	test("flatMap shouldn't cancel previous emits", async () => {
+		const s = new Subject<Wrapped<string>>()
+
+		let index = 0
+		const flatMapped = s.pipe(
+			flatMap(async x => {
+				if (index === 0) {
+					index = index + 1
+					await delay(100)
+				}
+				return parseInt(x)
+			})
+		)
+
+		const emitted: Wrapped<number>[] = []
+		flatMapped.subscribe(v => emitted.push(v))
+		expect(emitted.length).toBe(1)
+		expect(emitted[0].status).toBe("pending")
+
+		s.next(createFulfilledWrapped("10"))
+		s.next(createFulfilledWrapped("15"))
+
+		await delay(16)
+		expect(emitted.length).toBe(2)
+		expectValue(emitted[1], 15)
+
+		await delay(100)
+		expect(emitted.length).toBe(3)
+		expectValue(emitted[2], 10)
+		expect(emitted[2].status).toBe("fulfilled")
+		expect((emitted[2] as any).value).toBe(10)
+	})
+
+	test("switchMap should save reload function", () => {
+		const s = new Subject<Wrapped<string>>()
+		const switchMapped = s.pipe(switchMap(x => delay(100).then(() => parseInt(x))))
+
+		const emitted: Wrapped<number>[] = []
+		switchMapped.subscribe(v => emitted.push(v))
+		expect(emitted.length).toBe(1)
+		expect(emitted[0].status).toBe("pending")
+
+		const reload = jest.fn()
+		s.next(createRejectedWrapped("reason1", reload))
+		expect(emitted.length).toBe(2)
+		expect(emitted[1].status).toBe("rejected")
+		const rej = emitted[1] as Rejected
+		expect(rej.error).toBe("reason1")
+		expect(reload.mock.calls.length).toEqual(0)
+		rej.reload()
+		expect(reload.mock.calls.length).toEqual(1)
+	})
+
+	test("switchMap should cancel previous emits", async () => {
+		const s = new Subject<Wrapped<string>>()
+
+		let index = 0
+		const switchMapped = s.pipe(
+			switchMap(async x => {
+				if (index === 0) {
+					index = index + 1
+					await delay(100)
+				}
+				return parseInt(x)
+			})
+		)
+
+		const emitted: Wrapped<number>[] = []
+		switchMapped.subscribe(v => emitted.push(v))
+		expect(emitted.length).toBe(1)
+		expect(emitted[0].status).toBe("pending")
+
+		s.next(createFulfilledWrapped("10"))
+		s.next(createFulfilledWrapped("15"))
+
+		await delay(120)
+		expect(emitted.length).toBe(2)
+		expectValue(emitted[1], 15)
+	})
+
+	test("filter should filter out even numbers", () => {
+		const s = new Subject<Wrapped<number>>()
+		const filtered = s.pipe(filter(x => x % 2 === 0))
+
+		const emitted: Wrapped<number>[] = []
+		filtered.subscribe(v => emitted.push(v))
+		expect(emitted.length).toBe(1)
+		expect(emitted[0].status).toBe("pending")
+
+		s.next(createFulfilledWrapped(5))
+		expect(emitted.length).toBe(1)
+
+		s.next(createFulfilledWrapped(10))
+		expect(emitted.length).toBe(2)
+		expectValue(emitted[1], 10)
+	})
+
+	test("catchError should map rejected status of Wrapped", () => {
 		const catchMapper = (x: any) => x + 2
 		const s = new Subject<Wrapped<number>>()
 		const mapped = s.pipe(catchError(catchMapper))
@@ -117,15 +210,13 @@ describe("operators", () => {
 
 		s.next(createFulfilledWrapped(1))
 		expect(values.length).toBe(2)
-		expect(values[1].status).toBe("fulfilled")
-		expect((values[1] as Fulfilled<number>).value).toBe(1)
+		expectValue(values[1], 1)
 		s.next(createRejectedWrapped(1))
 		expect(values.length).toBe(3)
-		expect(values[2].status).toBe("fulfilled")
-		expect((values[2] as Fulfilled<number>).value).toBe(catchMapper(1))
+		expectValue(values[2], catchMapper(1))
 	})
 
-	test("unwrap should accept WrappedObservable<T> and return Observable<T>", async () => {
+	test("unwrap should accept WrappedObservable<T> and return Observable<T>", () => {
 		const s = new Subject<number>()
 		const mapped = s.pipe(map(identity), unwrap())
 		const values: number[] = []
@@ -141,7 +232,7 @@ describe("operators", () => {
 		expect(values[0]).toBe(1)
 	})
 
-	test("unwrap should throw error if receive rejected status", async () => {
+	test("unwrap should throw error if receive rejected status", () => {
 		const s = new Subject<Wrapped<number>>()
 		const original = s.pipe(map(identity))
 		const unwrapped = original.pipe(unwrap())
@@ -166,4 +257,9 @@ describe("operators", () => {
 
 function delay(timeout: number): Promise<number> {
 	return new Promise(resolve => setTimeout(resolve, timeout))
+}
+
+function expectValue<T>(value: Wrapped<T>, expectedValue: T) {
+	expect(value.status).toEqual("fulfilled")
+	expect((value as Fulfilled<T>).value).toEqual(expectedValue)
 }

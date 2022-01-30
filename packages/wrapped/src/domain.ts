@@ -45,8 +45,11 @@ export function createFulfilledWrapped<T>(value: T): Fulfilled<T> & HasFlag {
 	}
 }
 
-export function isWrapped(value: any) {
-	return value && value[wrapped] === symbol
+export function isWrapped(value: unknown): value is Wrapped<any> {
+	if (typeof value === "object" && value !== null) {
+		return (value as Wrapped<any>)[wrapped] === symbol
+	}
+	return false
 }
 
 export type Lifted<T> = {
