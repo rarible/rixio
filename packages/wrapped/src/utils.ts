@@ -22,7 +22,7 @@ export function toObservable<T>(like: ObservableLike<T>): Observable<Wrapped<T>>
 
 export function wrap<T>(observable: WrappedObservable<T>): Observable<Wrapped<T>> {
 	if (isWrappedObservable(observable)) {
-		return observable as Observable<Wrapped<T>>
+		return observable
 	}
 	const result = new Observable<Wrapped<T>>(s => {
 		let got = false
@@ -50,10 +50,9 @@ export function wrap<T>(observable: WrappedObservable<T>): Observable<Wrapped<T>
 
 export function toWrapped<T>(value: T | Wrapped<T>): Wrapped<T> {
 	if (isWrapped(value)) {
-		return value as Wrapped<T>
-	} else {
-		return createFulfilledWrapped(value) as Wrapped<T>
+		return value
 	}
+	return createFulfilledWrapped(value)
 }
 
 export function toPlainOrThrow<T>(value: Wrapped<T>): T {
@@ -63,7 +62,7 @@ export function toPlainOrThrow<T>(value: Wrapped<T>): T {
 	throw new Error("not fulfilled")
 }
 
-function isWrappedObservable(observable: Observable<any>) {
+function isWrappedObservable(observable: Observable<unknown>): observable is Observable<Wrapped<any>> {
 	return (observable as any)[wrapped] === symbol
 }
 

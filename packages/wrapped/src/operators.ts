@@ -1,5 +1,10 @@
-import { combineLatest as rxjsCombineLatest, from, NEVER, Observable, of, throwError } from "rxjs"
-import { distinctUntilChanged, map as rxjsMap, mergeMap as rxjsMergeMap } from "rxjs/operators"
+import { combineLatest as rxjsCombineLatest, EMPTY, from, NEVER, Observable, of, throwError } from "rxjs"
+import {
+	distinctUntilChanged,
+	map as rxjsMap,
+	mergeMap as rxjsMergeMap,
+	switchMap as rxjsSwitchMap,
+} from "rxjs/operators"
 
 import {
 	createFulfilledWrapped,
@@ -18,19 +23,14 @@ export function map<T, R>(mapper: (value: T) => R): F<WrappedObservable<T>, Obse
 		markWrappedObservable(
 			wrap(observable).pipe(
 				rxjsMap(v => {
-					switch (v.status) {
-						case "fulfilled": {
-							try {
-								return createFulfilledWrapped(mapper(v.value))
-							} catch (error) {
-								return createRejectedWrapped(error)
-							}
+					if (v.status === "fulfilled") {
+						try {
+							return createFulfilledWrapped(mapper(v.value))
+						} catch (error) {
+							return createRejectedWrapped(error)
 						}
-						case "pending":
-							return v
-						case "rejected":
-							return v
 					}
+					return v
 				})
 			)
 		)
@@ -98,6 +98,44 @@ export function flatMap<T, R>(
 		)
 }
 
+export function switchMap<T, R>(
+	mapper: (value: T) => WrappedObservable<R> | PromiseLike<R>
+): F<WrappedObservable<T>, Observable<Wrapped<R>>> {
+	return observable =>
+		markWrappedObservable(
+			wrap(observable).pipe(
+				rxjsSwitchMap(x => {
+					switch (x.status) {
+						case "pending":
+							return of(wrappedPending)
+						case "rejected":
+							return of(x)
+						case "fulfilled":
+							return wrap(from(mapper(x.value)))
+					}
+				}),
+				distinctUntilChanged()
+			)
+		)
+}
+
+export function filter<T>(
+	predicate: (value: T, index: number) => boolean
+): F<WrappedObservable<T>, Observable<Wrapped<T>>> {
+	return observable => {
+		let index = 0
+		return observable.pipe(
+			flatMap(x => {
+				if (predicate(x, index)) {
+					index = index + 1
+					return of(x)
+				}
+				return EMPTY
+			})
+		)
+	}
+}
+
 export function catchError<T, R>(
 	mapper: (value: any) => WrappedObservable<R> | R
 ): F<WrappedObservable<T>, Observable<Wrapped<R>>> {
@@ -114,9 +152,8 @@ export function catchError<T, R>(
 							const result = mapper(v.error)
 							if (result instanceof Observable) {
 								return wrap(result)
-							} else {
-								return wrap(of(createFulfilledWrapped(result)))
 							}
+							return wrap(of(createFulfilledWrapped(result)))
 					}
 				})
 			)
