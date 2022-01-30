@@ -63,6 +63,16 @@ describe("operators", () => {
 		expect((emitted[2] as any).error).toBe("reason-string")
 	})
 
+	test("combineLatest should work with empty arrays", async () => {
+		const combined = combineLatest([])
+
+		const emitted: Wrapped<[]>[] = []
+		combined.subscribe(v => emitted.push(v))
+		expect(emitted.length).toBe(1)
+		expect(emitted[0].status).toBe("fulfilled")
+		expect((emitted[0] as any).value).toStrictEqual([])
+	})
+
 	test("flatMap should work with Promises", async () => {
 		const s = new Subject<string>()
 		const flatMapped = s.pipe(flatMap(x => delay(100).then(() => parseInt(x))))
