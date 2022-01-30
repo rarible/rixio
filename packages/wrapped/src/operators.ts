@@ -14,6 +14,7 @@ import {
 	Wrapped,
 	WrappedObservable,
 } from "./domain"
+import { toWrapped } from "./utils"
 import { markWrappedObservable, wrap } from "./index"
 
 type F<T, R> = (value: T) => R
@@ -42,11 +43,17 @@ type InferFromTuple<T extends any[]> = {
 export function combineLatest<Ts extends [...WrappedObservable<any>[]]>(
 	array: [...Ts]
 ): Observable<Wrapped<InferFromTuple<Ts>>> {
+	if (array.length === 0) {
+		return of(toWrapped([])) as Observable<Wrapped<InferFromTuple<Ts>>>
+	}
 	return markWrappedObservable(
 		rxjsCombineLatest(array.map(wrap)).pipe(
 			rxjsMap(resultArray => {
+				if (resultArray.length === 0) {
+					return createFulfilledWrapped([])
+				}
 				let pending = false
-				let rejected: Rejected[] = []
+				const rejected: Rejected[] = []
 				const combined = new Array(resultArray.length)
 				resultArray.forEach((w, idx) => {
 					switch (w.status) {
@@ -61,16 +68,14 @@ export function combineLatest<Ts extends [...WrappedObservable<any>[]]>(
 					}
 				})
 				if (rejected.length > 0) {
-					const error = rejected[0].error
-					const reload = () => {
+					return createRejectedWrapped(rejected[0].error, () => {
 						rejected.forEach(r => r.reload())
-					}
-					return createRejectedWrapped(error, reload)
-				} else if (pending) {
-					return wrappedPending
-				} else {
-					return createFulfilledWrapped(combined)
+					})
 				}
+				if (pending) {
+					return wrappedPending
+				}
+				return createFulfilledWrapped(combined)
 			}),
 			distinctUntilChanged()
 		)
