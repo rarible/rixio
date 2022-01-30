@@ -1,4 +1,15 @@
-import { combineLatest as rxjsCombineLatest, EMPTY, from, NEVER, Observable, of, throwError } from "rxjs"
+import {
+	combineLatest as rxjsCombineLatest,
+	EMPTY,
+	from as rxjsFrom,
+	NEVER,
+	Observable,
+	of,
+	throwError,
+	defer as rxjsDefer,
+	ObservableInput,
+	ObservedValueOf,
+} from "rxjs"
 import {
 	distinctUntilChanged,
 	map as rxjsMap,
@@ -95,7 +106,7 @@ export function flatMap<T, R>(
 						case "rejected":
 							return of(x)
 						case "fulfilled":
-							return wrap(from(mapper(x.value)))
+							return wrap(rxjsFrom(mapper(x.value)))
 					}
 				}),
 				distinctUntilChanged()
@@ -116,7 +127,7 @@ export function switchMap<T, R>(
 						case "rejected":
 							return of(x)
 						case "fulfilled":
-							return wrap(from(mapper(x.value)))
+							return wrap(rxjsFrom(mapper(x.value)))
 					}
 				}),
 				distinctUntilChanged()
@@ -182,8 +193,16 @@ export function unwrap<T>(): F<WrappedObservable<T>, Observable<T>> {
 		)
 }
 
+export function from<T extends ObservableInput<any>>(input: T): Observable<Wrapped<ObservedValueOf<T>>> {
+	return markWrappedObservable(wrap(rxjsFrom(input)))
+}
+
 export function fromPromise<T>(promise: PromiseLike<T>): Observable<Wrapped<T>> {
-	return wrap(from(promise))
+	return from(promise)
+}
+
+export function defer<T extends ObservableInput<any> | void>(input: () => T): Observable<Wrapped<ObservedValueOf<T>>> {
+	return markWrappedObservable(wrap(rxjsDefer(input)))
 }
 
 export function cond<T>(ifTrue: T, ifFalse: T): F<WrappedObservable<any>, Observable<Wrapped<T>>> {

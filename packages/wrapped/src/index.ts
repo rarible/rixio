@@ -12,6 +12,18 @@ export {
 	ObservableLike,
 	Lifted,
 } from "./domain"
-export { cond, combineLatest, fromPromise, map, flatMap, switchMap, filter, catchError, unwrap } from "./operators"
+export {
+	cond,
+	combineLatest,
+	fromPromise,
+	map,
+	defer,
+	from,
+	flatMap,
+	switchMap,
+	filter,
+	catchError,
+	unwrap,
+} from "./operators"
 export { toObservable, toWrapped, wrap, toPlainOrThrow, markWrappedObservable } from "./utils"
 export { rxObject } from "./rx-object"

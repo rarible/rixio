@@ -1,5 +1,5 @@
 import { identity, Subject } from "rxjs"
-import { catchError, combineLatest, filter, flatMap, map, switchMap, unwrap } from "./operators"
+import { catchError, combineLatest, filter, flatMap, map, switchMap, unwrap, fromPromise, defer } from "./operators"
 import { createFulfilledWrapped, createRejectedWrapped, Fulfilled, Rejected, Wrapped } from "./domain"
 import { wrap } from "./utils"
 
@@ -262,6 +262,45 @@ describe("operators", () => {
 		s.next(createRejectedWrapped(ERROR))
 		expect(unwrappedErrors.length).toBe(1)
 		expect(unwrappedErrors[0]).toBe(ERROR)
+	})
+
+	test("fromPromise should receive value after promise fulfill", async () => {
+		const promise = delay(100).then(() => 10)
+		const emitted: Wrapped<number>[] = []
+		const sub = fromPromise(promise).subscribe(x => emitted.push(x))
+		expect(emitted.length).toEqual(1)
+		expect(emitted[0].status).toEqual("pending")
+
+		await delay(120)
+		expect(emitted.length).toEqual(2)
+		expectValue(emitted[1], 10)
+
+		sub.unsubscribe()
+	})
+
+	test("defer should receive value only after subscribe", async () => {
+		let called = false
+		const getSomething = async () => {
+			called = true
+			await delay(100)
+			return 10
+		}
+		const emitted: Wrapped<number>[] = []
+		const observable = defer(() => getSomething())
+
+		await delay(120)
+		expect(called).toEqual(false)
+
+		const sub = observable.subscribe(x => emitted.push(x))
+		expect(called).toEqual(true)
+		expect(emitted.length).toEqual(1)
+		expect(emitted[0].status).toEqual("pending")
+
+		await delay(120)
+		expect(emitted.length).toEqual(2)
+		expectValue(emitted[1], 10)
+
+		sub.unsubscribe()
 	})
 })
 
