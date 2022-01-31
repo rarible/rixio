@@ -1,11 +1,6 @@
 {
 	"name": "@rixio/cache",
 	"version": "0.12.0",
-	"main": "build/index.js",
-	"types": "build/index.d.ts",
-	"files": [
-		"/build"
-	],
 	"keywords": [
 		"cache",
 		"frp",
@@ -15,19 +10,21 @@
 		"rxjs",
 		"atom"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/roborox/rixio.git"
+	},
+	"license": "Apache-2.0",
+	"main": "build/index.js",
+	"types": "build/index.d.ts",
+	"files": [
+		"/build"
+	],
 	"scripts": {
 		"build": "tsc --project tsconfig-build.json",
 		"clean": "rimraf ./build",
 		"test": "jest --silent",
 		"verify": "tsc --noEmit"
-	},
-	"license": "Apache-2.0",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/roborox/rixio.git"
-	},
-	"publishConfig": {
-		"access": "public"
 	},
 	"dependencies": {
 		"@rixio/atom": "^0.12.0",
@@ -45,5 +42,8 @@
 	"peerDependencies": {
 		"immutable": ">= 4.0.0-rc.12",
 		"rxjs": ">= 6.5.0 < 7.0.0-0"
+	},
+	"publishConfig": {
+		"access": "public"
 	}
 }
