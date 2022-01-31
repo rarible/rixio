@@ -27,8 +27,8 @@
 		"verify": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@rixio/cache": "^0.4.1",
-		"@rixio/react": "^0.10.2"
+		"@rixio/cache": "^0.12.0",
+		"@rixio/react": "^0.12.0"
 	},
 	"devDependencies": {
 		"@types/jest": "26.0.0",

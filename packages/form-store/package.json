@@ -26,7 +26,7 @@
 		"verify": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@rixio/atom": "^0.3.10"
+		"@rixio/atom": "^0.12.0"
 	},
 	"devDependencies": {
 		"@types/jest": "26.0.0",
