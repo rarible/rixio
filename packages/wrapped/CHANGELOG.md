@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/roborox/rixio/compare/@rixio/wrapped@0.2.8...@rixio/wrapped@0.3.0) (2022-01-31)
+
+
+### Bug Fixes
+
+* combineLatest operator support empty arrays ([52dcd67](https://github.com/roborox/rixio/commit/52dcd67cf0047300e90a86baada3643ba5e9b452))
+
+
+### Features
+
+* add filter, switchMap operators for wrapped ([24fcc50](https://github.com/roborox/rixio/commit/24fcc5051c45b53a426f751ecde4e7a4c5fe4e47))
+* add from, defer ([6e55f58](https://github.com/roborox/rixio/commit/6e55f58364ee5302797d2a35078d31bcfeabab5e))
+
+
+
+
+
 ## [0.2.8](https://github.com/roborox/rixio/compare/@rixio/wrapped@0.2.7...@rixio/wrapped@0.2.8) (2021-07-11)
 
 

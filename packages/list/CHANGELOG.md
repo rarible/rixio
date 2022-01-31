@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.7](https://github.com/roborox/rixio/compare/@rixio/list@0.5.6...@rixio/list@0.5.7) (2022-01-31)
+
+**Note:** Version bump only for package @rixio/list
+
+
+
+
+
 ## [0.5.6](https://github.com/roborox/rixio/compare/@rixio/list@0.5.5...@rixio/list@0.5.6) (2022-01-23)
 
 **Note:** Version bump only for package @rixio/list

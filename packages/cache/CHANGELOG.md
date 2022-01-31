@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/roborox/rixio/compare/@rixio/cache@0.4.0...@rixio/cache@0.4.1) (2022-01-31)
+
+**Note:** Version bump only for package @rixio/cache
+
+
+
+
+
 # [0.4.0](https://github.com/roborox/rixio/compare/@rixio/cache@0.3.0...@rixio/cache@0.4.0) (2022-01-23)
 
 
