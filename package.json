@@ -1,46 +1,48 @@
 {
-  "name": "root",
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "scripts": {
-    "bootstrap": "lerna bootstrap && lerna link",
-    "clean": "yarn workspaces run clean",
-    "build-all": "sh build-all.sh",
-    "build-lens": "yarn workspace @rixio/lens run build",
-    "build-atom": "yarn workspace @rixio/atom run build",
-    "build-list": "yarn workspace @rixio/list run build",
-    "build-list-react": "yarn workspace @rixio/list-react run build",
-    "build-list-react-native": "yarn workspace @rixio/list-react-native run build",
-    "build-react": "yarn workspace @rixio/react run build",
-    "build-wrapped": "yarn workspace @rixio/wrapped run build",
-    "build-cache": "yarn workspace @rixio/cache run build",
-    "build-react-native": "yarn workspace @rixio/react-native run build",
-    "build-form-store": "yarn workspace @rixio/form-store run build",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
-    "prettify": "prettier --write **/src/**/*",
-    "test": "yarn workspaces run test",
-    "verify": "yarn workspaces run verify"
-  },
-  "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
-      "yarn run prettify"
-    ]
-  },
-  "dependencies": {
-    "immutable": "4.0.0-rc.12",
-    "react": "16.13.1",
-    "react-native": "0.63.3",
-    "rxjs": "6.6.3"
-  },
-  "devDependencies": {
-    "@roborox/eslint-config-default": "2.2.0",
-    "eslint": "7.10.0",
-    "eslint-config-prettier": "6.11.0",
-    "husky": "4.3.0",
-    "lerna": "^3.20.2",
-    "lint-staged": "10.4.0",
-    "prettier": "2.1.2"
-  }
+	"name": "root",
+	"private": true,
+	"workspaces": [
+		"packages/*"
+	],
+	"scripts": {
+		"bootstrap": "lerna bootstrap && lerna link",
+		"link": "lerna link",
+		"clean": "yarn workspaces run clean",
+		"build-all": "sh build-all.sh",
+		"build-lens": "yarn workspace @rixio/lens run build",
+		"build-atom": "yarn workspace @rixio/atom run build",
+		"build-list": "yarn workspace @rixio/list run build",
+		"build-list-react": "yarn workspace @rixio/list-react run build",
+		"build-list-react-native": "yarn workspace @rixio/list-react-native run build",
+		"build-react": "yarn workspace @rixio/react run build",
+		"build-wrapped": "yarn workspace @rixio/wrapped run build",
+		"build-cache": "yarn workspace @rixio/cache run build",
+		"build-react-native": "yarn workspace @rixio/react-native run build",
+		"build-form-store": "yarn workspace @rixio/form-store run build",
+		"lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
+		"prettify": "prettier --write **/src/**/*",
+		"test": "yarn workspaces run test",
+		"publish-all": "lerna publish from-package",
+		"verify": "yarn workspaces run verify"
+	},
+	"lint-staged": {
+		"**/*.{js,jsx,ts,tsx}": [
+			"yarn run prettify"
+		]
+	},
+	"dependencies": {
+		"immutable": "4.0.0-rc.12",
+		"react": "16.13.1",
+		"react-native": "0.63.3",
+		"rxjs": "6.6.3"
+	},
+	"devDependencies": {
+		"@roborox/eslint-config-default": "2.2.0",
+		"eslint": "7.10.0",
+		"eslint-config-prettier": "6.11.0",
+		"husky": "4.3.0",
+		"lerna": "^3.20.2",
+		"lint-staged": "10.4.0",
+		"prettier": "2.1.2"
+	}
 }
