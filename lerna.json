@@ -1,12 +1,14 @@
 {
-  "packages": ["packages/*"],
-  "npmClient": "yarn",
-  "useWorkspaces": true,
-  "version": "independent",
-  "command": {
-    "publish": {
-      "conventionalCommits": true,
-      "yes": true
-    }
-  }
+	"packages": ["packages/*"],
+	"npmClient": "yarn",
+	"useWorkspaces": true,
+	"version": "0.11.0",
+	"command": {
+		"publish": {
+			"allowBranch": "master",
+			"registry": "https://registry.npmjs.org/",
+			"message": "chore: bump versions after release",
+			"yes": true
+		}
+	}
 }

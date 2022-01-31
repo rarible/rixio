@@ -1,35 +1,35 @@
 {
-  "name": "@rixio/lens",
-  "version": "0.5.0",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
-  "files": [
-    "/build"
-  ],
-  "keywords": [
-    "frp",
-    "lens",
-    "reactive"
-  ],
-  "scripts": {
-    "build": "tsc --project tsconfig-build.json",
-    "clean": "rimraf ./build",
-    "test": "jest --silent",
-    "verify": "tsc --noEmit"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/roborox/rixio.git"
-  },
-  "devDependencies": {
-    "@types/jest": "26.0.14",
-    "cpx": "1.5.0",
-    "jest": "26.4.2",
-    "ts-jest": "26.4.1",
-    "typescript": "4.0.5"
-  }
+	"name": "@rixio/lens",
+	"version": "0.11.0",
+	"main": "build/index.js",
+	"types": "build/index.d.ts",
+	"files": [
+		"/build"
+	],
+	"keywords": [
+		"frp",
+		"lens",
+		"reactive"
+	],
+	"scripts": {
+		"build": "tsc --project tsconfig-build.json",
+		"clean": "rimraf ./build",
+		"test": "jest --silent",
+		"verify": "tsc --noEmit"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/roborox/rixio.git"
+	},
+	"devDependencies": {
+		"@types/jest": "26.0.14",
+		"cpx": "1.5.0",
+		"jest": "26.4.2",
+		"ts-jest": "26.4.1",
+		"typescript": "4.0.5"
+	}
 }
