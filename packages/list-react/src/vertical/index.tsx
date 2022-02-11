@@ -87,9 +87,14 @@ export function VerticalList<T>(props: VerticalListProps<T>) {
 export type VerticalListWindowRect = Omit<VerticalListRect, "height">
 export type VerticalListWindowProps<T> = Omit<VerticalListProps<T>, "rect"> & {
 	rect: VerticalListWindowRect
+	onRef?(ref: WindowScroller): void
 }
 export function VerticalListWindow<T>(props: VerticalListWindowProps<T>) {
-	return <WindowScroller>{childProps => <VerticalListWindowChild {...childProps} {...props} />}</WindowScroller>
+	return (
+		<WindowScroller ref={props.onRef}>
+			{childProps => <VerticalListWindowChild {...childProps} {...props} />}
+		</WindowScroller>
+	)
 }
 
 export type RxVerticalListWindowProps<T> = RxReactListProps<T, VerticalListWindowProps<T>>
