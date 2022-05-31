@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react"
-import type { Index, WindowScrollerChildProps } from "react-virtualized"
+import type {Index, WindowScrollerChildProps, WindowScrollerProps} from "react-virtualized"
 import { InfiniteLoader, InfiniteLoaderProps } from "react-virtualized/dist/es/InfiniteLoader"
 import { List, ListProps, ListRowProps } from "react-virtualized/dist/es/List"
 import { CellMeasurerCache, CellMeasurer } from "react-virtualized/dist/es/CellMeasurer"
@@ -88,10 +88,11 @@ export type VerticalListWindowRect = Omit<VerticalListRect, "height">
 export type VerticalListWindowProps<T> = Omit<VerticalListProps<T>, "rect"> & {
 	rect: VerticalListWindowRect
 	onRef?(ref: WindowScroller): void
+	windowScrollerProps?: Partial<WindowScrollerProps>
 }
 export function VerticalListWindow<T>(props: VerticalListWindowProps<T>) {
 	return (
-		<WindowScroller ref={props.onRef}>
+		<WindowScroller ref={props.onRef} {...props.windowScrollerProps}>
 			{childProps => <VerticalListWindowChild {...childProps} {...props} />}
 		</WindowScroller>
 	)
