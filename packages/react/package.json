@@ -1,6 +1,6 @@
 {
 	"name": "@rixio/react",
-	"version": "0.12.1",
+	"version": "0.13.0",
 	"keywords": [
 		"frp",
 		"lens",
@@ -27,12 +27,12 @@
 		"verify": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@rixio/lens": "^0.12.1",
-		"@rixio/wrapped": "^0.12.1"
+		"@rixio/lens": "^0.13.0",
+		"@rixio/wrapped": "^0.13.0"
 	},
 	"devDependencies": {
-		"@rixio/atom": "^0.12.1",
-		"@rixio/cache": "^0.12.1",
+		"@rixio/atom": "^0.13.0",
+		"@rixio/cache": "^0.13.0",
 		"@testing-library/jest-dom": "5.11.4",
 		"@testing-library/react": "11.0.4",
 		"@types/jest": "26.0.14",
