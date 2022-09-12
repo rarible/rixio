@@ -21,8 +21,35 @@ export type DataLoader<K, V> = (key: K) => Promise<V>
 
 export type ListDataLoader<K, V> = (keys: K[]) => Promise<[K, V][]>
 
+/**
+ * @deprecated please use toListLoader
+ * since it can handle errors and doesn't trigger fail of whole chain
+ */
+
 export function toListDataLoader<K, V>(loader: DataLoader<K, V>): ListDataLoader<K, V> {
 	return ids => Promise.all(ids.map(id => loader(id).then(v => [id, v] as [K, V])))
+}
+
+/**
+ * Utility to conver your single-loader to list loader
+ */
+
+export function toListLoader<K, V, J>(
+	loader: DataLoader<K, V>,
+	defaultValue: J,
+	onError?: (id: K, error: unknown) => void
+): ListDataLoader<K, V | J> {
+	return ids =>
+		Promise.all(
+			ids.map(id =>
+				loader(id)
+					.then(v => [id, v] as [K, V])
+					.catch(err => {
+						onError?.(id, err)
+						return [id, defaultValue] as [K, J]
+					})
+			)
+		)
 }
 
 export interface KeyCache<K, V> {

@@ -3,7 +3,7 @@ import { Map as IM } from "immutable"
 import waitForExpect from "wait-for-expect"
 import { createFulfilledWrapped, pendingWrapped, Rejected, Wrapped } from "@rixio/wrapped"
 import { waitFor } from "@testing-library/react"
-import { KeyCacheImpl, toListDataLoader } from "./key"
+import { KeyCacheImpl, toListLoader, toListDataLoader } from "./key"
 import { createAddKeyEvent, createErrorKeyEvent, KeyEvent } from "./domain"
 import { CacheState, createFulfilledCache } from "./index"
 
@@ -121,5 +121,35 @@ describe("KeyCacheImpl", () => {
 			expect(emitted.length).toBe(3)
 			expect(emitted[2]).toStrictEqual(createAddKeyEvent("test3"))
 		})
+	})
+})
+
+describe("toListLoader", () => {
+	it("should resolve all values", async () => {
+		const loader = toListLoader<string, string, undefined>(x => Promise.resolve(x + "1"), undefined)
+		const result = await loader(["hello", "world"])
+		expect(result).toStrictEqual([
+			["hello", "hello1"],
+			["world", "world1"],
+		])
+	})
+
+	it("should return default value if one element fails", async () => {
+		const logger = jest.fn()
+		const err = new Error("My error")
+		const loader = toListLoader<string, string, undefined>(
+			x => {
+				if (x === "hello") return Promise.reject(err)
+				return Promise.resolve(x + "1")
+			},
+			undefined,
+			logger
+		)
+		const result = await loader(["hello", "world"])
+		expect(result).toStrictEqual([
+			["hello", undefined],
+			["world", "world1"],
+		])
+		expect(logger.mock.calls[0]).toEqual(["hello", err])
 	})
 })

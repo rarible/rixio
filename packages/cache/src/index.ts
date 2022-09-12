@@ -17,6 +17,7 @@ export {
 	byKeyWithDefaultFactory,
 	byKey,
 	toListDataLoader,
+	toListLoader,
 } from "./key"
 export { toWrapped, toCache } from "./utils"
 export { Memo, MemoImpl } from "./memo"
