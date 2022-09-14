@@ -58,8 +58,3 @@ export function createErrorKeyEvent<K>(key: K, error: unknown): KeyEventError<K>
 		error,
 	}
 }
-
-export const UNDEFINED = Symbol.for("UNDEFINED")
-export function isNotFound(value: unknown): value is typeof UNDEFINED {
-	return value === UNDEFINED
-}

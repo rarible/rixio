@@ -1,7 +1,6 @@
 import { Atom } from "@rixio/atom"
 import { noop } from "rxjs"
 import { first, map, take } from "rxjs/operators"
-import waitForExpect from "wait-for-expect"
 import { CacheState, idleCache } from "./domain"
 import { MemoImpl } from "./memo"
 
@@ -44,11 +43,13 @@ describe("MemoImpl", () => {
 		expect(cache.atom.get().status).toBe("idle")
 		cache.subscribe(noop)
 		expect(cache.atom.get().status).toBe("pending")
-		await waitForExpect(() => expect(cache.atom.get().status).toBe("fulfilled"))
+		await delay(120)
+		expect(cache.atom.get().status).toBe("fulfilled")
 		expect(await cache.pipe(take(1)).toPromise()).toBe("loaded")
 		cache.clear()
 		expect(cache.atom.get().status).toBe("pending")
-		await waitForExpect(() => expect(cache.atom.get().status).toBe("fulfilled"))
+		await delay(120)
+		expect(cache.atom.get().status).toBe("fulfilled")
 		expect(await cache.pipe(take(1)).toPromise()).toBe("loaded")
 	})
 
@@ -124,14 +125,16 @@ describe("MemoImpl", () => {
 		const sub1 = cache.subscribe(x => emitted.push(x), noop)
 		expect(counter).toEqual(1)
 
-		await waitForExpect(() => expect(atom$.get().status).toBe("rejected"))
+		await delay(120)
+		expect(atom$.get().status).toBe("rejected")
 		expect(emitted).toStrictEqual([])
 		sub1.unsubscribe()
 		expect(emittedStatuses).toStrictEqual(["idle", "pending", "rejected"])
 
 		const sub2 = cache.subscribe(x => emitted.push(x))
 		expect(counter).toEqual(2)
-		await waitForExpect(() => expect(atom$.get().status).toBe("fulfilled"))
+		await delay(120)
+		expect(atom$.get().status).toBe("fulfilled")
 		expect(counter).toEqual(2)
 		expect(emittedStatuses).toEqual(["idle", "pending", "rejected", "idle", "pending", "fulfilled"])
 		expect(emitted).toStrictEqual(["resolved"])
@@ -143,10 +146,12 @@ describe("MemoImpl", () => {
 		cache.subscribe(noop)
 		const emitted1: string[] = []
 		cache.subscribe(x => emitted1.push(x))
-		await waitForExpect(() => expect(emitted1).toStrictEqual(["loaded"]))
+		await delay(120)
+		expect(emitted1).toStrictEqual(["loaded"])
 		expect(getTimes()).toBe(1)
 		cache.clear()
-		await waitForExpect(() => expect(emitted1).toStrictEqual(["loaded", "loaded"]))
+		await delay(120)
+		expect(emitted1).toStrictEqual(["loaded", "loaded"])
 		expect(getTimes()).toBe(2)
 	})
 })
@@ -160,4 +165,8 @@ function createTestSet() {
 			return Promise.resolve("loaded")
 		}),
 	}
+}
+
+async function delay(ms: number) {
+	await new Promise(r => setTimeout(r, ms))
 }

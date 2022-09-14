@@ -12,45 +12,13 @@ import {
 	createErrorKeyEvent,
 	createFulfilledCache,
 	idleCache,
-	isNotFound,
 	KeyEvent,
-	UNDEFINED,
 } from "./domain"
+import { toGenericError } from "./utils"
+import { KeyNotFoundError } from "./errors"
 
 export type DataLoader<K, V> = (key: K) => Promise<V>
-
 export type ListDataLoader<K, V> = (keys: K[]) => Promise<[K, V][]>
-
-/**
- * @deprecated please use toListLoader
- * since it can handle errors and doesn't trigger fail of whole chain
- */
-
-export function toListDataLoader<K, V>(loader: DataLoader<K, V>): ListDataLoader<K, V> {
-	return ids => Promise.all(ids.map(id => loader(id).then(v => [id, v] as [K, V])))
-}
-
-/**
- * Utility to conver your single-loader to list loader
- */
-
-export function toListLoader<K, V, J>(
-	loader: DataLoader<K, V>,
-	defaultValue: J,
-	onError?: (id: K, error: unknown) => void
-): ListDataLoader<K, V | J> {
-	return ids =>
-		Promise.all(
-			ids.map(id =>
-				loader(id)
-					.then(v => [id, v] as [K, V])
-					.catch(err => {
-						onError?.(id, err)
-						return [id, defaultValue] as [K, J]
-					})
-			)
-		)
-}
 
 export interface KeyCache<K, V> {
 	get(key: K, force?: boolean): Promise<V>
@@ -64,7 +32,7 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 	public readonly events = this._events.pipe()
 
 	private readonly batchHelper: BatchHelper<K>
-	private readonly results: Subject<[K, V | typeof UNDEFINED]> = new Subject()
+	private readonly results: Subject<[K, V | Error]> = new Subject()
 	private readonly lensFactory = byKeyWithDefaultFactory<K, CacheState<V>>(idleCache)
 
 	private readonly singles = new SimpleCache<K, Cache<V>>(key => {
@@ -85,12 +53,12 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 			const values = await this.loader(keys)
 			const map = IM(values)
 			keys.forEach(key => {
-				this.results.next([key, map.has(key) ? map.get(key)! : UNDEFINED])
+				this.results.next([key, map.has(key) ? map.get(key)! : new KeyNotFoundError(key)])
 			})
 		} catch (e) {
 			keys.forEach(key => {
 				this._events.next(createErrorKeyEvent(key, e))
-				this.results.next([key, UNDEFINED])
+				this.results.next([key, toGenericError(e, `Can't load entry with key ${key}`)])
 			})
 		}
 	}
@@ -123,10 +91,9 @@ export class KeyCacheImpl<K, V> implements KeyCache<K, V> {
 			)
 			.toPromise()
 
-		if (isNotFound(v)) {
-			const error = new Error(`Entity with key "${key}" not found`)
-			this._events.next(createErrorKeyEvent(key, error))
-			throw error
+		if (v instanceof Error) {
+			this._events.next(createErrorKeyEvent(key, v))
+			throw v
 		}
 		return v
 	}

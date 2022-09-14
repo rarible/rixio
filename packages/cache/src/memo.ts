@@ -5,10 +5,10 @@ import { CacheState, createFulfilledCache, idleCache } from "./domain"
 import { save } from "./impl"
 
 export interface Memo<T> extends Observable<T> {
-	get(force?: boolean): Promise<T>
-	set(value: T): void
-	modifyIfFulfilled(updateFn: (currentValue: T) => T): void
-	clear(): void
+	get: (force?: boolean) => Promise<T>
+	set: (value: T) => void
+	modifyIfFulfilled: (updateFn: (currentValue: T) => T) => void
+	clear: () => void
 	atom: Atom<CacheState<T>>
 }
 
@@ -62,21 +62,16 @@ export class MemoImpl<T> extends Observable<T> implements Memo<T> {
 
 			return subscriber
 		})
-		this.clear = this.clear.bind(this)
 	}
 
-	async get(force = false): Promise<T> {
-		if (force) {
-			this.clear()
-		}
+	get = async (force = false): Promise<T> => {
+		if (force) this.clear()
 		return this.pipe(first()).toPromise()
 	}
 
-	set(value: T): void {
-		this.atom.set(createFulfilledCache(value))
-	}
+	set = (value: T): void => this.atom.set(createFulfilledCache(value))
 
-	modifyIfFulfilled(fn: (current: T) => T): void {
+	modifyIfFulfilled = (fn: (current: T) => T): void =>
 		this.atom.modify(s => {
 			if (s.status === "fulfilled") {
 				return {
@@ -86,9 +81,6 @@ export class MemoImpl<T> extends Observable<T> implements Memo<T> {
 			}
 			return s
 		})
-	}
 
-	clear(): void {
-		this.atom.set(idleCache)
-	}
+	clear = (): void => this.atom.set(idleCache)
 }

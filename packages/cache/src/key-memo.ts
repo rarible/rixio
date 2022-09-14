@@ -3,29 +3,26 @@ import { Atom } from "@rixio/atom"
 import { SimpleCache } from "@rixio/lens"
 import { Observable, Subject } from "rxjs"
 import { filter, first } from "rxjs/operators"
-import {
-	CacheState,
-	idleCache,
-	isNotFound,
-	UNDEFINED,
-	KeyEvent,
-	createErrorKeyEvent,
-	createAddKeyEvent,
-} from "./domain"
+import { CacheState, idleCache, KeyEvent, createErrorKeyEvent, createAddKeyEvent } from "./domain"
 import { BatchHelper } from "./key-batch"
-import { byKeyWithDefaultFactory, ListDataLoader } from "./key"
+import { byKeyWithDefaultFactory } from "./key"
 import { Memo, MemoImpl } from "./memo"
+import { toGenericError } from "./utils"
+import { KeyNotFoundError } from "./errors"
+
+export type DataLoader<K, V> = (key: K) => Promise<V>
+export type ListDataLoader<K, V> = (keys: K[]) => Promise<[K, V][]>
 
 export interface KeyMemo<K, V> {
-	get(key: K, force?: boolean): Promise<V>
-	set(key: K, value: V): void
-	getAtom(key: K): Atom<CacheState<V>>
-	single(key: K): Memo<V>
+	get: (key: K, force?: boolean) => Promise<V>
+	set: (key: K, value: V) => void
+	getAtom: (key: K) => Atom<CacheState<V>>
+	single: (key: K) => Memo<V>
 }
 
 export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 	private readonly _batch: BatchHelper<K>
-	private readonly _results = new Subject<[K, V | typeof UNDEFINED]>()
+	private readonly _results = new Subject<[K, V | Error]>()
 	private readonly _lensFactory = byKeyWithDefaultFactory<K, CacheState<V>>(idleCache)
 	private readonly _events = new Subject<KeyEvent<K>>()
 	readonly events: Observable<KeyEvent<K>> = this._events
@@ -44,34 +41,25 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 				const values = await this.loader(keys)
 				const map = IM(values)
 				keys.forEach(key => {
-					this._results.next([key, map.has(key) ? map.get(key)! : UNDEFINED])
+					this._results.next([key, map.has(key) ? map.get(key)! : new KeyNotFoundError(key)])
 				})
 			} catch (e) {
 				keys.forEach(k => {
 					this._events.next(createErrorKeyEvent(k, e))
-					this._results.next([k, UNDEFINED])
+					this._results.next([k, toGenericError(e, `Can't load entry with key ${k}`)])
 				})
 			}
 		}, timeout)
 	}
 
-	single(key: K): Memo<V> {
-		return this.singles.getOrCreate(key, () => {
+	single = (key: K): Memo<V> =>
+		this.singles.getOrCreate(key, () => {
 			this._events.next(createAddKeyEvent(key))
 		})
-	}
 
-	get(key: K, force?: boolean): Promise<V> {
-		return this.single(key).get(force)
-	}
-
-	set(key: K, value: V): void {
-		this.single(key).set(value)
-	}
-
-	getAtom(key: K): Atom<CacheState<V>> {
-		return this.map.lens(this._lensFactory(key))
-	}
+	get = (key: K, force?: boolean): Promise<V> => this.single(key).get(force)
+	set = (key: K, value: V): void => this.single(key).set(value)
+	getAtom = (key: K): Atom<CacheState<V>> => this.map.lens(this._lensFactory(key))
 
 	private async load(key: K): Promise<V> {
 		this._batch.add(key)
@@ -81,10 +69,9 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 				first()
 			)
 			.toPromise()
-		if (isNotFound(v)) {
-			const error = new Error(`Entity with key "${key}" not found`)
-			this._events.next(createErrorKeyEvent(key, error))
-			throw error
+		if (v instanceof Error) {
+			this._events.next(createErrorKeyEvent(key, v))
+			throw v
 		}
 		return v
 	}

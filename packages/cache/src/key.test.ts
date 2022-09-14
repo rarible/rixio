@@ -1,10 +1,10 @@
 import { Atom } from "@rixio/atom"
 import { Map as IM } from "immutable"
-import waitForExpect from "wait-for-expect"
 import { createFulfilledWrapped, pendingWrapped, Rejected, Wrapped } from "@rixio/wrapped"
-import { waitFor } from "@testing-library/react"
-import { KeyCacheImpl, toListLoader, toListDataLoader } from "./key"
-import { createAddKeyEvent, createErrorKeyEvent, KeyEvent } from "./domain"
+import { KeyCacheImpl } from "./key"
+import { createAddKeyEvent, createErrorKeyEvent, KeyEvent, KeyEventError } from "./domain"
+import { toListLoader } from "./utils"
+import { UnknownError } from "./errors"
 import { CacheState, createFulfilledCache } from "./index"
 
 describe("KeyCacheImpl", () => {
@@ -20,17 +20,15 @@ describe("KeyCacheImpl", () => {
 		expect(state$.get().size).toBe(0)
 		single.subscribe()
 		cache.single("other").subscribe()
-		await waitForExpect(() => {
-			expect(single.atom.get()).toStrictEqual(createFulfilledCache("testing"))
-		})
+		await delay(120)
+		expect(single.atom.get()).toStrictEqual(createFulfilledCache("testing"))
 		expect(state$.get().size).toBe(2)
 		expect(await single.get()).toBe("testing")
 		expect(requests.length).toBe(1)
 
 		cache.single("other2").subscribe()
-		await waitForExpect(() => {
-			expect(cache.single("other2").atom.get()).toStrictEqual(createFulfilledCache("other2"))
-		})
+		await delay(120)
+		expect(cache.single("other2").atom.get()).toStrictEqual(createFulfilledCache("other2"))
 		expect(requests.length).toBe(2)
 		expect(requests[1]).toStrictEqual(["other2"])
 		expect(state$.get().size).toBe(3)
@@ -39,15 +37,14 @@ describe("KeyCacheImpl", () => {
 	test("should work with undefined values", async () => {
 		const cache = new KeyCacheImpl<string, number | undefined>(
 			Atom.create(IM()),
-			toListDataLoader(() => Promise.resolve(undefined))
+			toListLoader(() => Promise.resolve(undefined))
 		)
 		const emitted: Wrapped<number | undefined>[] = []
 		cache.single("test").subscribe(value => emitted.push(value))
-		await waitFor(() => {
-			expect(emitted.length).toBe(2)
-			expect(emitted[0]).toStrictEqual(pendingWrapped)
-			expect(emitted[1]).toStrictEqual(createFulfilledWrapped(undefined))
-		})
+		await delay(120)
+		expect(emitted.length).toBe(2)
+		expect(emitted[0]).toStrictEqual(pendingWrapped)
+		expect(emitted[1]).toStrictEqual(createFulfilledWrapped(undefined))
 	})
 
 	test("should mark items as errors if load list fails", async () => {
@@ -56,77 +53,64 @@ describe("KeyCacheImpl", () => {
 		const emittedEvents: KeyEvent<string>[] = []
 		cache.events.subscribe(x => emittedEvents.push(x))
 		cache.single("test").subscribe(x => emitted.push(x))
-		await waitFor(() => {
-			expect(emitted.length).toBe(2)
-			expect(emitted[0]).toStrictEqual(pendingWrapped)
-			expect(emitted[1].status).toBe("rejected")
-			const error = new Error('Entity with key "test" not found')
-			expect((emitted[1] as Rejected).error).toStrictEqual(error)
-			expect(emittedEvents.length).toEqual(3)
-			expect(emittedEvents[0]).toStrictEqual(createAddKeyEvent("test"))
-			expect(emittedEvents[1]).toStrictEqual(createErrorKeyEvent("test", "rejected"))
-			expect(emittedEvents[2]).toStrictEqual(createErrorKeyEvent("test", error))
-		})
+		await delay(120)
+		expect(emitted.length).toBe(2)
+		expect(emitted[0]).toStrictEqual(pendingWrapped)
+		expect(emitted[1].status).toBe("rejected")
+		expect((emitted[1] as Rejected).error).toBeInstanceOf(UnknownError)
+		expect(emittedEvents.length).toEqual(3)
+		expect(emittedEvents[0]).toStrictEqual(createAddKeyEvent("test"))
+		expect(emittedEvents[1]).toStrictEqual(createErrorKeyEvent("test", "rejected"))
+		expect((emittedEvents[2] as KeyEventError<string>).error).toBeInstanceOf(UnknownError)
 	})
 
 	test("should be reloaded if cleared", async () => {
 		let value: number = 10
 		const cache = new KeyCacheImpl<string, number>(
 			Atom.create(IM()),
-			toListDataLoader(() => Promise.resolve(value))
+			toListLoader(() => Promise.resolve(value))
 		)
 
 		const emitted: Wrapped<number>[] = []
 		cache.single("key1").subscribe(value => emitted.push(value))
-		await waitFor(() => {
-			expect(emitted.length).toBe(2)
-			expect(emitted[0]).toStrictEqual(pendingWrapped)
-			expect(emitted[1]).toStrictEqual(createFulfilledWrapped(10))
-		})
+		await delay(120)
+		expect(emitted.length).toBe(2)
+		expect(emitted[0]).toStrictEqual(pendingWrapped)
+		expect(emitted[1]).toStrictEqual(createFulfilledWrapped(10))
 		value = 20
 		cache.single("key1").clear()
-		await waitFor(() => {
-			expect(emitted.length).toBe(4)
-			expect(emitted[2]).toStrictEqual(pendingWrapped)
-			expect(emitted[3]).toStrictEqual(createFulfilledWrapped(20))
-		})
+		await delay(120)
+		expect(emitted.length).toBe(4)
+		expect(emitted[2]).toStrictEqual(pendingWrapped)
+		expect(emitted[3]).toStrictEqual(createFulfilledWrapped(20))
 	})
 
 	test("should put new entry in events Subject", async () => {
-		function loadData(key: string) {
-			return Promise.resolve(key)
-		}
 		const cache = new KeyCacheImpl<string, string>(
 			Atom.create(IM()),
-			toListDataLoader(key => loadData(key))
+			toListLoader(x => Promise.resolve(x))
 		)
 
 		const emitted: KeyEvent<string>[] = []
 		cache.events.subscribe(value => emitted.push(value))
 		cache.get("test").then()
 
-		await waitFor(() => {
-			expect(emitted.length).toBe(1)
-			expect(emitted[0]).toStrictEqual(createAddKeyEvent("test"))
-		})
+		expect(emitted.length).toBe(1)
+		expect(emitted[0]).toStrictEqual(createAddKeyEvent("test"))
 
 		cache.get("test2").then()
-		await waitFor(() => {
-			expect(emitted.length).toBe(2)
-			expect(emitted[1]).toStrictEqual(createAddKeyEvent("test2"))
-		})
+		expect(emitted.length).toBe(2)
+		expect(emitted[1]).toStrictEqual(createAddKeyEvent("test2"))
 
 		cache.set("test3", "test3")
-		await waitFor(() => {
-			expect(emitted.length).toBe(3)
-			expect(emitted[2]).toStrictEqual(createAddKeyEvent("test3"))
-		})
+		expect(emitted.length).toBe(3)
+		expect(emitted[2]).toStrictEqual(createAddKeyEvent("test3"))
 	})
 })
 
 describe("toListLoader", () => {
 	it("should resolve all values", async () => {
-		const loader = toListLoader<string, string, undefined>(x => Promise.resolve(x + "1"), undefined)
+		const loader = toListLoader<string, string>(x => Promise.resolve(x + "1"), undefined)
 		const result = await loader(["hello", "world"])
 		expect(result).toStrictEqual([
 			["hello", "hello1"],
@@ -134,22 +118,23 @@ describe("toListLoader", () => {
 		])
 	})
 
-	it("should return default value if one element fails", async () => {
-		const logger = jest.fn()
+	it("should apply fallback when error", async () => {
 		const err = new Error("My error")
-		const loader = toListLoader<string, string, undefined>(
+		const loader = toListLoader<string, string>(
 			x => {
 				if (x === "hello") return Promise.reject(err)
 				return Promise.resolve(x + "1")
 			},
-			undefined,
-			logger
+			() => "fallback"
 		)
 		const result = await loader(["hello", "world"])
 		expect(result).toStrictEqual([
-			["hello", undefined],
+			["hello", "fallback"],
 			["world", "world1"],
 		])
-		expect(logger.mock.calls[0]).toEqual(["hello", err])
 	})
 })
+
+async function delay(ms: number) {
+	await new Promise(r => setTimeout(r, ms))
+}
