@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo, useState } from "react"
-import { WrappedObservable, combineLatest } from "@rixio/wrapped"
+import { combineLatest, OWLike } from "@rixio/wrapped"
 import { useRx } from "./use-rx"
 import { OrReactChild } from "./base"
 
@@ -14,22 +14,22 @@ export interface RxProps extends RxPropsBase {
 }
 
 type Rx1Props<T> = {
-	value$: WrappedObservable<T>
+	value$: OWLike<T>
 	children?: OrReactChild<(value: T, reload: () => {}) => ReactNode>
 } & RxPropsBase
 
 type Rx2Props<T1, T2> = {
-	value$: [WrappedObservable<T1>, WrappedObservable<T2>]
+	value$: [OWLike<T1>, OWLike<T2>]
 	children?: OrReactChild<(value: [T1, T2], reload: () => {}) => ReactNode>
 } & RxPropsBase
 
 type Rx3Props<T1, T2, T3> = {
-	value$: [WrappedObservable<T1>, WrappedObservable<T2>, WrappedObservable<T3>]
+	value$: [OWLike<T1>, OWLike<T2>, OWLike<T3>]
 	children?: OrReactChild<(value: [T1, T2, T3], reload: () => {}) => ReactNode>
 } & RxPropsBase
 
 type Rx4Props<T1, T2, T3, T4> = {
-	value$: [WrappedObservable<T1>, WrappedObservable<T2>, WrappedObservable<T3>, WrappedObservable<T4>]
+	value$: [OWLike<T1>, OWLike<T2>, OWLike<T3>, OWLike<T4>]
 	children?: OrReactChild<(value: [T1, T2, T3, T4], reload: () => {}) => ReactNode>
 } & RxPropsBase
 
@@ -38,47 +38,41 @@ export function Rx<T1, T2>(props: Rx2Props<T1, T2>): React.ReactElement
 export function Rx<T1, T2, T3>(props: Rx3Props<T1, T2, T3>): React.ReactElement
 export function Rx<T1, T2, T3, T4>(props: Rx4Props<T1, T2, T3, T4>): React.ReactElement
 export function Rx({ pending, rejected, children, value$ }: RxProps): React.ReactElement | null {
-	const observables = useObservables(value$)
+	const array = getObservables(value$)
+	const observables = useMemo(() => {
+		return combineLatest(array)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, array)
 	const [nonce, setNonce] = useState(0)
 	const value = useRx(observables, [observables, nonce])
 
 	switch (value.status) {
 		case "pending":
-			return <>{pending}</>
+			return <React.Fragment children={pending} />
 		case "rejected":
 			if (typeof rejected === "function") {
 				return (
-					<React.Fragment>
-						{rejected(value.error, () => {
+					<React.Fragment
+						children={rejected(value.error, () => {
 							value.reload()
 							setNonce(n => n + 1)
 						})}
-					</React.Fragment>
+					/>
 				)
 			}
-			return <>{rejected}</>
+			return <React.Fragment children={rejected} />
 		case "fulfilled":
-			const finalResult = Array.isArray(value$) ? value.value : value.value[0]
-			if (typeof children === "function") {
-				return <>{children(finalResult)}</>
-			} else if (children) {
-				return <>{children}</>
-			} else {
-				return <>{finalResult}</>
+			const final = Array.isArray(value$) ? value.value : value.value[0]
+			if (children) {
+				if (typeof children === "function") {
+					return <React.Fragment children={children(final)} />
+				}
+				return <React.Fragment children={children} />
 			}
+			return <React.Fragment children={final} />
 	}
 }
 
-function useObservables(observables: any) {
-	const array = getObservables(observables)
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	return useMemo(() => combineLatest(array), array)
-}
-
-function getObservables(observables: any): WrappedObservable<any>[] {
-	if (Array.isArray(observables)) {
-		return observables
-	} else {
-		return [observables]
-	}
+function getObservables(observables: OWLike<any> | OWLike<any>[]): OWLike<any>[] {
+	return Array.isArray(observables) ? observables : [observables]
 }

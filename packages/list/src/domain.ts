@@ -1,11 +1,19 @@
-import type { AtomStateStatus } from "@rixio/cache"
-import type { OrReactChild } from "@rixio/react"
 import React from "react"
+import type { OrReactChild } from "@rixio/react"
 import { BaseInfiniteList } from "./infinite-list"
 
 export type ListPartLoader<T, C> = (size: number, continuation: C | null) => Promise<[T[], C | null]>
 
-export type InfiniteListState<T, C> = AtomStateStatus & {
+type InfiniteListStateBase =
+	| {
+			status: "pending" | "fulfilled" | "idle"
+	  }
+	| {
+			status: "rejected"
+			error: unknown
+	  }
+
+export type InfiniteListState<T, C> = InfiniteListStateBase & {
 	items: T[]
 	continuation: C | null
 	finished: boolean

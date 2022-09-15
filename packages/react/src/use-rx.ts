@@ -1,46 +1,31 @@
 import { useState, useMemo, useRef, useEffect } from "react"
 import { Observable } from "rxjs"
 import { first } from "rxjs/operators"
-import { Wrapped, wrap, WrappedObservable, toPlainOrThrow, pendingWrapped } from "@rixio/wrapped"
+import { Wrapped, toPlainOrThrow, WrappedFulfilled, WrappedRejected, WrappedPending, OWLike, OW } from "@rixio/wrapped"
 import { ReadOnlyAtom } from "@rixio/atom"
 import { useSubscription } from "./use-subscription"
 
-export type ImmediateFulfilled<T> = {
-	status: "fulfilled"
-	value: T
-}
-
-export type Immediate<T> = ImmediateFulfilled<T> | { status: "pending" } | { status: "rejected"; error: any }
-
-export function getImmediate<T>(observable: Observable<T>): Immediate<T> {
-	let immediate: Immediate<T> = { status: "pending" }
+export function getImmediate<T>(observable: Observable<T>): Wrapped<T> {
+	let immediate: Wrapped<T> = WrappedPending.create()
 	observable.pipe(first()).subscribe(
-		value => {
-			immediate = { status: "fulfilled", value }
-		},
-		error => {
-			immediate = { status: "rejected", error }
-		}
+		value => (immediate = WrappedFulfilled.create(value)),
+		error => (immediate = WrappedRejected.create(error))
 	)
 	return immediate
 }
 
 export function getImmediateOrThrow<T>(observable: Observable<T>): T {
 	const immediate = getImmediate(observable)
-	if (immediate.status === "rejected") {
-		throw immediate.error
-	}
-	if (immediate.status !== "fulfilled") {
-		throw new Error("Observable doesn't immediately emits value")
-	}
+	if (immediate.status === "rejected") throw immediate.error
+	if (immediate.status !== "fulfilled") throw new Error("Observable doesn't immediately emits value")
 	return immediate.value
 }
 
-export function useRx<T>(observable: WrappedObservable<T>, deps: any[] = [observable]): Wrapped<T> {
+export function useRx<T>(observable: OWLike<T>, deps: any[] = [observable]): Wrapped<T> {
 	const [, setCount] = useState<number>(0)
-	const value = useRef<Wrapped<T>>(pendingWrapped)
+	const value = useRef<Wrapped<T>>(WrappedPending.create())
 	const initial = useRef(true)
-	const memoized = useMemo(() => wrap(observable), [observable])
+	const memoized = useMemo(() => new OW(observable), [observable])
 
 	const sub = useMemo(
 		() =>
@@ -64,7 +49,7 @@ export function useRx<T>(observable: WrappedObservable<T>, deps: any[] = [observ
 	return value.current
 }
 
-export function useRxOrThrow<T>(observable: WrappedObservable<T>): T {
+export function useRxOrThrow<T>(observable: OWLike<T>): T {
 	return toPlainOrThrow(useRx(observable))
 }
 

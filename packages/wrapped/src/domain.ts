@@ -1,55 +1,34 @@
 import { noop, Observable } from "rxjs"
 
-const wrapped = "___wrapped___"
-const symbol = Symbol.for(wrapped)
+export class WrappedBase {}
 
-type HasFlag = { [wrapped]: typeof symbol }
-
-export type Fulfilled<T> = {
-	status: "fulfilled"
-	value: T
-}
-export type Pending = {
-	status: "pending"
-}
-export type SimpleRejected = {
-	status: "rejected"
-	error: any
-}
-export type Rejected = SimpleRejected & {
-	reload: () => void
+export class WrappedFulfilled<T> extends WrappedBase {
+	readonly status = "fulfilled"
+	constructor(public readonly value: T) {
+		super()
+	}
+	static create = <T>(value: T) => new WrappedFulfilled<T>(value)
 }
 
+export class WrappedPending extends WrappedBase {
+	readonly status = "pending"
+	static create = () => new WrappedPending()
+}
+
+export class WrappedRejected extends WrappedBase {
+	readonly status = "rejected"
+	constructor(public readonly error: unknown, public readonly reload: () => void = noop) {
+		super()
+	}
+
+	static create = (error: unknown, reload: () => void = noop) => new WrappedRejected(error, reload)
+}
+
+export type Wrapped<T> = WrappedFulfilled<T> | WrappedPending | WrappedRejected
 export type ObservableLike<T> = T | Observable<T> | Observable<Wrapped<T>>
 
-export type WrappedObservable<T> = Observable<T | Wrapped<T>>
-
-export type Wrapped<T> = (Fulfilled<T> | Pending | Rejected) & HasFlag
-
-export const pendingWrapped: Wrapped<any> = { status: "pending", [wrapped]: symbol }
-
-export function createRejectedWrapped(error: any, reload: () => void = noop): Wrapped<any> {
-	return {
-		status: "rejected",
-		error,
-		reload,
-		[wrapped]: symbol,
-	}
-}
-
-export function createFulfilledWrapped<T>(value: T): Fulfilled<T> & HasFlag {
-	return {
-		status: "fulfilled",
-		value,
-		[wrapped]: symbol,
-	}
-}
-
-export function isWrapped(value: unknown): value is Wrapped<any> {
-	if (typeof value === "object" && value !== null) {
-		return (value as Wrapped<any>)[wrapped] === symbol
-	}
-	return false
+export function isWrapped(value: unknown): value is Wrapped<unknown> {
+	return value instanceof WrappedBase
 }
 
 export type Lifted<T> = {

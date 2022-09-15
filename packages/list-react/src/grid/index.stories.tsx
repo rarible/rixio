@@ -60,12 +60,3 @@ storiesOf("grid-window-list", module)
 			<div>Content from bottom</div>
 		</React.Fragment>
 	))
-	.add("with throttling", () => (
-		<RxGridList
-			data$={list$}
-			rect={rect}
-			threshold={1}
-			renderer={renderer}
-			loadButton={load => <button onClick={load}>Load more</button>}
-		/>
-	))

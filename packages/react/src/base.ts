@@ -1,7 +1,7 @@
 import React from "react"
 import { Observable, Subscription } from "rxjs"
 import { Lens } from "@rixio/lens"
-import { Wrapped, createRejectedWrapped, toWrapped, pendingWrapped, Rejected, Lifted } from "@rixio/wrapped"
+import { Wrapped, Lifted, WrappedRejected, WrappedPending, toWrapped } from "@rixio/wrapped"
 
 export type OrReactChild<T> = React.ReactChild | React.ReactChild[] | T
 
@@ -26,9 +26,7 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 	}
 
 	abstract extractRxBaseProps(props: RProps): RxBaseProps | undefined
-
 	abstract extractProps(props: RProps): Lifted<P>
-
 	abstract extractComponent(props: RProps): any
 
 	componentDidMount() {
@@ -43,7 +41,7 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 		this._mounted = false
 	}
 
-	shouldComponentUpdate(nextProps: Readonly<RProps>, nextState: Readonly<Lifted<P>>, nextContext: any): boolean {
+	shouldComponentUpdate(nextProps: RProps): boolean {
 		if (this.props !== nextProps) {
 			const oldProps = this.extractProps(this.props)
 			const newProps = this.extractProps(nextProps)
@@ -56,25 +54,22 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 
 	render() {
 		const result = toWrapped(this.checkObservables())
-		switch (result.status) {
-			case "fulfilled":
-				return React.createElement(this.extractComponent(this.props), result.value as P)
-			case "pending":
-				const pending = this.extractRxBaseProps(this.props)?.pending
-				if (pending) {
-					return pending
-				}
-				return null
-			case "rejected":
-				const rejected = this.extractRxBaseProps(this.props)?.rejected
-				if (rejected && typeof rejected === "function") {
-					return rejected(result.error, result.reload)
-				} else if (rejected) {
-					return rejected
-				} else {
-					return null
-				}
+		if (result.status === "fulfilled") {
+			return React.createElement(this.extractComponent(this.props), result.value as P)
 		}
+		const props = this.extractRxBaseProps(this.props)
+		if (props) {
+			if (result.status === "pending" && props.pending) {
+				return props.pending
+			}
+			if (result.status === "rejected" && props.rejected) {
+				if (typeof props.rejected === "function") {
+					return props.rejected(result.error, result.reload)
+				}
+				return props.rejected
+			}
+		}
+		return null
 	}
 
 	private doSubscribe(oldProps: Lifted<P>, props: Lifted<P>) {
@@ -88,8 +83,8 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 				}
 				if (oldValue !== value) {
 					const s = value.subscribe(
-						plain => this.handle(lens, toWrapped(plain)),
-						error => this.handle(lens, createRejectedWrapped(error))
+						v => this.handle(lens, toWrapped(v)),
+						e => this.handle(lens, WrappedRejected.create(e))
 					)
 					this.subscriptions.set(value, [s, lens])
 				}
@@ -102,7 +97,10 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 	private doUnsubscribe(oldProps: Lifted<P>, newProps: Lifted<P>) {
 		walk(oldProps, (value, lens) => {
 			if (value instanceof Observable && lens.get(newProps) !== value) {
-				this.subscriptions.get(value)![0].unsubscribe()
+				const [subscription] = this.subscriptions.get(value) || []
+				if (subscription) {
+					subscription.unsubscribe()
+				}
 				this.subscriptions.delete(value)
 			}
 		})
@@ -120,7 +118,7 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 
 	private checkObservables(): Lifted<P> | Wrapped<any> {
 		let foundPending = false
-		const rejected: Rejected[] = []
+		const rejected: WrappedRejected[] = []
 		let props = this._state
 		walk(this._state, (value, lens) => {
 			if (value instanceof Observable) {
@@ -135,7 +133,7 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 				props = lens.set(wrapped.value, props)
 			}
 		})
-		if (foundPending) return pendingWrapped
+		if (foundPending) return WrappedPending.create()
 		if (rejected.length > 0) {
 			const reload = () => {
 				rejected.forEach(r => r.reload())
@@ -143,12 +141,12 @@ export abstract class RxWrapperBase<P extends object, RProps extends object> ext
 					s.unsubscribe()
 					const newSubscription = obs.subscribe(
 						plain => this.handle(lens, toWrapped(plain)),
-						error => this.handle(lens, createRejectedWrapped(error))
+						error => this.handle(lens, WrappedRejected.create(error))
 					)
 					this.subscriptions.set(obs, [newSubscription, lens])
 				})
 			}
-			return createRejectedWrapped(rejected[0].error, reload)
+			return WrappedRejected.create(rejected[0].error, reload)
 		}
 		return props
 	}

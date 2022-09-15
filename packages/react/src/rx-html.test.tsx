@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-pascal-case */
-import { act, render } from "@testing-library/react"
-import { of, ReplaySubject } from "rxjs"
 import React from "react"
-import { createFulfilledWrapped } from "@rixio/wrapped"
+import { act, render } from "@testing-library/react"
+import { WrappedFulfilled } from "@rixio/wrapped"
+import { of, ReplaySubject } from "rxjs"
 import { R } from "./rx-html"
 
 describe("RxHtml", () => {
@@ -25,7 +25,7 @@ describe("RxHtml", () => {
 		const text = Math.random().toString()
 		const r = render(
 			<span data-testid="value">
-				<R.div>{of(createFulfilledWrapped(text))}</R.div>
+				<R.div>{of(WrappedFulfilled.create(text))}</R.div>
 			</span>
 		)
 		expect(r.getByTestId("value")).toHaveTextContent(text)

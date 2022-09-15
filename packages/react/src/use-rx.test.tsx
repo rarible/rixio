@@ -1,5 +1,5 @@
-import { Observable, of, ReplaySubject } from "rxjs"
 import React from "react"
+import { Observable, of, ReplaySubject } from "rxjs"
 import { render } from "@testing-library/react"
 import { Atom } from "@rixio/atom"
 import { act } from "react-dom/test-utils"

@@ -1,35 +1,38 @@
-import { Observable } from "rxjs"
-import { Fulfilled, Pending, Wrapped, SimpleRejected } from "@rixio/wrapped"
-import { Atom } from "@rixio/atom"
-
-const cache = "___cache___"
-const symbol = Symbol.for(cache)
-
-type HasFlag = { [cache]: typeof symbol }
-
-export type Idle = {
-	status: "idle"
+export class CacheBase {}
+export class CacheIdle extends CacheBase {
+	readonly status = "idle"
+	static create = () => {
+		return new CacheIdle()
+	}
 }
 
-export const idleCache: CacheState<any> = { status: "idle", [cache]: symbol }
-export const pendingCache: CacheState<any> = { status: "pending", [cache]: symbol }
-export function createRejectedCache(error: any): CacheState<any> {
-	return { status: "rejected", error, [cache]: symbol }
-}
-export function createFulfilledCache<T>(value: T): CacheState<T> {
-	return { status: "fulfilled", value, [cache]: symbol }
+export class CachePending extends CacheBase {
+	readonly status = "pending"
+	static create = () => {
+		return new CachePending()
+	}
 }
 
-export type AtomStateStatus = Idle | Pending | SimpleRejected | { status: "fulfilled" }
-export type CacheState<T> = (Idle | Pending | SimpleRejected | Fulfilled<T>) & HasFlag
+export class CacheRejected extends CacheBase {
+	readonly status = "rejected"
+	constructor(public readonly error: unknown) {
+		super()
+	}
 
-export interface Cache<T> extends Observable<Wrapped<T>> {
-	get(force?: boolean): Promise<T>
-	set(value: T): void
-	modifyIfFulfilled(updateFn: (currentValue: T) => T): void
-	clear(): void
-	atom: Atom<CacheState<T>>
+	static create = (err: unknown) => {
+		return new CacheRejected(err)
+	}
 }
+
+export class CacheFulfilled<T> extends CacheBase {
+	readonly status = "fulfilled"
+	constructor(public readonly value: T) {
+		super()
+	}
+	static create = <T>(value: T) => new CacheFulfilled<T>(value)
+}
+
+export type CacheState<T> = CacheIdle | CachePending | CacheRejected | CacheFulfilled<T>
 
 export type KeyEventAdd<K> = {
 	type: "add"
@@ -58,3 +61,6 @@ export function createErrorKeyEvent<K>(key: K, error: unknown): KeyEventError<K>
 		error,
 	}
 }
+
+export type DataLoader<K, V> = (key: K) => Promise<V>
+export type ListDataLoader<K, V> = (keys: K[]) => Promise<[K, V][]>

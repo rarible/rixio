@@ -1,8 +1,7 @@
 import React from "react"
 import { act, render, fireEvent } from "@testing-library/react"
 import { Observable, ReplaySubject, defer } from "rxjs"
-import { Wrapped, createRejectedWrapped, createFulfilledWrapped } from "@rixio/wrapped"
-import waitForExpect from "wait-for-expect"
+import { Wrapped, WrappedFulfilled, WrappedRejected } from "@rixio/wrapped"
 import { RxWrapper } from "./rx-wrapper"
 
 type TestProps = { value1: string; value2: string }
@@ -66,9 +65,7 @@ describe("RxWrapper", () => {
 		const text = Math.random().toString()
 		const obs = new ReplaySubject<Wrapped<string>>(1)
 		let reloaded = false
-		const reload = () => {
-			reloaded = true
-		}
+		const reload = () => (reloaded = true)
 		const r = render(
 			<RxWrapper<TestProps>
 				component={Test}
@@ -77,7 +74,7 @@ describe("RxWrapper", () => {
 				rejected={(e, reload) => <Testing text={e} reload={reload} />}
 			/>
 		)
-		act(() => obs.next(createRejectedWrapped(text, reload)))
+		act(() => obs.next(WrappedRejected.create(text, reload)))
 		expect(r.getByTestId("testing")).toHaveTextContent(text)
 		expect(() => r.getByTestId("value")).toThrow()
 		expect(reloaded).toBeFalsy()
@@ -85,7 +82,7 @@ describe("RxWrapper", () => {
 			fireEvent.click(r.getByTestId("reload"))
 		})
 		expect(reloaded).toBeTruthy()
-		act(() => obs.next(createFulfilledWrapped(text)))
+		act(() => obs.next(WrappedFulfilled.create(text)))
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 	})
 
@@ -102,9 +99,8 @@ describe("RxWrapper", () => {
 				rejected={(e, reload) => <Testing text={e} reload={reload} />}
 			/>
 		)
-		await waitForExpect(() => {
-			expect(r.getByTestId("testing")).toHaveTextContent(text)
-		})
+		await delay(100)
+		expect(r.getByTestId("testing")).toHaveTextContent(text)
 		expect(() => r.getByTestId("value")).toThrow()
 		act(() => {
 			fireEvent.click(r.getByTestId("reload"))
@@ -115,9 +111,8 @@ describe("RxWrapper", () => {
 		act(() => {
 			fireEvent.click(r.getByTestId("reload"))
 		})
-		await waitForExpect(() => {
-			expect(r.getByTestId("value")).toHaveTextContent(successText)
-		})
+		await delay(100)
+		expect(r.getByTestId("value")).toHaveTextContent(successText)
 	})
 
 	test("should react to props changes", () => {
@@ -135,9 +130,7 @@ describe("RxWrapper", () => {
 		const obs = new Observable<string>(s => {
 			count = count + 1
 			s.next(text)
-			return () => {
-				count = count - 1
-			}
+			return () => (count = count - 1)
 		})
 		const r = render(<RxWrapper component={Test} value1={obs} value2="some" />)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
@@ -152,3 +145,7 @@ describe("RxWrapper", () => {
 		expect(count).toBe(0)
 	})
 })
+
+async function delay(ms: number) {
+	await new Promise(r => setTimeout(r, ms))
+}

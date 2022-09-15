@@ -1,5 +1,5 @@
 import { Atom } from "@rixio/atom"
-import { pendingWrapped, Wrapped } from "@rixio/wrapped"
+import { Wrapped } from "@rixio/wrapped"
 import { waitFor } from "@testing-library/react"
 import { InfiniteList, ListItem, mapperFactory, MapperFactoryProps } from "./infinite-list"
 import { InfiniteListState, ListPartLoader, listStateIdle } from "./domain"
@@ -21,7 +21,7 @@ describe("mapper", () => {
 		const [mapper, loadNextInvocations, fakeList$] = init()
 
 		const pending = mapper({ status: "pending", finished: false, continuation: null, items: [] }, fakeList$)
-		expect(pending).toBe(pendingWrapped)
+		expect(pending.status).toBe("pending")
 		expect(loadNextInvocations.length).toBe(0)
 	})
 

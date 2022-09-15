@@ -1,4 +1,4 @@
-import React, { CSSProperties, memo, useCallback, useMemo, useRef, useState } from "react"
+import React, { CSSProperties, memo, useCallback, useMemo, useRef } from "react"
 import { isFakeItem } from "@rixio/list"
 import { InfiniteLoader, InfiniteLoaderProps } from "react-virtualized/dist/es/InfiniteLoader"
 import {
@@ -25,8 +25,6 @@ export type GridRect = {
 export type GridListProps<T> = Partial<Pick<InfiniteLoaderProps, "threshold">> & {
 	renderer: GridReactRenderer<T>
 	data: T[]
-	rowsToPreview?: number
-	loadButton?: (onClick: () => void) => React.ReactElement
 	minimumBatchRequest?: number
 	rect: GridRect
 	gridProps?: Partial<GridProps>
@@ -37,8 +35,6 @@ export type GridListProps<T> = Partial<Pick<InfiniteLoaderProps, "threshold">> &
 
 export function GridList<T>({
 	mapKey = identity,
-	loadButton,
-	rowsToPreview = 2,
 	data,
 	rect,
 	minimumBatchRequest = 10,
@@ -47,21 +43,15 @@ export function GridList<T>({
 	threshold = 3,
 	loadNext,
 }: GridListProps<T>) {
-	const [preview, setPreview] = useState(() => Boolean(loadButton))
 	const onSectionRendered = useRef<(r: RenderedSection) => void>()
-
-	const renderable = useMemo(() => {
-		return preview ? data.slice(0, rect.columnCount * rowsToPreview) : data
-	}, [preview, data, rowsToPreview, rect.columnCount])
-
-	const rowCount = useMemo(() => Math.ceil(renderable.length / rect.columnCount), [renderable.length, rect.columnCount])
+	const rowCount = useMemo(() => Math.ceil(data.length / rect.columnCount), [data.length, rect.columnCount])
 
 	const isRowLoaded = useCallback(
 		({ index }: Index) => {
 			const rowStart = rect.columnCount * index
-			return rowStart < renderable.length && !isFakeItem(renderable[rowStart])
+			return rowStart < data.length && !isFakeItem(data[rowStart])
 		},
-		[renderable, rect.columnCount]
+		[data, rect.columnCount]
 	)
 
 	const loadMoreRows = useCallback<(params: IndexRange) => Promise<any>>(async () => loadNext(), [loadNext])
@@ -71,23 +61,13 @@ export function GridList<T>({
 				gap={rect.gap}
 				columnCount={rect.columnCount}
 				renderer={renderer}
-				data={renderable}
+				data={data}
 				key={mapKey(key)}
 				{...restCellProps}
 			/>
 		),
-		[renderable, mapKey, rect.columnCount, rect.gap, renderer]
+		[data, mapKey, rect.columnCount, rect.gap, renderer]
 	)
-
-	const loadMoreSection = useMemo(() => {
-		if (preview && loadButton && data > renderable) {
-			const last = data[rowsToPreview * rect.columnCount]
-			if (last && !isFakeItem(last)) {
-				return loadButton(() => setPreview(false))
-			}
-		}
-		return null
-	}, [preview, loadButton, renderable, data, rect, rowsToPreview])
 
 	const { onScroll, ...restGridProps } = gridProps
 
@@ -126,7 +106,6 @@ export function GridList<T>({
 					)
 				}}
 			</InfiniteLoader>
-			{loadMoreSection}
 		</React.Fragment>
 	)
 }

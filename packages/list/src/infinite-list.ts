@@ -1,13 +1,7 @@
-import {
-	createFulfilledWrapped,
-	createRejectedWrapped,
-	markWrappedObservable,
-	pendingWrapped,
-	Wrapped,
-} from "@rixio/wrapped"
+import { Wrapped, WrappedFulfilled, WrappedPending, WrappedRejected } from "@rixio/wrapped"
 import { Atom } from "@rixio/atom"
-import { MappedSubject } from "@rixio/cache/build/mapped-subject"
 import { InfiniteListState, ListPartLoader, listStateIdle } from "./domain"
+import { MappedSubject } from "./utils"
 
 export type InfiniteListMapper<T, C, R> = (
 	state: InfiniteListState<T, C>,
@@ -21,25 +15,18 @@ export class BaseInfiniteList<T, C, R> extends MappedSubject<InfiniteListState<T
 		readonly pageSize: number,
 		private readonly mapper: InfiniteListMapper<T, C, R>
 	) {
-		super(state$, undefined!)
-		markWrappedObservable(this)
+		super(state$, WrappedPending.create())
 	}
 
-	clear(): void {
-		this.state$.set(listStateIdle)
-	}
+	clear = (): void => this.state$.set(listStateIdle)
+	loadPage = (continuation: C | null): Promise<[T[], C | null]> => this.loader(this.pageSize, continuation)
 
-	loadPage(continuation: C | null): Promise<[T[], C | null]> {
-		return this.loader(this.pageSize, continuation)
-	}
-
-	loadNext(force: boolean = false): Promise<void> {
+	loadNext = (force = false): Promise<void> => {
 		const { status, finished } = this.state$.get()
 		if ((force || status === "fulfilled") && !finished) {
 			return this.loadNextInternal()
-		} else {
-			return Promise.resolve()
 		}
+		return Promise.resolve()
 	}
 
 	protected _onValue(source: InfiniteListState<T, C>): void {
@@ -127,29 +114,28 @@ export function mapperFactory<T, C>(props?: MapperFactoryProps): InfiniteListMap
 		if (initial === "wrapped") {
 			if (state.continuation === null && !state.finished) {
 				if (state.status === "idle" || state.status === "pending") {
-					return pendingWrapped
+					return WrappedPending.create()
 				} else if (state.status === "rejected") {
-					return createRejectedWrapped(state.error, () => list$.loadNext(true))
+					return WrappedRejected.create(state.error, () => list$.loadNext(true))
 				}
 			}
 		}
 		switch (state.status) {
 			case "idle":
 			case "pending":
-				return createFulfilledWrapped(
+				return WrappedFulfilled.create(
 					createRealListItems(state.items).concat(createPendingPage(pendingPageSize, list$))
 				)
 			case "rejected":
-				return createFulfilledWrapped([
+				return WrappedFulfilled.create([
 					...createRealListItems(state.items),
 					createRejectedItem(state.error, () => list$.loadNext(true)),
 				])
 		}
 		if (state.finished) {
-			return createFulfilledWrapped(createRealListItems(state.items))
-		} else {
-			return createFulfilledWrapped(createRealListItems(state.items).concat(createPendingPage(pendingPageSize, list$)))
+			return WrappedFulfilled.create(createRealListItems(state.items))
 		}
+		return WrappedFulfilled.create(createRealListItems(state.items).concat(createPendingPage(pendingPageSize, list$)))
 	}
 }
 

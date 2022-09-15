@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react"
-import type {Index, WindowScrollerChildProps, WindowScrollerProps} from "react-virtualized"
+import type { Index, WindowScrollerChildProps, WindowScrollerProps } from "react-virtualized"
 import { InfiniteLoader, InfiniteLoaderProps } from "react-virtualized/dist/es/InfiniteLoader"
 import { List, ListProps, ListRowProps } from "react-virtualized/dist/es/List"
 import { CellMeasurerCache, CellMeasurer } from "react-virtualized/dist/es/CellMeasurer"

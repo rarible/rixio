@@ -1,5 +1,5 @@
 import { RxPropsBase, useRx } from "@rixio/react"
-import { WrappedObservable } from "@rixio/wrapped"
+import { OWLike } from "@rixio/wrapped"
 import React, { useCallback, useState } from "react"
 
 export type BaseListProps<T> = {
@@ -11,7 +11,7 @@ type InferItemType<Props extends BaseListProps<any>> = Props extends BaseListPro
 
 export type RxReactListProps<T, Props extends BaseListProps<T>> = Omit<Props, "data" | "loadNext"> &
 	RxPropsBase & {
-		data$: WrappedObservable<Array<InferItemType<Props>>>
+		data$: OWLike<Array<InferItemType<Props>>>
 	}
 
 export function liftReactList<Props extends BaseListProps<any>>(Component: React.ComponentType<Props>) {

@@ -3,12 +3,9 @@ import { act, render, waitFor, fireEvent } from "@testing-library/react"
 import { Atom } from "@rixio/atom"
 import { R } from "@rixio/react"
 import { BehaviorSubject, Observable, ReplaySubject, defer, Subject } from "rxjs"
-import { createFulfilledWrapped, pendingWrapped, Wrapped } from "@rixio/wrapped"
-import { CacheImpl, createFulfilledCache, idleCache, KeyCacheImpl, KeyMemoImpl } from "@rixio/cache"
-import { MemoImpl } from "@rixio/cache"
+import { Wrapped, WrappedFulfilled, WrappedPending } from "@rixio/wrapped"
+import { CacheFulfilled, CacheIdle, KeyMemoImpl, MemoImpl, toListLoader } from "@rixio/cache"
 import { Map as IM } from "immutable"
-import { toListDataLoader } from "@rixio/cache"
-import waitForExpect from "wait-for-expect"
 import { Rx } from "./rx"
 
 const Testing = ({ text, reload }: { text?: any; reload?: () => void }) => {
@@ -25,7 +22,7 @@ const Testing = ({ text, reload }: { text?: any; reload?: () => void }) => {
 describe("Rx", () => {
 	test("should display pending if is pending", async () => {
 		expect.assertions(2)
-		const state$ = Atom.create<Wrapped<string>>(pendingWrapped)
+		const state$ = Atom.create<Wrapped<string>>(WrappedPending.create())
 		const r = render(
 			<span data-testid="test">
 				<Rx value$={state$} pending="pending">
@@ -64,59 +61,9 @@ describe("Rx", () => {
 		})
 	})
 
-	test("Rx should work with Cache", async () => {
-		let value: number = 10
-		const cache = new CacheImpl<number>(Atom.create(idleCache), () => Promise.resolve(value))
-		const r = render(
-			<span data-testid="test">
-				<Rx value$={cache} pending="pending" />
-			</span>
-		)
-		await waitFor(() => {
-			expect(r.getByTestId("test")).toHaveTextContent("10")
-		})
-		act(() => {
-			value = 20
-			cache.clear()
-		})
-		await waitFor(() => {
-			expect(r.getByTestId("test")).toHaveTextContent("20")
-		})
-		act(() => {
-			cache.atom.set(createFulfilledCache(30))
-		})
-		await waitFor(() => {
-			expect(r.getByTestId("test")).toHaveTextContent("30")
-		})
-	})
-
-	test("Rx should work with CacheImpl and reload", async () => {
-		let counter = 0
-		const cache = new CacheImpl<string>(Atom.create(idleCache), () => {
-			counter = counter + 1
-			return new Promise<string>((resolve, reject) => {
-				setTimeout(() => (counter <= 1 ? reject("my-error") : resolve("resolved")), 0)
-			})
-		})
-		const r = render(
-			<span data-testid="test">
-				<Rx value$={cache} pending="pending" rejected={(err, reload) => <Testing text={err} reload={reload} />} />
-			</span>
-		)
-		await waitFor(() => {
-			expect(r.getByTestId("test")).toHaveTextContent("my-error")
-		})
-		act(() => {
-			fireEvent.click(r.getByTestId("reload"))
-		})
-		await waitFor(() => {
-			expect(r.getByTestId("test")).toHaveTextContent("resolved")
-		})
-	})
-
 	test("Rx should work with Memo", async () => {
 		let value: number = 10
-		const cache = new MemoImpl<number>(Atom.create(idleCache), () => Promise.resolve(value))
+		const cache = new MemoImpl<number>(Atom.create(CacheIdle.create()), () => Promise.resolve(value))
 		const r = render(
 			<span data-testid="test">
 				<Rx value$={cache} pending="pending" />
@@ -133,16 +80,16 @@ describe("Rx", () => {
 			expect(r.getByTestId("test")).toHaveTextContent("20")
 		})
 		act(() => {
-			cache.atom.set(createFulfilledCache(30))
+			cache.atom.set(CacheFulfilled.create(30))
 		})
 		await waitFor(() => {
 			expect(r.getByTestId("test")).toHaveTextContent("30")
 		})
 	})
 
-	test("Rx should work with MemoImpl and reload", async () => {
+	test("Rx should work with Memo and reload", async () => {
 		let counter = 0
-		const cache = new MemoImpl<string>(Atom.create(idleCache), () => {
+		const cache = new MemoImpl<string>(Atom.create(CacheIdle.create()), () => {
 			counter = counter + 1
 			return new Promise<string>((resolve, reject) => {
 				setTimeout(() => (counter <= 1 ? reject("my-error") : resolve("resolved")), 0)
@@ -161,35 +108,6 @@ describe("Rx", () => {
 		})
 		await waitFor(() => {
 			expect(r.getByTestId("test")).toHaveTextContent("resolved")
-		})
-	})
-
-	test("Rx should work with KeyCache", async () => {
-		let value: number = 10
-		const cache = new KeyCacheImpl<string, number>(
-			Atom.create(IM()),
-			toListDataLoader(() => Promise.resolve(value))
-		)
-		const r = render(
-			<span data-testid="test">
-				<Rx value$={cache.single("key1")} pending="pending" />
-			</span>
-		)
-		await waitFor(() => {
-			expect(r.getByTestId("test")).toHaveTextContent("10")
-		})
-		act(() => {
-			value = 20
-			cache.single("key1").clear()
-		})
-		await waitFor(() => {
-			expect(r.getByTestId("test")).toHaveTextContent("20")
-		})
-		act(() => {
-			cache.single("key1").atom.set(createFulfilledCache(30))
-		})
-		await waitFor(() => {
-			expect(r.getByTestId("test")).toHaveTextContent("30")
 		})
 	})
 
@@ -197,7 +115,7 @@ describe("Rx", () => {
 		let value: number = 10
 		const cache = new KeyMemoImpl<string, number>(
 			Atom.create(IM()),
-			toListDataLoader(() => Promise.resolve(value))
+			toListLoader(() => Promise.resolve(value))
 		)
 		const r = render(
 			<span data-testid="test">
@@ -215,7 +133,7 @@ describe("Rx", () => {
 			expect(r.getByTestId("test")).toHaveTextContent("20")
 		})
 		act(() => {
-			cache.single("key1").atom.set(createFulfilledCache(30))
+			cache.single("key1").atom.set(WrappedFulfilled.create(30))
 		})
 		await waitFor(() => {
 			expect(r.getByTestId("test")).toHaveTextContent("30")
@@ -270,13 +188,13 @@ describe("Rx", () => {
 				<Rx value$={obs} pending="pending" rejected={(err, reload) => <Testing text={err} reload={reload} />} />
 			</span>
 		)
-		await waitForExpect(() => {
+		await waitFor(() => {
 			expect(r.getByTestId("testing")).toHaveTextContent(text)
 		})
 		act(() => {
 			fireEvent.click(r.getByTestId("reload"))
 		})
-		await waitForExpect(() => {
+		await waitFor(() => {
 			expect(r.getByTestId("testing")).toHaveTextContent(text)
 		})
 		const successText = Math.random().toString()
@@ -284,7 +202,7 @@ describe("Rx", () => {
 		act(() => {
 			fireEvent.click(r.getByTestId("reload"))
 		})
-		await waitForExpect(() => {
+		await waitFor(() => {
 			expect(r.getByTestId("test")).toHaveTextContent(successText)
 		})
 	})
@@ -322,12 +240,12 @@ describe("Rx", () => {
 })
 
 function testCacheState(comp: (state: Observable<Wrapped<number>>) => ReactElement) {
-	const state$ = new BehaviorSubject<Wrapped<number>>(pendingWrapped)
+	const state$ = new BehaviorSubject<Wrapped<number>>(WrappedPending.create())
 	const r = render(comp(state$))
 	expect(r.getByTestId("test")).toHaveTextContent("pending")
 	const number = Math.random()
 	act(() => {
-		state$.next(createFulfilledWrapped(number))
+		state$.next(WrappedFulfilled.create(number))
 	})
 	expect(r.getByTestId("test")).toHaveTextContent(number.toString())
 }
