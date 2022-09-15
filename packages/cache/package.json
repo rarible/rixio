@@ -1,6 +1,6 @@
 {
 	"name": "@rixio/cache",
-	"version": "0.13.0",
+	"version": "0.14.0",
 	"keywords": [
 		"cache",
 		"frp",
@@ -27,8 +27,8 @@
 		"verify": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@rixio/atom": "^0.13.0",
-		"@rixio/wrapped": "^0.13.0"
+		"@rixio/atom": "^0.14.0",
+		"@rixio/wrapped": "^0.14.0"
 	},
 	"devDependencies": {
 		"@types/jest": "26.0.14",
