@@ -23,7 +23,8 @@
 		"prettify:packages": "lerna exec -- sort-package-json && sort-package-json",
 		"publish-all": "lerna publish from-package",
 		"test": "yarn workspaces run test",
-		"verify": "yarn workspaces run verify"
+		"verify": "yarn workspaces run verify",
+		"version": "lerna version"
 	},
 	"lint-staged": {
 		"**/src/package.json": [
