@@ -7,9 +7,8 @@ export function createValidationResult<T>(
 	value: Observable<T>,
 	validate: Validate<T>
 ): Observable<ValidationResult<T>> {
-	const simplified = simplify(validate)
 	return value.pipe(
-		mergeMap(simplified),
+		mergeMap(simplify(validate)),
 		scan<ValidationResult<T>>(
 			(prev, next) => {
 				if (next.status === "validating" && prev.status === "error") {
@@ -17,7 +16,9 @@ export function createValidationResult<T>(
 				}
 				return next
 			},
-			{ status: "validating" } as ValidationResultValidating
+			{
+				status: "validating",
+			} as ValidationResultValidating
 		),
 		shareReplay(1)
 	)

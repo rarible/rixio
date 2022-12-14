@@ -28,7 +28,7 @@ export function validateJoi<T>(
 					current = next
 				})
 			})
-			return result as ValidationResult<T>
+			return result as ValidationResultError<T>
 		}
 		return { status: "success" } as ValidationResultSuccess
 	}

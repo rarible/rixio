@@ -1,7 +1,5 @@
 import { Observable } from "rxjs"
 
-export type ValidationStatus = "validating" | "error" | "success"
-
 export interface ValidationResultValidating {
 	status: "validating"
 }
@@ -23,3 +21,5 @@ export type ValidationResult<T> = ValidationResultSuccess | ValidationResultVali
 export type Validate<T> = (
 	value: T
 ) => ValidationResult<T> | PromiseLike<ValidationResult<T>> | Observable<ValidationResult<T>>
+
+export type ValidationStatus = ValidationResult<any>["status"]

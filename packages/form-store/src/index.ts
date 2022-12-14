@@ -1,40 +1,39 @@
 import { Observable } from "rxjs"
 import { Atom } from "@rixio/atom"
+import { Lens } from "@rixio/lens"
 import { map } from "rxjs/operators"
-import type { Validate, ValidationResult, ValidationResultSuccess, ValidationResultValidating } from "./domain"
+import type {
+	Validate,
+	ValidationResult,
+	ValidationResultError,
+	ValidationResultSuccess,
+	ValidationResultValidating,
+} from "./domain"
 import { createValidationResult } from "./utils/create-validation-result"
 
-export * from "./is-submit-disabled"
-export * from "./utils/validate-joi"
-export const noErrors: ValidationResultSuccess = { status: "success" }
-export const validating: ValidationResultValidating = { status: "validating" }
-
 export class FormStore<T> {
-	canSubmit$: Observable<boolean>
+	readonly canSubmit$ = this.validationResult.pipe(map(x => x.status === "success"))
 	private readonly bindCache: Map<keyof T, FormStore<any>> = new Map()
 
-	constructor(public readonly value: Atom<T>, public readonly validationResult: Observable<ValidationResult<T>>) {
-		this.canSubmit$ = this.validationResult.pipe(map(it => it.status === "success"))
-	}
+	constructor(public readonly value: Atom<T>, public readonly validationResult: Observable<ValidationResult<T>>) {}
 
-	bind<K extends keyof T>(field: K): FormStore<T[K]> {
+	bind<K extends keyof T>(field: K, getCustomLens?: (key: K) => Lens<T, T[K]>): FormStore<T[K]> {
 		const cached = this.bindCache.get(field)
-		if (cached) {
-			return cached
-		}
-		const created = new FormStore(this.value.lens(field), this.getChild(field))
+		if (cached) return cached
+		const lensed$ = getCustomLens ? this.value.lens(getCustomLens(field)) : this.value.lens(field)
+		const created = new FormStore(lensed$, this.getChild(field))
 		this.bindCache.set(field, created)
 		return created
 	}
 
-	private getChild<K extends keyof T>(field: K) {
+	private getChild<K extends keyof T>(field: K): Observable<ValidationResult<T[K]>> {
 		return this.validationResult.pipe(
 			map(x => {
 				if (x.status === "validating") {
 					return { status: "validating" } as ValidationResultValidating
 				}
 				if (x.status === "error" && x.children?.[field]) {
-					return x.children[field] as ValidationResult<T[K]>
+					return x.children[field] as ValidationResultError<T[K]>
 				}
 				return { status: "success" } as ValidationResultSuccess
 			})
@@ -45,3 +44,6 @@ export class FormStore<T> {
 		return new FormStore(value, createValidationResult(value, validate))
 	}
 }
+
+export * from "./is-submit-disabled"
+export * from "./utils/validate-joi"
