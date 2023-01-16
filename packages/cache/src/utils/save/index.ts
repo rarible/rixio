@@ -1,11 +1,17 @@
 import { Atom } from "@rixio/atom"
-import { from } from "@rixio/wrapped"
-import { map } from "rxjs/operators"
-import { CacheState } from "../../domain"
-import { toCache } from "../to-cache"
+import { CacheFulfilled, CachePending, CacheRejected, CacheState } from "../../domain"
 
-export async function save<T, K extends T>(promise: PromiseLike<K>, atom: Atom<CacheState<T>>): Promise<K> {
-	const observable = from(promise).pipe(map(toCache))
-	await Atom.set(atom, observable).toPromise()
-	return promise
+export function save<T, K extends T>(_promise: Promise<K>, atom: Atom<CacheState<T>>): Promise<K> {
+	atom.set(CachePending.create())
+	return new Promise<K>((resolve, reject) => {
+		Promise.resolve(_promise)
+			.then(x => {
+				atom.set(CacheFulfilled.create(x))
+				resolve(x)
+			})
+			.catch(x => {
+				atom.set(CacheRejected.create(x))
+				reject(x)
+			})
+	})
 }

@@ -8,6 +8,8 @@ import { CacheFulfilled, CacheIdle, KeyMemoImpl, MemoImpl, toListLoader } from "
 import { Map as IM } from "immutable"
 import { Rx } from "./rx"
 
+globalThis.Promise = jest.requireActual("promise")
+
 const Testing = ({ text, reload }: { text?: any; reload?: () => void }) => {
 	return (
 		<>

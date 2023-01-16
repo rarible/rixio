@@ -45,7 +45,7 @@ export class MemoImpl<T> extends Observable<T> implements Memo<T> {
 			}
 
 			this._refCount = this._refCount + 1
-			const localSub = this._sharedBuffer$!.subscribe({
+			const localSub = this._sharedBuffer$.subscribe({
 				error: err => subscriber.error(err),
 				next: value => subscriber.next(value),
 			})
