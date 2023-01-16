@@ -4,6 +4,8 @@ import { first, map, take } from "rxjs/operators"
 import { CacheState, CacheIdle } from "../domain"
 import { MemoImpl } from "./index"
 
+globalThis.Promise = jest.requireActual("promise")
+
 describe("MemoImpl", () => {
 	test("should load data when subscribed and idle", async () => {
 		const { getTimes, cache } = createTestSet()

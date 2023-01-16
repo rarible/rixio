@@ -5,6 +5,8 @@ import { UnknownError } from "../utils/errors"
 import { KeyMemoImpl } from "../key-memo"
 import { toListLoader } from "../utils/to-list-loader"
 
+globalThis.Promise = jest.requireActual("promise")
+
 describe("KeyMemoImpl", () => {
 	test("should create single caches", async () => {
 		const state$ = Atom.create(IM<string, CacheState<string>>())
