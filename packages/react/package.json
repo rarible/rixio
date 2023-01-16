@@ -1,6 +1,6 @@
 {
 	"name": "@rixio/react",
-	"version": "0.14.0",
+	"version": "0.14.2",
 	"keywords": [
 		"frp",
 		"lens",
@@ -32,7 +32,7 @@
 	},
 	"devDependencies": {
 		"@rixio/atom": "^0.14.0",
-		"@rixio/cache": "^0.14.0",
+		"@rixio/cache": "^0.14.2",
 		"@testing-library/jest-dom": "5.11.4",
 		"@testing-library/react": "11.0.4",
 		"@types/jest": "26.0.14",
