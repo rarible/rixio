@@ -28,19 +28,12 @@
 	},
 	"dependencies": {
 		"@rixio/atom": "^0.14.0",
-		"@rixio/wrapped": "^0.14.0"
-	},
-	"devDependencies": {
-		"@types/jest": "26.0.14",
-		"immutable": "4.0.0-rc.12",
-		"jest": "26.4.2",
-		"rxjs": "6.6.3",
-		"ts-jest": "26.4.1",
-		"typescript": "4.8.3"
+		"@rixio/lens": "^0.14.0",
+		"@rixio/wrapped": "^0.14.0",
+		"immutable": "^4.0.0"
 	},
 	"peerDependencies": {
-		"immutable": ">= 4.0.0-rc.12",
-		"rxjs": ">= 6.5.0 < 7.0.0-0"
+		"rxjs": ">= 6.0.0 < 7.0.0-0"
 	},
 	"publishConfig": {
 		"access": "public"

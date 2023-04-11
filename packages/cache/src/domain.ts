@@ -26,6 +26,8 @@ export class CacheRejected extends CacheBase {
 
 export class CacheFulfilled<T> extends CacheBase {
 	readonly status = "fulfilled"
+	readonly timestamp = Date.now()
+
 	constructor(public readonly value: T) {
 		super()
 	}

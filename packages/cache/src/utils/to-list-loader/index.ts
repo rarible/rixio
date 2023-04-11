@@ -9,9 +9,7 @@ export function toListLoader<K, V>(
 		await Promise.all(
 			keys.map(key =>
 				loader(key)
-					.then(v => {
-						map.set(key, [key, v])
-					})
+					.then(v => map.set(key, [key, v]))
 					.catch(error => {
 						if (createFallback) {
 							map.set(key, [key, createFallback(key, error)])

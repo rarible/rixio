@@ -25,15 +25,11 @@
 		"test": "jest --silent",
 		"verify": "tsc --noEmit"
 	},
-	"devDependencies": {
-		"@types/jest": "26.0.14",
-		"jest": "26.4.2",
-		"rxjs": "6.6.3",
-		"ts-jest": "26.4.1",
-		"typescript": "4.8.3"
+	"dependencies": {
+		"@rixio/lens": "^0.14.0"
 	},
 	"peerDependencies": {
-		"rxjs": ">= 6.5.0 < 7.0.0-0"
+		"rxjs": ">= 6.0.0 < 7.0.0-0"
 	},
 	"publishConfig": {
 		"access": "public"

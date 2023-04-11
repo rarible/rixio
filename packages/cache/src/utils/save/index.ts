@@ -1,17 +1,8 @@
 import { Atom } from "@rixio/atom"
-import { CacheFulfilled, CachePending, CacheRejected, CacheState } from "../../domain"
+import { CacheState } from "../../domain"
+import { runPromiseWithCache } from "../run-promise-with-cache"
 
-export function save<T, K extends T>(_promise: Promise<K>, atom: Atom<CacheState<T>>): Promise<K> {
-	atom.set(CachePending.create())
-	return new Promise<K>((resolve, reject) => {
-		Promise.resolve(_promise)
-			.then(x => {
-				atom.set(CacheFulfilled.create(x))
-				resolve(x)
-			})
-			.catch(x => {
-				atom.set(CacheRejected.create(x))
-				reject(x)
-			})
-	})
+export async function save<T, K extends T>(promise: Promise<K>, atom: Atom<CacheState<T>>): Promise<K> {
+	await runPromiseWithCache(promise, atom)
+	return await promise
 }

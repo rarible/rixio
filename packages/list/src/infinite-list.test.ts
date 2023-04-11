@@ -1,8 +1,7 @@
 import { Atom } from "@rixio/atom"
-import { Wrapped } from "@rixio/wrapped"
-import { waitFor } from "@testing-library/react"
+import { CacheState } from "@rixio/cache"
 import { InfiniteList, ListItem, mapperFactory, MapperFactoryProps } from "./infinite-list"
-import { InfiniteListState, ListPartLoader, listStateIdle } from "./domain"
+import { InfiniteListState, listStateIdle } from "./domain"
 
 describe("mapper", () => {
 	function init(props?: MapperFactoryProps) {
@@ -106,21 +105,22 @@ describe("InfiniteList", () => {
 	it("should load first page when subscribed", async () => {
 		const state$ = Atom.create<InfiniteListState<number, string>>(listStateIdle)
 		const requests: Array<[number, string | null]> = []
-		const loader: ListPartLoader<number, string> = async (size, cont) => {
+		const loader = jest.fn().mockImplementation(async (size, cont) => {
 			requests.push([size, cont])
 			return [[0, 1, 2], "first"]
-		}
-		const list$ = new InfiniteList(state$, loader, 10, { pendingPageSize: 0 })
-		const results: Array<Wrapped<ListItem<number>[]>> = []
-		list$.subscribe(next => results.push(next))
-
-		expect(requests.length).toBe(1)
-		expect(requests[0]).toStrictEqual([10, null])
-
-		await waitFor(() => {
-			expect(results.length).toBe(2)
-			expect(results[1].status).toBe("fulfilled")
-			expect((results[1] as any).value.map((x: any) => x.value)).toStrictEqual([0, 1, 2])
 		})
+		const list$ = new InfiniteList(state$, loader, 10, { pendingPageSize: 0 })
+		const statuses: CacheState<unknown>["status"][] = []
+		const values: ListItem<number>[] = []
+		list$.subscribe(next => {
+			if (next.status === "fulfilled") values.push(...next.value)
+			statuses.push(next.status)
+		})
+
+		expect(statuses).toEqual(["pending"])
+		await list$.loadNext()
+		expect(loader.mock.calls).toHaveLength(1)
+		expect(statuses).toEqual(["pending", "fulfilled"])
+		expect(values.map(x => (x.type === "item" ? x.value : undefined))).toEqual([0, 1, 2])
 	})
 })

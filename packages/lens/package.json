@@ -22,12 +22,8 @@
 		"test": "jest --silent",
 		"verify": "tsc --noEmit"
 	},
-	"devDependencies": {
-		"@types/jest": "26.0.14",
-		"cpx": "1.5.0",
-		"jest": "26.4.2",
-		"ts-jest": "26.4.1",
-		"typescript": "4.8.3"
+	"dependencies": {
+		"immutable": "^4.0.0"
 	},
 	"publishConfig": {
 		"access": "public"

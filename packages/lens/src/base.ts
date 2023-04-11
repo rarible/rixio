@@ -4,14 +4,11 @@ import { SimpleCache } from "./simple-cache"
 export interface Optic<TSource, T, U> {
 	get(s: TSource): T
 	set(v: U, s: TSource): TSource
-	modify(updateFn: (v: T) => U, s: TSource): TSource // tslint:disable-line no-unused-vars
-
-	// @TODO can't optic compose?
+	modify(updateFn: (v: T) => U, s: TSource): TSource
 }
 
 function createModify<TSource, T, U>(getter: (s: TSource) => T, setter: (v: U, s: TSource) => TSource) {
 	return function modify(updateFn: (v: T) => U, s: TSource) {
-		// tslint:disable-line
 		return setter(updateFn(getter(s)), s)
 	}
 }

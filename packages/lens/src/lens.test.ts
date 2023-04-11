@@ -8,8 +8,7 @@ function roundtrip<T, U>(name: string, l: Lens<T, U>, obj: T, oldVal: U, newVal:
 	})
 }
 
-// tslint:disable-next-line
-// see https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/a-little-lens-starter-tutorial#the-lens-laws-
+// @see https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/a-little-lens-starter-tutorial#the-lens-laws-
 function testLaws<T, U>(l: Lens<T, U>, object: T, value1: U, value2: U, name: string) {
 	describe(`lens laws: ${name}`, () => {
 		it("get-put", () => expect(structEq(object, l.set(l.get(object), object))).toBeTruthy())

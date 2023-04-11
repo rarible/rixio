@@ -2,7 +2,7 @@ import type { Atom } from "@rixio/atom"
 import { Observable, ReplaySubject, Subscription } from "rxjs"
 import { first } from "rxjs/operators"
 import { CacheState, CacheFulfilled, CacheIdle } from "../domain"
-import { save } from "../utils/save"
+import { runPromiseWithCache } from "../utils"
 
 export interface Memo<T> extends Observable<T> {
 	get: (force?: boolean) => Promise<T>
@@ -17,13 +17,19 @@ export class MemoImpl<T> extends Observable<T> implements Memo<T> {
 	private _subscription: Subscription | undefined = undefined
 	private _refCount = 0
 
-	constructor(public readonly atom: Atom<CacheState<T>>, private readonly _loader: () => Promise<T>) {
+	constructor(
+		public readonly atom: Atom<CacheState<T>>,
+		private readonly _loader: () => Promise<T>,
+		private readonly cacheLiveTimeMs: number = 1000 * 60 * 10 // 10 minutes cache
+	) {
 		super(subscriber => {
 			const initial = atom.get()
 
-			if (initial.status === "rejected") {
-				this.clear()
-			}
+			// When user subscribes and it's in failed state then we have to reset it
+			if (initial.status === "rejected") this.clear()
+
+			// When user subscribes and it's in stalled state then we have to reset it
+			if (initial.status === "fulfilled" && this.shouldRefresh(initial)) this.clear()
 
 			if (!this._sharedBuffer$) {
 				this._sharedBuffer$ = new ReplaySubject(1)
@@ -31,7 +37,7 @@ export class MemoImpl<T> extends Observable<T> implements Memo<T> {
 					next: x => {
 						switch (x.status) {
 							case "idle":
-								save(this._loader(), this.atom).then()
+								runPromiseWithCache(this._loader(), this.atom).then()
 								break
 							case "rejected":
 								this._sharedBuffer$?.error(x.error)
@@ -66,7 +72,31 @@ export class MemoImpl<T> extends Observable<T> implements Memo<T> {
 
 	get = async (force = false): Promise<T> => {
 		if (force) this.clear()
-		return this.pipe(first()).toPromise()
+
+		const [result] = await Promise.all([
+			// This will emit subscribe
+			this.pipe(first()).toPromise(),
+			// It may be previous value so just to be sure that it's
+			// fresh value after reset we need to wait for atom state change
+			new Promise<T>((resolve, reject) => {
+				this.atom
+					.pipe(
+						// It will kill subscription right after first result
+						first(x => x.status === "fulfilled" || x.status === "rejected")
+					)
+					.subscribe(value => {
+						switch (value.status) {
+							case "fulfilled":
+								return resolve(value.value)
+							case "rejected":
+								return reject(value.error)
+							default:
+								throw new Error("Never happen")
+						}
+					})
+			}),
+		])
+		return result
 	}
 
 	set = (value: T): void => this.atom.set(CacheFulfilled.create(value))
@@ -83,4 +113,9 @@ export class MemoImpl<T> extends Observable<T> implements Memo<T> {
 		})
 
 	clear = (): void => this.atom.set(CacheIdle.create())
+
+	private shouldRefresh(value: CacheFulfilled<T>) {
+		// Refresh cache in case when live time is exceeded
+		return value.timestamp + this.cacheLiveTimeMs < Date.now()
+	}
 }

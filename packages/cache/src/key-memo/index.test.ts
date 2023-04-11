@@ -1,113 +1,125 @@
 import { Atom } from "@rixio/atom"
 import { Map as IM } from "immutable"
+import { Subscription } from "rxjs"
 import { KeyEvent, CacheState, createAddKeyEvent, createErrorKeyEvent, CacheFulfilled, KeyEventError } from "../domain"
 import { UnknownError } from "../utils/errors"
 import { KeyMemoImpl } from "../key-memo"
-import { toListLoader } from "../utils/to-list-loader"
-
-globalThis.Promise = jest.requireActual("promise")
 
 describe("KeyMemoImpl", () => {
-	test("should create single caches", async () => {
-		const state$ = Atom.create(IM<string, CacheState<string>>())
-		const requests: string[][] = []
-		const cache = new KeyMemoImpl(state$, keys => {
-			requests.push(keys)
-			return Promise.resolve(keys.map(k => [k, k]))
-		})
+	jest.useFakeTimers()
 
-		const single = cache.single("testing")
-		expect(state$.get().size).toBe(0)
-		single.subscribe()
-		cache.single("other").subscribe()
-		await delay(200)
-		expect(single.atom.get()).toStrictEqual(CacheFulfilled.create("testing"))
-		expect(state$.get().size).toBe(2)
-		expect(await single.get()).toBe("testing")
-		expect(requests.length).toBe(1)
+	test("should have 2 batched requests (2 and 1)", async () => {
+		const testset = new TestSet()
+		const sub = new Subscription()
 
-		cache.single("other2").subscribe()
-		await delay(120)
-		expect(cache.single("other2").atom.get()).toStrictEqual(CacheFulfilled.create("other2"))
+		const single = testset.cache.single("testing")
+		expect(testset.atom.get().size).toBe(0)
+		sub.add(single.subscribe())
+		const other$ = testset.cache.single("other")
+		sub.add(other$.subscribe())
+		expect(testset.impl.mock.calls).toHaveLength(0)
+		single.get()
+		await jest.runAllTimersAsync()
+		expect(single.atom.get()).toEqual(CacheFulfilled.create("testing"))
+		expect(testset.atom.get().size).toBe(2)
+		expect(testset.impl.mock.calls).toHaveLength(1)
 
-		expect(requests.length).toBe(2)
-		expect(requests[1]).toStrictEqual(["other2"])
-		expect(state$.get().size).toBe(3)
+		const other2$ = testset.cache.single("other2")
+		sub.add(other2$.subscribe())
+		other2$.get()
+		await jest.runAllTimersAsync()
+		expect(other2$.atom.get()).toEqual(CacheFulfilled.create("other2"))
+
+		expect(testset.impl.mock.calls).toHaveLength(2)
+		expect(testset.atom.get().size).toBe(3)
+
+		sub.unsubscribe()
 	})
 
-	test("should work with undefined values", async () => {
-		const cache = new KeyMemoImpl<string, number | undefined>(
-			Atom.create(IM()),
-			toListLoader(() => Promise.resolve(undefined), undefined)
-		)
-		const emitted: Array<number | undefined> = []
-		cache.single("test").subscribe(x => emitted.push(x))
-		await delay(120)
-		expect(emitted.length).toBe(1)
-		expect(emitted[0]).toEqual(undefined)
+	test("should not batch requests if key already loaded", async () => {
+		const testset = new TestSet()
+		const loadAndCheck = async () => {
+			const single1 = testset.cache.single("single")
+			single1.get()
+			await jest.runAllTimersAsync()
+		}
+		await loadAndCheck()
+		expect(testset.impl.mock.calls).toHaveLength(1)
+		await loadAndCheck()
+		expect(testset.impl.mock.calls).toHaveLength(1)
 	})
 
 	test("should be reloaded if cleared", async () => {
-		let value: number = 10
-		const cache = new KeyMemoImpl<string, number | undefined>(
-			Atom.create(IM()),
-			toListLoader(() => Promise.resolve(value), undefined)
-		)
-
-		const emitted: Array<number | undefined> = []
-		cache.single("key1").subscribe(x => emitted.push(x))
-		await delay(120)
-		expect(emitted.length).toBe(1)
-		expect(emitted[0]).toEqual(10)
-		value = 20
-		cache.single("key1").clear()
-		await delay(120)
-		expect(emitted.length).toBe(2)
-		expect(emitted[1]).toEqual(20)
+		const testset = new TestSet()
+		const emitted: Array<string> = []
+		const key1$ = testset.cache.single("key1")
+		const sub = key1$.subscribe(x => emitted.push(x))
+		key1$.get()
+		await jest.runAllTimersAsync()
+		expect(testset.impl.mock.calls).toHaveLength(1)
+		expect(emitted).toEqual(["key1"])
+		key1$.clear()
+		key1$.get()
+		await jest.runAllTimersAsync()
+		expect(testset.impl.mock.calls).toHaveLength(2)
+		expect(emitted).toEqual(["key1", "key1"])
+		sub.unsubscribe()
 	})
 
 	test("should put new entry in events Subject", async () => {
-		const cache = new KeyMemoImpl<string, string | undefined>(
-			Atom.create(IM()),
-			toListLoader(x => Promise.resolve(x), undefined)
-		)
+		const testset = new TestSet()
 
 		const emitted: KeyEvent<string>[] = []
-		cache.events.subscribe(value => emitted.push(value))
-		cache.get("test").then()
+		const sub = testset.cache.events.subscribe(x => emitted.push(x))
+		testset.cache.get("test").then()
 		expect(emitted.length).toBe(1)
 		expect(emitted[0]).toStrictEqual(createAddKeyEvent("test"))
 
-		cache.get("test2").then()
+		testset.cache.get("test2").then()
 		expect(emitted.length).toBe(2)
 		expect(emitted[1]).toStrictEqual(createAddKeyEvent("test2"))
 
-		cache.set("test3", "test3")
+		testset.cache.set("test3", "test3")
 		expect(emitted.length).toBe(3)
 		expect(emitted[2]).toStrictEqual(createAddKeyEvent("test3"))
+
+		sub.unsubscribe()
 	})
 
 	test("should mark items as errors if load list fails", async () => {
-		const cache = new KeyMemoImpl<string, number | undefined>(Atom.create(IM()), () => Promise.reject("rejected"))
-		const emitted: (number | undefined)[] = []
+		const loader = jest.fn().mockImplementation(() => Promise.reject("rejected"))
+		const testset = new TestSet(undefined, loader)
+		const valuesEmitted: string[] = []
 		const emittedEvents: KeyEvent<string>[] = []
-		cache.events.subscribe(x => emittedEvents.push(x))
+		testset.cache.events.subscribe(x => emittedEvents.push(x))
 		const errorsEmitted: unknown[] = []
-		cache.single("test").subscribe({
-			next: x => emitted.push(x),
+		const test$ = testset.cache.single("test")
+		const sub = test$.subscribe({
+			next: x => valuesEmitted.push(x),
 			error: e => errorsEmitted.push(e),
 		})
-		await delay(120)
-		expect(emitted.length).toBe(0)
+		await jest.runAllTimersAsync()
+		expect(valuesEmitted.length).toBe(0)
 		expect(errorsEmitted.length).toBe(1)
 		expect(errorsEmitted[0]).toBeInstanceOf(UnknownError)
 		expect(emittedEvents.length).toEqual(3)
 		expect(emittedEvents[0]).toStrictEqual(createAddKeyEvent("test"))
 		expect(emittedEvents[1]).toStrictEqual(createErrorKeyEvent("test", "rejected"))
 		expect((emittedEvents[2] as KeyEventError<string>).error).toBeInstanceOf(UnknownError)
+		sub.unsubscribe()
 	})
 })
 
-async function delay(ms: number) {
-	await new Promise(r => setTimeout(r, ms))
+class TestSet {
+	readonly impl = jest.fn().mockImplementation((keys: string[]) => {
+		const timeout = this.timeout
+		const getValues = () => keys.map(k => [k, k])
+		if (typeof timeout !== "number") return Promise.resolve(getValues())
+		return new Promise(r => setTimeout(() => r(getValues()), timeout))
+	})
+
+	readonly atom = Atom.create(IM<string, CacheState<string>>())
+	readonly cache = new KeyMemoImpl<string, string>(this.atom, this.customImpl || this.impl)
+
+	constructor(private readonly timeout?: number, private readonly customImpl?: jest.Mock<string>) {}
 }

@@ -23,7 +23,6 @@ import { Lens, Prism, Optic } from "./base"
 //
 // But maybe there is a way to avoid this?
 import "./json"
-
 import { structEq, Option } from "./utils"
 
 export { Lens, Prism, Optic, structEq, Option }

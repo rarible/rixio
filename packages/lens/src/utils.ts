@@ -1,7 +1,7 @@
 import { equals as structEq } from "./equals"
 export { equals as structEq } from "./equals"
 
-export function setKey<T, K extends keyof T>(k: K, v: T[K], o: T): T {
+export function setKey<T extends object, K extends keyof T>(k: K, v: T[K], o: T): T {
 	if (k in o && structEq(v, o[k])) {
 		return o
 	} else {

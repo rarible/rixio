@@ -1,11 +1,10 @@
-/* eslint-disable no-nested-ternary,no-plusplus */
-import { Lens, Prism, structEq, Option, SimpleCache } from "@rixio/lens"
-
-import { Observable, Subscriber, Subscription, BehaviorSubject, combineLatest } from "rxjs"
+import type { Prism, Option } from "@rixio/lens"
+import { Lens, structEq, SimpleCache } from "@rixio/lens"
+import type { Observable, Subscriber } from "rxjs"
+import { Subscription, BehaviorSubject, combineLatest } from "rxjs"
 
 /**
  * Read-only atom.
- *
  * @template T type of atom values
  */
 export interface ReadOnlyAtom<T> extends Observable<T> {
@@ -77,7 +76,6 @@ export interface ReadOnlyAtom<T> extends Observable<T> {
 
 	/**
 	 * View this atom through a given lens.
-	 *
 	 * @param lens lens that defines the view
 	 * @returns atom viewed through the given transformation
 	 */
@@ -85,7 +83,6 @@ export interface ReadOnlyAtom<T> extends Observable<T> {
 
 	/**
 	 * View this atom through a given prism.
-	 *
 	 * @param prism prism that defines the view
 	 * @returns atom viewed through the given transformation
 	 */
@@ -140,7 +137,6 @@ export interface ReadOnlyAtom<T> extends Observable<T> {
 
 /**
  * A read/write atom.
- *
  * @template T type of atom values
  */
 export interface Atom<T> extends ReadOnlyAtom<T> {
@@ -154,18 +150,17 @@ export interface Atom<T> extends ReadOnlyAtom<T> {
 	 *
 	 * @param updateFn value update function
 	 */
-	modify(updateFn: (currentValue: T) => T): void
+	modify(updateFn: (current: T) => T): void
 
 	/**
 	 * Set new atom value.
 	 *
-	 * @param newValue new value
+	 * @param next new value
 	 */
-	set(newValue: T): void
+	set(next: T): void
 
 	/**
 	 * Create a lensed atom by supplying a lens.
-	 *
 	 * @template U destination value type
 	 * @param lens a lens
 	 * @returns a lensed atom
@@ -266,16 +261,11 @@ export abstract class AbstractAtom<T> extends AbstractReadOnlyAtom<T> implements
 			typeof arg1 === "string" || typeof arg1 === "number"
 				? Lens.compose(Lens.key(arg1), ...args.map(k => Lens.key(k)))
 				: (arg1 as Lens<T, U>)
-
 		return this.lensedAtomsCache.getOrCreate(lens)
 	}
 }
 
 export class JsonAtom<T> extends AbstractAtom<T> {
-	constructor(initialValue: T) {
-		super(initialValue)
-	}
-
 	get() {
 		return this.getValue()
 	}
@@ -325,8 +315,8 @@ class LensedAtom<TSource, TDest> extends AbstractAtom<TDest> {
 		this._source.modify(x => this._lens.modify(updateFn, x))
 	}
 
-	set(newValue: TDest) {
-		this._source.modify(x => this._lens.set(newValue, x))
+	set(next: TDest) {
+		this._source.modify(x => this._lens.set(next, x))
 	}
 
 	private _onSourceValue(x: TSource) {
@@ -339,22 +329,20 @@ class LensedAtom<TSource, TDest> extends AbstractAtom<TDest> {
 	private _subscription: Subscription | null = null
 	private _refCount = 0
 
-	// Rx method overrides
 	_subscribe(subscriber: Subscriber<TDest>) {
-		// tslint:disable-line function-name
 		if (!this._subscription) {
 			this._subscription = this._source.subscribe(x => this._onSourceValue(x))
 		}
-		this._refCount++
+		this._refCount = this._refCount + 1
 
 		const sub = new Subscription(() => {
-			if (--this._refCount <= 0 && this._subscription) {
+			this._refCount = this._refCount - 1
+			if (this._refCount <= 0 && this._subscription) {
 				this._subscription.unsubscribe()
 				this._subscription = null
 			}
 		})
 		sub.add(super._subscribe(subscriber))
-
 		return sub
 	}
 
@@ -406,22 +394,20 @@ class AtomViewImpl<TSource, TDest> extends AbstractReadOnlyAtom<TDest> {
 	private _subscription: Subscription | null = null
 	private _refCount = 0
 
-	// Rx method overrides
 	_subscribe(subscriber: Subscriber<TDest>) {
-		// tslint:disable-line function-name
 		if (!this._subscription) {
 			this._subscription = this._source.subscribe(x => this._onSourceValue(x))
 		}
-		this._refCount++
+		this._refCount = this._refCount + 1
 
 		const sub = new Subscription(() => {
-			if (--this._refCount <= 0 && this._subscription) {
+			this._refCount = this._refCount - 1
+			if (this._refCount <= 0 && this._subscription) {
 				this._subscription.unsubscribe()
 				this._subscription = null
 			}
 		})
 		sub.add(super._subscribe(subscriber))
-
 		return sub
 	}
 
@@ -474,22 +460,20 @@ export class CombinedAtomViewImpl<TResult> extends AbstractReadOnlyAtom<TResult>
 	private _subscription: Subscription | null = null
 	private _refCount = 0
 
-	// Rx method overrides
 	_subscribe(subscriber: Subscriber<TResult>) {
-		// tslint:disable-line function-name
 		if (!this._subscription) {
 			this._subscription = combineLatest(this._sources).subscribe(xs => this._onSourceValues(xs))
 		}
-		this._refCount++
+		this._refCount = this._refCount + 1
 
 		const sub = new Subscription(() => {
-			if (--this._refCount <= 0 && this._subscription) {
+			this._refCount = this._refCount - 1
+			if (this._refCount <= 0 && this._subscription) {
 				this._subscription.unsubscribe()
 				this._subscription = null
 			}
 		})
 		sub.add(super._subscribe(subscriber))
-
 		return sub
 	}
 

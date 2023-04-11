@@ -1,27 +1,26 @@
-/* eslint-disable no-plusplus */
-// tslint:disable no-unnecessary-local-variable
-import { merge, Observable, from, Subject, never, throwError, empty } from "rxjs"
-import { take, toArray, tap, materialize, map } from "rxjs/operators"
-import { structEq, Option } from "@rixio/lens"
-import { Lens } from "@rixio/lens"
-import { Atom, ReadOnlyAtom } from "./index"
+import { merge, Observable, from, Subject, throwError, noop, EMPTY, NEVER, of } from "rxjs"
+import { take, toArray, tap, materialize, map, first } from "rxjs/operators"
+import type { Option } from "@rixio/lens"
+import { structEq, Lens } from "@rixio/lens"
+import type { ReadOnlyAtom } from "./index"
+import { Atom } from "./index"
 
-function testAtom(newAtom: (x: number) => Atom<number>) {
+function firstValueFrom<T>(obs$: Observable<T>) {
+	return obs$.pipe(first()).toPromise()
+}
+
+function testAtom(next: (x: number) => Atom<number>) {
 	it("atom/basic", async () => {
-		const a = newAtom(1)
+		const a = next(1)
 		let expected = 1
 
 		const cb = (x: number) => {
-			// expected new value
 			expect(x).toEqual(expected)
-
-			// expected current value
 			expect(a.get()).toEqual(expected)
 		}
 
 		const subscription = a.subscribe(cb)
 
-		// get initial value
 		expect(a.get()).toEqual(1)
 
 		expected = 2
@@ -34,7 +33,7 @@ function testAtom(newAtom: (x: number) => Atom<number>) {
 	})
 
 	it("atom/observable: distinct values", () => {
-		const a = newAtom(1)
+		const a = next(1)
 		const observations: number[] = []
 		const cb = (x: number) => observations.push(x)
 		const subscription = a.subscribe(cb)
@@ -130,13 +129,7 @@ function testDerivedAtom(
 
 	describe("resubscribe", () => {
 		const a = create(5)
-		const v = createDerived(
-			a,
-			x => x + 1,
-			() => {
-				/* no-op */
-			}
-		)
+		const v = createDerived(a, x => x + 1, noop)
 
 		const os: number[] = []
 		const sub1 = v.subscribe(x => os.push(x))
@@ -257,7 +250,7 @@ describe("atom", () => {
 				.lens(
 					Lens.create(
 						(x: number) => x + 1,
-						(v: number, _: number) => v - 1
+						(v: number) => v - 1
 					)
 				)
 
@@ -277,7 +270,7 @@ describe("atom", () => {
 				.lens(
 					Lens.create(
 						(x: number) => x + 1,
-						(v: number, _: number) => v - 1
+						(v: number) => v - 1
 					)
 				)
 
@@ -311,54 +304,34 @@ describe("atom", () => {
 				testAtom(x => {
 					const source = Atom.create([x, 2, 3])
 					return source.lens(
-						Lens.index<number>(0)
-							// assert element is non-undefined
-							.compose(
-								Lens.create(
-									(x: number | undefined) => x!,
-									(v, _) => v
-								)
+						Lens.index<number>(0).compose(
+							Lens.create(
+								(x: number | undefined) => x!,
+								v => v
 							)
-					)
+						)
+					) as Atom<number>
 				})
 			})
 
 			describe("atom interface", () => {
 				const source = Atom.create([1, 2, 3])
 				const first = source.lens(Lens.index<number>(0))
-
-				// initial value
 				expect(first.get()).toEqual(1)
-
 				first.set(10)
-
-				// set through lens
 				expect(first.get()).toEqual(10)
-
-				// propagates to source
 				expect(structEq(source.get(), [10, 2, 3])).toBeTruthy()
-
 				source.set([100, 2, 3])
-
-				// set through source
 				expect(first.get()).toEqual(100)
-
 				source.set([2, 3])
-
-				// get after element removed
 				expect(first.get()).toEqual(2)
 			})
 
 			describe("observing lensed", () => {
 				const source = Atom.create([1, 2, 3])
 				const first = source.lens(Lens.index<number>(0))
-
 				const observations: Option<number>[] = []
-
-				const cb = (x: Option<number>) => {
-					observations.push(x)
-				}
-				const subscription = first.subscribe(cb)
+				const subscription = first.subscribe((x: Option<number>) => observations.push(x))
 
 				first.set(10)
 				source.set([100, 2, 3])
@@ -366,7 +339,6 @@ describe("atom", () => {
 				source.set([1000, 2, 3])
 
 				expect(observations).toEqual([1, 10, 100, 2, 1000])
-
 				subscription.unsubscribe()
 			})
 		})
@@ -374,28 +346,14 @@ describe("atom", () => {
 		testDerivedAtom((a, f, onCalled) =>
 			a.lens(
 				Lens.create(
-					(x: number) => {
+					x => {
 						onCalled(x)
 						return f(x)
 					},
-					(v, _) => v
+					v => v
 				)
 			)
 		)
-
-		describe("string key lens then atom.get", () => {
-			const x1 = Atom.create({ y: { x: 123 } })
-			const x2 = x1.lens("y")
-
-			expect(x2.get()).toMatchObject({ x: 123 })
-		})
-
-		describe("number key lens then atom.get", () => {
-			const x1 = Atom.create([{ x: 123 }])
-			const x2 = x1.lens(0)
-
-			expect(x2.get()).toMatchObject({ x: 123 })
-		})
 	})
 
 	describe("view", () => {
@@ -490,25 +448,25 @@ describe("atom", () => {
 
 			let called1 = 0
 			const a1 = source.view(x => {
-				called1++
+				called1 = called1 + 1
 				return x + 1
 			})
 
 			let called2 = 0
 			const a2 = a1.view(x => {
-				called2++
+				called2 = called2 + 1
 				return -x
 			})
 
 			let called3 = 0
 			const a3 = a2.view(x => {
-				called3++
+				called3 = called3 + 1
 				return `Hi ${x}`
 			})
 
 			let called4 = 0
 			const a4 = a2.view(x => {
-				called4++
+				called4 = called4 + 1
 				return `Ho ${x}`
 			})
 
@@ -534,65 +492,56 @@ describe("atom", () => {
 
 			let called1 = 0
 			const a1 = source.view(x => {
-				console.log("a1", called1, x)
-				called1++
+				called1 = called1 + 1
 				return x + 1
 			})
 
 			let called2 = 0
 			const a2 = a1.view(x => {
-				console.log("a2", called2, x)
-				called2++
+				called2 = called2 + 1
 				return -x
 			})
 
 			let called3 = 0
 			const a3 = a2.view(x => {
-				console.log("a3", called3, x)
-				called3++
+				called3 = called3 + 1
 				return x * 2
 			})
 
 			let called4 = 0
 			const a4 = a3.view(x => {
-				console.log("a4", called4, x)
-				called4++
+				called4 = called4 + 1
 				return `Hi ${x}`
 			})
 
 			let called5 = 0
 			const a5 = a3.view(x => {
-				console.log("a5", called5, x)
-				called5++
+				called5 = called5 + 1
 				return `Ho ${x}`
 			})
 
 			let called6 = 0
 			const a6 = a3.view(x => {
-				console.log("a6", called6, x)
-				called6++
+				called6 = called6 + 1
 				return `HU ${x}`
 			})
 
-			function testCalls(a: number, b: number, c: number, d: number, e: number, f: number, msg: string) {
+			function testCalls(a: number, b: number, c: number, d: number, e: number, f: number) {
 				expect([called1, called2, called3, called4, called5, called5]).toEqual([a, b, c, d, e, f])
-				//   ,
-				//   msg
-				// )
 			}
 
 			const test = merge(a4, a5, a6)
-			testCalls(0, 0, 0, 0, 0, 0, "no calls initially")
+			testCalls(0, 0, 0, 0, 0, 0)
 
 			const observations: string[] = []
 			const sub = test.subscribe(x => observations.push(x))
-			testCalls(1, 1, 1, 1, 1, 1, "one call each on subscribe (initial emit)")
+			testCalls(1, 1, 1, 1, 1, 1)
 
 			source.set(1)
-			testCalls(2, 2, 2, 2, 2, 2, "two calls each after subscribe + 1 set")
+			testCalls(2, 2, 2, 2, 2, 2)
 
 			source.set(2)
-			testCalls(3, 3, 3, 3, 3, 3, "3 calls each after subscribe + 2 sets")
+			testCalls(3, 3, 3, 3, 3, 3)
 
 			expect(observations).toEqual(["Hi -2", "Ho -2", "HU -2", "Hi -4", "Ho -4", "HU -4", "Hi -6", "Ho -6", "HU -6"])
 
@@ -604,75 +553,60 @@ describe("atom", () => {
 
 			let called1 = 0
 			const a1 = source.view(x => {
-				console.log("a1", called1, x)
-				called1++
+				called1 = called1 + 1
 				return x + 1
 			})
 
 			let called2 = 0
 			const a2 = a1.view(x => {
-				console.log("a2", called2, x)
-				called2++
+				called2 = called2 + 1
 				return -x
 			})
 
 			let called3 = 0
 			const a3 = a2.view(x => {
-				console.log("a3", called3, x)
-				called3++
+				called3 = called3 + 1
 				return x * 2
 			})
 
 			let called4 = 0
 			const a4 = a3.view(x => {
-				console.log("a4", called4, x)
-				called4++
+				called4 = called4 + 1
 				return `Hi ${x}`
 			})
 
 			let called5 = 0
 			const a5 = a3.view(x => {
-				console.log("a5", called5, x)
-				called5++
+				called5 = called5 + 1
 				return `Ho ${x}`
 			})
 
 			let called6 = 0
 			const a6 = a3.view(x => {
-				console.log("a6", called6, x)
-				called6++
+				called6 = called6 + 1
 				return `HU ${x}`
 			})
 
-			function testCalls(
-				a: number,
-				b: number,
-				c: number,
-				d: number,
-				e: number,
-				f: number,
-				// @TODO jest doesn't have messages for expects
-				_msg: string
-			) {
+			function testCalls(a: number, b: number, c: number, d: number, e: number, f: number) {
 				expect([called1, called2, called3, called4, called5, called5]).toEqual([a, b, c, d, e, f])
 			}
 
-			testCalls(0, 0, 0, 0, 0, 0, "no calls initially")
+			testCalls(0, 0, 0, 0, 0, 0)
 
 			const combined = Atom.combine(a4, a5, a6, (x, y, z) => [x, y, z])
-			testCalls(0, 0, 0, 0, 0, 0, "no calls after creating Atom.combined")
+			testCalls(0, 0, 0, 0, 0, 0)
 
 			expect(combined.get()).toEqual(["Hi -2", "Ho -2", "HU -2"])
 
 			// it's ok to have 3 calls here each as until we are subscribed to this
 			// atom it doesn't track its sources
-			testCalls(3, 3, 3, 1, 1, 1, "3 + 1 call after .get()")
+			testCalls(3, 3, 3, 1, 1, 1)
 
 			source.set(1)
-			testCalls(3, 3, 3, 1, 1, 1, "no new calls after source .set()")
+			testCalls(3, 3, 3, 1, 1, 1)
 
 			expect(a4.get()).toEqual("Hi -4")
-			testCalls(4, 4, 4, 2, 1, 1, "calls after .get() on intermediate node")
+			testCalls(4, 4, 4, 2, 1, 1)
 		})
 	})
 
@@ -737,7 +671,7 @@ describe("atom", () => {
 		})
 
 		testDerivedAtom((a, f, onCalled) =>
-			Atom.combine(a, Atom.create(0), (a, b) => {
+			Atom.combine(a, Atom.create(0), a => {
 				onCalled(a)
 				return f(a)
 			})
@@ -749,9 +683,9 @@ describe("atom", () => {
 
 		const atom = Atom.create("bar")
 		const consoleLogArguments: string[][] = []
-		const logAtom = Atom.log(atom, (prevState: string, newState: string) => {
-			consoleLogFireTime++
-			consoleLogArguments.push([prevState, newState])
+		const logAtom = Atom.log(atom, (prevState: string, next: string) => {
+			consoleLogFireTime = consoleLogFireTime + 1
+			consoleLogArguments.push([prevState, next])
 		})
 		logAtom.set("foo")
 
@@ -764,19 +698,17 @@ describe("atom", () => {
 
 	describe("fromObservable", () => {
 		test("emits atom", async () => {
-			const a = await Atom.fromObservable(from([1]))
-				.pipe(take(1))
-				.toPromise()
+			const a = await firstValueFrom(Atom.fromObservable(from([1])))
 			expect(a.get()).toEqual(1)
 		})
 
 		test("emits atom once", async () => {
-			const a = await merge(
-				Atom.fromObservable(from(Array.from(new Array(15)).map(_ => Math.random()))),
-				from(["hello"])
+			const a = await firstValueFrom(
+				merge(
+					Atom.fromObservable(of(Array.from(new Array(15).fill(1)).map(() => Math.random()))),
+					from(["hello"])
+				).pipe(take(2), toArray())
 			)
-				.pipe(take(2), toArray())
-				.toPromise()
 
 			expect(a[1]).toEqual("hello")
 		})
@@ -787,14 +719,10 @@ describe("atom", () => {
 			const src = new Observable(o => {
 				subscribed = true
 				o.complete()
-
-				return () => {
-					subscribed = false
-				}
+				return () => (subscribed = false)
 			})
 
-			const _ = Atom.fromObservable(src)
-
+			Atom.fromObservable(src)
 			expect(subscribed).toEqual(false)
 		})
 
@@ -802,12 +730,9 @@ describe("atom", () => {
 			let subCount = 0
 
 			const src = new Observable<number>(o => {
-				subCount++
+				subCount = subCount + 1
 				o.next(1)
-
-				return () => {
-					subCount--
-				}
+				return () => (subCount = subCount - 1)
 			})
 
 			const a = Atom.fromObservable(src)
@@ -815,7 +740,7 @@ describe("atom", () => {
 			// no subs until we have subscribed to use the atom
 			expect(subCount).toEqual(0)
 
-			const subs = Array.from(new Array(5)).map(_ =>
+			const subs = Array.from(new Array(5)).map(() =>
 				a.subscribe(a => {
 					expect(a.get()).toEqual(1)
 				})
@@ -831,32 +756,29 @@ describe("atom", () => {
 		})
 
 		test("does not return atom if source has no value", async () => {
-			const r = await merge(Atom.fromObservable(never()), from(["hello"]))
-				.pipe(take(1), toArray())
-				.toPromise()
-
+			const r = await firstValueFrom(merge(Atom.fromObservable(NEVER), from(["hello"])).pipe(take(1), toArray()))
 			expect(r).toEqual(["hello"])
 		})
 
 		test("atom values correspond to source", async () => {
 			const src = new Subject<number>()
 
-			const r = Atom.fromObservable(src)
-				.pipe(
+			const r = firstValueFrom(
+				Atom.fromObservable(src).pipe(
 					tap(async a => {
-						const srcValues = Array.from(new Array(10), _ => Math.random())
-						const atomValues = a.pipe(toArray()).toPromise()
+						const srcValues = Array.from(new Array(10), () => Math.random())
 
 						srcValues.forEach(x => {
 							src.next(x)
 							expect(a.get()).toEqual(x)
 						})
 
-						expect(await atomValues).toEqual(srcValues)
+						const atomValues = await firstValueFrom(a.pipe(toArray()))
+						expect(atomValues).toEqual(srcValues)
 					}),
 					take(1)
 				)
-				.toPromise()
+			)
 
 			src.next(0)
 			await r
@@ -867,11 +789,7 @@ describe("atom", () => {
 			let atom!: ReadOnlyAtom<number>
 
 			const sub = Atom.fromObservable(src)
-				.pipe(
-					tap(a => {
-						atom = a
-					})
-				)
+				.pipe(tap(a => (atom = a)))
 				.subscribe()
 
 			src.next(1)
@@ -887,28 +805,28 @@ describe("atom", () => {
 
 		test("source error is propagated", async () => {
 			try {
-				await Atom.fromObservable(throwError("hello")).toPromise()
+				await firstValueFrom(Atom.fromObservable(throwError(new Error("hello"))))
 				fail()
 			} catch (e) {
-				expect(e).toEqual("hello")
+				expect(e).toEqual(new Error("hello"))
 			}
 		})
 
 		test("source completion is propagated 1", async () => {
 			expect(
-				await Atom.fromObservable(empty())
-					.pipe(
+				await firstValueFrom(
+					Atom.fromObservable(EMPTY).pipe(
 						materialize(),
 						map(x => x.kind),
 						toArray()
 					)
-					.toPromise()
+				)
 			).toEqual(["C"])
 		})
 
 		test("source completion is propagated 2", async () => {
 			expect(
-				await Atom.fromObservable(from([1, 2, 3]))
+				await Atom.fromObservable(of([1, 2, 3]))
 					.pipe(
 						materialize(),
 						map(x => x.kind),

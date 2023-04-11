@@ -1,12 +1,9 @@
-/* eslint-disable no-plusplus */
 /**
  * Lenses for JSON data.
- *
  * @module
  */
 
 import { structEq, setKey, conservatively, findIndex, Option } from "./utils"
-
 import { Lens, Prism } from "./base"
 import { SimpleCache } from "./simple-cache"
 
@@ -73,14 +70,12 @@ export function keyImpl<TValue = any>(k: string): Prism<{ [k: string]: TValue },
 //
 // Pretty cool!
 export function keyImpl<TObject = any>(): KeyImplFor<TObject>
-
 export function keyImpl<TObject>(k?: string) {
-	return k === undefined
-		? // type-safe key
-		  <K extends keyof TObject>(k: K): Lens<TObject, TObject[K]> =>
-				keyCache.getOrCreate(k as string) as Lens<TObject, TObject[K]>
-		: // untyped key
-		  keyCache.getOrCreate(k)
+	if (k === undefined) {
+		return <K extends keyof TObject>(k: K): Lens<TObject, TObject[K]> =>
+			keyCache.getOrCreate(k as string) as Lens<TObject, TObject[K]>
+	}
+	return keyCache.getOrCreate(k)
 }
 
 export function indexImpl<TItem>(i: number): Prism<TItem[], TItem> {
@@ -160,7 +155,7 @@ Lens.withDefault = withDefaultImpl
 Lens.replace = replaceImpl
 Lens.find = findImpl
 
-const keyCache = new SimpleCache<string, Lens<any, any>>(key =>
+const keyCache = new SimpleCache((key: string) =>
 	Lens.create<any, any>(
 		s => s[key],
 		(v, s) => setKey(key, v, s)
@@ -170,13 +165,9 @@ const indexCache = new SimpleCache<number, Prism<any[], any>>(i =>
 	Prism.create(
 		xs => xs[i],
 		(v, xs) => {
-			if (xs.length <= i) {
-				return xs.concat(Array(i - xs.length), [v])
-			} else if (structEq(v, xs[i])) {
-				return xs
-			} else {
-				return xs.slice(0, i).concat([v], xs.slice(i + 1))
-			}
+			if (xs.length <= i) return xs.concat(Array(i - xs.length), [v])
+			if (structEq(v, xs[i])) return xs
+			return xs.slice(0, i).concat([v], xs.slice(i + 1))
 		}
 	)
 )

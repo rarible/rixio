@@ -1,13 +1,13 @@
 import { Map as IM } from "immutable"
 import { Atom } from "@rixio/atom"
 import { SimpleCache } from "@rixio/lens"
+import { byKeyImmutable } from "@rixio/lens/build/lenses/by-key-immutable"
 import { Observable, Subject } from "rxjs"
-import { filter, first } from "rxjs/operators"
+import { first } from "rxjs/operators"
 import { CacheState, CacheIdle, KeyEvent, createErrorKeyEvent, createAddKeyEvent, ListDataLoader } from "../domain"
 import { Batcher } from "../utils/batcher"
 import { Memo, MemoImpl } from "../memo"
 import { KeyNotFoundError, UnknownError } from "../utils/errors"
-import { byKeyWithDefaultFactory } from "../utils/by-key-with-default-factory"
 
 export interface KeyMemo<K, V> {
 	get: (key: K, force?: boolean) => Promise<V>
@@ -19,7 +19,7 @@ export interface KeyMemo<K, V> {
 export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 	private readonly _batch: Batcher<K>
 	private readonly _results = new Subject<[K, V | Error]>()
-	private readonly _lensFactory = byKeyWithDefaultFactory<K, CacheState<V>>(() => CacheIdle.create())
+	private readonly _lensFactory = byKeyImmutable<K, CacheState<V>>(() => CacheIdle.create())
 	private readonly _events = new Subject<KeyEvent<K>>()
 	readonly events: Observable<KeyEvent<K>> = this._events
 
@@ -30,7 +30,7 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 	constructor(
 		private readonly map: Atom<IM<K, CacheState<V>>>,
 		private readonly loader: ListDataLoader<K, V>,
-		timeout: number = 100
+		readonly timeout: number = 200
 	) {
 		this._batch = new Batcher<K>(async keys => {
 			try {
@@ -59,12 +59,7 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 
 	private async load(key: K): Promise<V> {
 		this._batch.add(key)
-		const [, v] = await this._results
-			.pipe(
-				filter(([k]) => key === k),
-				first()
-			)
-			.toPromise()
+		const [, v] = await this._results.pipe(first(([k]) => key === k)).toPromise()
 		if (v instanceof Error) {
 			this._events.next(createErrorKeyEvent(key, v))
 			throw v
