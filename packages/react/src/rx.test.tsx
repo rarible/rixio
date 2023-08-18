@@ -1,4 +1,3 @@
-import type { ReactElement } from "react"
 import React from "react"
 import { act, render, waitFor, fireEvent } from "@testing-library/react"
 import { Atom } from "@rixio/atom"
@@ -11,14 +10,12 @@ import { CacheFulfilled, CacheIdle, KeyMemoImpl, MemoImpl, toListLoader } from "
 import { Map as IM } from "immutable"
 import { Rx } from "./rx"
 
-const Testing = ({ text, reload }: { text?: any; reload?: () => void }) => {
+const Testing = ({ text = "BLABLABLA", reload }: { text?: any; reload?: () => void }) => {
   return (
-    <>
-      <span data-testid="testing">{text || "BLABLABLA"}</span>
-      <button data-testid="reload" onClick={reload}>
-        reload
-      </button>
-    </>
+    <React.Fragment>
+      <span data-testid="testing" children={text} />
+      <button data-testid="reload" onClick={reload} children="reload" />
+    </React.Fragment>
   )
 }
 
@@ -29,7 +26,7 @@ describe("Rx", () => {
     const r = render(
       <span data-testid="test">
         <Rx value$={state$} pending="pending">
-          {v => <span>{v}</span>}
+          {v => <span children={v} />}
         </Rx>
       </span>,
     )
@@ -41,7 +38,7 @@ describe("Rx", () => {
     testCacheState(state$ => (
       <span data-testid="test">
         <Rx<number> value$={state$} pending="pending">
-          {value => <span>{value}</span>}
+          {v => <span children={v} />}
         </Rx>
       </span>
     ))
@@ -136,7 +133,7 @@ describe("Rx", () => {
       expect(r.getByTestId("test")).toHaveTextContent("20")
     })
     act(() => {
-      cache.single("key1").atom.set(WrappedFulfilled.create(30))
+      cache.single("key1").atom.set(CacheFulfilled.create(30))
     })
     await waitFor(() => {
       expect(r.getByTestId("test")).toHaveTextContent("30")
@@ -234,14 +231,14 @@ describe("Rx", () => {
     const state$ = Atom.create(null)
     const r = render(
       <span data-testid="test">
-        <Rx value$={state$}>{v => <span>{`${v}`}</span>}</Rx>
+        <Rx value$={state$}>{v => <span children={`${v}`} />}</Rx>
       </span>,
     )
     expect(r.getByTestId("test")).toHaveTextContent("null")
   })
 })
 
-function testCacheState(comp: (state: Observable<Wrapped<number>>) => ReactElement) {
+function testCacheState(comp: (state: Observable<Wrapped<number>>) => React.ReactElement) {
   const state$ = new BehaviorSubject<Wrapped<number>>(WrappedPending.create())
   const r = render(comp(state$))
   expect(r.getByTestId("test")).toHaveTextContent("pending")

@@ -1,10 +1,10 @@
 import { Map as IM } from "immutable"
 import type { Atom } from "@rixio/atom"
 import { SimpleCache } from "@rixio/lens"
-import { byKeyImmutable } from "@rixio/lens/build/lenses/by-key-immutable"
 import type { Observable } from "rxjs"
 import { Subject } from "rxjs"
 import { first } from "rxjs/operators"
+import { byKeyImmutableFactory } from "@rixio/atom"
 import type { CacheState, KeyEvent, ListDataLoader } from "../domain"
 import { CacheIdle, createErrorKeyEvent, createAddKeyEvent } from "../domain"
 import { Batcher } from "../utils/batcher"
@@ -22,7 +22,7 @@ export interface KeyMemo<K, V> {
 export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
   private readonly _batch: Batcher<K>
   private readonly _results = new Subject<[K, V | Error]>()
-  private readonly _lensFactory = byKeyImmutable<K, CacheState<V>>(() => CacheIdle.create())
+  private readonly _lensFactory = byKeyImmutableFactory<K, CacheState<V>>(() => CacheIdle.create())
   private readonly _events = new Subject<KeyEvent<K>>()
   readonly events: Observable<KeyEvent<K>> = this._events
 
