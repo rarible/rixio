@@ -1,6 +1,6 @@
 {
 	"name": "@rixio/form-store",
-	"version": "0.14.1",
+	"version": "0.15.0-alpha.0",
 	"keywords": [
 		"frp",
 		"lens",
@@ -26,8 +26,8 @@
 		"verify": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@rixio/atom": "^0.14.0",
-		"@rixio/lens": "^0.14.0"
+		"@rixio/atom": "^0.15.0-alpha.0",
+		"@rixio/lens": "^0.15.0-alpha.0"
 	},
 	"peerDependencies": {
 		"joi": ">= 17.0.0 < 18.0.0",
