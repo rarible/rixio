@@ -14,15 +14,25 @@ export interface Memo<T> extends Observable<T> {
   atom: Atom<CacheState<T>>
 }
 
+export type MemoConfig = {
+  /**
+   * Set a live time that will be used for cache invalidation
+   * invalidation happens only whenever Memo is accessed
+   * @default 10m
+   */
+  cacheLiveTimeMs: number
+}
+
 export class MemoImpl<T> extends Observable<T> implements Memo<T> {
   private _sharedBuffer$: ReplaySubject<T> | undefined = undefined
   private _subscription: Subscription | undefined = undefined
   private _refCount = 0
+  private readonly _config: MemoConfig
 
   constructor(
     public readonly atom: Atom<CacheState<T>>,
     private readonly _loader: () => Promise<T>,
-    private readonly cacheLiveTimeMs: number = 1000 * 60 * 10, // 10 minutes cache
+    config: Partial<MemoConfig> = {},
   ) {
     super(subscriber => {
       const initial = atom.get()
@@ -72,6 +82,11 @@ export class MemoImpl<T> extends Observable<T> implements Memo<T> {
 
       return subscriber
     })
+
+    this._config = {
+      ...createDefaultConfig(),
+      ...config,
+    }
   }
 
   get = async (force = false): Promise<T> => {
@@ -120,6 +135,12 @@ export class MemoImpl<T> extends Observable<T> implements Memo<T> {
 
   private shouldRefresh(value: CacheFulfilled<T>) {
     // Refresh cache in case when live time is exceeded
-    return value.timestamp + this.cacheLiveTimeMs < Date.now()
+    return value.timestamp + this._config.cacheLiveTimeMs < Date.now()
+  }
+}
+
+function createDefaultConfig(): MemoConfig {
+  return {
+    cacheLiveTimeMs: 1000 * 60 * 10, // 10 minutes cache
   }
 }

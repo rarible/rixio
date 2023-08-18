@@ -1,8 +1,9 @@
 import { Atom } from "@rixio/atom"
 import { noop } from "rxjs"
 import { first, map } from "rxjs/operators"
-import type { CacheState } from "../domain"
 import { CacheIdle } from "../domain"
+import type { CacheState } from "../domain"
+import type { MemoConfig } from "./index"
 import { MemoImpl } from "./index"
 
 describe("MemoImpl", () => {
@@ -24,7 +25,7 @@ describe("MemoImpl", () => {
   test("should invalidate cache", async () => {
     let changed = false
     const loader = jest.fn().mockImplementation(() => (changed ? Promise.resolve("hello") : Promise.resolve("world")))
-    const testset = new TestSet({ cacheLiveTime: 100, customImpl: loader })
+    const testset = new TestSet({ cacheLiveTimeMs: 100, customImpl: loader })
     const data1 = await testset.cache.get()
     expect(data1).toEqual("world")
     expect(loader.mock.calls).toHaveLength(1)
@@ -133,10 +134,9 @@ describe("MemoImpl", () => {
   })
 })
 
-type TestSetConfig = {
+type TestSetConfig = Partial<MemoConfig> & {
   customImpl?: jest.Mock<string>
   timeout?: number
-  cacheLiveTime?: number
 }
 
 class TestSet {
@@ -147,7 +147,7 @@ class TestSet {
   })
 
   readonly atom = Atom.create(CacheIdle.create())
-  readonly cache = new MemoImpl<string>(this.atom, this.config.customImpl || this.impl, this.config.cacheLiveTime)
+  readonly cache = new MemoImpl<string>(this.atom, this.config.customImpl || this.impl, this.config)
   readonly statuses: CacheState<unknown>["status"][] = []
   private readonly sub = this.atom.subscribe(x => this.statuses.push(x.status))
 

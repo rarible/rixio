@@ -8,7 +8,7 @@ import { byKeyImmutableFactory } from "@rixio/atom"
 import type { CacheState, KeyEvent, ListDataLoader } from "../domain"
 import { CacheIdle, createErrorKeyEvent, createAddKeyEvent } from "../domain"
 import { Batcher } from "../utils/batcher"
-import type { Memo } from "../memo"
+import type { Memo, MemoConfig } from "../memo"
 import { MemoImpl } from "../memo"
 import { KeyNotFoundError, UnknownError } from "../utils/errors"
 
@@ -19,22 +19,37 @@ export interface KeyMemo<K, V> {
   single: (key: K) => Memo<V>
 }
 
+export type KeyMemoConfig = MemoConfig & {
+  /**
+   * Set batcher timeout that will blow the batched queue
+   * set as smaller as you can, tweak it if you think fetching working slow
+   * @default 200ms
+   */
+  batcherTimeout: number
+}
+
 export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
   private readonly _batch: Batcher<K>
   private readonly _results = new Subject<[K, V | Error]>()
   private readonly _lensFactory = byKeyImmutableFactory<K, CacheState<V>>(() => CacheIdle.create())
   private readonly _events = new Subject<KeyEvent<K>>()
+  private readonly _config: KeyMemoConfig
+
   readonly events: Observable<KeyEvent<K>> = this._events
 
   private readonly singles = new SimpleCache<K, Memo<V>>(key => {
-    return new MemoImpl(this.getAtom(key), () => this.load(key))
+    return new MemoImpl(this.getAtom(key), () => this.load(key), this._config)
   })
 
   constructor(
     private readonly map: Atom<IM<K, CacheState<V>>>,
     private readonly loader: ListDataLoader<K, V>,
-    readonly timeout: number = 200,
+    config: Partial<KeyMemoConfig> = {},
   ) {
+    this._config = {
+      ...createDefaultConfig(),
+      ...config,
+    }
     this._batch = new Batcher<K>(async keys => {
       try {
         const values = await this.loader(keys)
@@ -48,7 +63,7 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
           this._results.next([k, UnknownError.create(e, `Can't load entry with key ${k}`)])
         })
       }
-    }, timeout)
+    }, this._config.batcherTimeout)
   }
 
   single = (key: K): Memo<V> =>
@@ -57,7 +72,9 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
     })
 
   get = (key: K, force?: boolean): Promise<V> => this.single(key).get(force)
+
   set = (key: K, value: V): void => this.single(key).set(value)
+
   getAtom = (key: K): Atom<CacheState<V>> => this.map.lens(this._lensFactory(key))
 
   private async load(key: K): Promise<V> {
@@ -68,5 +85,12 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
       throw v
     }
     return v
+  }
+}
+
+function createDefaultConfig(): KeyMemoConfig {
+  return {
+    batcherTimeout: 200,
+    cacheLiveTimeMs: 1000 * 60 * 10, // 10 min
   }
 }
