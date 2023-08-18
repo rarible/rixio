@@ -1,54 +1,54 @@
 {
-	"name": "@rixio/list-react",
-	"version": "0.15.0-alpha.0",
-	"keywords": [
-		"frp",
-		"lens",
-		"react",
-		"reactive",
-		"rx",
-		"rxjs",
-		"atom",
-		"list"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/roborox/rixio.git"
-	},
-	"license": "Apache-2.0",
-	"main": "build/index.js",
-	"types": "build/index.d.ts",
-	"files": [
-		"/build"
-	],
-	"scripts": {
-		"build": "tsc --project tsconfig-build.json",
-		"build-storybook": "sb build",
-		"clean": "rimraf ./build",
-		"storybook": "sb dev",
-		"test": "jest --silent --passWithNoTests",
-		"verify": "tsc --noEmit"
-	},
-	"dependencies": {
-		"@rixio/atom": "^0.15.0-alpha.0",
-		"@rixio/list": "^0.15.0-alpha.0",
-		"@rixio/react": "^0.15.0-alpha.0",
-		"@rixio/wrapped": "^0.15.0-alpha.0",
-		"react-virtualized": "^9.22.2"
-	},
-	"devDependencies": {
-		"@babel/core": "^7.21.4",
-		"@storybook/cli": "^7.0.2",
-		"@storybook/react": "^7.0.2",
-		"@storybook/react-webpack5": "^7.0.2",
-		"ts-loader": "^9.4.2",
-		"webpack-merge": "^5.8.0"
-	},
-	"peerDependencies": {
-		"react": ">= 16.9.0",
-		"rxjs": ">= 6.0.0 < 7.0.0-0"
-	},
-	"publishConfig": {
-		"access": "public"
-	}
+  "name": "@rixio/list-react",
+  "version": "0.15.0-alpha.1",
+  "keywords": [
+    "frp",
+    "lens",
+    "react",
+    "reactive",
+    "rx",
+    "rxjs",
+    "atom",
+    "list"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roborox/rixio.git"
+  },
+  "license": "Apache-2.0",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "/build"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig-build.json",
+    "build-storybook": "sb build",
+    "clean": "rimraf ./build",
+    "storybook": "sb dev",
+    "test": "jest --silent --passWithNoTests",
+    "verify": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rixio/atom": "^0.15.0-alpha.1",
+    "@rixio/list": "^0.15.0-alpha.1",
+    "@rixio/react": "^0.15.0-alpha.1",
+    "@rixio/wrapped": "^0.15.0-alpha.1",
+    "react-virtualized": "^9.22.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@storybook/cli": "^7.0.2",
+    "@storybook/react": "^7.0.2",
+    "@storybook/react-webpack5": "^7.0.2",
+    "ts-loader": "^9.4.2",
+    "webpack-merge": "^5.8.0"
+  },
+  "peerDependencies": {
+    "react": ">= 16.9.0",
+    "rxjs": ">= 6.0.0 < 7.0.0-0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }
