@@ -1,5 +1,5 @@
 export const range = (from: number, to: number) => {
-	return Array(to - from)
+	return new Array(to - from)
 		.fill(0)
 		.map((_, idx) => from + idx)
 }

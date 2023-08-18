@@ -6,18 +6,18 @@ import { Lens, SimpleCache } from "@rixio/lens"
  */
 
 export function byKeyFactory<K extends string, V>(
-	createDefaultValue: (key: K) => V
+  createDefaultValue: (key: K) => V,
 ): (key: K) => Lens<Record<K, V>, V> {
-	const cache = new SimpleCache<K, Lens<Record<K, V>, V>>((x: K) =>
-		Lens.create(
-			s => (x in s ? s[x] : createDefaultValue(x)),
-			(s, xs) => {
-				return {
-					...xs,
-					[x]: s,
-				}
-			}
-		)
-	)
-	return x => cache.getOrCreate(x)
+  const cache = new SimpleCache<K, Lens<Record<K, V>, V>>((x: K) =>
+    Lens.create(
+      s => (x in s ? s[x] : createDefaultValue(x)),
+      (s, xs) => {
+        return {
+          ...xs,
+          [x]: s,
+        }
+      },
+    ),
+  )
+  return x => cache.getOrCreate(x)
 }

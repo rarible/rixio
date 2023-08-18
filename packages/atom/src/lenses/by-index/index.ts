@@ -6,12 +6,12 @@ import { Lens } from "@rixio/lens"
  */
 
 export function byIndexFactory<T>(index: number, createDefaultValue: () => T): Lens<T[], T> {
-	return Lens.create<T[], T>(
-		x => x[index] || createDefaultValue(),
-		(x, xs) => {
-			const result = [...xs]
-			result[index] = x || createDefaultValue()
-			return result
-		}
-	)
+  return Lens.create<T[], T>(
+    x => x[index] || createDefaultValue(),
+    (x, xs) => {
+      const result = [...xs]
+      result[index] = x || createDefaultValue()
+      return result
+    },
+  )
 }

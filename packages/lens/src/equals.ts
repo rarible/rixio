@@ -29,23 +29,23 @@
 // tslint:disable no-function-expression
 
 function arrayFromIterator<T>(iter: Iterator<T>) {
-	const result: T[] = []
-	let next: IteratorResult<T>
-	while (!(next = iter.next()).done) {
-		// tslint:disable-line no-conditional-assignment
-		result.push(next.value)
-	}
-	return result
+  const result: T[] = []
+  let next: IteratorResult<T>
+  while (!(next = iter.next()).done) {
+    // tslint:disable-line no-conditional-assignment
+    result.push(next.value)
+  }
+  return result
 }
 
 function functionName(f: Function) {
-	// String(x => x) evaluates to "x => x", so the pattern may not match.
-	const match = String(f).match(/^function (\w*)/)
-	return match == null ? "" : match[1]
+  // String(x => x) evaluates to "x => x", so the pattern may not match.
+  const match = String(f).match(/^function (\w*)/)
+  return match == null ? "" : match[1]
 }
 
 function has(prop: string, obj: any) {
-	return Object.prototype.hasOwnProperty.call(obj, prop)
+  return Object.prototype.hasOwnProperty.call(obj, prop)
 }
 
 /**
@@ -64,28 +64,28 @@ function has(prop: string, obj: any) {
  *      R.identical(NaN, NaN); //=> true
  */
 function identical(a: any, b: any) {
-	// SameValue algorithm
-	if (a === b) {
-		// Steps 1-5, 7-10
-		// Steps 6.b-6.e: +0 != -0
-		return a !== 0 || 1 / a === 1 / b
-	} else {
-		// Step 6.a: NaN == NaN
-		// eslint-disable-next-line no-self-compare
-		return a !== a && b !== b
-	}
+  // SameValue algorithm
+  if (a === b) {
+    // Steps 1-5, 7-10
+    // Steps 6.b-6.e: +0 != -0
+    return a !== 0 || 1 / a === 1 / b
+  } else {
+    // Step 6.a: NaN == NaN
+    // eslint-disable-next-line no-self-compare
+    return a !== a && b !== b
+  }
 }
 
 const _isArguments = (function () {
-	const toString = Object.prototype.toString
+  const toString = Object.prototype.toString
 
-	return toString.call(arguments) === "[object Arguments]"
-		? function isArguments(x: any) {
-				return toString.call(x) === "[object Arguments]"
-		  }
-		: function isArguments(x: any) {
-				return has("callee", x)
-		  }
+  return toString.call(arguments) === "[object Arguments]"
+    ? function isArguments(x: any) {
+        return toString.call(x) === "[object Arguments]"
+      }
+    : function isArguments(x: any) {
+        return has("callee", x)
+      }
 })()
 
 /**
@@ -95,92 +95,92 @@ const _isArguments = (function () {
  * across different JS platforms.
  */
 const keys = (function () {
-	// cover IE < 9 keys issues
-	const hasEnumBug = !{ toString: null }.propertyIsEnumerable("toString")
+  // cover IE < 9 keys issues
+  const hasEnumBug = !{ toString: null }.propertyIsEnumerable("toString")
 
-	const nonEnumerableProps = [
-		"constructor",
-		"valueOf",
-		"isPrototypeOf",
-		"toString",
-		"propertyIsEnumerable",
-		"hasOwnProperty",
-		"toLocaleString",
-	]
+  const nonEnumerableProps = [
+    "constructor",
+    "valueOf",
+    "isPrototypeOf",
+    "toString",
+    "propertyIsEnumerable",
+    "hasOwnProperty",
+    "toLocaleString",
+  ]
 
-	// Safari bug
-	const hasArgsEnumBug = (function () {
-		return arguments.propertyIsEnumerable("length")
-	})()
+  // Safari bug
+  const hasArgsEnumBug = (function () {
+    return arguments.propertyIsEnumerable("length")
+  })()
 
-	const contains = function contains<T>(list: T[], item: T) {
-		var idx = 0 // tslint:disable-line no-var-keyword
+  const contains = function contains<T>(list: T[], item: T) {
+    var idx = 0 // tslint:disable-line no-var-keyword
 
-		while (idx < list.length) {
-			if (list[idx] === item) return true
+    while (idx < list.length) {
+      if (list[idx] === item) return true
 
-			idx += 1
-		}
+      idx += 1
+    }
 
-		return false
-	}
+    return false
+  }
 
-	return typeof Object.keys === "function" && !hasArgsEnumBug
-		? function keys(obj: any) {
-				return Object(obj) !== obj ? [] : Object.keys(obj)
-		  }
-		: function keys(obj: any) {
-				if (Object(obj) !== obj) return []
+  return typeof Object.keys === "function" && !hasArgsEnumBug
+    ? function keys(obj: any) {
+        return Object(obj) !== obj ? [] : Object.keys(obj)
+      }
+    : function keys(obj: any) {
+        if (Object(obj) !== obj) return []
 
-				let prop: string, nIdx: number
-				const ks: string[] = []
-				const checkArgsLength = hasArgsEnumBug && _isArguments(obj)
+        let prop: string, nIdx: number
+        const ks: string[] = []
+        const checkArgsLength = hasArgsEnumBug && _isArguments(obj)
 
-				for (prop in obj) {
-					if (has(prop, obj) && (!checkArgsLength || prop !== "length")) {
-						ks[ks.length] = prop
-					}
-				}
+        for (prop in obj) {
+          if (has(prop, obj) && (!checkArgsLength || prop !== "length")) {
+            ks[ks.length] = prop
+          }
+        }
 
-				if (hasEnumBug) {
-					nIdx = nonEnumerableProps.length - 1
-					while (nIdx >= 0) {
-						prop = nonEnumerableProps[nIdx]
-						if (has(prop, obj) && !contains(ks, prop)) {
-							ks[ks.length] = prop
-						}
-						nIdx -= 1
-					}
-				}
+        if (hasEnumBug) {
+          nIdx = nonEnumerableProps.length - 1
+          while (nIdx >= 0) {
+            prop = nonEnumerableProps[nIdx]
+            if (has(prop, obj) && !contains(ks, prop)) {
+              ks[ks.length] = prop
+            }
+            nIdx -= 1
+          }
+        }
 
-				return ks
-		  }
+        return ks
+      }
 })()
 
 type TypeDescString =
-	| "Object"
-	| "Number"
-	| "Boolean"
-	| "String"
-	| "Null"
-	| "Array"
-	| "RegExp"
-	| "Int8Array"
-	| "Uint8Array"
-	| "Uint8ClampedArray"
-	| "Int16Array"
-	| "Uint16Array"
-	| "Int32Array"
-	| "Uint32Array"
-	| "Float32Array"
-	| "Float64Array"
-	| "Arguments"
-	| "Map"
-	| "Set"
-	| "Date"
-	| "Error"
-	| "ArrayBuffer"
-	| "Undefined"
+  | "Object"
+  | "Number"
+  | "Boolean"
+  | "String"
+  | "Null"
+  | "Array"
+  | "RegExp"
+  | "Int8Array"
+  | "Uint8Array"
+  | "Uint8ClampedArray"
+  | "Int16Array"
+  | "Uint16Array"
+  | "Int32Array"
+  | "Uint32Array"
+  | "Float32Array"
+  | "Float64Array"
+  | "Arguments"
+  | "Map"
+  | "Set"
+  | "Date"
+  | "Error"
+  | "ArrayBuffer"
+  | "Undefined"
 
 /**
  * Gives a single-word string description of the (native) type of a value,
@@ -199,12 +199,12 @@ type TypeDescString =
  *      R.type(/[A-z]/); //=> "RegExp"
  */
 function type(val: any) {
-	// eslint-disable-next-line no-nested-ternary
-	return val === null
-		? ("Null" as TypeDescString)
-		: val === undefined
-		? ("Undefined" as TypeDescString)
-		: (Object.prototype.toString.call(val).slice(8, -1) as TypeDescString)
+  // eslint-disable-next-line no-nested-ternary
+  return val === null
+    ? ("Null" as TypeDescString)
+    : val === undefined
+    ? ("Undefined" as TypeDescString)
+    : (Object.prototype.toString.call(val).slice(8, -1) as TypeDescString)
 }
 
 /**
@@ -225,101 +225,101 @@ function type(val: any) {
  *      equals(a, b); //=> true
  */
 export function equals(a: any, b: any, stackA: any[] = [], stackB: any[] = []) {
-	if (identical(a, b)) return true
-	if (type(a) !== type(b)) return false
-	if (a == null || b == null) return false
+  if (identical(a, b)) return true
+  if (type(a) !== type(b)) return false
+  if (a == null || b == null) return false
 
-	if (typeof a.equals === "function" || typeof b.equals === "function") {
-		return typeof a.equals === "function" && a.equals(b) && typeof b.equals === "function" && b.equals(a)
-	}
+  if (typeof a.equals === "function" || typeof b.equals === "function") {
+    return typeof a.equals === "function" && a.equals(b) && typeof b.equals === "function" && b.equals(a)
+  }
 
-	switch (type(a)) {
-		case "Arguments":
-		case "Array":
-		case "Object":
-			if (typeof a.constructor === "function" && functionName(a.constructor) === "Promise") {
-				return a === b
-			}
-			break
+  switch (type(a)) {
+    case "Arguments":
+    case "Array":
+    case "Object":
+      if (typeof a.constructor === "function" && functionName(a.constructor) === "Promise") {
+        return a === b
+      }
+      break
 
-		case "Boolean":
-		case "Number":
-		case "String":
-			if (!(typeof a === typeof b && identical(a.valueOf(), b.valueOf()))) return false
+    case "Boolean":
+    case "Number":
+    case "String":
+      if (!(typeof a === typeof b && identical(a.valueOf(), b.valueOf()))) return false
 
-			break
+      break
 
-		case "Date":
-			if (!identical(a.valueOf(), b.valueOf())) return false
+    case "Date":
+      if (!identical(a.valueOf(), b.valueOf())) return false
 
-			break
+      break
 
-		case "Error":
-			return a.name === b.name && a.message === b.message
+    case "Error":
+      return a.name === b.name && a.message === b.message
 
-		case "RegExp":
-			if (
-				!(
-					a.source === b.source &&
-					a.global === b.global &&
-					a.ignoreCase === b.ignoreCase &&
-					a.multiline === b.multiline &&
-					a.sticky === b.sticky &&
-					a.unicode === b.unicode
-				)
-			) {
-				return false
-			}
+    case "RegExp":
+      if (
+        !(
+          a.source === b.source &&
+          a.global === b.global &&
+          a.ignoreCase === b.ignoreCase &&
+          a.multiline === b.multiline &&
+          a.sticky === b.sticky &&
+          a.unicode === b.unicode
+        )
+      ) {
+        return false
+      }
 
-			break
+      break
 
-		case "Map":
-		case "Set":
-			if (!equals(arrayFromIterator(a.entries()), arrayFromIterator(b.entries()), stackA, stackB)) return false
+    case "Map":
+    case "Set":
+      if (!equals(arrayFromIterator(a.entries()), arrayFromIterator(b.entries()), stackA, stackB)) return false
 
-			break
+      break
 
-		case "Int8Array":
-		case "Uint8Array":
-		case "Uint8ClampedArray":
-		case "Int16Array":
-		case "Uint16Array":
-		case "Int32Array":
-		case "Uint32Array":
-		case "Float32Array":
-		case "Float64Array":
-			break
+    case "Int8Array":
+    case "Uint8Array":
+    case "Uint8ClampedArray":
+    case "Int16Array":
+    case "Uint16Array":
+    case "Int32Array":
+    case "Uint32Array":
+    case "Float32Array":
+    case "Float64Array":
+      break
 
-		case "ArrayBuffer":
-			break
+    case "ArrayBuffer":
+      break
 
-		default:
-			// Values of other types are only equal if identical.
-			return false
-	}
+    default:
+      // Values of other types are only equal if identical.
+      return false
+  }
 
-	const keysA = keys(a)
-	if (keysA.length !== keys(b).length) return false
+  const keysA = keys(a)
+  if (keysA.length !== keys(b).length) return false
 
-	let idx = stackA.length - 1
-	while (idx >= 0) {
-		if (stackA[idx] === a) return stackB[idx] === b
+  let idx = stackA.length - 1
+  while (idx >= 0) {
+    if (stackA[idx] === a) return stackB[idx] === b
 
-		idx -= 1
-	}
+    idx -= 1
+  }
 
-	stackA.push(a)
-	stackB.push(b)
-	idx = keysA.length - 1
-	while (idx >= 0) {
-		const key = keysA[idx]
+  stackA.push(a)
+  stackB.push(b)
+  idx = keysA.length - 1
+  while (idx >= 0) {
+    const key = keysA[idx]
 
-		if (!(has(key, b) && equals(b[key], a[key], stackA, stackB))) return false
+    if (!(has(key, b) && equals(b[key], a[key], stackA, stackB))) return false
 
-		idx -= 1
-	}
-	stackA.pop()
-	stackB.pop()
+    idx -= 1
+  }
+  stackA.pop()
+  stackB.pop()
 
-	return true
+  return true
 }
