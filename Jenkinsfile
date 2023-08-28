@@ -1,6 +1,7 @@
 @Library('shared-library') _
 
 def pipelineConfig = [
-  "JSpublicLibrary": "true"
+  "JSpublicLibrary": "true",
+  "pkgRepoName": "npmjs-org"
 ]
 pipelinePackageRelease(pipelineConfig)
