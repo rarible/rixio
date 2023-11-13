@@ -120,7 +120,10 @@ class TestSet {
   })
 
   readonly atom = Atom.create(IM<string, CacheState<string>>())
-  readonly cache = new KeyMemoImpl<string, string>(this.atom, this.customImpl || this.impl)
+  readonly cache = new KeyMemoImpl<string, string>({
+    map: this.atom,
+    loader: this.customImpl || this.impl,
+  })
 
   constructor(private readonly timeout?: number, private readonly customImpl?: jest.Mock<string>) {}
 }

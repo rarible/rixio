@@ -1,6 +1,5 @@
 import { Map as IM } from "immutable"
 import type { Atom } from "@rixio/atom"
-import { SimpleCache } from "@rixio/lens"
 import type { Observable } from "rxjs"
 import { Subject } from "rxjs"
 import { first } from "rxjs/operators"
@@ -11,6 +10,7 @@ import { Batcher } from "../utils/batcher"
 import type { Memo, MemoConfig } from "../memo"
 import { MemoImpl } from "../memo"
 import { KeyNotFoundError, UnknownError } from "../utils/errors"
+import { KeyHashCache } from "./key-hash-value"
 
 export interface KeyMemo<K, V> {
   get: (key: K, force?: boolean) => Promise<V>
@@ -28,6 +28,12 @@ export type KeyMemoConfig = MemoConfig & {
   batcherTimeout: number
 }
 
+export type KeyMemoConstructor<K, V> = (K extends string ? {} : { toHash: (key: K) => string }) & {
+  map: Atom<IM<K, CacheState<V>>>
+  loader: ListDataLoader<K, V>
+  config?: Partial<KeyMemoConfig>
+}
+
 export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
   private readonly _batch: Batcher<K>
   private readonly _results = new Subject<[K, V | Error]>()
@@ -37,22 +43,20 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 
   readonly events: Observable<KeyEvent<K>> = this._events
 
-  private readonly singles = new SimpleCache<K, Memo<V>>(key => {
-    return new MemoImpl(this.getAtom(key), () => this.load(key), this._config)
+  private readonly singles = new KeyHashCache<K, Memo<V>>({
+    create: key => new MemoImpl(this.getAtom(key), () => this.load(key), this._config),
+    toHash: x => ("toHash" in this.config ? this.config.toHash(x) : (x as string)),
+    onCreate: key => this._events.next(createAddKeyEvent(key)),
   })
 
-  constructor(
-    private readonly map: Atom<IM<K, CacheState<V>>>,
-    private readonly loader: ListDataLoader<K, V>,
-    config: Partial<KeyMemoConfig> = {},
-  ) {
+  constructor(private readonly config: KeyMemoConstructor<K, V>) {
     this._config = {
       ...createDefaultConfig(),
-      ...config,
+      ...(config.config || {}),
     }
     this._batch = new Batcher<K>(async keys => {
       try {
-        const values = await this.loader(keys)
+        const values = await this.config.loader(keys)
         const map = IM(values)
         keys.forEach(key => {
           this._results.next([key, map.has(key) ? map.get(key)! : new KeyNotFoundError(key)])
@@ -66,16 +70,13 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
     }, this._config.batcherTimeout)
   }
 
-  single = (key: K): Memo<V> =>
-    this.singles.getOrCreate(key, () => {
-      this._events.next(createAddKeyEvent(key))
-    })
+  single = (key: K): Memo<V> => this.singles.get(key)
 
   get = (key: K, force?: boolean): Promise<V> => this.single(key).get(force)
 
   set = (key: K, value: V): void => this.single(key).set(value)
 
-  getAtom = (key: K): Atom<CacheState<V>> => this.map.lens(this._lensFactory(key))
+  getAtom = (key: K): Atom<CacheState<V>> => this.config.map.lens(this._lensFactory(key))
 
   private async load(key: K): Promise<V> {
     this._batch.add(key)

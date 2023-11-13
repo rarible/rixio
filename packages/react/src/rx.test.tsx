@@ -113,10 +113,10 @@ describe("Rx", () => {
 
   test("Rx should work with KeyMemo", async () => {
     let value: number = 10
-    const cache = new KeyMemoImpl<string, number>(
-      Atom.create(IM()),
-      toListLoader(() => Promise.resolve(value)),
-    )
+    const cache = new KeyMemoImpl<string, number>({
+      map: Atom.create(IM()),
+      loader: toListLoader(() => Promise.resolve(value)),
+    })
     const r = render(
       <span data-testid="test">
         <Rx value$={cache.single("key1")} pending="pending" />
