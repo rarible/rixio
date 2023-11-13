@@ -1,44 +1,37 @@
 {
-	"name": "@rixio/atom",
-	"version": "0.14.0",
-	"keywords": [
-		"frp",
-		"lens",
-		"reactive",
-		"rx",
-		"rxjs",
-		"atom"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/roborox/rixio.git"
-	},
-	"license": "Apache-2.0",
-	"main": "build/index.js",
-	"types": "build/index.d.ts",
-	"files": [
-		"/build"
-	],
-	"scripts": {
-		"build": "tsc --project tsconfig-build.json",
-		"clean": "rimraf ./build",
-		"test": "jest --silent",
-		"verify": "tsc --noEmit"
-	},
-	"dependencies": {
-		"@rixio/lens": "^0.14.0"
-	},
-	"devDependencies": {
-		"@types/jest": "26.0.0",
-		"jest": "26.4.2",
-		"rxjs": "6.6.3",
-		"ts-jest": "26.4.1",
-		"typescript": "4.8.3"
-	},
-	"peerDependencies": {
-		"rxjs": ">= 6.5.0 < 7.0.0-0"
-	},
-	"publishConfig": {
-		"access": "public"
-	}
+  "name": "@rixio/atom",
+  "version": "0.15.0-alpha.2",
+  "keywords": [
+    "frp",
+    "lens",
+    "reactive",
+    "rx",
+    "rxjs",
+    "atom"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roborox/rixio.git"
+  },
+  "license": "Apache-2.0",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "/build"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig-build.json",
+    "clean": "rimraf ./build",
+    "test": "jest --silent",
+    "verify": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rixio/lens": "^0.15.0-alpha.2"
+  },
+  "peerDependencies": {
+    "rxjs": ">= 6.0.0 < 7.0.0-0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }

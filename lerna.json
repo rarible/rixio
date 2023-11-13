@@ -1,16 +1,15 @@
 {
-	"packages": [
-		"packages/*"
-	],
-	"npmClient": "yarn",
-	"useWorkspaces": true,
-	"version": "0.14.2",
-	"command": {
-		"publish": {
-			"allowBranch": "master",
-			"registry": "https://registry.npmjs.org/",
-			"message": "chore: bump versions after release",
-			"yes": true
-		}
-	}
+  "packages": ["packages/*"],
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "version": "0.15.0-alpha.2",
+  "command": {
+    "publish": {
+      "allowBranch": ["master", "0.15.x"],
+      "registry": "https://registry.npmjs.org/",
+      "message": "chore: bump versions after release",
+      "yes": true,
+      "logLevel": "verbose"
+    }
+  }
 }

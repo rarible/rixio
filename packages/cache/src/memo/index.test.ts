@@ -1,174 +1,156 @@
 import { Atom } from "@rixio/atom"
 import { noop } from "rxjs"
-import { first, map, take } from "rxjs/operators"
-import { CacheState, CacheIdle } from "../domain"
+import { first, map } from "rxjs/operators"
+import { CacheIdle } from "../domain"
+import type { CacheState } from "../domain"
+import type { MemoConfig } from "./index"
 import { MemoImpl } from "./index"
 
-globalThis.Promise = jest.requireActual("promise")
-
 describe("MemoImpl", () => {
-	test("should load data when subscribed and idle", async () => {
-		const { getTimes, cache } = createTestSet()
-		expect(cache.atom.get().status).toBe("idle")
-		const sub1 = cache.subscribe()
-		expect(cache.atom.get().status).toBe("pending")
-		const data = await cache.get()
-		expect(data).toBe("loaded")
-		expect(getTimes()).toBe(1)
-		sub1.unsubscribe()
-		const data2 = await cache.get()
-		expect(data2).toBe("loaded")
-		expect(getTimes()).toBe(1)
-	})
+  jest.useFakeTimers()
 
-	test("should force get", async () => {
-		const { getTimes, cache } = createTestSet()
-		await cache.get()
-		await cache.get()
-		expect(getTimes()).toBe(1)
-		await cache.get(true)
-		expect(getTimes()).toBe(2)
-	})
+  test("should load data when subscribed and idle", async () => {
+    const testset = new TestSet({ timeout: 100 })
+    const sub1 = testset.cache.subscribe(noop)
+    expect(testset.impl.mock.calls).toHaveLength(1)
+    expect(testset.statuses).toEqual(["idle"])
+    await jest.runAllTimersAsync()
+    expect(testset.statuses).toEqual(["idle", "pending", "fulfilled"])
+    sub1.unsubscribe()
+    await testset.cache.get()
+    expect(testset.impl.mock.calls).toHaveLength(1)
+    testset.reset()
+  })
 
-	test("should set idle after clear and not start loading", () => {
-		const { cache } = createTestSet()
-		expect(cache.atom.get().status).toBe("idle")
-		const sub1 = cache.subscribe(noop)
-		expect(cache.atom.get().status).toBe("pending")
-		sub1.unsubscribe()
-		cache.clear()
-		expect(cache.atom.get().status).toBe("idle")
-	})
+  test("should invalidate cache", async () => {
+    let changed = false
+    const loader = jest.fn().mockImplementation(() => (changed ? Promise.resolve("hello") : Promise.resolve("world")))
+    const testset = new TestSet({ cacheLiveTimeMs: 100, customImpl: loader })
+    const data1 = await testset.cache.get()
+    expect(data1).toEqual("world")
+    expect(loader.mock.calls).toHaveLength(1)
+    expect(testset.statuses).toEqual(["idle", "fulfilled"])
+    jest.advanceTimersByTime(110)
+    changed = true
+    const data2 = await testset.cache.get()
+    expect(loader.mock.calls).toHaveLength(2)
+    expect(data2).toEqual("hello")
+    expect(testset.statuses).toEqual(["idle", "fulfilled", "idle", "fulfilled"])
+    testset.reset()
+  })
 
-	test("should start loading right after clear if someone subscribed", async () => {
-		const { cache } = createTestSet()
-		expect(cache.atom.get().status).toBe("idle")
-		cache.subscribe(noop)
-		expect(cache.atom.get().status).toBe("pending")
-		await delay(120)
-		expect(cache.atom.get().status).toBe("fulfilled")
-		expect(await cache.pipe(take(1)).toPromise()).toBe("loaded")
-		cache.clear()
-		expect(cache.atom.get().status).toBe("pending")
-		await delay(120)
-		expect(cache.atom.get().status).toBe("fulfilled")
-		expect(await cache.pipe(take(1)).toPromise()).toBe("loaded")
-	})
+  test("should load immediately", async () => {
+    const testset = new TestSet()
+    const sub1 = testset.cache.subscribe(noop)
+    expect(testset.statuses).toEqual(["idle"])
+    await jest.runAllTimersAsync()
+    expect(testset.statuses).toEqual(["idle", "fulfilled"])
+    sub1.unsubscribe()
+    testset.reset()
+  })
 
-	test("get should return value and invalidate after clear", async () => {
-		let result: string = "loaded"
-		const cache = new MemoImpl<string>(
-			Atom.create(CacheIdle.create()),
-			() => new Promise(resolve => setTimeout(() => resolve(result), 100))
-		)
-		expect(cache.atom.get().status).toBe("idle")
-		const value = await cache.get()
-		expect(value).toBe("loaded")
-		result = "other"
-		expect(await cache.get()).toBe("loaded")
-		cache.clear()
-		expect(cache.atom.get().status).toBe("idle")
-		const value3 = await cache.get()
-		expect(value3).toBe("other")
-	})
+  test("should force get", async () => {
+    const testset = new TestSet()
+    await Promise.all(new Array(5).fill(0).map(() => testset.cache.get()))
+    expect(testset.impl.mock.calls).toHaveLength(1)
+    await testset.cache.get(true)
+    expect(testset.impl.mock.calls).toHaveLength(2)
+    testset.reset()
+  })
 
-	test("set should work", async () => {
-		const { cache } = createTestSet()
-		expect(cache.atom.get().status).toBe("idle")
-		const value1 = await cache.get()
-		expect(value1).toBe("loaded")
-		cache.set("other")
-		expect(cache.atom.get().status).toBe("fulfilled")
-		const value = await cache.get()
-		expect(value).toBe("other")
-	})
+  test("should set idle after clear and not start loading", async () => {
+    const testset = new TestSet({ timeout: 100 })
+    const cacheSub = testset.cache.subscribe(noop)
+    expect(testset.statuses).toEqual(["idle"])
+    await jest.runAllTimersAsync()
+    expect(testset.statuses).toEqual(["idle", "pending", "fulfilled"])
+    cacheSub.unsubscribe()
+    testset.cache.clear()
+    expect(testset.statuses).toEqual(["idle", "pending", "fulfilled", "idle"])
+    testset.reset()
+  })
 
-	test("modify should work", async () => {
-		const { cache } = createTestSet()
-		expect(cache.atom.get().status).toBe("idle")
-		const value1 = await cache.get()
-		expect(value1).toBe("loaded")
-		cache.modifyIfFulfilled(x => x + "1")
-		expect(cache.atom.get().status).toBe("fulfilled")
-		const value = await cache.get()
-		expect(value).toBe("loaded1")
-	})
+  test("should start loading right after clear if someone subscribed", async () => {
+    const testset = new TestSet()
+    const sub = testset.cache.subscribe(noop)
+    expect(testset.statuses).toEqual(["idle"])
+    await jest.runAllTimersAsync()
+    expect(testset.statuses).toEqual(["idle", "fulfilled"])
+    testset.cache.clear()
+    expect(testset.statuses).toEqual(["idle", "fulfilled", "idle"])
+    await jest.runAllTimersAsync()
+    expect(testset.statuses).toEqual(["idle", "fulfilled", "idle", "fulfilled"])
+    expect(testset.impl.mock.calls).toHaveLength(2)
+    sub.unsubscribe()
+    testset.reset()
+  })
 
-	test("rxjs operators should work", async () => {
-		const { cache } = createTestSet()
-		expect(cache.atom.get().status).toBe("idle")
-		const value1 = await cache
-			.pipe(
-				map(x => x + "1"),
-				first()
-			)
-			.toPromise()
-		expect(value1).toBe("loaded1")
-	})
+  test("set should work", async () => {
+    const testset = new TestSet()
+    await testset.cache.get()
+    expect(testset.statuses).toEqual(["idle", "fulfilled"])
+    testset.cache.set("other")
+    expect(testset.statuses).toEqual(["idle", "fulfilled", "fulfilled"])
+    await testset.cache.get()
+    expect(testset.statuses).toEqual(["idle", "fulfilled", "fulfilled"])
+  })
 
-	test("should start fetching after subscribe on rejected Memo", async () => {
-		const atom$ = Atom.create<CacheState<string>>(CacheIdle.create())
-		let counter = 0
-		const cache = new MemoImpl(atom$, () => {
-			counter = counter + 1
-			return new Promise((resolve, reject) => {
-				setTimeout(() => {
-					return counter <= 1 ? reject("rejected") : resolve("resolved")
-				}, 100)
-			})
-		})
-		expect(counter).toEqual(0)
-		const emitted: string[] = []
-		const emittedStatuses: CacheState<any>["status"][] = []
-		atom$.subscribe(x => {
-			emittedStatuses.push(x.status)
-		})
+  test("rxjs operators should work", async () => {
+    const testset = new TestSet()
+    const value1 = await testset.cache
+      .pipe(
+        map(() => "mapped"),
+        first(),
+      )
+      .toPromise()
+    expect(value1).toBe("mapped")
+  })
 
-		const sub1 = cache.subscribe(x => emitted.push(x), noop)
-		expect(counter).toEqual(1)
+  test("should start fetching after subscribe on rejected Memo", async () => {
+    const loader = jest
+      .fn()
+      .mockImplementation(() =>
+        loader.mock.calls.length <= 1 ? Promise.reject("rejected") : Promise.resolve("resolved"),
+      )
+    const testset = new TestSet({ customImpl: loader })
+    expect(loader.mock.calls.length).toEqual(0)
+    const emitted: string[] = []
 
-		await delay(120)
-		expect(atom$.get().status).toBe("rejected")
-		expect(emitted).toStrictEqual([])
-		sub1.unsubscribe()
-		expect(emittedStatuses).toStrictEqual(["idle", "pending", "rejected"])
+    // First call
+    const sub1 = testset.cache.subscribe(x => emitted.push(x), noop)
+    expect(loader.mock.calls.length).toEqual(1)
+    await jest.runAllTimersAsync()
+    expect(testset.statuses).toEqual(["idle", "rejected"])
+    expect(emitted).toEqual([])
+    sub1.unsubscribe()
 
-		const sub2 = cache.subscribe(x => emitted.push(x))
-		expect(counter).toEqual(2)
-		await delay(120)
-		expect(atom$.get().status).toBe("fulfilled")
-		expect(counter).toEqual(2)
-		expect(emittedStatuses).toEqual(["idle", "pending", "rejected", "idle", "pending", "fulfilled"])
-		expect(emitted).toStrictEqual(["resolved"])
-		sub2.unsubscribe()
-	})
-
-	test("notifies observer if data is already fetched", async () => {
-		const { getTimes, cache } = createTestSet()
-		cache.subscribe(noop)
-		const emitted1: string[] = []
-		cache.subscribe(x => emitted1.push(x))
-		await delay(120)
-		expect(emitted1).toStrictEqual(["loaded"])
-		expect(getTimes()).toBe(1)
-		cache.clear()
-		await delay(120)
-		expect(emitted1).toStrictEqual(["loaded", "loaded"])
-		expect(getTimes()).toBe(2)
-	})
+    // Second call
+    const sub2 = testset.cache.subscribe(x => emitted.push(x))
+    await jest.runAllTimersAsync()
+    expect(loader.mock.calls.length).toEqual(2)
+    expect(testset.statuses).toEqual(["idle", "rejected", "idle", "fulfilled"])
+    expect(emitted).toStrictEqual(["resolved"])
+    sub2.unsubscribe()
+  })
 })
 
-function createTestSet() {
-	let times = 0
-	return {
-		getTimes: () => times,
-		cache: new MemoImpl<string>(Atom.create(CacheIdle.create()), () => {
-			times = times + 1
-			return Promise.resolve("loaded")
-		}),
-	}
+type TestSetConfig = Partial<MemoConfig> & {
+  customImpl?: jest.Mock<string>
+  timeout?: number
 }
 
-async function delay(ms: number) {
-	await new Promise(r => setTimeout(r, ms))
+class TestSet {
+  readonly impl = jest.fn().mockImplementation(() => {
+    const timeout = this.config.timeout
+    if (typeof timeout !== "number") return Promise.resolve("loaded")
+    return new Promise(r => setTimeout(() => r("loaded"), timeout))
+  })
+
+  readonly atom = Atom.create(CacheIdle.create())
+  readonly cache = new MemoImpl<string>(this.atom, this.config.customImpl || this.impl, this.config)
+  readonly statuses: CacheState<unknown>["status"][] = []
+  private readonly sub = this.atom.subscribe(x => this.statuses.push(x.status))
+
+  constructor(private readonly config: TestSetConfig = {}) {}
+  reset = () => this.sub.unsubscribe()
 }

@@ -1,4 +1,4 @@
 {
 	"root": true,
-	"extends": ["@roborox/default", "prettier", "prettier/@typescript-eslint"]
+	"extends": ["@rarible/eslint-config-ts", "prettier"]
 }

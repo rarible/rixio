@@ -1,4 +1,4 @@
 export { save } from "./save"
-export { byKeyWithDefaultFactory } from "./by-key-with-default-factory"
+export { runPromiseWithCache } from "./run-promise-with-cache"
 export { toListLoader } from "./to-list-loader"
 export { toCache, fromCache } from "./to-cache"

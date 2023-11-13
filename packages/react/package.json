@@ -1,55 +1,42 @@
 {
-	"name": "@rixio/react",
-	"version": "0.14.2",
-	"keywords": [
-		"frp",
-		"lens",
-		"react",
-		"reactive",
-		"rx",
-		"rxjs",
-		"atom"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/roborox/rixio.git"
-	},
-	"license": "Apache-2.0",
-	"main": "build/index.js",
-	"types": "build/index.d.ts",
-	"files": [
-		"/build"
-	],
-	"scripts": {
-		"build": "tsc --project tsconfig-build.json",
-		"clean": "rimraf ./build",
-		"test": "jest --silent",
-		"verify": "tsc --noEmit"
-	},
-	"dependencies": {
-		"@rixio/lens": "^0.14.0",
-		"@rixio/wrapped": "^0.14.0"
-	},
-	"devDependencies": {
-		"@rixio/atom": "^0.14.0",
-		"@rixio/cache": "^0.14.2",
-		"@testing-library/jest-dom": "5.11.4",
-		"@testing-library/react": "11.0.4",
-		"@types/jest": "26.0.14",
-		"@types/react": "16.9.37",
-		"@types/react-dom": "16.9.8",
-		"jest": "26.4.2",
-		"react": "16.13.1",
-		"react-dom": "16.13.1",
-		"rxjs": "6.6.3",
-		"ts-jest": "26.4.1",
-		"typescript": "4.8.3"
-	},
-	"peerDependencies": {
-		"react": ">= 16.13.1",
-		"rxjs": ">= 6.5.0 < 7.0.0-0"
-	},
-	"publishConfig": {
-		"access": "public"
-	}
+  "name": "@rixio/react",
+  "version": "0.15.0-alpha.2",
+  "keywords": [
+    "frp",
+    "lens",
+    "react",
+    "reactive",
+    "rx",
+    "rxjs",
+    "atom"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roborox/rixio.git"
+  },
+  "license": "Apache-2.0",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "/build"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig-build.json",
+    "clean": "rimraf ./build",
+    "test": "jest --silent",
+    "verify": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rixio/atom": "^0.15.0-alpha.2",
+    "@rixio/cache": "^0.15.0-alpha.2",
+    "@rixio/lens": "^0.15.0-alpha.2",
+    "@rixio/wrapped": "^0.15.0-alpha.2"
+  },
+  "peerDependencies": {
+    "react": ">= 16.9.0",
+    "rxjs": ">= 6.0.0 < 7.0.0-0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }
