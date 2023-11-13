@@ -2,7 +2,7 @@
   "packages": ["packages/*"],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "0.15.0-alpha.1",
+  "version": "0.15.0-alpha.2",
   "command": {
     "publish": {
       "allowBranch": ["master", "0.15.x"],
