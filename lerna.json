@@ -8,7 +8,8 @@
       "allowBranch": ["master", "0.15.x"],
       "registry": "https://registry.npmjs.org/",
       "message": "chore: bump versions after release",
-      "yes": true
+      "yes": true,
+      "logLevel": "verbose"
     }
   }
 }
