@@ -1,6 +1,6 @@
 {
   "name": "@rixio/cache",
-  "version": "0.15.0-alpha.1",
+  "version": "0.15.0-alpha.2",
   "keywords": [
     "cache",
     "frp",
@@ -27,9 +27,9 @@
     "verify": "tsc --noEmit"
   },
   "dependencies": {
-    "@rixio/atom": "^0.15.0-alpha.1",
-    "@rixio/lens": "^0.15.0-alpha.1",
-    "@rixio/wrapped": "^0.15.0-alpha.1",
+    "@rixio/atom": "^0.15.0-alpha.2",
+    "@rixio/lens": "^0.15.0-alpha.2",
+    "@rixio/wrapped": "^0.15.0-alpha.2",
     "immutable": "^4.0.0"
   },
   "peerDependencies": {
