@@ -18,7 +18,7 @@ export type MemoConfig = {
   /**
    * Set a live time that will be used for cache invalidation
    * invalidation happens only whenever Memo is accessed
-   * @default 10m
+   * @default Infinity
    */
   cacheLiveTimeMs: number
 }
@@ -32,7 +32,7 @@ export class MemoImpl<T> extends Observable<T> implements Memo<T> {
   constructor(
     public readonly atom: Atom<CacheState<T>>,
     private readonly _loader: () => Promise<T>,
-    config: Partial<MemoConfig> = {},
+    readonly config: Partial<MemoConfig> = {},
   ) {
     super(subscriber => {
       const initial = atom.get()

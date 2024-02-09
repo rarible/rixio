@@ -1,8 +1,8 @@
 import { Map as IM } from "immutable"
 import type { Atom } from "@rixio/atom"
 import type { Observable } from "rxjs"
-import { Subject } from "rxjs"
-import { first } from "rxjs/operators"
+import { defer, Subject } from "rxjs"
+import { first, shareReplay, switchMap } from "rxjs/operators"
 import { byKeyImmutableFactory } from "@rixio/atom"
 import type { CacheState, KeyEvent, ListDataLoader } from "../domain"
 import { CacheIdle, createErrorKeyEvent, createAddKeyEvent } from "../domain"
@@ -28,9 +28,10 @@ export type KeyMemoConfig = MemoConfig & {
   batcherTimeout: number
 }
 
-export type KeyMemoConstructor<K, V> = (K extends string ? {} : { toHash: (key: K) => string }) & {
+export type KeyMemoConstructor<K, V> = {
   map: Atom<IM<K, CacheState<V>>>
   loader: ListDataLoader<K, V>
+  toHash?: (key: K) => string
   config?: Partial<KeyMemoConfig>
 }
 
@@ -45,9 +46,15 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 
   private readonly singles = new KeyHashCache<K, Memo<V>>({
     create: key => new MemoImpl(this.getAtom(key), () => this.load(key), this._config),
-    toHash: x => ("toHash" in this.config ? this.config.toHash(x) : (x as string)),
+    toHash: x => this.toHash(x),
     onCreate: key => this._events.next(createAddKeyEvent(key)),
   })
+
+  private toHash(x: K) {
+    if (typeof x === "string") return x
+    if (typeof this.config.toHash === "function") return this.config.toHash(x)
+    return JSON.stringify(x)
+  }
 
   constructor(private readonly config: KeyMemoConstructor<K, V>) {
     this._config = {
@@ -72,6 +79,12 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 
   single = (key: K): Memo<V> => this.singles.get(key)
 
+  singleFresh = (id: K, revalidate: boolean = true): Observable<V> =>
+    defer(() => this.get(id, revalidate)).pipe(
+      switchMap(() => this.single(id)),
+      shareReplay(1),
+    )
+
   get = (key: K, force?: boolean): Promise<V> => this.single(key).get(force)
 
   set = (key: K, value: V): void => this.single(key).set(value)
@@ -92,6 +105,6 @@ export class KeyMemoImpl<K, V> implements KeyMemo<K, V> {
 function createDefaultConfig(): KeyMemoConfig {
   return {
     batcherTimeout: 200,
-    cacheLiveTimeMs: 1000 * 60 * 10, // 10 min
+    cacheLiveTimeMs: Infinity,
   }
 }

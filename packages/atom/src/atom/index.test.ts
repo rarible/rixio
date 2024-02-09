@@ -678,24 +678,6 @@ describe("atom", () => {
     )
   })
 
-  describe("logger", () => {
-    let consoleLogFireTime = 0
-
-    const atom = Atom.create("bar")
-    const consoleLogArguments: string[][] = []
-    const logAtom = Atom.log(atom, (prevState: string, next: string) => {
-      consoleLogFireTime = consoleLogFireTime + 1
-      consoleLogArguments.push([prevState, next])
-    })
-    logAtom.set("foo")
-
-    expect(consoleLogFireTime).toEqual(2)
-    expect(consoleLogArguments).toEqual([
-      ["bar", "bar"],
-      ["bar", "foo"],
-    ])
-  })
-
   describe("fromObservable", () => {
     test("emits atom", async () => {
       const a = await firstValueFrom(Atom.fromObservable(from([1])))

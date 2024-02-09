@@ -20,35 +20,6 @@ export namespace Atom {
     return new JsonAtom(initialValue)
   }
 
-  export function log<T>(atom: Atom<T>, name?: string): Atom<T>
-  export function log<T>(atom: ReadOnlyAtom<T>, name?: string): ReadOnlyAtom<T>
-  export function log<T>(atom: Atom<T>, logger?: (prevState: T, next: T) => void): Atom<T>
-  export function log<T>(atom: ReadOnlyAtom<T>, logger?: (prevState: T, next: T) => void): ReadOnlyAtom<T>
-
-  export function log<T>(
-    atom: Atom<T> | ReadOnlyAtom<T>,
-    logger?: string | ((prevState: T, next: T) => void),
-  ): Atom<T> | ReadOnlyAtom<T> {
-    const logState = (msg: string, color: string, x: T) => {
-      console.log("%c" + msg, `color: ${color}; font-weight: bold`, x)
-    }
-    let prevState = atom.get()
-
-    atom.subscribe(next => {
-      if (typeof logger === "function") {
-        logger(prevState, next)
-      } else {
-        console.group(`UPDATE ${logger ? `TYPE: ${logger} ` : ""}@ ${new Date().toTimeString()}`)
-        logState("prev state", "#9E9E9E", prevState)
-        logState("next state", "#4CAF50", next)
-        console.groupEnd()
-      }
-      prevState = next
-    })
-
-    return atom
-  }
-
   export function combine<T1, T2, TResult>(
     source1: ReadOnlyAtom<T1>,
     source2: ReadOnlyAtom<T2>,

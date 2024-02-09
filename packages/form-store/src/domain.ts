@@ -2,24 +2,30 @@ import type { Observable } from "rxjs"
 
 export interface ValidationResultValidating {
   status: "validating"
+  value: unknown
 }
 
-export interface ValidationResultSuccess {
+export interface ValidationResultSuccess<T> {
   status: "success"
+  value: T
 }
 
 export interface ValidationResultError<T> {
   status: "error"
   error: string
-  children: {
-    [P in keyof T]+?: ValidationResult<T[P]>
-  }
+  value: unknown | undefined
+  children: Partial<{
+    [P in keyof T]: ValidationResult<T[P]>
+  }>
 }
 
-export type ValidationResult<T> = ValidationResultSuccess | ValidationResultValidating | ValidationResultError<T>
+export type ValidationResultFinal<T> = ValidationResultSuccess<T> | ValidationResultError<T>
 
-export type Validate<T> = (
-  value: T,
-) => ValidationResult<T> | PromiseLike<ValidationResult<T>> | Observable<ValidationResult<T>>
+export type ValidationResult<T> = ValidationResultFinal<T> | ValidationResultValidating
 
-export type ValidationStatus = ValidationResult<any>["status"]
+export type ValidateFnResult<T> =
+  | ValidationResultFinal<T>
+  | PromiseLike<ValidationResultFinal<T>>
+  | Observable<ValidationResult<T>>
+
+export type ValidateFn<T> = (value: T) => ValidateFnResult<T>

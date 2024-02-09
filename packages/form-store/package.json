@@ -30,8 +30,8 @@
     "@rixio/lens": "^0.15.0-alpha.2"
   },
   "peerDependencies": {
-    "joi": ">= 17.0.0 < 18.0.0",
-    "rxjs": ">= 6.0.0 < 7.0.0-0"
+    "joi": "^17.0.0",
+    "rxjs": "^6.0.0"
   },
   "publishConfig": {
     "access": "public"
