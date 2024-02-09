@@ -1,6 +1,6 @@
 {
   "name": "@rixio/list",
-  "version": "0.15.0-alpha.2",
+  "version": "0.15.0-alpha.3",
   "keywords": [
     "frp",
     "lens",
@@ -27,9 +27,9 @@
     "verify": "tsc --noEmit"
   },
   "dependencies": {
-    "@rixio/cache": "^0.15.0-alpha.2",
-    "@rixio/react": "^0.15.0-alpha.2",
-    "@rixio/wrapped": "^0.15.0-alpha.2"
+    "@rixio/cache": "^0.15.0-alpha.3",
+    "@rixio/react": "^0.15.0-alpha.3",
+    "@rixio/wrapped": "^0.15.0-alpha.3"
   },
   "peerDependencies": {
     "rxjs": "^6.0.0"
